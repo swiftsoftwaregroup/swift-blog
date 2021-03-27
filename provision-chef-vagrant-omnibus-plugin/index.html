@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Provision Chef with Vagrant-Omnibus Plugin | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/provision-chef-vagrant-omnibus-plugin/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/provision-chef-vagrant-omnibus-plugin/">Provision Chef with Vagrant-Omnibus Plugin</a></h1><time datetime="2015-11-22T00:00:00-08:00">November 22, 2015</time>
+</header>
+
+  <p>In this post we show how you can provision <a href="https://www.chef.io/chef/">Chef</a> from Vagrant using the <code class="language-plaintext highlighter-rouge">vagrant-omnibus</code> plugin. This post is for Ubuntu 14.04 guest running in VirtualBox on Windows 10 host.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>You need VirtualBox and Vagrant installed. To do that, you can follow the steps described in <a href="http://www.swiftsoftwaregroup.com/ubuntu-with-vagrant-and-virtualbox-on-windows/">Ubuntu with Vagrant and VirtualBox on Windows</a>.</p>
+
+<h2 id="install-chef-development-kit-chefdk">Install Chef Development Kit (ChefDK)</h2>
+
+<p>In PowerShell as <em>Administrator</em>:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">choco</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">chefdk</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="provision-chef">Provision Chef</h2>
+
+<p>Before you can use Chef Solo, Chef Zero, or Chef Client for provisioning, you need to install the latest Chef client on the guest. This can be done with a shell script or with a Vagrant plugin called <code class="language-plaintext highlighter-rouge">vagrant-omnibus</code>.</p>
+
+<p>In PowerShell:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vagrant</span><span class="w"> </span><span class="nx">plugin</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">vagrant-omnibus</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Open <code class="language-plaintext highlighter-rouge">Vagrantfile</code> and add the following code at the end of the configuration:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Install the latest version of Chef.</span>
+<span class="c1"># For more information see https://github.com/chef/vagrant-omnibus</span>
+<span class="c1">#</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">omnibus</span><span class="p">.</span><span class="nf">chef_version</span> <span class="o">=</span> <span class="ss">:latest</span>
+</code></pre></div></div>
+
+<p>The complete <code class="language-plaintext highlighter-rouge">Vagrantfile</code> file should look like this:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># -*- mode: ruby -*-</span>
+<span class="c1"># vi: set ft=ruby :</span>
+
+<span class="c1"># All Vagrant configuration is done below. The "2" in Vagrant.configure</span>
+<span class="c1"># configures the configuration version (we support older styles for</span>
+<span class="c1"># backwards compatibility). Please don't change it unless you know what</span>
+<span class="c1"># you're doing.</span>
+<span class="c1">#</span>
+<span class="no">Vagrant</span><span class="p">.</span><span class="nf">configure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+
+  <span class="c1"># Every Vagrant development environment requires a box. You can search for</span>
+  <span class="c1"># boxes at https://atlas.hashicorp.com/search.</span>
+  <span class="c1">#</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">vm</span><span class="p">.</span><span class="nf">box</span> <span class="o">=</span> <span class="s2">"ubuntu/trusty64"</span>
+
+  <span class="c1"># Provider-specific configuration so you can fine-tune various</span>
+  <span class="c1"># backing providers for Vagrant. These expose provider-specific options.</span>
+  <span class="c1">#</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">vm</span><span class="p">.</span><span class="nf">provider</span> <span class="s2">"virtualbox"</span> <span class="k">do</span> <span class="o">|</span><span class="n">vb</span><span class="o">|</span>
+    <span class="c1"># For a complete reference, please see the online documentation at</span>
+    <span class="c1"># https://docs.vagrantup.com/v2/virtualbox/configuration.html</span>
+
+    <span class="c1"># Name used in Oracle VM VirtualBox Manager GUI</span>
+    <span class="n">vb</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s2">"Ubuntu-x64-Vagrant"</span>
+
+    <span class="c1"># Customize the amount of memory on the VM (in MB):</span>
+    <span class="n">vb</span><span class="p">.</span><span class="nf">memory</span> <span class="o">=</span> <span class="s2">"2048"</span>
+
+    <span class="c1"># Customize the amount of video memory on the VM (in MB):</span>
+    <span class="n">vb</span><span class="p">.</span><span class="nf">customize</span> <span class="p">[</span><span class="s2">"modifyvm"</span><span class="p">,</span> <span class="ss">:id</span><span class="p">,</span> <span class="s2">"--vram"</span><span class="p">,</span> <span class="s2">"128"</span><span class="p">]</span>
+  <span class="k">end</span>
+
+  <span class="c1"># Install the latest version of Chef.</span>
+  <span class="c1"># For more information see https://github.com/chef/vagrant-omnibus</span>
+  <span class="c1">#</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">omnibus</span><span class="p">.</span><span class="nf">chef_version</span> <span class="o">=</span> <span class="ss">:latest</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<h2 id="test">Test</h2>
+
+<p>Finally launch and provision the Vagrant box. It should install the latest Chef Client:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vagrant</span><span class="w"> </span><span class="nx">reload</span><span class="w">
+</span><span class="n">vagrant</span><span class="w"> </span><span class="nx">provision</span><span class="w">
+</span></code></pre></div></div>
+
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

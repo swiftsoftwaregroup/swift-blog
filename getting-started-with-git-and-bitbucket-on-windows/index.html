@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Getting started with Git and BitBucket on Windows | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/getting-started-with-git-and-bitbucket-on-windows/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/getting-started-with-git-and-bitbucket-on-windows/">Getting started with Git and BitBucket on Windows</a></h1><time datetime="2013-02-19T00:00:00-08:00">February 19, 2013</time>
+</header>
+
+  <p>This post describes setting up Git on Windows and using a private remote Git repository hosted on BitBucket.org. Here it goes:</p>
+
+<p>1) Start by downloading Git fromthe <a href="http://msysgit.github.com/" title="msysgit">msysgit</a> site. At the time of writing the latest installer was Git-1.8.1.2-preview20130201.exe. For some unknown reason the installers are labeled “preview” which normally suggests unfinished product, but the versions are actually fully functional.</p>
+
+<p>After downloading, run the installer and follow the steps. You may use the default options on each screen, but since we are going to try TortoiseGit later, on the first screen select “Simple context menu (Registry based)” and check only “Git Bash Here”. That will keep to your Windows Explorer context menu less cluttered.</p>
+
+<p>2) Install <a href="http://code.google.com/p/tortoisegit/" title="TortoiseGit Home">TortoiseGit</a>. At the time of this writing the latest version was 1.8.1. There is nothing special about installing TortoiseGit.</p>
+
+<p>To verify the TortoiseGit installer integrated with your msysgit installation: right click anywhere in Windows Explorer and select TorstoiseGit &gt; Settings from the context menu, then make sure you have the correct paths for Git.exe under the General section and the ssh client under the Network section.</p>
+
+<p><img src="/assets/images/getting-started-with-git-and-bitbucket-on-windows/git-tortoisegit-settings-general.png" alt="git-tortoisegit-settings-general" /> 
+<img src="/assets/images/getting-started-with-git-and-bitbucket-on-windows/git-tortoisegit-settings-network.png" alt="git-tortoisegit-settings-network" /></p>
+
+<p>3) Install the <a href="https://github.com/blog/1104-credential-caching-for-wrist-friendly-git-usage" title="Credential Caching">Credential Caching</a> Git extension. We will be using Git via <code class="language-plaintext highlighter-rouge">https://</code> instead of <code class="language-plaintext highlighter-rouge">ssh</code> and that extension caches the username and password, so we do not have to type them all the time. Download <em><a href="http://github-media-downloads.s3.amazonaws.com/windows/GitWindowsExtras-Fx4.zip">git-credential-winstore and GitPad</a> for Windows 8 (.NET 4.0 required)</em>, unzip,copy <em>git-credential-winstore.exe</em> to the Git bin directory and run it. By default Git is installed in <code class="language-plaintext highlighter-rouge">C:\Program Files (x86)\Git\bin</code> on 64 Bit systems. Open your global <em>.gitconfig</em> file. The global <em>.gitconfig</em> file is in your home directory which on Windows Vista and above should be under <code class="language-plaintext highlighter-rouge">C:\Users\&lt;yourname&gt;</code>. <em>Verify the you have this line in *.gitconfig</em>:</p>
+
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[credential]</span>
+<span class="py">helper</span> <span class="p">=</span> <span class="s">!~/AppData/Roaming/GitCredStore/git-credential-winstore</span>
+</code></pre></div></div>
+
+<p>4) Optionally you may want to change the default text editor that Git uses, e.g. you might need that for commit messages. The default editor in msysgit is Unix VIM. You can change that to Notepad with GitPad – a small utility found in the credential caching extension zip. Simply copy GitPad.exe in<em>C:\Program Files (x86)\Git\bin</em> and run it.</p>
+
+<p>5) Create an empty Git repository onBitbucket.org – that will be your shared repository. If you are new to BitBucket you can check this short<a href="https://confluence.atlassian.com/display/BITBUCKET/Create+an+Account+and+a+Git+Repo" title="Create an Account and a Git Repo">tutorial</a>on how to create a BitBucket account and a Git repo- the process is rather straightforward. For this demo create a repo and name it <em>SandboxGit</em>. Please note that BitBucket will create a bare repository. A bare repository is one without branches.</p>
+
+<p><img src="/assets/images/getting-started-with-git-and-bitbucket-on-windows/create-a-repository-bitbucket.png" alt="create-a-repository-bitbucket-sandbox" /></p>
+
+<p>6) We are now ready to start playing with the <em>SandboxGit</em> repo. If you are new to Git, it is better to start in Git Bash at the beginning just to get a feeling of Git. Knowing Git command line will help you understand what TortoiseGit or any other GUI tool does later, because in almost all cases, all the GUI tools generate and execute Git commands for you.</p>
+
+<ul>
+  <li><a href="#git-bash-tab">Git Bash</a></li>
+  <li><a href="#tortoise-git-tab">TortoiseGit</a></li>
+</ul>
+
+<h4 id="configure-default-name-and-email-for-commits">Configure default name and email for commits</h4>
+
+<p>In Windows Explorer, go to a place where you want to put your working directory, right click and select<em>Git Bash Here</em>from the menu.</p>
+
+<p>In Git Bash prompt enter:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config <span class="nt">--global</span> user.name <span class="s2">"user"</span>
+git config <span class="nt">--global</span> user.email <span class="s2">"user@domain.com"</span>
+</code></pre></div></div>
+
+<p>After the changes, <code class="language-plaintext highlighter-rouge">C:\Users\&lt;yourname&gt;\.gitconfig</code> should have the user configuration in it:</p>
+
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[credential]</span>
+<span class="py">helper</span> <span class="p">=</span> <span class="s">!~/AppData/Roaming/GitCredStore/git-credential-winstore</span>
+<span class="nn">[user]</span>
+<span class="py">name</span> <span class="p">=</span> <span class="s">user</span>
+<span class="py">email</span> <span class="p">=</span> <span class="s">user@domain.com</span>
+</code></pre></div></div>
+
+<p>Also we can get the same result with the <code class="language-plaintext highlighter-rouge">git config</code> command:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config <span class="nt">--global</span> <span class="nt">-l</span> <span class="se">\</span>
+credential.helper<span class="o">=!</span>~/AppData/Roaming/GitCredStore/git-credential-winstore <span class="se">\</span>
+user.name<span class="o">=</span>user <span class="se">\</span>
+user.email<span class="o">=</span>user@domain.com
+</code></pre></div></div>
+
+<h4 id="configure--disable-line-ending-conversion">Configure / disable line ending conversion</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config <span class="nt">--global</span> core.autocrlf <span class="nb">false</span>
+</code></pre></div></div>
+
+<p>Without that we will get CR/LF conversion warning on each commit, e.g. something like this will be shown for each new line in your source:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>warning: LF will be replaced by CRLF in HelloWorld.cpp.
+The file will have its original line endings in your working directory.
+</code></pre></div></div>
+
+<p>Modern development tools support both CR/LF and LF line endings, so we do not need Git to do line ending conversion.</p>
+
+<h4 id="clone-the-remote-repository">Clone the remote repository</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://user@bitbucket.org/primosoftware/sandboxgit.git ./SandboxGit
+Cloning into <span class="s1">'./SandboxGit'</span>...
+warning: You appear to have cloned an empty repository.
+</code></pre></div></div>
+
+<p>The first time you do this Git will ask for a BitBucket.org password. After that it will remember the password, because of the credentials caching extension thatwe installed in step 3.</p>
+
+<h4 id="check-the-remote-configuration">Check the remote configuration</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ./SandboxGit
+git remote show
+origin
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git remote show origin
+<span class="k">*</span> remote origin
+Fetch URL: https://user@bitbucket.org/primosoftware/sandboxgit.git
+Push URL: https://user@bitbucket.org/primosoftware/sandboxgit.git
+HEAD branch: <span class="o">(</span>unknown<span class="o">)</span>
+Local branch configured <span class="k">for</span> <span class="s1">'git pull'</span>:
+master merges with remote master
+</code></pre></div></div>
+
+<p>Basically we have:</p>
+
+<ul>
+  <li>An <code class="language-plaintext highlighter-rouge">origin</code> alias that points to a remote repo at <em>https://user@nullbitbucket.org/primosoftware/sandboxgit.git</em></li>
+  <li>A local branch <code class="language-plaintext highlighter-rouge">master</code> that will merge with the remote branch <code class="language-plaintext highlighter-rouge">master</code>. However, the remote <code class="language-plaintext highlighter-rouge">master</code> branch does not exist yet. It will be created when we do our first commit and push.</li>
+  <li>A remote HEAD branch that is unknown.</li>
+</ul>
+
+<p>Think of HEAD as a symlink/shortcut to a branch. The HEADis unknown because there are no branches in the remote repository yet. Normally HEAD points to the<em>master</em>branch.</p>
+
+<h4 id="add-a-file-and-commit">Add a file and commit</h4>
+
+<p>In the <em>SandboxGit</em> folder create a file<em>HelloWorld.cpp</em>with some code in it. For example:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello World!"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>   
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Welcome to Git"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> 
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>In Git Bash do <code class="language-plaintext highlighter-rouge">git add HelloWorld.cpp</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add HelloWorld.cpp
+</code></pre></div></div>
+<p>… and <code class="language-plaintext highlighter-rouge">git commit</code> – enter “Initial commit.” when Git asks for a commit message.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit <span class="nb">.</span>
+<span class="o">[</span>master <span class="o">(</span>root-commit<span class="o">)</span> 8ed71ed] Initial commit.
+1 file changed, 7 insertions<span class="o">(</span>+<span class="o">)</span>
+create mode 100644 HelloWorld.cpp
+</code></pre></div></div>
+
+<p>The commit is local. Up to this point we have done local changes only. The remote repository on BitBucket.org is still untouched.</p>
+
+<p><img src="/assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-sandboxgit-empty-bitbucket.png" alt="tortoisegit-git-sandboxgit-empty-bitbucket" /></p>
+
+<p>In order for others to see the changes we have to push the changes to the remote location. That is done with the<em>git push</em> command.</p>
+
+<h4 id="configure-default-push-style">Configure default “push” style</h4>
+
+<p><em>Git push</em>can work in one of two ways:</p>
+
+<ul>
+  <li><strong>matching</strong>: pushes all local branches to remote branches with the same name. This may lead to unwanted remote branches created by accident.</li>
+  <li><strong>simple</strong>: pushes only the current local branch to its remote brother which is usually a remote branch with the same name. This is a more intuitive behavior.</li>
+</ul>
+
+<p>We will use the <em>simple</em> push:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config <span class="nt">--global</span> push.default simple
+</code></pre></div></div>
+
+<h4 id="push-to-the-remote-repository">Push to the remote repository</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push
+Counting objects: 3, <span class="k">done</span><span class="nb">.</span>
+Delta compression using up to 8 threads.
+Compressing objects: 100% <span class="o">(</span>2/2<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+Writing objects: 100% <span class="o">(</span>3/3<span class="o">)</span>, 322 bytes, <span class="k">done</span><span class="nb">.</span>
+Total 3 <span class="o">(</span>delta 0<span class="o">)</span>, reused 0 <span class="o">(</span>delta 0<span class="o">)</span>
+remote: bb/acl: user is allowed. accepted payload.
+To https://user@bitbucket.org/primosoftware/sandboxgit.git
+    <span class="k">*</span> <span class="o">[</span>new branch]      master -&gt; master
+</code></pre></div></div>
+
+<p>Verify that now we have a remote branch called master:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git remote show origin
+<span class="k">*</span> remote origin
+    Fetch URL: https://user@bitbucket.org/primosoftware/sandboxgit.git
+    Push  URL: https://user@bitbucket.org/primosoftware/sandboxgit.git
+    HEAD branch: master
+    Remote branch:
+    master tracked
+    Local branch configured <span class="k">for</span> <span class="s1">'git pull'</span>:
+    master merges with remote master
+    Local ref configured <span class="k">for</span> <span class="s1">'git push'</span>:
+    master pushes to master <span class="o">(</span>up to <span class="nb">date</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p>We are done.</p>
+
+<h4 id="configure-default-name-and-email-for-commits-1">Configure default name and email for commits</h4>
+
+<p>Right click anywhere in Windows Explorer and select <strong>TorstoiseGit &gt; Settings</strong> from the context menu, then enter your name and email on under the <strong>Git</strong> section.</p>
+
+<p><img src="/assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-settings-config-name-email.png" alt="tortoisegit-git-settings-config-name-email" /></p>
+
+<p>Click <em>Edit global .gitconfig</em>. Verify that the <em>.gitconfig</em> file now contains the user configuration:</p>
+
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[credential]</span>
+<span class="py">helper</span> <span class="p">=</span> <span class="s">!~/AppData/Roaming/GitCredStore/git-credential-winstore</span>
+
+<span class="nn">[user]</span>
+<span class="py">name</span> <span class="p">=</span> <span class="s">user</span>
+<span class="py">email</span> <span class="p">=</span> <span class="s">user@domain.com</span>
+</code></pre></div></div>
+
+<h4 id="configure--disable-line-ending-conversion-1">Configure / disable line ending conversion</h4>
+
+<p>Again in the <strong>TorstoiseGit &gt; Settings &gt; Git</strong> section, in the <strong>“Auto CrLf convert”</strong> group, uncheck the <strong>AutoCrlf</strong> box.</p>
+
+<p>Without that we will get CR/LF conversion warning on each commit, e.g. something like this will be shown for each new line in your source code:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>warning: LF will be replaced by CRLF <span class="k">in </span>HelloWorld.cpp.
+The file will have its original line endings <span class="k">in </span>your working directory.
+</code></pre></div></div>
+
+<p>Modern development tools support both CR/LF and LF line endings, so we do not need Git to do line ending conversion.</p>
+
+<h4 id="clone-the-remote-repository-1">Clone the remote repository</h4>
+
+<p>In Windows Explorer, go to a place where you want to put your working directory, right click and select <strong>Git Clone</strong> from the menu.</p>
+
+<p><img src="/assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-clone.png" alt="tortoisegit-git-clone" /></p>
+
+<p><img src="/assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-clone-finished.png" alt="tortoisegit-git-clone-finished" /></p>
+
+<h4 id="check-the-remote-configuration-1">Check the remote configuration</h4>
+
+<p>Right click on the <code class="language-plaintext highlighter-rouge">SandboxGit</code> folder in Windows Explorer and select <strong>TorstoiseGit &gt; Settings</strong> from the context menu, then go to the <em>Git &gt; Remote</em> section. Verify the remote url to which the <em>origin</em> alias points.</p>
+
+<p><img src="/assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-settings-config-remote.png" alt="tortoisegit-git-settings-config-remote" /></p>
+
+<h4 id="add-a-file-and-commit-1">Add a file and commit</h4>
+
+<p>In the <em>SandboxGit</em> folder create a file<em>HelloWorld.cpp</em>with some code in it. For example:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello World!"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>   
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Welcome to Git"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> 
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Right click on the <code class="language-plaintext highlighter-rouge">HelloWorld.cpp</code> file and select <strong>TortoiseGit &gt; Add</strong>. Check the <code class="language-plaintext highlighter-rouge">HelloWorld.cpp</code> file and click OK.</p>
+
+<p><img src="/assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-add-file.png" alt="tortoisegit-git-add-file" /></p>
+
+<p>Right click on the <code class="language-plaintext highlighter-rouge">HelloWorld.cpp</code> file again and select <strong>Git Commit -&gt; Master</strong>. Enter “Initial commit.” for a message. Check the <code class="language-plaintext highlighter-rouge">HelloWorld.cpp</code> file and click OK.</p>
+
+<p><img src="/assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-commit-file.png" alt="tortoisegit-git-commit-file" /></p>
+
+<p><img src="/assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-commit-file-done.png" alt="tortoisegit-git-commit-file-done" /> 
+ 
+The commit is local. Up to this point we have done local changes only. The remote repository on BitBucket.org is still untouched.</p>
+
+<p><img src="/assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-sandboxgit-empty-bitbucket.png" alt="tortoisegit-git-sandboxgit-empty-bitbucket" /></p>
+
+<h4 id="push-to-the-remote-repository-1">Push to the remote repository</h4>
+
+<p>Right click on the<em>SandboxGit</em>folder in Windows Explorer and select <strong>TorstoiseGit &gt; Push</strong> from the context menu. Click OK.</p>
+
+<p><img src="/assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-sandboxgit-push.png" alt="tortoisegit-git-sandboxgit-push" /></p>
+
+<p><img src="/assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-sandboxgit-push-done.png" alt="tortoisegit-git-sandboxgit-push-done" /></p>
+
+<p>
+We are done.</p>
+
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

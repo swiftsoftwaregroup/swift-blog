@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Debian &quot;Wheezy&quot; guest on Windows 8.1 host using VirtualBox | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/debian-wheezy-guest-windows-8-1-host-using-virtualbox/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/debian-wheezy-guest-windows-8-1-host-using-virtualbox/">Debian "Wheezy" guest on Windows 8.1 host using VirtualBox</a></h1><time datetime="2013-11-15T00:00:00-08:00">November 15, 2013</time>
+</header>
+
+  <p>This post is about using Oracle VirtualBox to install a Debian 7.2 x86_64 guest virtual machine on Windows 8.1 host.</p>
+
+<h2 id="install-virtualbox">Install VirtualBox</h2>
+
+<ol>
+  <li>Download the latest VirtualBox installer from <a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a>. Make sure you get the 64-bit version. That was <em>VirtualBox-4.3.2-90405-Win.exe</em> at the time of writing.</li>
+  <li>Run the installer and follow the instructions on the screen. Leave the default options as they are. The installation should complete without any issues.</li>
+  <li>Download the Oracle VM VirtualBox Extension Pack from <a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a>.</li>
+  <li>Double click the downloaded <em>.vbox-extpack</em> file to install the extensions.</li>
+  <li>Go to File &gt; Preferences &gt; Extensions. You should see the Oracle VM VirtualBox Extension Pack listed under Extension Packages.</li>
+</ol>
+
+<p><img src="/assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/virtualbox-settings.png?lightbox&amp;resize=200,200" alt="virtualbox-settings" /></p>
+
+<h2 id="create-virtual-machine">Create virtual machine</h2>
+
+<ol>
+  <li>Start VirtualBox</li>
+  <li>Select Machine &gt; New from the menu - Name: Debian-7.2-x64
+    <ul>
+      <li>Type: Linux</li>
+      <li>Version: Debian (64 bit)</li>
+      <li>Click <em>Next</em></li>
+    </ul>
+  </li>
+</ol>
+
+<p>NOTE: If the <em>Debian (64 bit)</em> choice is not available, make sure Intel Virtualization Technology is enabled in the host UEFI / BIOS.</p>
+<ol>
+  <li>Memory size - Memory size: 4096 MB
+    <ul>
+      <li>Click <em>Next</em></li>
+    </ul>
+  </li>
+  <li>Hard drive - Choose <em>Create a virtual hard drive now</em>
+    <ul>
+      <li>Click <em>Create</em></li>
+      <li>Choose VDI (VirtualBox Disk Image)</li>
+      <li>Click <em>Create</em></li>
+      <li>File allocation and size - Select a path for the virtual disk image</li>
+      <li>Select 100 GB for size</li>
+      <li>Click <em>Create</em></li>
+    </ul>
+  </li>
+</ol>
+
+<p>It takes a few minutes to create the virtual disk image, but eventually you will see the image in the VirtualBox Manager. We are ready to install Debian now.</p>
+
+<p><img src="/assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/create-virtual-machine.png?lightbox&amp;resize=200,200" alt="create-virtual-machine" />
+<img src="/assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/create-virtual-machine-memory-size.png?lightbox&amp;resize=200,200" alt="create-virtual-machine-memory-size" />
+<img src="/assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/create-virtual-machine-hard-drive.png?lightbox&amp;resize=200,200" alt="create-virtual-machine-hard-drive" />
+<img src="/assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/create-virtual-hard-drive-creating-fixed-medium-storage-unit.png?lightbox&amp;resize=200,200" alt="create-virtual-hard-drive-creating-fixed-medium-storage-unit" /> 
+<img src="/assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/oracle-vm-virtualbox-manager.png?lightbox&amp;resize=200,200" alt="oracle-vm-virtualbox-manager" /></p>
+
+<h2 id="configure-display">Configure Display</h2>
+
+<p>In VirtualBox Manager:</p>
+
+<ol>
+  <li>Select Debian-7.2-x64 &gt; Settings</li>
+  <li>Select Display &gt; Video</li>
+  <li>Bump up the video memory to 128 MB.</li>
+  <li>Do not check <em>Enable 3D Acceleration</em>. We will enable 3D Acceleration later.</li>
+</ol>
+
+<p>no images were found</p>
+
+<h2 id="mount-debian-boot-cd">Mount Debian Boot CD</h2>
+
+<ol>
+  <li>Download the Debian 7.2 x64 ISO image from the <a href="http://www.debian.org/CD/netinst/">network install page</a> on the Debian web site. Make sure you get the <em>amd64</em> image.</li>
+  <li>Open VirtualBox Manager</li>
+  <li>Select Debian-7.2-x64 &gt; Settings</li>
+  <li>Select Storage &gt; Controller IDE &gt; Empty</li>
+  <li>Click on the little CD icon</li>
+  <li>Find and select the Debian ISO (<em>debian-7.2.0-amd64-netinst.iso</em>) that you downloaded in step 1.</li>
+  <li>Click OK</li>
+</ol>
+
+<p><img src="/assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/oracle-vm-virtualbox-manager-machine-settings.png?lightbox&amp;resize=200,200" alt="oracle-vm-virtualbox-manager-machine-settings" />
+<img src="/assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/debian-7-2-x64-storage-settings.png?lightbox&amp;resize=200,200" alt="debian-7-2-x64-storage-settings" /></p>
+
+<h2 id="start-the-virtual-machine">Start the virtual machine</h2>
+
+<ol>
+  <li>Open VirtualBox Manager</li>
+  <li>Start the Debian-7.2-x64 machine</li>
+  <li>Press right CTRL+R to reset the machine. You should see the Debian Installer boot menu.</li>
+</ol>
+
+<p><img src="/assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/oracle-vm-virtualbox-manager-start.png?lightbox&amp;resize=200,200" alt="oracle-vm-virtualbox-manager-start" />
+<img src="/assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/debian-7-2-x64-debian-installer-boot-menu.png?lightbox&amp;resize=200,200" alt="debian-7-2-x64-debian-installer-boot-menu" /></p>
+
+<h2 id="install-debian">Install Debian</h2>
+
+<p>In the Debian Install boot menu:</p>
+
+<ol>
+  <li>Select Graphical Install</li>
+  <li>Follow the installer instructions and configure Debian just as you would do on a physical machine. You should be able to install without any problems.</li>
+</ol>
+
+<h2 id="enable-3d-acceleration">Enable 3D Acceleration</h2>
+
+<h3 id="install-guest-additions-for-virtualbox">Install Guest Additions for VirtualBox</h3>
+
+<ol>
+  <li>Start the Debian-7.2-x64 virtual machine</li>
+  <li>Login into Debian</li>
+  <li>Select <em>Insert Guest Additions CD image…</em> from the VirtualBox <em>Devices</em> menu. Do not run it!</li>
+  <li>Open <em>Root Terminal</em></li>
+</ol>
+
+<p>Install Module Assistant, so you can build kernel modules.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>module-assistant
+</code></pre></div></div>
+
+<p>Let Module Assistant prepare the system.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>m-a prepare
+</code></pre></div></div>
+
+<p>Install Guest Additions</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sh /media/cdrom/VBoxLinuxAdditions.run
+</code></pre></div></div>
+
+<h3 id="enable-3d-acceleration-1">Enable 3D Acceleration</h3>
+
+<ol>
+  <li>Shutdown the Debian-7.2-x64 virtual machine</li>
+  <li>Open VirtualBox Manager - Select Debian-7.2-x64 &gt; Settings
+    <ul>
+      <li>Select Display &gt; Video</li>
+      <li>Check <em>Enable 3D Acceleration</em></li>
+    </ul>
+  </li>
+  <li>Start the Debian-7.2-x64 virtual machine</li>
+</ol>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<p>If the installation does not start or hangs, try booting using <em>Advanced Options &gt; Expert Install</em>. That will give you more information about what is wrong with the installation.</p>
+
+<h3 id="errors">Errors</h3>
+
+<h4 id="this-kernel-requires-an-x86_64-cpu-but-only-detected-an-i686-cpu-">This kernel requires an x86_64 CPU, but only detected an i686 CPU …</h4>
+
+<p><img src="/assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/debian-7-2-x64-running-oracle-vm-virtualbox.png?lightbox&amp;resize=200,200" alt="debian-7-2-x64-running-oracle-vm-virtualbox" /></p>
+
+<h5 id="how-to-fix">How to fix</h5>
+
+<ul>
+  <li>Make sure Intel Virtualization Technology is ON in the host UEFI / BIOS.</li>
+  <li>Make sure the VirtualBox machine version is <em>Debian (64 bit)</em>.</li>
+  <li>Make sure Windows Hyper-V services are not running.</li>
+</ul>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

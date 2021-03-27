@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Import a SQL dump from one schema into another with MySQL Workbench | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench/">Import a SQL dump from one schema into another with MySQL Workbench</a></h1><time datetime="2012-12-16T00:00:00-08:00">December 16, 2012</time>
+</header>
+
+  <p>When restoring a MySQL dump from MySQL Workbench, currently it is not possible to specify a different schema than the schema used during the export. The workaround for that is to edit the dump file (which is just a text file) in a text editor and change the name of the schema manually.</p>
+
+<p>For example to change the schema name from ‘old_schema’ to ‘new_schema’, open the dump file in a text editor and change these two lines:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">DATABASE</span>  <span class="n">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="s1">'old_schema'</span> <span class="cm">/*!40100 DEFAULT CHARACTER SET utf8 */</span><span class="p">;</span>
+<span class="n">USE</span> <span class="s1">'old_schema'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>to this:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">DATABASE</span>  <span class="n">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="s1">'new_schema'</span> <span class="cm">/*!40100 DEFAULT CHARACTER SET utf8 */</span><span class="p">;</span>
+<span class="n">USE</span> <span class="s1">'new_schema'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>After that, import the dump file using MySQL Workbench as usual. Please note that if you exported the old schema with qualified identifiers you would also have to search and replace the schema name everywhere in the dump file, otherwise each object would have the old schema name as prefix.</p>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

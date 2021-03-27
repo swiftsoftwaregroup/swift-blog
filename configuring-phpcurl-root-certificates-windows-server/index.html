@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Configuring PHP / CURL root certificates on Windows Server | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/configuring-phpcurl-root-certificates-windows-server/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/configuring-phpcurl-root-certificates-windows-server/">Configuring PHP / CURL root certificates on Windows Server</a></h1><time datetime="2013-09-05T00:00:00-07:00">September 05, 2013</time>
+</header>
+
+  <p>This post is about configuring PHP/CURL root certificates for a WordPress installation running on Windows Server 2008 R2 / IIS 7.5.</p>
+
+<p>Yesterday I was trying to add an RSS feed to the <a href="https://wiki.avblocks.com" title="AVBlocks Wiki Site">AVBlocks Wiki Site</a> and I got this error:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WP HTTP Error: SSL certificate problem, verify that the CA cert is OK.
+Details: error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed
+</code></pre></div></div>
+
+<p>In my case the <a href="https://groups.google.com/forum/feed/avblocks-support/msgs/rss.xml?num=3">feed</a> was coming from the <a href="https://groups.google.com/forum/#!forum/avblocks">AVBlocks Group</a> on Google. However, the Google Groups feeds are served via secure https:// protocol and that requires SSL for server-to-server communication. The problem is that WordPress uses <em>php_curl</em>, and on a standard PHP installation of WordPress, <em>curl</em> does not come with the root certificate authorities installed.</p>
+
+<p>Here is how to fix it:</p>
+
+<ol>
+  <li>You need to be running PHP 5.3.7 or later.</li>
+  <li>Download <a href="https://raw.github.com/bagder/curl/master/lib/mk-ca-bundle.vbs">mk-ca-bundle.vbs</a> from the <a href="https://github.com/bagder/curl/tree/master/lib">Curl</a> repository on GitHub.</li>
+  <li>Open a Command Prompt as Administrator and go to the directory in which you downloaded <code class="language-plaintext highlighter-rouge">mk-ca-bundle.vbs</code>.</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">mk-ca-bundle.vbs</code>. Accept the default filename and do not include the text information for each certificate.</li>
+  <li>After running this you will end up with a file <code class="language-plaintext highlighter-rouge">ca-bundle.crt</code>.</li>
+  <li>Copy that to a known location, e.g. <code class="language-plaintext highlighter-rouge">{path}/ca-bundle.crt</code>.</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">curl.cainfo={path}/ca-bundle.crt</code> to php.ini. See <a href="http://php.net/manual/en/curl.configuration.php">PHP Runtime Configuration</a> for more details:</li>
+</ol>
+
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[PHP]</span>
+
+<span class="c">;;;;;;;;;;;;;;;;;;;
+; CURL Settings ;
+;;;;;;;;;;;;;;;;;;;
+</span>
+<span class="py">curl.cainfo</span><span class="p">=</span><span class="s">{path}/ca-bundle.crt</span>
+</code></pre></div></div>
+<ol>
+  <li>Restart the IIS web site</li>
+</ol>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

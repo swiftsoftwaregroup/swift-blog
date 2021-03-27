@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>How to use a different cache directory for Chocolatey packages | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/use-different-cache-directory-chocolatey-packages/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/use-different-cache-directory-chocolatey-packages/">How to use a different cache directory for Chocolatey packages</a></h1><time datetime="2015-08-15T00:00:00-07:00">August 15, 2015</time>
+</header>
+
+  <h2 id="about-chocolatey">About Chocolatey</h2>
+
+<p>In short, Chocolatey is a package manager for Windows which saves time by automating otherwise manual installation tasks. You can install Chocolatey by following the instructions on <a href="https://chocolatey.org/">chocolatey.org</a>.</p>
+
+<h2 id="configure-chocolateys-cache-folder">Configure Chocolatey’s Cache Folder</h2>
+
+<p>For security reasons, Chocolatey installs in <code class="language-plaintext highlighter-rouge">C:\ProgramData\chocolatey</code> by default. See <a href="https://github.com/chocolatey/choco/wiki/DefaultChocolateyInstallReasoning">Why does Chocolatey install where it does?</a> for more information.</p>
+
+<p>Also by default, Chocolatey will download packages in <code class="language-plaintext highlighter-rouge">C:\Users\USERNAME\AppData\Local\Temp\chocolatey</code> which might work or not for you. If you need to use a different folder, you can set the <code class="language-plaintext highlighter-rouge">cacheLocation</code> key in <code class="language-plaintext highlighter-rouge">C:\ProgramData\chocolatey\config\chocolatey.config</code> to a folder of your choice.</p>
+
+<p>For example, to use <code class="language-plaintext highlighter-rouge">C:\ChocolateyCache</code> as a cache folder, add <code class="language-plaintext highlighter-rouge">&lt;add key="cacheLocation" value="C:\ChocolateyCache" description="Cache location if not TEMP folder." /&gt;</code> to the <code class="language-plaintext highlighter-rouge">chocolatey.config</code> file like this:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;chocolatey</span> <span class="na">xmlns:xsd=</span><span class="s">"http://www.w3.org/2001/XMLSchema"</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;containsLegacyPackageInstalls&gt;</span>false<span class="nt">&lt;/containsLegacyPackageInstalls&gt;</span>
+  <span class="nt">&lt;commandExecutionTimeoutSeconds&gt;</span>0<span class="nt">&lt;/commandExecutionTimeoutSeconds&gt;</span>
+  <span class="nt">&lt;config&gt;</span>
+    <span class="nt">&lt;add</span> <span class="na">key=</span><span class="s">"cacheLocation"</span> <span class="na">value=</span><span class="s">"C:/ChocolateyCache"</span> <span class="na">description=</span><span class="s">"Cache location if not TEMP folder."</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;add</span> <span class="na">key=</span><span class="s">"containsLegacyPackageInstalls"</span> <span class="na">value=</span><span class="s">"true"</span> <span class="na">description=</span><span class="s">"Install has packages installed prior to 0.9.9 series."</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;add</span> <span class="na">key=</span><span class="s">"commandExecutionTimeoutSeconds"</span> <span class="na">value=</span><span class="s">"2700"</span> <span class="na">description=</span><span class="s">"Default timeout for command execution."</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;add</span> <span class="na">key=</span><span class="s">"proxy"</span> <span class="na">value=</span><span class="s">""</span> <span class="na">description=</span><span class="s">"Explicit proxy location."</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;add</span> <span class="na">key=</span><span class="s">"proxyUser"</span> <span class="na">value=</span><span class="s">""</span> <span class="na">description=</span><span class="s">"Optional proxy user."</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;add</span> <span class="na">key=</span><span class="s">"proxyPassword"</span> <span class="na">value=</span><span class="s">""</span> <span class="na">description=</span><span class="s">"Optional proxy password. Encrypted."</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/config&gt;</span>
+  <span class="nt">&lt;sources&gt;</span>
+    <span class="nt">&lt;source</span> <span class="na">id=</span><span class="s">"chocolatey"</span> <span class="na">value=</span><span class="s">"https://chocolatey.org/api/v2/"</span> <span class="na">disabled=</span><span class="s">"false"</span> <span class="na">priority=</span><span class="s">"0"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/sources&gt;</span>
+  <span class="nt">&lt;features&gt;</span>
+    <span class="nt">&lt;feature</span> <span class="na">name=</span><span class="s">"checksumFiles"</span> <span class="na">enabled=</span><span class="s">"true"</span> <span class="na">setExplicitly=</span><span class="s">"false"</span> <span class="na">description=</span><span class="s">"Checksum files when pulled in from internet (based on package)."</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;feature</span> <span class="na">name=</span><span class="s">"autoUninstaller"</span> <span class="na">enabled=</span><span class="s">"false"</span> <span class="na">setExplicitly=</span><span class="s">"false"</span> <span class="na">description=</span><span class="s">"Uninstall from programs and features without requiring an explicit uninstall script."</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;feature</span> <span class="na">name=</span><span class="s">"allowGlobalConfirmation"</span> <span class="na">enabled=</span><span class="s">"false"</span> <span class="na">setExplicitly=</span><span class="s">"false"</span> <span class="na">description=</span><span class="s">"Prompt for confirmation in scripts or bypass."</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;feature</span> <span class="na">name=</span><span class="s">"failOnAutoUninstaller"</span> <span class="na">enabled=</span><span class="s">"false"</span> <span class="na">setExplicitly=</span><span class="s">"false"</span> <span class="na">description=</span><span class="s">"Fail if automatic uninstaller fails."</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/features&gt;</span>
+  <span class="nt">&lt;apiKeys</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/chocolatey&gt;</span>
+</code></pre></div></div>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

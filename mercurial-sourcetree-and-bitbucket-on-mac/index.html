@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Starting with Mercurial, BitBucket and SourceTree on Mac | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/mercurial-sourcetree-and-bitbucket-on-mac/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/mercurial-sourcetree-and-bitbucket-on-mac/">Starting with Mercurial, BitBucket and SourceTree on Mac</a></h1><time datetime="2013-04-18T00:00:00-07:00">April 18, 2013</time>
+</header>
+
+  <p>This is a quick step-by-step tutorial on starting with Mercurial and BitBucket on Mac. This tutorial was done on Mac OS 10.8.2.</p>
+
+<h3 id="install-mercurial">Install Mercurial</h3>
+
+<p>The easiest way to do that is to download and install the <a href="http://mercurial.berkwood.com/binaries/Mercurial-2.5.4-py2.7-macosx10.8.zip">Mercurial 2.5.4 for OS X 10.8</a> binary package from the official <a href="http://mercurial.berkwood.com/" title="Mercurial for Mac">Mercurial</a> site. After downloading the file unzip it and open <code class="language-plaintext highlighter-rouge">mercurial-2.5.4+20130405-py2.7-macosx10.8.mpkg</code>.</p>
+
+<h3 id="verify-mercurial-installation">Verify Mercurial Installation</h3>
+
+<p>Open Terminal and type <code class="language-plaintext highlighter-rouge">hg –version</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hg <span class="nt">--version</span>
+Mercurial Distributed SCM <span class="o">(</span>version 2.5.4+20130405<span class="o">)</span>
+<span class="o">(</span>see http://mercurial.selenic.com <span class="k">for </span>more information<span class="o">)</span>
+
+Copyright <span class="o">(</span>C<span class="o">)</span> 2005-2012 Matt Mackall and others
+This is free software<span class="p">;</span> see the <span class="nb">source </span><span class="k">for </span>copying conditions. There is NO
+warranty<span class="p">;</span> not even <span class="k">for </span>MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+</code></pre></div></div>
+
+<h3 id="install-mercurial-keyring-extension">Install Mercurial Keyring Extension</h3>
+
+<p>In Terminal:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>easy_install keyring
+<span class="nb">sudo </span>easy_install mercurial_keyring
+</code></pre></div></div>
+
+<p>Next, add these lines to <code class="language-plaintext highlighter-rouge">.hgrc</code> (in your home directory):</p>
+
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[extensions]</span>
+<span class="py">mercurial_keyring</span> <span class="p">=</span>
+</code></pre></div></div>
+
+<p>Now Mercurial will store and use user credentials to/from the Mac OS keychain.</p>
+
+<h3 id="configure-bitbucket-user">Configure BitBucket User</h3>
+
+<p>There are a few ways to do this, but the best is via [ui] and [auth] sections in <em>.hgrc</em> (in your home directory). Your final <em>.hgrc</em> file should look like this:</p>
+
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[ui]</span>
+<span class="py">username</span> <span class="p">=</span> <span class="s">Valentin Kantchev &lt;youremail@&lt;span class="oe_displaynone"&gt;null&lt;/span&gt;yourdomain.com&gt;</span>
+
+<span class="nn">[auth]</span>
+<span class="py">bitbucket.org.prefix</span> <span class="p">=</span> <span class="s">bitbucket.org</span>
+<span class="py">bitbucket.org.username</span> <span class="p">=</span> <span class="s">yourusername</span>
+
+<span class="nn">[extensions]</span>
+<span class="py">mercurial_keyring</span><span class="p">=</span>
+</code></pre></div></div>
+
+<h3 id="install-atlassian-sourcetree">Install Atlassian SourceTree</h3>
+
+<p>Go to <a href="http://www.sourcetreeapp.com/" title="SourceTree for Mac">www.sourcetreeapp.com</a> and download SourceTree for Mac. At the time of this writing the latest version of SourceTree was 1.5.8. SourceTree for Mac comes packaged as a dmg file – after you open the dmg file you install the app the normal Mac way – by dragging SourceTree.app into your Applications folder.</p>
+
+<h3 id="configure-sourcetree">Configure SourceTree</h3>
+
+<p>I recommend configuring SourceTree to use the system Mercurial. That way you get consistent Hg experience when working in Terminal and in the SourceTree GUI. To do that, run SourceTree and press <em>“Command + ,”</em> to open Preferences and then click <em>Use System Mercurial.</em></p>
+
+<p><img src="/assets/images/mercurial-sourcetree-and-bitbucket-on-mac/sourcetree-preferences.png?lightbox&amp;resize=300,300" alt="sourcetree-preferences" /></p>
+
+<h3 id="clone-a-bitbucket-repository">Clone a BitBucket Repository</h3>
+
+<p>In the SourceTree Bookmarks window:</p>
+
+<ol>
+  <li>Click on the Add Repository button.</li>
+  <li>Enter the remote repository url and the local repository folder.</li>
+  <li>Click Clone</li>
+</ol>
+
+<p><img src="/assets/images/mercurial-sourcetree-and-bitbucket-on-mac/sourcetree-add-repository.png?lightbox&amp;resize=300,300" alt="sourcetree-add-repository" /> 
+<img src="/assets/images/mercurial-sourcetree-and-bitbucket-on-mac/sourcetree-clone-repository.png?lightbox&amp;resize=300,300" alt="sourcetree-clone-repository" /> 
+<img src="/assets/images/mercurial-sourcetree-and-bitbucket-on-mac/sourcetree-repository-bookmark.png?lightbox&amp;resize=300,300" alt="sourcetree-repository-bookmark" /></p>
+
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

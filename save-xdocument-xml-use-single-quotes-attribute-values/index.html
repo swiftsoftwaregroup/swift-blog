@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>How to save XDocument to xml and use single quotes for attribute values | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/save-xdocument-xml-use-single-quotes-attribute-values/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/save-xdocument-xml-use-single-quotes-attribute-values/">How to save XDocument to xml and use single quotes for attribute values</a></h1><time datetime="2013-10-17T00:00:00-07:00">October 17, 2013</time>
+</header>
+
+  <p>I had to do this for <a href="https://avblocks.com">AVBlocks</a> xml licenses recently. It is not straightforward, but here is the C# code.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Xml</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Xml.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Xml.XPath</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Primo.LicenseBuilder.Xml</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">XmlExtensions</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">ToSingleQuoteString</span><span class="p">(</span><span class="k">this</span> <span class="n">XDocument</span> <span class="n">xDocument</span><span class="p">,</span> 
+                                                    <span class="n">System</span><span class="p">.</span><span class="n">Xml</span><span class="p">.</span><span class="n">Formatting</span> <span class="n">formatting</span> <span class="p">=</span> <span class="n">Formatting</span><span class="p">.</span><span class="n">Indented</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">using</span> <span class="p">(</span><span class="n">StringWriter</span> <span class="n">sw</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StringWriter</span><span class="p">())</span>
+            <span class="p">{</span>
+                <span class="k">using</span> <span class="p">(</span><span class="n">XmlTextWriter</span> <span class="n">writer</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">XmlTextWriter</span><span class="p">(</span><span class="n">sw</span><span class="p">))</span>
+                <span class="p">{</span>
+                    <span class="n">writer</span><span class="p">.</span><span class="n">Formatting</span> <span class="p">=</span> <span class="n">formatting</span><span class="p">;</span>
+                    <span class="n">writer</span><span class="p">.</span><span class="n">QuoteChar</span> <span class="p">=</span> <span class="sc">'\''</span><span class="p">;</span>
+                    <span class="n">writer</span><span class="p">.</span><span class="nf">WriteNode</span><span class="p">(</span><span class="n">xDocument</span><span class="p">.</span><span class="nf">CreateNavigator</span><span class="p">(),</span> <span class="k">false</span><span class="p">);</span>
+                    <span class="n">writer</span><span class="p">.</span><span class="nf">Flush</span><span class="p">();</span>
+                <span class="p">}</span>
+
+                <span class="k">return</span> <span class="n">sw</span><span class="p">.</span><span class="nf">ToString</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

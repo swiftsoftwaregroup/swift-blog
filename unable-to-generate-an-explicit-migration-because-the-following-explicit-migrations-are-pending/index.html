@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Unable to generate an explicit migration because the following explicit migrations are pending | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/unable-to-generate-an-explicit-migration-because-the-following-explicit-migrations-are-pending/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/unable-to-generate-an-explicit-migration-because-the-following-explicit-migrations-are-pending/">Unable to generate an explicit migration because the following explicit migrations are pending</a></h1><time datetime="2014-10-16T00:00:00-07:00">October 16, 2014</time>
+</header>
+
+  <p>After renaming the namespace of some POCO classes from <code class="language-plaintext highlighter-rouge">Primo.LicenseManager.Models</code> to <code class="language-plaintext highlighter-rouge">Primo.Licensing.DataModel</code>, the Entity Framework scaffolding no longer recognizes the applied migrations:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Add-Migration</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="nx">AddInvoiceEntity</span><span class="w"> </span><span class="nt">-Verbose</span><span class="w"> </span><span class="nt">-StartUpProjectName</span><span class="w"> </span><span class="nx">LicensingDataModel</span><span class="w"> </span><span class="nt">-ProjectName</span><span class="w"> </span><span class="nx">LicensingDataModel</span><span class="w">
+
+</span><span class="n">Unable</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">generate</span><span class="w"> </span><span class="nx">an</span><span class="w"> </span><span class="nx">explicit</span><span class="w"> </span><span class="nx">migration</span><span class="w"> </span><span class="nx">because</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">following</span><span class="w"> </span><span class="nx">explicit</span><span class="w"> </span><span class="nx">migrations</span><span class="w"> </span><span class="nx">are</span><span class="w"> </span><span class="nx">pending:</span><span class="w"> </span><span class="p">[</span><span class="mi">201310191546582</span><span class="err">_</span><span class="n">CreateTables</span><span class="p">]</span><span class="o">.</span><span class="w"> 
+</span><span class="n">Apply</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">pending</span><span class="w"> </span><span class="nx">explicit</span><span class="w"> </span><span class="nx">migrations</span><span class="w"> </span><span class="nx">before</span><span class="w"> </span><span class="nx">attempting</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">generate</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">new</span><span class="w"> </span><span class="nx">explicit</span><span class="w"> </span><span class="nx">migration.</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="in-sql-server-management-studio">In SQL Server Management Studio:</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="o">*</span> 
+<span class="k">from</span> <span class="n">__MigrationHistory</span> 
+<span class="k">where</span> <span class="n">MigrationId</span> <span class="o">=</span> <span class="s1">'201310191546582_CreateTables'</span>
+
+<span class="n">MigrationId</span><span class="p">:</span> <span class="mi">201310191546582</span><span class="n">_CreateTables</span>
+<span class="n">ContextKey</span><span class="p">:</span> <span class="n">Primo</span><span class="p">.</span><span class="n">LicenseManager</span><span class="p">.</span><span class="n">Models</span><span class="p">.</span><span class="n">Migrations</span><span class="p">.</span><span class="n">Configuration</span>
+<span class="n">Model</span><span class="p">:</span> <span class="mi">0</span><span class="n">x1F8B08000000</span><span class="p">....</span>
+<span class="n">ProductVersion</span><span class="p">:</span>	<span class="mi">5</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="n">net45</span>
+</code></pre></div></div>
+
+<h2 id="the-problem">The problem</h2>
+
+<p>In the database, the ContextKey in the __MigrationHistory table is still the old namespace: <code class="language-plaintext highlighter-rouge">Primo.LicenseManager.Models.Migrations.Configuration</code>.</p>
+
+<h2 id="the-solution">The solution</h2>
+
+<p>Update the ContextKey to the new namespace <code class="language-plaintext highlighter-rouge">Primo.Licensing.DataModel.Migrations.Configuration</code></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">update</span> <span class="n">__MigrationHistory</span> 
+<span class="k">set</span> <span class="n">ContextKey</span> <span class="o">=</span> <span class="s1">'Primo.Licensing.DataModel.Migrations.Configuration'</span>
+<span class="k">where</span> <span class="n">MigrationId</span> <span class="o">=</span> <span class="s1">'201310191546582_CreateTables'</span>
+</code></pre></div></div>
+
+<p>Now this works:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Add-Migration</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="nx">AddInvoiceEntity</span><span class="w"> </span><span class="nt">-Verbose</span><span class="w"> </span><span class="nt">-StartUpProjectName</span><span class="w"> </span><span class="nx">LicensingDataModel</span><span class="w"> </span><span class="nt">-ProjectName</span><span class="w"> </span><span class="nx">LicensingDataModel</span><span class="w">
+</span></code></pre></div></div>
+
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

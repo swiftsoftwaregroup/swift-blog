@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Getting Started with FlashDevelop on Windows 10 | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/getting-started-flashdevelop-windows-10/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/getting-started-flashdevelop-windows-10/">Getting Started with FlashDevelop on Windows 10</a></h1><time datetime="2016-01-29T00:00:00-08:00">January 29, 2016</time>
+</header>
+
+  <p>FlashDevelop is a free IDE for Windows. You can use it to develop Adobe Flash and AIR applications using ActionScript.</p>
+
+<h2 id="install-chocolatey">Install Chocolatey</h2>
+
+<p>Chcocolatey is a package manager for Windows.</p>
+
+<p>Open PowerShell as <em>Administrator</em> and run the following command:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">iex</span><span class="w"> </span><span class="p">((</span><span class="n">new-object</span><span class="w"> </span><span class="nx">net.webclient</span><span class="p">)</span><span class="o">.</span><span class="nf">DownloadString</span><span class="p">(</span><span class="s1">'https://chocolatey.org/install.ps1'</span><span class="p">))</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="install-java-8-sdk-32-bit">Install Java 8 SDK 32-bit</h2>
+
+<p>FlashDevelop requires a 32-bit java on the system path.</p>
+
+<p>In PowerShell as <em>Administrator</em>:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">choco</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">jdk8</span><span class="w"> </span><span class="nt">-params</span><span class="w"> </span><span class="s2">"x64=false"</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="install-flashdevelop">Install FlashDevelop</h2>
+
+<p>Download the latest FlashDevelop setup package from <a href="http://www.flashdevelop.org/">www.flashdevelop.org</a> and install it, <code class="language-plaintext highlighter-rouge">FlashDevelop-5.0.2.exe</code> at the time of writing.</p>
+
+<h2 id="install-additional-software">Install Additional Software</h2>
+
+<ol>
+  <li>Start FlashDevelop</li>
+  <li>Install SDKs and other tools using AppMan, from Tools -&gt; Install Software …
+    <ul>
+      <li>Flex SDK + AIR SDK</li>
+      <li>Flash Player (SA)</li>
+    </ul>
+  </li>
+  <li>Restart FlashDevelop, so that it can detect the installed SDKs and tools properly.</li>
+</ol>
+
+<h2 id="create-new-project">Create New Project</h2>
+
+<ol>
+  <li>Create a new project from: Project -&gt; New Project</li>
+  <li>For project type choose AS3 Project</li>
+  <li>Set a breakpoint in Main method - Ctrl+Shift+B</li>
+  <li>Compile - F11</li>
+  <li>Debug - F5</li>
+</ol>
+
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

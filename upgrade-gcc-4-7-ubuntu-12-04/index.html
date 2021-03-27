@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>How to upgrade GCC to 4.7+ on Ubuntu 12.04 | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/upgrade-gcc-4-7-ubuntu-12-04/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/upgrade-gcc-4-7-ubuntu-12-04/">How to upgrade GCC to 4.7+ on Ubuntu 12.04</a></h1><time datetime="2013-10-02T00:00:00-07:00">October 02, 2013</time>
+</header>
+
+  <p>Note: This is only needed on Ubuntu 12.04. Ubuntu 12.10 already comes with GNU C++ 4.7 and above.</p>
+
+<h2 id="install">Install</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>add-apt-repository ppa:ubuntu-toolchain-r/test
+<span class="nb">sudo </span>apt-get update
+<span class="nb">sudo </span>apt-get <span class="nb">install </span>gcc-4.7 g++-4.7
+</code></pre></div></div>
+
+<h2 id="update-alternatives">Update Alternatives</h2>
+
+<h4 id="add-gcc-47">Add GCC 4.7</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>update-alternatives <span class="nt">--remove</span> gcc /usr/bin/gcc-4.6
+<span class="nb">sudo </span>update-alternatives <span class="nt">--install</span> /usr/bin/gcc gcc /usr/bin/gcc-4.7 60 <span class="nt">--slave</span> /usr/bin/g++ g++ /usr/bin/g++-4.7
+<span class="nb">sudo </span>update-alternatives <span class="nt">--install</span> /usr/bin/gcc gcc /usr/bin/gcc-4.6 40 <span class="nt">--slave</span> /usr/bin/g++ g++ /usr/bin/g++-4.6
+</code></pre></div></div>
+
+<h4 id="make-sure-gcc-47-is-the-default-alternative">Make sure GCC 4.7 is the default alternative</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>update-alternatives <span class="nt">--config</span> gcc
+There are 2 choices <span class="k">for </span>the alternative gcc <span class="o">(</span>providing /usr/bin/gcc<span class="o">)</span>
+
+Selection Path Priority Status
+<span class="nt">------------------------------------------------------------</span>
+<span class="k">*</span> 0 /usr/bin/gcc-4.7 60 auto mode
+1 /usr/bin/gcc-4.6 40 manual mode
+2 /usr/bin/gcc-4.7 60 manual mode
+
+Press enter to keep the current choice[<span class="k">*</span><span class="o">]</span>, or <span class="nb">type </span>selection number: 0
+</code></pre></div></div>
+
+<h2 id="verify">Verify</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gcc <span class="nt">--version</span>
+gcc <span class="o">(</span>Ubuntu/Linaro 4.7.3-2ubuntu1~12.04<span class="o">)</span> 4.7.3
+Copyright <span class="o">(</span>C<span class="o">)</span> 2012 Free Software Foundation, Inc.
+This is free software<span class="p">;</span> see the <span class="nb">source </span><span class="k">for </span>copying conditions. There is NO
+warranty<span class="p">;</span> not even <span class="k">for </span>MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+</code></pre></div></div>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

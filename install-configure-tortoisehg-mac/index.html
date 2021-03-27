@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>How to install and configure TortoiseHg on Mac | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/install-configure-tortoisehg-mac/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/install-configure-tortoisehg-mac/">How to install and configure TortoiseHg on Mac</a></h1><time datetime="2013-10-11T00:00:00-07:00">October 11, 2013</time>
+</header>
+
+  <p>I finally got fed up with SourceTree and installed TortoiseHg on my Mac development machine. Read on:</p>
+
+<h2 id="xcode-configuration">Xcode Configuration</h2>
+
+<p>For best results make sure you have the latest XCode and Command Line Tools installed (XCode 5 and Command Line Tools September 2013 at the time of this writing). You can get them from the <a href="https://developer.apple.com/downloads/">Apple Developer Downloads</a> site.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>xcode-select <span class="nt">-switch</span> /Applications/Xcode.app/Contents/Developer
+</code></pre></div></div>
+
+<h2 id="1-install--update-ruby">1. Install / Update Ruby</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ruby <span class="nt">-v</span>
+</code></pre></div></div>
+<p>should return something like:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ruby 2.0.0p247 (2013-06-27 revision 41674) [x86_64-darwin12.3.0]
+</code></pre></div></div>
+
+<p>You can skip the rest of this section if you have Ruby already installed.</p>
+
+<h3 id="install-the-ruby-version-manager-and-ruby">Install the Ruby Version Manager and Ruby</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-L</span> https://get.rvm.io | bash <span class="nt">-s</span> stable <span class="nt">--ruby</span>
+<span class="nb">source</span> /Users/yourname/.rvm/scripts/rvm
+</code></pre></div></div>
+
+<h2 id="2-install-homebrew">2. Install Homebrew</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ruby <span class="nt">-e</span> <span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-fsSL</span> https://raw.github.com/Homebrew/homebrew/go/install<span class="si">)</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>Follow the instructions in the script. The installation will take a few minutes.</p>
+
+<h3 id="verify-your-brew-installation">Verify your brew installation</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew doctor
+</code></pre></div></div>
+
+<p>This returned a few problems for me, but the output will vary depending on the existing system configuration.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Warning: An outdated version of Git was detected in your PATH.
+Git 1.7.10 or newer is required to perform checkouts over HTTPS from GitHub.
+Please upgrade: brew upgrade git
+
+Warning: /Library/Frameworks/Mono.framework detected
+This can be picked up by CMake's build system and likely cause the build to
+fail. You may need to move this file out of the way to compile CMake.
+
+Warning: You have MacPorts or Fink installed:
+    /Users/yourname/.rvm/bin/port, /opt/local/bin/port
+
+This can cause trouble. You don't have to uninstall them, but you may want to
+temporarily move them out of the way, e.g.
+
+    sudo mv /opt/local ~/macports
+
+Warning: /usr/bin occurs before /usr/local/bin
+This means that system-provided programs will be used instead of those
+provided by Homebrew. 
+
+Consider setting your PATH so that /usr/local/bin
+occurs before /usr/bin. Here is a one-liner:
+    echo export PATH="/usr/local/bin:$PATH" &gt;&gt; ~/.bash_profile
+
+Warning: Your Xcode (x.y.z) is outdated
+Please install Xcode a.b.c
+</code></pre></div></div>
+
+<p>The issues will depend on your specific installation. Use your best judgement about what to fix and what to ignore. Fixing one by one:</p>
+
+<h4 id="warning-you-have-macports-or-fink-installed">Warning: You have MacPorts or Fink installed</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo mv</span> /opt/local ~/macports
+</code></pre></div></div>
+
+<h4 id="warning-usrbin-occurs-before-usrlocalbin">Warning: /usr/bin occurs before /usr/local/bin</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/local/bin:<span class="nv">$PATH</span>
+<span class="nb">echo export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"/usr/local/bin:</span><span class="nv">$PATH</span><span class="s2">"</span> <span class="o">&gt;&gt;</span> ~/.bash_profile
+</code></pre></div></div>
+
+<h4 id="warning-an-outdated-version-of-git-was-detected-in-your-path">Warning: An outdated version of Git was detected in your PATH.</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew upgrade git
+</code></pre></div></div>
+
+<p>or if you do not have Git at all:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>git
+</code></pre></div></div>
+
+<h4 id="warning-your-xcode-xyz-is-outdated">Warning: Your Xcode (x.y.z) is outdated</h4>
+
+<p>You can ignore this one.</p>
+
+<h4 id="warning-libraryframeworksmonoframework-detected">Warning: /Library/Frameworks/Mono.framework detected</h4>
+
+<p>You can ignore this one.</p>
+
+<h2 id="3-install-python-packages">3. Install Python packages</h2>
+
+<p>I had Python already installed before Homebrew, so I had to amend PYTHONPATH like so:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PYTHONPATH</span><span class="o">=</span>/usr/local/lib/python2.7/site-packages:<span class="nv">$PYTHONPATH</span>  
+<span class="nb">echo export </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="s2">"/usr/local/lib/python2.7/site-packages:</span><span class="nv">$PYTHONPATH</span><span class="s2">"</span> <span class="o">&gt;&gt;</span> ~/.bash_profile
+</code></pre></div></div>
+
+<p>Then install PyQt (this also installs qt and sip):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>pyqt
+</code></pre></div></div>
+
+<p>Install QScintilla</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>qscintilla2
+</code></pre></div></div>
+
+<p>Install Python Package Mananger (pip)</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>easy_install pip
+</code></pre></div></div>
+
+<p>Install Pygments, iniparse and Mercurial Python packages. If you have Mercurial already, this will update it to the latest version.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>pip <span class="nb">install</span> <span class="nt">-U</span> Pygments iniparse Mercurial
+</code></pre></div></div>
+
+<h2 id="4-install-tortoisehg">4. Install TortoiseHg</h2>
+
+<p>Clone TortoiseHg repository using Mercurial:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hg clone http://bitbucket.org/tortoisehg/thg/ ~/Tools/TortoiseHg
+<span class="nb">cd</span> ~/Tools/TortoiseHg/
+hg update stable
+</code></pre></div></div>
+
+<p>Quick test. You should see TortoiseHg Workbench running:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./thg log
+</code></pre></div></div>
+
+<h2 id="5-install-tortoisehg-mac-app">5. Install TortoiseHg Mac App</h2>
+
+<h4 id="clone-thg-mac-app-repository">Clone thg-mac-app repository</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hg clone https://bitbucket.org/skrysmanski/thg-mac-app ~/Tools/thg-mac-app
+</code></pre></div></div>
+
+<h4 id="set-the-tortoisehg_path-variable">Set the TORTOISEHG_PATH variable</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp</span> <span class="nt">-p</span> ~/Tools/thg-mac-app/tortoisehg-path.sh ~/
+</code></pre></div></div>
+
+<p>Edit <code class="language-plaintext highlighter-rouge">~/tortoisehg-path.sh</code> so it points to <code class="language-plaintext highlighter-rouge">~/Tools/TortoiseHg</code>. This is what <code class="language-plaintext highlighter-rouge">~/tortoisehg-path.sh</code> looks like after the change:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+
+<span class="nb">export </span><span class="nv">TORTOISEHG_PATH</span><span class="o">=</span>~/Tools/TortoiseHg
+</code></pre></div></div>
+
+<h4 id="install-tortoisehgapp">Install TortoiseHg.app</h4>
+
+<p><strong>Option + Drag</strong> the TortoiseHg.app from <code class="language-plaintext highlighter-rouge">~/Tools/thg-mac-app</code> to your Applications folder.</p>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

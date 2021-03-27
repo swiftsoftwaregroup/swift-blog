@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Hg subrepositories: a how-to guide for the &amp;#8220;svn:externals&amp;#8221; junkie (Part 3) | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3/">Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 3)</a></h1><time datetime="2013-01-26T00:00:00-08:00">January 26, 2013</time>
+</header>
+
+  <p>This post summarizes the Mercurial subrepository vs the Subversion externals experience. This is the third and last post of a <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (TOC)">multi-part article</a> about Mercurial subrepositories. Please make sure you read <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/" title="Hg subrepositories: a how-to guide for the svn:externals junkie (Part 1)">Part 1</a> and <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 2)">Part 2</a> before reading this post.</p>
+
+<p>In a few words, Mercurial subrepositories are very similar to Subversion “svn:externals” and can be used pretty much the same way. However, there are some differences in the workflow, because of the distributed nature of Mercurial. Here are the main differences from Subversion:</p>
+
+<ul>
+  <li>You always work in a copy / clone of a remote shared repository.</li>
+  <li>You may <em>commit</em> changes multiple times, but those changes are not visible to others unless you <em>push</em> to the remote shared repository.</li>
+  <li>A <em>commit + push</em> in a subrepository is treated as a local change in the top-level <em>root</em> repository. To make the <em>root</em> change permanent, you have to do a <em>commit + push</em> of the <em>root</em> repository as well.</li>
+  <li>A <em>pull</em> from a remote repository just downloads the latest available changes. In order to apply/merge the changes, you have to manually <em>update</em> your working copy.</li>
+</ul>
+
+<p>On good thing about the <em>pull+update</em> workflow is that, it guards against accidentally losing local changes and allows you to do code merges at your convenience.You can also revert an <em>update</em> and continue in your local copy when an update breaks a lot of code and requires hard manual merge labor. You can <em>update</em> your working copy again later, when you are ready for the code merge.</p>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

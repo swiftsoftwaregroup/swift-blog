@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Install Git on Windows via Chocolatey | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/install-git-windows-via-chocolatey/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/install-git-windows-via-chocolatey/">Install Git on Windows via Chocolatey</a></h1><time datetime="2015-08-18T00:00:00-07:00">August 18, 2015</time>
+</header>
+
+  <p>This post shows how to use Chocolatey to install Git.</p>
+
+<h2 id="chocolatey">Chocolatey</h2>
+
+<p>If you do not have Chocolatey, you can install it by following the instructions on <a href="https://chocolatey.org/">chocolatey.org</a>. You may also see <a href="http://www.swiftsoftwaregroup.com/configure-download-folder-chocolatey-packages/">this post</a> for instructions on how to set the Chocolatey cache location.</p>
+
+<h2 id="git">Git</h2>
+
+<h3 id="install-git">Install Git</h3>
+
+<p>In PowerShell as <em>Administrator</em>:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">choco</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">git</span><span class="w"> </span><span class="nt">--params</span><span class="w"> </span><span class="s2">"/GitAndUnixToolsOnPath /NoAutoCrlf"</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Close and open PowerShell, so it can pick the updated PATH environment.</p>
+
+<h3 id="verify">Verify</h3>
+
+<p>Verify you have <code class="language-plaintext highlighter-rouge">git</code>:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">git</span><span class="w"> </span><span class="nt">--version</span><span class="w">
+</span><span class="n">git</span><span class="w"> </span><span class="nx">version</span><span class="w"> </span><span class="nx">2.6.4.windows.1</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Verify you have <code class="language-plaintext highlighter-rouge">ssh</code>:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ssh</span><span class="w">
+</span><span class="nx">usage:</span><span class="w"> </span><span class="nx">ssh</span><span class="w"> </span><span class="p">[</span><span class="nt">-1246AaCfGgKkMNnqsTtVvXxYy</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-b</span><span class="w"> </span><span class="n">bind_address</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-c</span><span class="w"> </span><span class="n">cipher_spec</span><span class="p">]</span><span class="w">
+           </span><span class="p">[</span><span class="nt">-D</span><span class="w"> </span><span class="p">[</span><span class="n">bind_address</span><span class="p">:]</span><span class="n">port</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-E</span><span class="w"> </span><span class="n">log_file</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-e</span><span class="w"> </span><span class="n">escape_char</span><span class="p">]</span><span class="w">
+           </span><span class="p">[</span><span class="nt">-F</span><span class="w"> </span><span class="n">configfile</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-I</span><span class="w"> </span><span class="n">pkcs11</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-i</span><span class="w"> </span><span class="n">identity_file</span><span class="p">]</span><span class="w">
+           </span><span class="p">[</span><span class="nt">-L</span><span class="w"> </span><span class="n">address</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-l</span><span class="w"> </span><span class="n">login_name</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-m</span><span class="w"> </span><span class="n">mac_spec</span><span class="p">]</span><span class="w">
+           </span><span class="p">[</span><span class="nt">-O</span><span class="w"> </span><span class="n">ctl_cmd</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-o</span><span class="w"> </span><span class="n">option</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-p</span><span class="w"> </span><span class="n">port</span><span class="p">]</span><span class="w">
+           </span><span class="p">[</span><span class="nt">-Q</span><span class="w"> </span><span class="n">cipher</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">cipher</span><span class="nt">-auth</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">mac</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">kex</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">key</span><span class="p">]</span><span class="w">
+           </span><span class="p">[</span><span class="nt">-R</span><span class="w"> </span><span class="n">address</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-S</span><span class="w"> </span><span class="n">ctl_path</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-W</span><span class="w"> </span><span class="n">host</span><span class="p">:</span><span class="n">port</span><span class="p">]</span><span class="w">
+           </span><span class="p">[</span><span class="nt">-w</span><span class="w"> </span><span class="n">local_tun</span><span class="p">[:</span><span class="n">remote_tun</span><span class="p">]]</span><span class="w"> </span><span class="p">[</span><span class="n">user</span><span class="err">@</span><span class="p">]</span><span class="n">hostname</span><span class="w"> </span><span class="p">[</span><span class="n">command</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

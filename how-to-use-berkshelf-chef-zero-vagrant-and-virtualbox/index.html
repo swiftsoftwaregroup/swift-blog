@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>How to use Berkshelf, Chef Zero, Vagrant and VirtualBox | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/how-to-use-berkshelf-chef-zero-vagrant-and-virtualbox/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/how-to-use-berkshelf-chef-zero-vagrant-and-virtualbox/">How to use Berkshelf, Chef Zero, Vagrant and VirtualBox</a></h1><time datetime="2015-11-25T00:00:00-08:00">November 25, 2015</time>
+</header>
+
+  <p>In this post we show how you can use <a href="http://berkshelf.com/">Berkshelf</a>, <a href="https://www.chef.io/chef/">Chef Zero</a>, <a href="https://www.vagrantup.com/">Vagrant</a>, and <a href="https://www.virtualbox.org/">VirtualBox</a> to provision Ubuntu 14.04 guest on Windows 10 host.</p>
+
+<h2 id="before-you-begin">Before You Begin</h2>
+
+<p>You need VirtualBox and Vagrant installed. To do that, you can follow the steps described in <a href="../ubuntu-with-vagrant-and-virtualbox-on-windows/">Ubuntu with Vagrant and VirtualBox on Windows</a>.</p>
+
+<h2 id="install-vagrant-omnibus-plugin">Install Vagrant-Omnibus Plugin</h2>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vagrant</span><span class="w"> </span><span class="nx">plugin</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">vagrant-omnibus</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="install-vagrant-berkshelf-plugin">Install Vagrant-Berkshelf Plugin</h2>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vagrant</span><span class="w"> </span><span class="nx">plugin</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">vagrant-berkshelf</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="install-chef-development-kit-chefdk">Install Chef Development Kit (ChefDK)</h2>
+
+<p>In PowerShell as <em>Administrator</em>:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">choco</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">chefdk</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="install-knife-solo">Install Knife Solo</h2>
+
+<p>At this time we only need knife solo to generate an empty Chef repository that is compatible with Chef Zero. For more information see <a href="https://matschaffer.github.io/knife-solo/">Knife Solo</a>.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chef</span><span class="w"> </span><span class="nx">gem</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">knife-solo</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="create-chef-repository">Create Chef Repository</h2>
+
+<h3 id="create-a-chef-repo-directory">Create a chef-repo directory</h3>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mkdir</span><span class="w"> </span><span class="nx">ubuntu-chef-repo</span><span class="w">
+</span><span class="n">cd</span><span class="w"> </span><span class="nx">ubuntu-chef-repo</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="setup-the-the-chef-repo-directory">Setup the the chef-repo directory</h3>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">touch</span><span class="w"> </span><span class="nx">Berksfile</span><span class="w">
+</span><span class="n">chef</span><span class="w"> </span><span class="nx">exec</span><span class="w"> </span><span class="nx">knife</span><span class="w"> </span><span class="nx">solo</span><span class="w"> </span><span class="nx">init</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nt">--no-git</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Paste this into the <code class="language-plaintext highlighter-rouge">Berksfile</code>:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">source</span> <span class="s1">'https://supermarket.chef.io'</span>
+
+<span class="n">cookbook</span> <span class="s1">'main'</span><span class="p">,</span> <span class="ss">path: </span><span class="s1">'./site-cookbooks/main'</span>
+</code></pre></div></div>
+
+<h2 id="create-new-cookbook">Create New Cookbook</h2>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cd</span><span class="w"> </span><span class="nx">site-cookbooks</span><span class="w">
+</span><span class="n">chef</span><span class="w"> </span><span class="nx">exec</span><span class="w"> </span><span class="nx">berks</span><span class="w"> </span><span class="nx">cookbook</span><span class="w"> </span><span class="nx">main</span><span class="w"> </span><span class="nt">--skip-git</span><span class="w"> </span><span class="nt">--skip-test-kitchen</span><span class="w"> </span><span class="nt">--no-foodcritic</span><span class="w"> </span><span class="nt">--no-chef-minitest</span><span class="w"> </span><span class="nt">--no-bundler</span><span class="w"> </span><span class="nt">--skip-vagrant</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Check the structure of the <code class="language-plaintext highlighter-rouge">main</code> cookbook:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tree</span><span class="w"> </span><span class="nx">/F</span><span class="w"> </span><span class="nx">main</span><span class="w">
+</span></code></pre></div></div>
+
+<p>It should have the following structure:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>│   Berksfile
+│   CHANGELOG.md
+│   chefignore
+│   LICENSE
+│   metadata.rb
+│   README.md
+│   Thorfile
+│
+├───attributes
+├───files
+│   └───default
+├───libraries
+├───providers
+├───recipes
+│       default.rb
+│
+├───resources
+└───templates
+    └───default
+</code></pre></div></div>
+
+<h3 id="add-the-apt-cookbook-as-a-dependency">Add the Apt Cookbook as a Dependency</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">apt</code> cookbook runs the <code class="language-plaintext highlighter-rouge">apt-get update</code> command on the guest system. See <a href="https://supermarket.chef.io/cookbooks/apt">apt Cookbook - Chef Supermarket</a> for details.</p>
+
+<p>Open the <code class="language-plaintext highlighter-rouge">site-cookbooks/main/metadata.rb</code> file and add the following code at the end (the version may be different than 2.9.2):</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">depends</span> <span class="s1">'apt'</span><span class="p">,</span> <span class="s1">'~&gt; 2.9.2'</span>
+</code></pre></div></div>
+
+<p>This is how the final file should look like:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">name</span>             <span class="s1">'main'</span>
+<span class="n">maintainer</span>       <span class="s1">'YOUR_NAME'</span>
+<span class="n">maintainer_email</span> <span class="s1">'YOUR_EMAIL'</span>
+<span class="n">license</span>          <span class="s1">'All rights reserved'</span>
+<span class="n">description</span>      <span class="s1">'Installs/Configures main'</span>
+<span class="n">long_description</span> <span class="s1">'Installs/Configures main'</span>
+
+<span class="n">version</span>          <span class="s1">'0.1.0'</span>
+
+<span class="n">depends</span> <span class="s1">'apt'</span><span class="p">,</span> <span class="s1">'~&gt; 2.9.2'</span>
+</code></pre></div></div>
+
+<h3 id="include-the-apt-cookbook-in-the-default-recipe">Include the Apt Cookbook in the Default Recipe</h3>
+
+<p>Open <code class="language-plaintext highlighter-rouge">site-cookbooks/main/recipes/default.rb</code> and add the following code at the end:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">include_recipe</span> <span class="s1">'apt::default'</span>
+</code></pre></div></div>
+
+<p>The final file looks like this:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#</span>
+<span class="c1"># Cookbook Name:: main</span>
+<span class="c1"># Recipe:: default</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (C) 2016 YOUR_NAME</span>
+<span class="c1">#</span>
+<span class="c1"># All rights reserved - Do Not Redistribute</span>
+<span class="c1">#</span>
+
+<span class="n">include_recipe</span> <span class="s1">'apt::default'</span>
+</code></pre></div></div>
+
+<h3 id="test">Test</h3>
+
+<p>This will generate Berksfile.lock</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">berks</span><span class="w"> </span><span class="nx">install</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="create-vagrantfile">Create Vagrantfile</h2>
+
+<p>Go to the Chef Repo root (<code class="language-plaintext highlighter-rouge">ubuntu-chef-repo</code>).</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">touch</span><span class="w"> </span><span class="nx">Vagrantfile</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Open <code class="language-plaintext highlighter-rouge">Vagrantfile</code> and replace its content with the following one:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># -*- mode: ruby -*-</span>
+<span class="c1"># vi: set ft=ruby :</span>
+
+<span class="no">Vagrant</span><span class="p">.</span><span class="nf">configure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="c1"># Every Vagrant development environment requires a box. You can search for</span>
+  <span class="c1"># boxes at https://atlas.hashicorp.com/search.</span>
+  <span class="c1">#</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">vm</span><span class="p">.</span><span class="nf">box</span> <span class="o">=</span> <span class="s2">"ubuntu/trusty64"</span>
+
+  <span class="c1"># Provider-specific configuration so you can fine-tune various</span>
+  <span class="c1"># backing providers for Vagrant. These expose provider-specific options.</span>
+  <span class="c1">#</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">vm</span><span class="p">.</span><span class="nf">provider</span> <span class="s2">"virtualbox"</span> <span class="k">do</span> <span class="o">|</span><span class="n">vb</span><span class="o">|</span>
+    <span class="c1"># For a complete reference, please see the online documentation at</span>
+    <span class="c1"># https://docs.vagrantup.com/v2/virtualbox/configuration.html</span>
+
+    <span class="c1"># Name used in Oracle VM VirtualBox Manager GUI</span>
+    <span class="n">vb</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s2">"berkshelf-ubuntu-kitchen"</span>
+
+    <span class="c1"># Customize the amount of memory on the VM (in MB):</span>
+    <span class="n">vb</span><span class="p">.</span><span class="nf">memory</span> <span class="o">=</span> <span class="s2">"2048"</span>
+
+    <span class="c1"># Customize the amount of video memory on the VM (in MB):</span>
+    <span class="n">vb</span><span class="p">.</span><span class="nf">customize</span> <span class="p">[</span><span class="s2">"modifyvm"</span><span class="p">,</span> <span class="ss">:id</span><span class="p">,</span> <span class="s2">"--vram"</span><span class="p">,</span> <span class="s2">"128"</span><span class="p">]</span>
+  <span class="k">end</span>
+
+  <span class="c1"># Install the latest version of Chef.</span>
+  <span class="c1"># For more information see https://github.com/chef/vagrant-omnibus</span>
+  <span class="c1">#</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">omnibus</span><span class="p">.</span><span class="nf">chef_version</span> <span class="o">=</span> <span class="ss">:latest</span>
+
+  <span class="c1"># Enabling the Berkshelf plugin.</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">berkshelf</span><span class="p">.</span><span class="nf">enabled</span> <span class="o">=</span> <span class="kp">true</span>
+
+  <span class="c1"># Provision with Chef Zero</span>
+  <span class="c1">#</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">vm</span><span class="p">.</span><span class="nf">provision</span> <span class="ss">:chef_zero</span> <span class="k">do</span> <span class="o">|</span><span class="n">chef</span><span class="o">|</span>
+    <span class="c1"># Specify the local paths where Chef data is stored</span>
+    <span class="n">chef</span><span class="p">.</span><span class="nf">cookbooks_path</span> <span class="o">=</span> <span class="p">[</span> <span class="s1">'cookbooks'</span><span class="p">,</span> <span class="s1">'site-cookbooks'</span> <span class="p">]</span>
+    <span class="n">chef</span><span class="p">.</span><span class="nf">data_bags_path</span> <span class="o">=</span> <span class="s2">"data_bags"</span>
+    <span class="n">chef</span><span class="p">.</span><span class="nf">nodes_path</span> <span class="o">=</span> <span class="s2">"nodes"</span>
+    <span class="n">chef</span><span class="p">.</span><span class="nf">roles_path</span> <span class="o">=</span> <span class="s2">"roles"</span>
+
+    <span class="c1"># Add a recipe</span>
+    <span class="n">chef</span><span class="p">.</span><span class="nf">add_recipe</span> <span class="s2">"main::default"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<h2 id="test-1">Test</h2>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vagrant</span><span class="w"> </span><span class="nx">up</span><span class="w">
+</span><span class="n">vagrant</span><span class="w"> </span><span class="nx">provision</span><span class="w">
+</span></code></pre></div></div>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

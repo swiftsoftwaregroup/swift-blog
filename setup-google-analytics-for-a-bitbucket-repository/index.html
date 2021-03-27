@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Setup Google Analytics for a Bitbucket repository | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/setup-google-analytics-for-a-bitbucket-repository/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/setup-google-analytics-for-a-bitbucket-repository/">Setup Google Analytics for a Bitbucket repository</a></h1><time datetime="2013-08-19T00:00:00-07:00">August 19, 2013</time>
+</header>
+
+  <p>The idea is to create a new Google Analytics property for Bitbucket and then have a separate Google Analytics profiles for each repository. That way I end up with one profile per repository neatly grouped under the Bitbucket property. In the profiles, I also use filters to include only the traffic for the corresponding repository.</p>
+
+<p>This post is about myself setting up Google Analytics for our <a href="https://bitbucket.org/primosoftware/avblocks-samples/" title="AVBlocks-Samples Repository">AVBlocks-Samples</a> repository, so in the steps below I use the “AVBlocks-Samples” name and the corresponding URL. Needless to say, when going through the steps, you will use the name and URL of your own Bitbucket repo. OK, here it goes:</p>
+
+<h2 id="create-a-new-google-analytics-property-called-bitbucket">Create a new Google Analytics property called Bitbucket</h2>
+
+<ol>
+  <li>Go to Google Analytics and login into your account.</li>
+  <li>Click on the Admin link at the top right corner.</li>
+  <li>Click on the property drop-down list and then select the New Property at the bottom.</li>
+  <li>Select “Classic Analytics” for tracking method.</li>
+  <li>Under Website Name, type “Bitbucket”.</li>
+  <li>Under Web Site URL, select “https://” and type “bitbucket.org”.</li>
+  <li>Click [Get Tracking ID]</li>
+</ol>
+
+<p><img src="/assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-19-19_30_38-google-analytics.png?lightbox&amp;resize=200,200" alt="2013-08-19-19_30_38-google-analytics" /> 
+<img src="/assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-19-19_52_18-google-analytics.png?lightbox&amp;resize=200,200" alt="2013-08-19-19_52_18-google-analytics" /></p>
+
+<h2 id="add-the-tracking-id-to-the-bitbucket-repository">Add the Tracking ID to the Bitbucket repository</h2>
+
+<p>Google Analytics will generate a new tracking ID for you, something that looks like “UA-123456-78″.</p>
+
+<ol>
+  <li>Copy the Tracking ID that Google generated</li>
+  <li>Go to the repository admin page on Bitbucket</li>
+  <li>Paste the Tracking ID into the “Google Analytics key” field.</li>
+</ol>
+
+<p><img src="/assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-19-19_55_54-avblocks-samples-bitbucket.png?lightbox&amp;resize=200,200" alt="2013-08-19-19_55_54-avblocks-samples-bitbucket" /></p>
+
+<p>## Update the Google Analytics profile</p>
+
+<ol>
+  <li>Go back to Google Analytics admin page</li>
+  <li>Select “Bitbucket” for property</li>
+  <li>Select “All Web Site Data” for profile</li>
+  <li>Click “View Settings”</li>
+  <li>Update the Website’s URL with the full URL of your bitbucket repository.</li>
+  <li>In my case I put “https://” and “bitbucket.org/primosoftware/avblocks-samples”.</li>
+  <li>If you plan to have multiple repo profiles under the Bitbucket property, I recommend changing the View name to something other than “All Web Site Data”. I my case, I named my property “AVBlocks-Samples”.</li>
+  <li>Click Apply.</li>
+</ol>
+
+<p><img src="/assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-19-20_06_28-google-analytics.png?lightbox&amp;resize=200,200" alt="2013-08-19-20_06_28-google-analytics" /> 
+<img src="/assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-19-20_12_10-google-analytics.png?lightbox&amp;resize=200,200" alt="2013-08-19-20_12_10-google-analytics" /> 
+<img src="/assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-22-06_27_20-google-analytics.png?lightbox&amp;resize=200,200" alt="2013-08-22-06_27_20-google-analytics" /></p>
+
+<h2 id="setup-a-profile-filter">Setup a profile filter</h2>
+
+<ol>
+  <li>Go back to Google Analytics admin page</li>
+  <li>Select “Bitbucket” for property</li>
+  <li>Select “AVBlocks-Samples” for profile</li>
+  <li>Click “View Settings”</li>
+  <li>Click “Filters” and then on the +New Filter button.</li>
+  <li>Type “AVBlocks-Samples” for Filter Name</li>
+  <li>Select “Predefined filter” for Filter Type</li>
+  <li>Select “include only”, “traffic to subdirectories”, “that begin with”</li>
+  <li>Type “/primosoftware/avblocks-samples/” for Subdirectory</li>
+  <li>Select “No” for Case Sensitive</li>
+  <li>Click Save</li>
+</ol>
+
+<p><img src="/assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-22-07_00_25-google-analytics.png?lightbox&amp;resize=200,200" alt="2013-08-22-07_00_25-google-analytics" /> 
+<img src="/assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-22-07_15_04-google-analytics.png?lightbox&amp;resize=200,200" alt="2013-08-22-07_15_04-google-analytics" /> 
+<img src="/assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-22-07_15_47-google-analytics.png?lightbox&amp;resize=200,200" alt="2013-08-22-07_15_47-google-analytics" /></p>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>How To Install Nginx On Ubuntu Using Chef | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/install-nginx-ubuntu-using-chef/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/install-nginx-ubuntu-using-chef/">How To Install Nginx On Ubuntu Using Chef</a></h1><time datetime="2016-01-13T00:00:00-08:00">January 13, 2016</time>
+</header>
+
+  <p>In this post we show how to install NGINX on Ubuntu using <a href="https://www.chef.io/chef/">Chef</a> on Windows 10 workstation.</p>
+
+<p>All commands are executed in PowerShell on a Windows workstation.</p>
+
+<h2 id="before-you-begin">Before You Begin</h2>
+
+<h3 id="install-chocolatey">Install Chocolatey</h3>
+
+<p>If you do not have Chocolatey, you can install it by following the instructions on <a href="https://chocolatey.org/">chocolatey.org</a>. You may also see <a href="http://www.swiftsoftwaregroup.com/configure-download-folder-chocolatey-packages/">this post</a> for instructions on how to set the Chocolatey cache location.</p>
+
+<h3 id="install-chef-development-kit-chefdk">Install Chef Development Kit (ChefDK)</h3>
+
+<p>In PowerShell as <em>Administrator</em>:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">choco</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">chefdk</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="install-virtualbox-and-vagrant">Install VirtualBox and Vagrant</h3>
+
+<p>To install VirtualBox and Vagrant, follow the steps described in <a href="http://www.swiftsoftwaregroup.com/ubuntu-with-vagrant-and-virtualbox-on-windows/">Ubuntu with Vagrant and VirtualBox on Windows</a>.</p>
+
+<h3 id="install-vagrant-plugins">Install Vagrant Plugins</h3>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vagrant</span><span class="w"> </span><span class="nx">plugin</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">vagrant-omnibus</span><span class="w">
+</span><span class="n">vagrant</span><span class="w"> </span><span class="nx">plugin</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">vagrant-berkshelf</span><span class="w">
+</span><span class="n">vagrant</span><span class="w"> </span><span class="nx">plugin</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">vagrant-hostmanager</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="create-chef-cookbook">Create Chef Cookbook</h2>
+
+<p>This directory will become the root of your source repository:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chef</span><span class="w"> </span><span class="nx">generate</span><span class="w"> </span><span class="nx">cookbook</span><span class="w"> </span><span class="nx">my_ubuntu_nginx</span><span class="w">
+</span><span class="n">cd</span><span class="w"> </span><span class="nx">my_ubuntu_nginx</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="ensure-the-apt-cache-is-up-to-date">Ensure the apt cache is up to date</h2>
+
+<h3 id="reference-the-apt-cookbook">Reference the <code class="language-plaintext highlighter-rouge">apt</code> Cookbook</h3>
+
+<p>Add this line to <code class="language-plaintext highlighter-rouge">metadata.rb</code>:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">depends</span> <span class="s1">'apt'</span><span class="p">,</span> <span class="s1">'~&gt; 2.9.2'</span>
+</code></pre></div></div>
+
+<p>To get the latest version string, run <code class="language-plaintext highlighter-rouge">knife cookbook site show apt</code>:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chef</span><span class="w"> </span><span class="nx">exec</span><span class="w"> </span><span class="nx">knife</span><span class="w"> </span><span class="nx">cookbook</span><span class="w"> </span><span class="nx">site</span><span class="w"> </span><span class="nx">show</span><span class="w"> </span><span class="nx">apt</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">grep</span><span class="w"> </span><span class="nx">latest_version</span><span class="w">
+</span><span class="n">latest_version:</span><span class="w">     </span><span class="nx">https://supermarket.chef.io/api/v1/cookbooks/apt/versions/2.9.2</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Here is the complete file:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">name</span> <span class="s1">'my_ubuntu_nginx'</span>
+<span class="n">maintainer</span> <span class="s1">'The Authors'</span>
+<span class="n">maintainer_email</span> <span class="s1">'you@example.com'</span>
+<span class="n">license</span> <span class="s1">'all_rights'</span>
+<span class="n">description</span> <span class="s1">'Installs/Configures my_ubuntu_nginx'</span>
+<span class="n">long_description</span> <span class="s1">'Installs/Configures my_ubuntu_nginx'</span>
+<span class="n">version</span> <span class="s1">'0.1.0'</span>
+
+<span class="n">depends</span> <span class="s1">'apt'</span><span class="p">,</span> <span class="s1">'~&gt; 2.9.2'</span>
+</code></pre></div></div>
+
+<h3 id="set-the-apt-cookbooks-default-recipe-to-run">Set the apt cookbook’s default recipe to run</h3>
+
+<p>Add this line to <code class="language-plaintext highlighter-rouge">recipes/default.rb</code>:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">include_recipe</span> <span class="s1">'apt::default'</span>
+</code></pre></div></div>
+
+<p>Here is the complete file:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#</span>
+<span class="c1"># Cookbook Name:: my_ubuntu_nginx</span>
+<span class="c1"># Recipe:: default</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2016 The Authors, All Rights Reserved.</span>
+
+<span class="n">include_recipe</span> <span class="s1">'apt::default'</span>
+</code></pre></div></div>
+
+<h3 id="test">Test</h3>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chef</span><span class="w"> </span><span class="nx">exec</span><span class="w"> </span><span class="nx">berks</span><span class="w"> </span><span class="nx">install</span><span class="w">
+</span></code></pre></div></div>
+
+<p>This generates <code class="language-plaintext highlighter-rouge">Berksfile.lock</code> file.</p>
+
+<h2 id="configure-nginx">Configure NGINX</h2>
+
+<h3 id="reference-the-nginx-cookbook">Reference the nginx cookbook</h3>
+
+<p>We need the <code class="language-plaintext highlighter-rouge">nginx</code> cookbook for it’s <code class="language-plaintext highlighter-rouge">nginx::repo</code> recipe. Add this line to <code class="language-plaintext highlighter-rouge">metadata.rb</code>:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">depends</span> <span class="s1">'nginx'</span><span class="p">,</span> <span class="s1">'~&gt; 2.7.6'</span>
+</code></pre></div></div>
+
+<p>To get the latest version string, run <code class="language-plaintext highlighter-rouge">knife cookbook site show nginx</code>:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chef</span><span class="w"> </span><span class="nx">exec</span><span class="w"> </span><span class="nx">knife</span><span class="w"> </span><span class="nx">cookbook</span><span class="w"> </span><span class="nx">site</span><span class="w"> </span><span class="nx">show</span><span class="w"> </span><span class="nx">nginx</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">grep</span><span class="w"> </span><span class="nx">latest_version</span><span class="w">
+</span><span class="n">latest_version:</span><span class="w">     </span><span class="nx">https://supermarket.chef.io/api/v1/cookbooks/nginx/versions/2.7.6</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Here is the complete file:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">name</span> <span class="s1">'my_ubuntu_nginx'</span>
+<span class="n">maintainer</span> <span class="s1">'The Authors'</span>
+<span class="n">maintainer_email</span> <span class="s1">'you@example.com'</span>
+<span class="n">license</span> <span class="s1">'all_rights'</span>
+<span class="n">description</span> <span class="s1">'Installs/Configures my_ubuntu_nginx'</span>
+<span class="n">long_description</span> <span class="s1">'Installs/Configures my_ubuntu_nginx'</span>
+<span class="n">version</span> <span class="s1">'0.1.0'</span>
+
+<span class="n">depends</span> <span class="s1">'apt'</span><span class="p">,</span> <span class="s1">'~&gt; 2.9.2'</span>
+<span class="n">depends</span> <span class="s1">'nginx'</span><span class="p">,</span> <span class="s1">'~&gt; 2.7.6'</span>
+</code></pre></div></div>
+
+<h3 id="write-the-install_nginx-recipe">Write the install_nginx recipe</h3>
+
+<p>The first step is to create the recipe file, <code class="language-plaintext highlighter-rouge">install_nginx.rb</code>. Run the following command to generate it:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chef</span><span class="w"> </span><span class="nx">generate</span><span class="w"> </span><span class="nx">recipe</span><span class="w"> </span><span class="nx">install_nginx</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Write out <code class="language-plaintext highlighter-rouge">recipes/install_nginx.rb</code> like this:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#</span>
+<span class="c1"># Cookbook Name:: my_ubuntu_nginx</span>
+<span class="c1"># Recipe:: install_nginx</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2016 The Authors, All Rights Reserved.</span>
+
+<span class="c1"># Only needed if you want to install latest stable package from nginx.org</span>
+<span class="n">include_recipe</span> <span class="s1">'nginx::repo'</span>
+
+<span class="n">package</span> <span class="s1">'nginx'</span> <span class="k">do</span>
+  <span class="n">action</span> <span class="ss">:install</span>
+<span class="k">end</span>
+
+<span class="n">service</span> <span class="s1">'nginx'</span> <span class="k">do</span>
+  <span class="n">supports</span> <span class="ss">status: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">restart: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">reload: </span><span class="kp">true</span>
+  <span class="n">action</span> <span class="ss">:enable</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<h3 id="set-the-install_nginx-recipe-to-run">Set the install_nginx recipe to run</h3>
+
+<p>Add this line to <code class="language-plaintext highlighter-rouge">cookbooks/my_web_server/recipes/default.rb</code>:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">include_recipe</span> <span class="s1">'my_ubuntu_nginx::install_nginx'</span>
+</code></pre></div></div>
+
+<p>Here is the complete file:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#</span>
+<span class="c1"># Cookbook Name:: my_ubuntu_nginx</span>
+<span class="c1"># Recipe:: default</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2016 The Authors, All Rights Reserved.</span>
+
+<span class="n">include_recipe</span> <span class="s1">'apt::default'</span>
+<span class="n">include_recipe</span> <span class="s1">'my_ubuntu_nginx::install_nginx'</span>
+</code></pre></div></div>
+
+<h3 id="update-the-integration-test">Update the integration test</h3>
+
+<p>Replace the contents of <code class="language-plaintext highlighter-rouge">test/integration/default/serverspec/default_spec.rb</code> with this code:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">require</span> <span class="s1">'spec_helper'</span>
+
+<span class="n">describe</span> <span class="s1">'my_ubuntu_nginx::default'</span> <span class="k">do</span>
+  <span class="c1"># Serverspec examples can be found at</span>
+  <span class="c1"># http://serverspec.org/resource_types.html</span>
+  <span class="n">describe</span> <span class="n">package</span><span class="p">(</span><span class="s1">'nginx'</span><span class="p">)</span> <span class="k">do</span>
+    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">be_installed</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">describe</span> <span class="n">service</span><span class="p">(</span><span class="s1">'nginx'</span><span class="p">)</span> <span class="k">do</span>
+    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">be_enabled</span> <span class="p">}</span>
+    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">be_running</span> <span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<h2 id="test-1">Test</h2>
+
+<h3 id="ruby-lint">Ruby Lint</h3>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chef</span><span class="w"> </span><span class="nx">exec</span><span class="w"> </span><span class="nx">rubocop</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="chef-lint">Chef Lint</h3>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chef</span><span class="w"> </span><span class="nx">exec</span><span class="w"> </span><span class="nx">foodcritic</span><span class="w"> </span><span class="o">.</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="unit-tests">Unit Tests</h3>
+
+<p>Install / Update cookbooks:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chef</span><span class="w"> </span><span class="nx">exec</span><span class="w"> </span><span class="nx">berks</span><span class="w"> </span><span class="nx">install</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Create a <code class="language-plaintext highlighter-rouge">.rspec</code> file:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">touch</span><span class="w"> </span><span class="o">.</span><span class="nf">rspec</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Paste these lines in <code class="language-plaintext highlighter-rouge">.rspec</code></p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>--color
+--format documentation
+</code></pre></div></div>
+
+<p>Run:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chef</span><span class="w"> </span><span class="nx">exec</span><span class="w"> </span><span class="nx">rspec</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="integration-tests">Integration Tests</h3>
+
+<p>Update <code class="language-plaintext highlighter-rouge">.kitchen.yml</code> to include the Ubuntu platform only. This is how it should look:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">driver</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">vagrant</span>
+  <span class="na">network</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="pi">[</span><span class="s2">"</span><span class="s">private_network"</span><span class="pi">,</span> <span class="pi">{</span><span class="nv">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">dhcp"</span><span class="pi">}]</span>
+
+<span class="na">provisioner</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">chef_zero</span>
+
+<span class="na">platforms</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">ubuntu-14.04</span>
+
+<span class="na">suites</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">default</span>
+    <span class="na">run_list</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">recipe[my_ubuntu_nginx::default]</span>
+</code></pre></div></div>
+
+<p>Run the integration tests:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chef</span><span class="w"> </span><span class="nx">exec</span><span class="w"> </span><span class="nx">kitchen</span><span class="w"> </span><span class="nx">test</span><span class="w"> </span><span class="nt">--destroy</span><span class="o">=</span><span class="n">never</span><span class="w">
+</span></code></pre></div></div>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

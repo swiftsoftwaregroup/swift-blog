@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Ubuntu with Vagrant and VirtualBox on Windows | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/ubuntu-with-vagrant-and-virtualbox-on-windows/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/ubuntu-with-vagrant-and-virtualbox-on-windows/">Ubuntu with Vagrant and VirtualBox on Windows</a></h1><time datetime="2015-08-20T00:00:00-07:00">August 20, 2015</time>
+</header>
+
+  <p>In this post I show how you can use <a href="https://www.virtualbox.org/">VirtualBox</a> and <a href="https://www.vagrantup.com/">Vagrant</a> to create and launch an Ubuntu 14.04 virtual machine on Windows 8.1 host.</p>
+
+<h2 id="preparation">Preparation</h2>
+
+<h3 id="chocolatey">Chocolatey</h3>
+
+<p>We will use <a href="chocolatey.org">Chocolatey</a> to install all the required software. If you do not have it, you can install it by following the instructions on <a href="https://chocolatey.org/">chocolatey.org</a>. You may also see <a href="http://www.swiftsoftwaregroup.com/configure-download-folder-chocolatey-packages/">this post</a> for instructions on how to set the Chocolatey cache location.</p>
+
+<h3 id="virtualbox">VirtualBox</h3>
+
+<p>In order to use VirtualBox on Windows 10 you first need to <a href="http://www.swiftsoftwaregroup.com/dual-boot-windows-8-1-virtualbox-hyper-v/">disable</a> Hyper-V.</p>
+
+<h4 id="install-virtualbox">Install VirtualBox</h4>
+
+<p>In PowerShell as <em>Administrator</em>:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">choco</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">virtualbox</span><span class="w">
+</span></code></pre></div></div>
+
+<p>IMPORTANT: After the installation, run Oracle VM VirtualBox once and when prompted, follow the instructions to install the Oracle VM VirtualBox Extension Pack. The version of the installed extension pack should match the version of Oracle VM VirtualBox.</p>
+
+<h4 id="add-virtualbox-to-system-path">Add VirtualBox To System Path</h4>
+
+<p>Vagrant will need access to <code class="language-plaintext highlighter-rouge">VBoxManage.exe</code>. For that you need to add <code class="language-plaintext highlighter-rouge">C:\Program Files\Oracle\VirtualBox</code> to your path. You can do that easily in PowerShell, by using the <a href="https://msdn.microsoft.com/en-us/library/system.environment.setenvironmentvariable.aspx">Environment.SetEnvironmentVariable</a> .NET method.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Environment</span><span class="p">]::</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span><span class="s2">"Path"</span><span class="p">,</span><span class="w"> </span><span class="s2">"C:/Program Files/Oracle/VirtualBox;"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">$</span><span class="nn">env</span><span class="p">:</span><span class="nv">Path</span><span class="p">,</span><span class="w"> </span><span class="s2">"Machine"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Close the PowerShell terminal and open it again, so it can pick up the PATH to VirtualBox.</p>
+
+<h3 id="git">Git</h3>
+
+<p>We want Git for <code class="language-plaintext highlighter-rouge">ssh.exe</code> and other Linux tools, which are needed later by Vagrant. If you have installed <code class="language-plaintext highlighter-rouge">ssh.exe</code> using some other way, you may skip this step.</p>
+
+<h4 id="install-git">Install Git</h4>
+
+<p>In PowerShell as <em>Administrator</em>:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">choco</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">git</span><span class="w"> </span><span class="nt">--params</span><span class="w"> </span><span class="s2">"/GitAndUnixToolsOnPath /NoAutoCrlf"</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Now, besides <code class="language-plaintext highlighter-rouge">git</code>, you should have <code class="language-plaintext highlighter-rouge">ssh</code>, <code class="language-plaintext highlighter-rouge">rsync</code>, <code class="language-plaintext highlighter-rouge">touch</code>, <code class="language-plaintext highlighter-rouge">clear</code> and a number of other useful Linux tools.</p>
+
+<h4 id="verify-git-and-ssh">Verify Git and SSH</h4>
+
+<p>Close and open PowerShell, so it can pick the updated PATH environment.</p>
+
+<p>Verify you have <code class="language-plaintext highlighter-rouge">git</code>:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">git</span><span class="w"> </span><span class="nt">--version</span><span class="w">
+</span><span class="n">git</span><span class="w"> </span><span class="nx">version</span><span class="w"> </span><span class="nx">2.6.4.windows.1</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Verify you have <code class="language-plaintext highlighter-rouge">ssh</code>:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ssh</span><span class="w">
+</span><span class="nx">usage:</span><span class="w"> </span><span class="nx">ssh</span><span class="w"> </span><span class="p">[</span><span class="nt">-1246AaCfGgKkMNnqsTtVvXxYy</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-b</span><span class="w"> </span><span class="n">bind_address</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-c</span><span class="w"> </span><span class="n">cipher_spec</span><span class="p">]</span><span class="w">
+           </span><span class="p">[</span><span class="nt">-D</span><span class="w"> </span><span class="p">[</span><span class="n">bind_address</span><span class="p">:]</span><span class="n">port</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-E</span><span class="w"> </span><span class="n">log_file</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-e</span><span class="w"> </span><span class="n">escape_char</span><span class="p">]</span><span class="w">
+           </span><span class="p">[</span><span class="nt">-F</span><span class="w"> </span><span class="n">configfile</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-I</span><span class="w"> </span><span class="n">pkcs11</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-i</span><span class="w"> </span><span class="n">identity_file</span><span class="p">]</span><span class="w">
+           </span><span class="p">[</span><span class="nt">-L</span><span class="w"> </span><span class="n">address</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-l</span><span class="w"> </span><span class="n">login_name</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-m</span><span class="w"> </span><span class="n">mac_spec</span><span class="p">]</span><span class="w">
+           </span><span class="p">[</span><span class="nt">-O</span><span class="w"> </span><span class="n">ctl_cmd</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-o</span><span class="w"> </span><span class="n">option</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-p</span><span class="w"> </span><span class="n">port</span><span class="p">]</span><span class="w">
+           </span><span class="p">[</span><span class="nt">-Q</span><span class="w"> </span><span class="n">cipher</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">cipher</span><span class="nt">-auth</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">mac</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">kex</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">key</span><span class="p">]</span><span class="w">
+           </span><span class="p">[</span><span class="nt">-R</span><span class="w"> </span><span class="n">address</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-S</span><span class="w"> </span><span class="n">ctl_path</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-W</span><span class="w"> </span><span class="n">host</span><span class="p">:</span><span class="n">port</span><span class="p">]</span><span class="w">
+           </span><span class="p">[</span><span class="nt">-w</span><span class="w"> </span><span class="n">local_tun</span><span class="p">[:</span><span class="n">remote_tun</span><span class="p">]]</span><span class="w"> </span><span class="p">[</span><span class="n">user</span><span class="err">@</span><span class="p">]</span><span class="n">hostname</span><span class="w"> </span><span class="p">[</span><span class="n">command</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="vagrant">Vagrant</h3>
+
+<h4 id="install-vagrant">Install Vagrant</h4>
+
+<p>In PowerShell as <em>Administrator</em>:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">choco</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">vagrant</span><span class="w">
+</span></code></pre></div></div>
+
+<h4 id="set-vagrant_home-optional">Set VAGRANT_HOME (Optional)</h4>
+
+<p>The Vagrant home directory is where things such as boxes are stored, so it can actually become quite large on disk. By default, this is set to <code class="language-plaintext highlighter-rouge">C:\Users\yourusername\.vagrant.d</code>.</p>
+
+<p>In PowerShell as <em>Administrator</em>:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mkdir</span><span class="w"> </span><span class="nx">C:/VagrantHome</span><span class="w">
+</span><span class="p">[</span><span class="n">Environment</span><span class="p">]::</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span><span class="s2">"VAGRANT_HOME"</span><span class="p">,</span><span class="w"> </span><span class="s2">"C:/VagrantHome"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Machine"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>You are now ready to launch virtual machines.</p>
+
+<h2 id="initialize-an-ubuntu-1404-box-and-launch-it">Initialize an Ubuntu 14.04 Box and Launch it</h2>
+
+<p>Create a directory for your project, e.g. <code class="language-plaintext highlighter-rouge">C:\Ubuntu</code>. Open PowerShell in the new directory and run the following commands:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vagrant</span><span class="w"> </span><span class="nx">init</span><span class="w"> </span><span class="nx">ubuntu/trusty64</span><span class="w">
+</span><span class="n">vagrant</span><span class="w"> </span><span class="nx">up</span><span class="w">
+</span></code></pre></div></div>
+
+<p>That creates a <code class="language-plaintext highlighter-rouge">Vagrantfile</code> file from the <code class="language-plaintext highlighter-rouge">ubuntu/trusty64</code> box. Every Vagrant development environment requires a box. You can search for
+boxes at https://atlas.hashicorp.com/search.</p>
+
+<h3 id="virtualbox-guest-additions">VirtualBox Guest Additions</h3>
+
+<p>During virtual machine boot you may get a warning about the VirtualBox Guest Additions version, something similar to this:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">==</span><span class="err">&gt;</span><span class="w"> </span><span class="n">default:</span><span class="w"> </span><span class="nx">Checking</span><span class="w"> </span><span class="nx">for</span><span class="w"> </span><span class="nx">guest</span><span class="w"> </span><span class="nx">additions</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="nx">VM...</span><span class="w">
+    </span><span class="n">default:</span><span class="w"> </span><span class="nx">The</span><span class="w"> </span><span class="nx">guest</span><span class="w"> </span><span class="nx">additions</span><span class="w"> </span><span class="nx">on</span><span class="w"> </span><span class="nx">this</span><span class="w"> </span><span class="nx">VM</span><span class="w"> </span><span class="nx">do</span><span class="w"> </span><span class="nx">not</span><span class="w"> </span><span class="nx">match</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">installed</span><span class="w"> </span><span class="nx">version</span><span class="w"> </span><span class="nx">of</span><span class="w">
+    </span><span class="n">default:</span><span class="w"> </span><span class="nx">VirtualBox</span><span class="o">!</span><span class="w"> </span><span class="nx">In</span><span class="w"> </span><span class="nx">most</span><span class="w"> </span><span class="nx">cases</span><span class="w"> </span><span class="nx">this</span><span class="w"> </span><span class="nx">is</span><span class="w"> </span><span class="nx">fine</span><span class="p">,</span><span class="w"> </span><span class="nx">but</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="nx">rare</span><span class="w"> </span><span class="nx">cases</span><span class="w"> </span><span class="nx">it</span><span class="w"> </span><span class="nx">can</span><span class="w">
+    </span><span class="n">default:</span><span class="w"> </span><span class="nx">prevent</span><span class="w"> </span><span class="nx">things</span><span class="w"> </span><span class="nx">such</span><span class="w"> </span><span class="nx">as</span><span class="w"> </span><span class="nx">shared</span><span class="w"> </span><span class="nx">folders</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">working</span><span class="w"> </span><span class="nx">properly.</span><span class="w"> </span><span class="nx">If</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">see</span><span class="w">
+    </span><span class="n">default:</span><span class="w"> </span><span class="nx">shared</span><span class="w"> </span><span class="nx">folder</span><span class="w"> </span><span class="nx">errors</span><span class="p">,</span><span class="w"> </span><span class="nx">please</span><span class="w"> </span><span class="nx">make</span><span class="w"> </span><span class="nx">sure</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">guest</span><span class="w"> </span><span class="nx">additions</span><span class="w"> </span><span class="nx">within</span><span class="w"> </span><span class="nx">the</span><span class="w">
+    </span><span class="n">default:</span><span class="w"> </span><span class="nx">virtual</span><span class="w"> </span><span class="nx">machine</span><span class="w"> </span><span class="nx">match</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">version</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">VirtualBox</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">have</span><span class="w"> </span><span class="nx">installed</span><span class="w"> </span><span class="nx">on</span><span class="w">
+    </span><span class="n">default:</span><span class="w"> </span><span class="nx">your</span><span class="w"> </span><span class="nx">host</span><span class="w"> </span><span class="nx">and</span><span class="w"> </span><span class="nx">reload</span><span class="w"> </span><span class="nx">your</span><span class="w"> </span><span class="nx">VM.</span><span class="w">
+    </span><span class="n">default:</span><span class="w">
+    </span><span class="nx">default:</span><span class="w"> </span><span class="nx">Guest</span><span class="w"> </span><span class="nx">Additions</span><span class="w"> </span><span class="nx">Version:</span><span class="w"> </span><span class="nx">4.3.10</span><span class="w">
+    </span><span class="n">default:</span><span class="w"> </span><span class="nx">VirtualBox</span><span class="w"> </span><span class="nx">Version:</span><span class="w"> </span><span class="nx">5.0</span><span class="w">
+</span></code></pre></div></div>
+
+<p>There is a Vagrant plugin for that. The <code class="language-plaintext highlighter-rouge">vagrant-vbguest</code> plugin will check for and install the correct guest additions automatically on startup. To get the <code class="language-plaintext highlighter-rouge">vagrant-vbguest</code> plugin:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vagrant</span><span class="w"> </span><span class="nx">plugin</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">vagrant-vbguest</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Now restart the VM:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vagrant</span><span class="w"> </span><span class="nx">reload</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="login-with-ssh">Login with SSH</h3>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vagrant</span><span class="w"> </span><span class="nx">ssh</span><span class="w">
+</span></code></pre></div></div>
+
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

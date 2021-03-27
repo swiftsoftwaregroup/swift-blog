@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Upgrading a web app from ASP.NET MVC 3 to ASP.NET MVC 4 | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/upgrading-a-web-app-from-asp-net-mvc-3-to-asp-net-mvc-4/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/upgrading-a-web-app-from-asp-net-mvc-3-to-asp-net-mvc-4/">Upgrading a web app from ASP.NET MVC 3 to ASP.NET MVC 4</a></h1><time datetime="2013-05-10T00:00:00-07:00">May 10, 2013</time>
+</header>
+
+  <p>I recently had to update a web application from ASP.NET MVC 3 to ASP.NET MVC 4. Here are the the steps I had to go through to do that:</p>
+
+<p>1) Update your project references. The easiest way to do that is to install ASP.NET MVC 4.0 from Package Manager Console:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Install-Package</span><span class="w"> </span><span class="nx">Microsoft.AspNet.Mvc</span><span class="w">
+</span></code></pre></div></div>
+
+<p>That will download and install all necessary components and will update your project references.</p>
+
+<p>2) In your root Web.config, in <code class="language-plaintext highlighter-rouge">&lt;system.web&gt; / &lt;assemblies&gt;</code>  section, update the assembly versions for <code class="language-plaintext highlighter-rouge">System.Web.Helpers</code>, <code class="language-plaintext highlighter-rouge">System.Web.Mvc</code> and <code class="language-plaintext highlighter-rouge">System.Web.WebPages</code>, i.e. replace this:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;assemblies&gt;</span>
+    <span class="nt">&lt;add</span> <span class="na">assembly=</span><span class="s">"System.Web.Abstractions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;add</span> <span class="na">assembly=</span><span class="s">"System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;add</span> <span class="na">assembly=</span><span class="s">"System.Web.Routing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;add</span> <span class="na">assembly=</span><span class="s">"System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;add</span> <span class="na">assembly=</span><span class="s">"System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/assemblies&gt;</span>
+</code></pre></div></div>
+
+<p>with this:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;assemblies&gt;</span>
+    <span class="nt">&lt;add</span> <span class="na">assembly=</span><span class="s">"System.Web.Abstractions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;add</span> <span class="na">assembly=</span><span class="s">"System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;add</span> <span class="na">assembly=</span><span class="s">"System.Web.Routing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;add</span> <span class="na">assembly=</span><span class="s">"System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;add</span> <span class="na">assembly=</span><span class="s">"System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/assemblies&gt;</span>
+</code></pre></div></div>
+
+<p>3) In <code class="language-plaintext highlighter-rouge">Views\\Web.config</code>, replace all instances of <code class="language-plaintext highlighter-rouge">System.Web.Mvc, Version=3.0.0.0</code> and <code class="language-plaintext highlighter-rouge">System.Web.WebPages.Razor, Version=1.0.0.0</code> with <code class="language-plaintext highlighter-rouge">System.Web.Mvc, Version=4.0.0.0</code> and <code class="language-plaintext highlighter-rouge">System.Web.WebPages.Razor, Version=2.0.0.0</code>.</p>
+
+<p>Those three basic changes were enough to get my web application running. Depending on your application you may have to do more changes. For a complete list of all changes that might be required, check out the <a href="http://www.asp.net/whitepapers/mvc4-release-notes#_Toc303253806">upgrade section</a> in the ASP.NET MVC 4 release notes.</p>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Hg subrepositories: a how-to guide for the &amp;#8220;svn:externals&amp;#8221; junkie (Part 1) | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/">Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 1)</a></h1><time datetime="2013-01-18T00:00:00-08:00">January 18, 2013</time>
+</header>
+
+  <p>This is the first post from a <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (TOC)">multi-part article</a> about using Mercurial subrepositories when you are switching from Subversion to Mercurial and you heavily used Subversion subrepositories configured via the svn:externals property.</p>
+
+<p>Often a common scenario in software development is to have a main project that depends on other projects. Here is an example of how the Subversion “trunk” for such projects might look like:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>svn://svnserver/SandboxSvn
+    trunk
+        SandboxSvn (main source code)
+        SanboxDep1Svn (svn:externals link from svn://svnserver/SandboxDep1Svn/trunk)
+        SanboxDep2Svn (svn:externals link from svn://svnserver/SandboxDep2Svn/trunk)
+</code></pre></div></div>
+
+<p>Basically we have a repository at <em>svn://svnserver/SandboxSvn</em> that includes the main project called <em>SandboxSvn</em> and two projects* SandboxDep1Svn* and <em>SandboxDep2Svn</em> on which <em>SandboxSvn</em> depends. The dependency projects are linked from two separate Subversion repositories, hosted at <em>svn://svnserver/SandboxDep1Svn/trunk</em> and <em>svn://svnserver/SandboxDep2Svn/trunk</em> respectively.</p>
+
+<p>You can create a similar structure in Mercurial by using the Mercurial subrepositories. In the example below, I use BitBucket, so I can test my setup later, but the same steps should be valid for any other shared Mercurial setup. For more information on how to use BitBucket, see the <a href="https://confluence.atlassian.com/display/BITBUCKET/Bitbucket+101" title="BitBucket 101">BitBucket 101</a> wiki.</p>
+
+<p>Steps to setup a main project with two dependencies in Mercurial:</p>
+
+<p>1) Create a repository called SandboxRootHg. This will be a containerrepository for both the main project and the dependencies. I set that up at https://bitbucket.org/your-team-name/SandboxRootHg.</p>
+
+<p>2) Create a repository for your main project, e.g. SandboxHg at <em>https://bitbucket.org/your-team-name/SandboxHg</em>.</p>
+
+<p>3) Create a repository for each of the dependencies:</p>
+
+<ul>
+  <li>SandboxDep1Hg at <em>https://bitbucket.org/your-team-name/SandboxDep1Hg</em></li>
+  <li>SandboxDep2Hg at <em>https://bitbucket.org/your-team-name/sandboxDep1Hg</em></li>
+</ul>
+
+<p>4) Setup the three dependencies in the container project.</p>
+
+<p>You first have to clone the container repository locally to your machine. In our case the containeris <em>SandboxRootHg</em>, so I cloned that in a new<em>SandboxRootHg</em> folder. In the <em>SandboxRootHg</em> folder create a <em>.hgsub</em> file(note the dot in the<em>.hgsub</em>name), and add the <em>SandboxHg</em>, <em>SandboxDep1Hg</em> and <em>SandboxDep2Hg</em> projects to in the <em>.hgsub</em> file. Your final <em>.hgsub</em> will have three lines in it and will look similar to this:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SandboxHg = https://bitbucket.org/your-team-name/SandboxHg
+SandboxDep1Hg = https://bitbucket.org/your-team-name/SandboxDep1Hg
+SandboxDep2Hg = https://bitbucket.org/your-team-name/SandboxDep2Hg
+</code></pre></div></div>
+
+<p>5) In the <em>SandboxRootHg</em> folder, do a <strong>Hg/Add</strong> to add the <em>.hgsub</em> file to Mercurial, then <strong>Hg/Commit</strong>. And last, do not forget to do a <strong>Hg/Push</strong> to update the remote shared repository with your changes.</p>
+
+<p>Continue to <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 2)">Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 2)</a>.</p>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

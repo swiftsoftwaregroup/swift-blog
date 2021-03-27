@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>How to upgrade the Linux kernel to 3.11 on Ubuntu 12.04.4 LTS | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/upgrade-linux-kernel-3-11-ubuntu-12-04-4-lts/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/upgrade-linux-kernel-3-11-ubuntu-12-04-4-lts/">How to upgrade the Linux kernel to 3.11 on Ubuntu 12.04.4 LTS</a></h1><time datetime="2014-05-05T00:00:00-07:00">May 05, 2014</time>
+</header>
+
+  <p>I have two Ubuntu 12.04.4 virtual machines that I use for building and testing <a href="https://avblocks.com">AVBlocks</a> - one 32 bit (i386) and one 64 bit (x86_64). Normally I keep them in sync and regularly updated via the Update Manager.</p>
+
+<p>I noticed today that for some reason, the 32-bit machine upgraded to Linux kernel 3.11, but the 64-bit machine is stuck with Linux kernel 3.8. The Update Manager reports that both systems are up-to-date, yet the kernel versions are different on both systems.</p>
+
+<h2 id="ubuntu-12044-lts-x86_64">Ubuntu 12.04.4 LTS x86_64</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">uname</span> <span class="nt">-a</span>
+Linux ubuntu-12-04-x64 3.8.0-39-generic <span class="c">#58~precise1-Ubuntu SMP Fri May 2 21:33:40 UTC 2014 x86_64 x86_64 x86_64 GNU/Linux</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lsb_release <span class="nt">-a</span>
+No LSB modules are available.
+Distributor ID:	Ubuntu
+Description:	Ubuntu 12.04.4 LTS
+Release:	12.04
+Codename:	precise
+</code></pre></div></div>
+
+<h2 id="ubuntu-12044-lts-i386">Ubuntu 12.04.4 LTS i386</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">uname</span> <span class="nt">-a</span>
+Linux ubuntu-12-04-i386 3.11.0-20-generic <span class="c">#35~precise1-Ubuntu SMP Fri May 2 21:35:48 UTC 2014 i686 i686 i386 GNU/Linux</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lsb_release <span class="nt">-a</span>
+No LSB modules are available.
+Distributor ID:	Ubuntu
+Description:	Ubuntu 12.04.4 LTS
+Release:	12.04
+Codename:	precise
+</code></pre></div></div>
+
+<h2 id="the-solution">The solution</h2>
+
+<p>After some reading on internet, I found that, only installations made from Ubuntu 12.04.2 ISO images and above will receive the 3.11 Linux kernel update automatically. For all other installations you will have to update it manually per this Ubuntu wiki <a href="https://wiki.ubuntu.com/Kernel/LTSEnablementStack">article</a>.</p>
+
+<p>So, for Ubuntu 12.04.4, you have to install the Saucy (13.10) Hardware Enablement Stack:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get <span class="nb">install</span> <span class="nt">--install-recommends</span> linux-generic-lts-saucy xserver-xorg-lts-saucy libgl1-mesa-glx-lts-saucy
+<span class="nb">sudo </span>reboot
+</code></pre></div></div>
+
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

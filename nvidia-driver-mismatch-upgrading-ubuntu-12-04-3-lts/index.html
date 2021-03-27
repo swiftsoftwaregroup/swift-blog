@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Nvidia driver mismatch after upgrading to Ubuntu 12.04.3 LTS | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/nvidia-driver-mismatch-upgrading-ubuntu-12-04-3-lts/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/nvidia-driver-mismatch-upgrading-ubuntu-12-04-3-lts/">Nvidia driver mismatch after upgrading to Ubuntu 12.04.3 LTS</a></h1><time datetime="2013-12-28T00:00:00-08:00">December 28, 2013</time>
+</header>
+
+  <p>After upgrading to Ubuntu 12.04.3 LTS, I could not boot in GUI / X anymore. I got this when trying to start X:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>startx
+    
+NVIDIA: API mismatch: the NVIDIA kernel module has version 304.88, but this NVIDIA driver component has version 304.108.
+Please make sure that the kernel module and all NVIDIA driver components have the same version.
+</code></pre></div></div>
+
+<p>To fix that it seems you have to disable the <code class="language-plaintext highlighter-rouge">xorg:nvidia_304_updates</code> (304.108) driver and enable the <code class="language-plaintext highlighter-rouge">xorg:nvidia_304</code> (304.88) driver:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>jockey-text <span class="nt">-e</span> xorg:nvidia_304 
+</code></pre></div></div>
+
+<p>After that you should have <code class="language-plaintext highlighter-rouge">xorg:nvidia_304</code> listed as Proprietary, Enabled, In use:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>jockey-text <span class="nt">--list</span>
+xorg:nvidia_173 - NVIDIA accelerated graphics driver <span class="o">(</span>Proprietary, Disabled, Not <span class="k">in </span>use<span class="o">)</span>
+xorg:nvidia_173_updates - NVIDIA accelerated graphics driver <span class="o">(</span>post-release updates<span class="o">)</span> <span class="o">(</span>Proprietary, Disabled, Not <span class="k">in </span>use<span class="o">)</span>
+xorg:nvidia_304 - NVIDIA accelerated graphics driver <span class="o">(</span>Proprietary, Enabled, In use<span class="o">)</span>
+xorg:nvidia_304_updates - NVIDIA accelerated graphics driver <span class="o">(</span>post-release updates<span class="o">)</span> <span class="o">(</span>Proprietary, Disabled, Not <span class="k">in </span>use<span class="o">)</span>
+xorg:nvidia_96 - NVIDIA accelerated graphics driver <span class="o">(</span>Proprietary, Disabled, Not <span class="k">in </span>use<span class="o">)</span>    
+</code></pre></div></div>
+
+<p>And finally you have to reboot:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>reboot
+</code></pre></div></div>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

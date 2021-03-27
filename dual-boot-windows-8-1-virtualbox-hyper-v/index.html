@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Dual boot Windows 8.1 for VirtualBox and Hyper-V | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/dual-boot-windows-8-1-virtualbox-hyper-v/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/dual-boot-windows-8-1-virtualbox-hyper-v/">Dual boot Windows 8.1 for VirtualBox and Hyper-V</a></h1><time datetime="2014-01-20T00:00:00-08:00">January 20, 2014</time>
+</header>
+
+  <p>Most of the time I use VirtualBox to run Linux distros like Ubuntu and Debian. At the same time, I have to work with Windows Phone SDK which needs Hyper-V to run the Windows Phone emulator. Understandably VirtualBox and Hyper-V will not run at the same time. The easiest way I found to solve that problem is creating a dual boot configuration where one of the boot options has Hyper-V disabled. Here is how to do it:</p>
+
+<p>Run Command Prompt (not PowerShell) as Administrator and execute the following commands (note that the GUID will be different on your system):</p>
+
+<pre><code class="language-cmd">bcdedit /set {current} hypervisorlaunchtype off 
+
+bcdedit /copy {current} /d "Windows 8.1 with Hyper-V"
+The entry was successfully copied to {5e0b6781-81ec-11e3-be83-74d02bc4e906}.
+
+bcdedit /set {5e0b6781-81ec-11e3-be83-74d02bc4e906} hypervisorlaunchtype auto 
+The operation completed successfully.
+</code></pre>
+
+<p>You should now have two boot options in the Windows start menu: “Windows 8.1” and “Windows 8.1 with Hyper-V”. To switch between the different configurations, make sure you hold the <code class="language-plaintext highlighter-rouge">Shift</code> key while clicking on the Restart option.</p>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

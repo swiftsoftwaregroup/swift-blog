@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Installing an Older Version of Xcode Alongside Xcode 9 | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Val Kantchev">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/installing-an-older-version-of-xcode-alongside-xcode-9/">
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/installing-an-older-version-of-xcode-alongside-xcode-9/">Installing an Older Version of Xcode Alongside Xcode 9</a></h1><time datetime="2017-09-23T00:00:00-07:00">September 23, 2017</time>
+</header>
+
+  <p>Today I started working on updating <a href="https://itunes.apple.com/us/app/apport/id1140306404?mt=8">Apport</a> code from Swift 2 to Swift 4. So I got everything ready, made a fresh cup of coffee and opened the project workspace in Xcode 9. And then I got this message:</p>
+
+<p><img src="/assets/images/installing-an-older-version-of-xcode-alongside-xcode-9/unsupported-swift-version.jpg" alt="unsupported-swift-version.jpg" /></p>
+
+<p>I have to convert the project to Swift 3 first in Xcode 8 and then convert once again to Swift 4 in Xcode 9.</p>
+
+<p>So I need both Xcode 8 and Xcode 9 installed, and here is how that can be done:</p>
+
+<h2 id="install">Install</h2>
+
+<ol>
+  <li>
+    <p>Download Xcode 8.3.3 from <a href="https://developer.apple.com/download/more/">Apple Developer Downloads</a>. You will receive a file named Xcode8.3.3.xip which is a digitally signed zip file.</p>
+  </li>
+  <li>
+    <p>Expand the xip file. It will be expanded to <code class="language-plaintext highlighter-rouge">Xcode.app</code></p>
+  </li>
+  <li>
+    <p>Rename <code class="language-plaintext highlighter-rouge">Xcode.app</code> to <code class="language-plaintext highlighter-rouge">Xcode8.app</code></p>
+  </li>
+  <li>
+    <p>Drag <code class="language-plaintext highlighter-rouge">Xcode8.app</code> to your <code class="language-plaintext highlighter-rouge">Applications</code> folder</p>
+  </li>
+</ol>
+
+<h2 id="selecting-xcode-version">Selecting Xcode version</h2>
+
+<h3 id="switch-to-xcode-8">Switch to Xcode 8</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>xcode-select <span class="nt">--switch</span> /Applications/Xcode8.app
+</code></pre></div></div>
+
+<h3 id="switch-to-xcode-9">Switch to Xcode 9</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>xcode-select <span class="nt">--switch</span> /Applications/Xcode.app
+</code></pre></div></div>
+
+<h3 id="print-version-that-is-selected">Print version that is selected</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xcode-select <span class="nt">--print-path</span>
+</code></pre></div></div>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:vkantchev@users.noreply.github.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>
