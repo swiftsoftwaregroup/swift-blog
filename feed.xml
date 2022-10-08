@@ -1,4 +1,259 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-10-07T17:15:46-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">AWS Authentication</title><link href="/aws-authentication/" rel="alternate" type="text/html" title="AWS Authentication" /><published>2020-12-30T00:00:00-08:00</published><updated>2020-12-30T00:00:00-08:00</updated><id>/aws-authentication</id><content type="html" xml:base="/aws-authentication/">&lt;p&gt;Set up your AWS credentials. For more information, see &lt;a href=&quot;https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html&quot;&gt;Configuration and credential file settings&lt;/a&gt;. Request access key ID and secret access key from you AWS admin.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-10-07T22:48:07-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Creating an AWS EC2 instance with the AWS CLI</title><link href="/aws-ec2-instance-aws-cli/" rel="alternate" type="text/html" title="Creating an AWS EC2 instance with the AWS CLI" /><published>2021-01-22T00:00:00-08:00</published><updated>2021-01-22T00:00:00-08:00</updated><id>/aws-ec2-instance-aws-cli</id><content type="html" xml:base="/aws-ec2-instance-aws-cli/">&lt;p&gt;Step-by-step guide for creating an AWS EC2 instance with the AWS CLI.&lt;/p&gt;
+
+&lt;p&gt;Make sure you go through these steps first:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;/setup-macos-for-aws-cloud-devops&quot;&gt;Setup macOS for AWS Cloud DevOps&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/aws-authentication&quot;&gt;AWS Authentication&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;setup&quot;&gt;Setup&lt;/h2&gt;
+
+&lt;h3 id=&quot;names&quot;&gt;Names&lt;/h3&gt;
+
+&lt;p&gt;Assign resource names:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# VPC&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;vpc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;vpc-ec2&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Subnets&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;subnet_1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;subnet-ec2-1&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;subnet_2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;subnet-ec2-2&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Internet Gateway&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;internet_gateway&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;igw-ec2&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Route Table&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;route_table&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;rtb-ec2&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Security Group&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;security_group&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;security-ec2&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# instance&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;instance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;instance-ec2&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# SSH access key&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;aws-ec2-key&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;vpc&quot;&gt;VPC&lt;/h3&gt;
+
+&lt;p&gt;Create a VPC  (Virtual Private Cloud):&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws ec2 create-vpc &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--cidr-block&lt;/span&gt; 10.0.0.0/16  &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--tag-specifications&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ResourceType=vpc,Tags=[{Key=Name,Value='&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$vpc&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'}]'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;subnets&quot;&gt;Subnets&lt;/h3&gt;
+
+&lt;p&gt;Create 2 subnets:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;vpc_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-vpcs &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$vpc&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Vpcs[0].VpcId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# 1st subnet&lt;/span&gt;
+aws ec2 create-subnet &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--vpc-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$vpc_id&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--cidr-block&lt;/span&gt; 10.0.0.0/24 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--availability-zone&lt;/span&gt; us-west-2a &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--tag-specifications&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ResourceType=subnet,Tags=[{Key=Name,Value='&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$subnet_1&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'}]'&lt;/span&gt;  
+
+&lt;span class=&quot;c&quot;&gt;# 2nd subnet&lt;/span&gt;
+aws ec2 create-subnet &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--vpc-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$vpc_id&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--cidr-block&lt;/span&gt; 10.0.1.0/24 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--availability-zone&lt;/span&gt; us-west-2a &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--tag-specifications&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ResourceType=subnet,Tags=[{Key=Name,Value='&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$subnet_2&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'}]'&lt;/span&gt;  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Optionally modify the public IP addressing behavior of your subnet so that an instance launched into the subnet automatically receives a public IP address. Otherwise, you should associate an Elastic IP address with your instance after launch so that it’s reachable from the Internet.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;subnet_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-subnets &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$subnet_1&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Subnets[0].SubnetId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+aws ec2 modify-subnet-attribute &lt;span class=&quot;nt&quot;&gt;--subnet-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$subnet_id&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--map-public-ip-on-launch&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;internet-gateway&quot;&gt;Internet Gateway&lt;/h3&gt;
+
+&lt;p&gt;After you’ve created the VPC and subnets, you can make one of the subnets a public subnet by attaching an Internet gateway to your VPC, creating a custom route table, and configuring routing for the subnet to the Internet gateway.&lt;/p&gt;
+
+&lt;h4 id=&quot;create&quot;&gt;Create&lt;/h4&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws ec2 create-internet-gateway &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--tag-specifications&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ResourceType=internet-gateway,Tags=[{Key=Name,Value='&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$internet_gateway&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'}]'&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;attach-to-vpc&quot;&gt;Attach to VPC&lt;/h4&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;vpc_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-vpcs &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$vpc&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Vpcs[0].VpcId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;internet_gateway_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-internet-gateways &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$internet_gateway&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.InternetGateways[0].InternetGatewayId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+aws ec2 attach-internet-gateway &lt;span class=&quot;nt&quot;&gt;--vpc-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$vpc_id&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--internet-gateway-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$internet_gateway_id&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;route-table&quot;&gt;Route Table&lt;/h3&gt;
+
+&lt;p&gt;Create:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;vpc_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-vpcs &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$vpc&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Vpcs[0].VpcId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+aws ec2 create-route-table &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--vpc-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$vpc_id&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--tag-specifications&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ResourceType=route-table,Tags=[{Key=Name,Value='&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$route_table&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'}]'&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Associate with a subnet:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 1st subnet&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;subnet_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-subnets &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$subnet_1&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Subnets[0].SubnetId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;route_table_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-route-tables &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$route_table&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.RouteTables[0].RouteTableId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+aws ec2 associate-route-table  &lt;span class=&quot;nt&quot;&gt;--subnet-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$subnet_id&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--route-table-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$route_table_id&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Create a route in the route table that points all traffic (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0.0.0.0/0&lt;/code&gt;) to the Internet gateway:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;route_table_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-route-tables &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$route_table&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.RouteTables[0].RouteTableId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;internet_gateway_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-internet-gateways &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$internet_gateway&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.InternetGateways[0].InternetGatewayId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+aws ec2 create-route &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--route-table-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$route_table_id&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--gateway-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$internet_gateway_id&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--destination-cidr-block&lt;/span&gt; 0.0.0.0/0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Confirm route is active:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;route_table_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-route-tables &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$route_table&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.RouteTables[0].RouteTableId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+aws ec2 describe-route-tables &lt;span class=&quot;nt&quot;&gt;--route-table-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$route_table_id&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;security-group&quot;&gt;Security Group&lt;/h3&gt;
+
+&lt;p&gt;Create a security group in your VPC:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;vpc_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-vpcs &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$vpc&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Vpcs[0].VpcId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+aws ec2 create-security-group &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;--group-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$security_group&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--description&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Security group for instance access&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--vpc-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$vpc_id&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--tag-specifications&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ResourceType=security-group,Tags=[{Key=Name,Value='&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$security_group&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'}]'&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Add a rule that allows SSH access from anywhere:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;group_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-security-groups &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$security_group&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.SecurityGroups[0].GroupId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+aws ec2 authorize-security-group-ingress &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--group-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$group_id&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--protocol&lt;/span&gt; tcp &lt;span class=&quot;nt&quot;&gt;--port&lt;/span&gt; 22 &lt;span class=&quot;nt&quot;&gt;--cidr&lt;/span&gt; 0.0.0.0/0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;ec2-instance&quot;&gt;EC2 Instance&lt;/h3&gt;
+
+&lt;p&gt;List Amazon Linux images (via System Manager):&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws ssm get-parameters-by-path &lt;span class=&quot;nt&quot;&gt;--path&lt;/span&gt; /aws/service/ami-amazon-linux-latest &lt;span class=&quot;nt&quot;&gt;--query&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Parameters[].Name&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Launch instance:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;subnet_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-subnets &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$subnet_1&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Subnets[0].SubnetId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;group_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-security-groups &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$security_group&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.SecurityGroups[0].GroupId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+aws ec2 run-instances &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--subnet-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$subnet_id&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--security-group-ids&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$group_id&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--image-id&lt;/span&gt; resolve:ssm:/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--instance-type&lt;/span&gt; t2.micro &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--count&lt;/span&gt; 1 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--key-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$key&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;--tag-specifications&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ResourceType=instance,Tags=[{Key=Name,Value='&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$instance&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'}]'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Check instance status. Wait until it is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;running&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;instance_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-instances &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$instance&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Reservations[0].Instances[0].InstanceId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+aws ec2 describe-instances &lt;span class=&quot;nt&quot;&gt;--instance-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$instance_id&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Reservations[0].Instances[0].State'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Login into the instance:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;instance_public_ip&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-instances &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$instance&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Reservations[0].Instances[0].PublicIpAddress'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+ssh &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; ~/.ssh/&lt;span class=&quot;nv&quot;&gt;$key&lt;/span&gt; ec2-user@&lt;span class=&quot;nv&quot;&gt;$instance_public_ip&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;clean-up&quot;&gt;Clean up&lt;/h2&gt;
+
+&lt;p&gt;Delete all resources in reverse order of creation.&lt;/p&gt;
+
+&lt;h3 id=&quot;ec2-instance-1&quot;&gt;EC2 Instance&lt;/h3&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;instance_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-instances &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$instance&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Reservations[0].Instances[0].InstanceId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+aws ec2 terminate-instances &lt;span class=&quot;nt&quot;&gt;--instance-ids&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$instance_id&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Check instance status. Wait until it is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;terminated&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws ec2 describe-instances &lt;span class=&quot;nt&quot;&gt;--instance-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$instance_id&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Reservations[0].Instances[0].State'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;security-group-1&quot;&gt;Security Group&lt;/h3&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;group_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-security-groups &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$security_group&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.SecurityGroups[0].GroupId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+aws ec2 delete-security-group &lt;span class=&quot;nt&quot;&gt;--group-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$group_id&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;subnets-1&quot;&gt;Subnets&lt;/h3&gt;
+
+&lt;p&gt;Delete:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 1st subnet&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;subnet_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-subnets &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$subnet_1&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Subnets[0].SubnetId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+aws ec2 delete-subnet &lt;span class=&quot;nt&quot;&gt;--subnet-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$subnet_id&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# 2nd subnet&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;subnet_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-subnets &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$subnet_2&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Subnets[0].SubnetId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+aws ec2 delete-subnet &lt;span class=&quot;nt&quot;&gt;--subnet-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$subnet_id&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;route-table-1&quot;&gt;Route Table&lt;/h3&gt;
+
+&lt;p&gt;Delete:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;route_table_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-route-tables &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$route_table&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.RouteTables[0].RouteTableId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+aws ec2 delete-route-table &lt;span class=&quot;nt&quot;&gt;--route-table-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$route_table_id&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;internet-gateway-1&quot;&gt;Internet Gateway&lt;/h3&gt;
+
+&lt;p&gt;Detach:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;vpc_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-vpcs &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$vpc&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Vpcs[0].VpcId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;internet_gateway_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-internet-gateways &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$internet_gateway&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.InternetGateways[0].InternetGatewayId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+aws ec2 detach-internet-gateway &lt;span class=&quot;nt&quot;&gt;--internet-gateway-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$internet_gateway_id&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--vpc-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$vpc_id&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Delete:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;internet_gateway_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-internet-gateways &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$internet_gateway&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.InternetGateways[0].InternetGatewayId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+aws ec2 delete-internet-gateway &lt;span class=&quot;nt&quot;&gt;--internet-gateway-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$internet_gateway_id&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;vpc-1&quot;&gt;VPC&lt;/h3&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;vpc_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-vpcs &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$vpc&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Vpcs[0].VpcId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+aws ec2 delete-vpc &lt;span class=&quot;nt&quot;&gt;--vpc-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$vpc_id&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Step-by-step guide for creating an AWS EC2 instance with the AWS CLI. Make sure you go through these steps first: Setup macOS for AWS Cloud DevOps AWS Authentication</summary></entry><entry><title type="html">AWS Authentication</title><link href="/aws-authentication/" rel="alternate" type="text/html" title="AWS Authentication" /><published>2020-12-30T00:00:00-08:00</published><updated>2020-12-30T00:00:00-08:00</updated><id>/aws-authentication</id><content type="html" xml:base="/aws-authentication/">&lt;p&gt;Set up your AWS credentials. For more information, see &lt;a href=&quot;https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html&quot;&gt;Configuration and credential file settings&lt;/a&gt;. Request access key ID and secret access key from you AWS admin.&lt;/p&gt;
+
+&lt;p&gt;Make sure you go through this step first:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;/setup-macos-for-aws-cloud-devops&quot;&gt;Setup macOS for AWS Cloud DevOps&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;h2 id=&quot;aws-cli&quot;&gt;AWS CLI&lt;/h2&gt;
 
@@ -56,7 +311,7 @@ aws configure &lt;span class=&quot;nt&quot;&gt;--profile&lt;/span&gt; swift
 &lt;p&gt;Import the key in AWS EC2:&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws ec2 import-key-pair &lt;span class=&quot;nt&quot;&gt;--key-name&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;aws-ec2-key&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--public-key-material&lt;/span&gt; fileb://~/.ssh/aws-ec2-key.pub
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Set up your AWS credentials. For more information, see Configuration and credential file settings. Request access key ID and secret access key from you AWS admin.</summary></entry><entry><title type="html">Setup macOS for AWS Cloud DevOps</title><link href="/setup-macos-for-aws-cloud-devops/" rel="alternate" type="text/html" title="Setup macOS for AWS Cloud DevOps" /><published>2020-11-15T00:00:00-08:00</published><updated>2020-11-15T00:00:00-08:00</updated><id>/setup-macos-for-aws-cloud-devops</id><content type="html" xml:base="/setup-macos-for-aws-cloud-devops/">&lt;p&gt;Step-by-step AWS DevOps environment setup for macOS.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Set up your AWS credentials. For more information, see Configuration and credential file settings. Request access key ID and secret access key from you AWS admin. Make sure you go through this step first: Setup macOS for AWS Cloud DevOps</summary></entry><entry><title type="html">Setup macOS for AWS Cloud DevOps</title><link href="/setup-macos-for-aws-cloud-devops/" rel="alternate" type="text/html" title="Setup macOS for AWS Cloud DevOps" /><published>2020-11-15T00:00:00-08:00</published><updated>2020-11-15T00:00:00-08:00</updated><id>/setup-macos-for-aws-cloud-devops</id><content type="html" xml:base="/setup-macos-for-aws-cloud-devops/">&lt;p&gt;Step-by-step AWS DevOps environment setup for macOS.&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;Scripts are &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bash&lt;/code&gt;&lt;/p&gt;
@@ -1877,202 +2132,4 @@ end script
 &lt;p&gt;Run the integration tests:&lt;/p&gt;
 
 &lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;kitchen&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--destroy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;never&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><category term="nginx" /><category term="chef" /><category term="ubuntu" /><summary type="html">In this post we show how to install NGINX on Ubuntu using Chef on Windows 10 workstation.</summary></entry><entry><title type="html">How to use Berkshelf, Chef Zero, Vagrant and VirtualBox</title><link href="/how-to-use-berkshelf-chef-zero-vagrant-and-virtualbox/" rel="alternate" type="text/html" title="How to use Berkshelf, Chef Zero, Vagrant and VirtualBox" /><published>2015-11-25T00:00:00-08:00</published><updated>2015-11-25T00:00:00-08:00</updated><id>/how-to-use-berkshelf-chef-zero-vagrant-and-virtualbox</id><content type="html" xml:base="/how-to-use-berkshelf-chef-zero-vagrant-and-virtualbox/">&lt;p&gt;In this post we show how you can use &lt;a href=&quot;http://berkshelf.com/&quot;&gt;Berkshelf&lt;/a&gt;, &lt;a href=&quot;https://www.chef.io/chef/&quot;&gt;Chef Zero&lt;/a&gt;, &lt;a href=&quot;https://www.vagrantup.com/&quot;&gt;Vagrant&lt;/a&gt;, and &lt;a href=&quot;https://www.virtualbox.org/&quot;&gt;VirtualBox&lt;/a&gt; to provision Ubuntu 14.04 guest on Windows 10 host.&lt;/p&gt;
-
-&lt;h2 id=&quot;before-you-begin&quot;&gt;Before You Begin&lt;/h2&gt;
-
-&lt;p&gt;You need VirtualBox and Vagrant installed. To do that, you can follow the steps described in &lt;a href=&quot;../ubuntu-with-vagrant-and-virtualbox-on-windows/&quot;&gt;Ubuntu with Vagrant and VirtualBox on Windows&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;install-vagrant-omnibus-plugin&quot;&gt;Install Vagrant-Omnibus Plugin&lt;/h2&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;vagrant&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;plugin&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;install&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;vagrant-omnibus&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;install-vagrant-berkshelf-plugin&quot;&gt;Install Vagrant-Berkshelf Plugin&lt;/h2&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;vagrant&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;plugin&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;install&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;vagrant-berkshelf&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;install-chef-development-kit-chefdk&quot;&gt;Install Chef Development Kit (ChefDK)&lt;/h2&gt;
-
-&lt;p&gt;In PowerShell as &lt;em&gt;Administrator&lt;/em&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;choco&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;install&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;chefdk&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;install-knife-solo&quot;&gt;Install Knife Solo&lt;/h2&gt;
-
-&lt;p&gt;At this time we only need knife solo to generate an empty Chef repository that is compatible with Chef Zero. For more information see &lt;a href=&quot;https://matschaffer.github.io/knife-solo/&quot;&gt;Knife Solo&lt;/a&gt;.&lt;/p&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;gem&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;install&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;knife-solo&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;create-chef-repository&quot;&gt;Create Chef Repository&lt;/h2&gt;
-
-&lt;h3 id=&quot;create-a-chef-repo-directory&quot;&gt;Create a chef-repo directory&lt;/h3&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;mkdir&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ubuntu-chef-repo&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cd&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ubuntu-chef-repo&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;setup-the-the-chef-repo-directory&quot;&gt;Setup the the chef-repo directory&lt;/h3&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;touch&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Berksfile&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;knife&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;solo&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--no-git&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Paste this into the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Berksfile&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'https://supermarket.chef.io'&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;cookbook&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'main'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;path: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'./site-cookbooks/main'&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;create-new-cookbook&quot;&gt;Create New Cookbook&lt;/h2&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;cd&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;site-cookbooks&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;berks&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cookbook&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--skip-git&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--skip-test-kitchen&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--no-foodcritic&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--no-chef-minitest&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--no-bundler&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--skip-vagrant&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Check the structure of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main&lt;/code&gt; cookbook:&lt;/p&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;tree&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;/F&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;It should have the following structure:&lt;/p&gt;
-
-&lt;div class=&quot;language-text highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;│   Berksfile
-│   CHANGELOG.md
-│   chefignore
-│   LICENSE
-│   metadata.rb
-│   README.md
-│   Thorfile
-│
-├───attributes
-├───files
-│   └───default
-├───libraries
-├───providers
-├───recipes
-│       default.rb
-│
-├───resources
-└───templates
-    └───default
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;add-the-apt-cookbook-as-a-dependency&quot;&gt;Add the Apt Cookbook as a Dependency&lt;/h3&gt;
-
-&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;apt&lt;/code&gt; cookbook runs the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;apt-get update&lt;/code&gt; command on the guest system. See &lt;a href=&quot;https://supermarket.chef.io/cookbooks/apt&quot;&gt;apt Cookbook - Chef Supermarket&lt;/a&gt; for details.&lt;/p&gt;
-
-&lt;p&gt;Open the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;site-cookbooks/main/metadata.rb&lt;/code&gt; file and add the following code at the end (the version may be different than 2.9.2):&lt;/p&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;depends&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'apt'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'~&amp;gt; 2.9.2'&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;This is how the final file should look like:&lt;/p&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;             &lt;span class=&quot;s1&quot;&gt;'main'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;maintainer&lt;/span&gt;       &lt;span class=&quot;s1&quot;&gt;'YOUR_NAME'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;maintainer_email&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'YOUR_EMAIL'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;license&lt;/span&gt;          &lt;span class=&quot;s1&quot;&gt;'All rights reserved'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;      &lt;span class=&quot;s1&quot;&gt;'Installs/Configures main'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;long_description&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Installs/Configures main'&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;version&lt;/span&gt;          &lt;span class=&quot;s1&quot;&gt;'0.1.0'&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;depends&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'apt'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'~&amp;gt; 2.9.2'&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;include-the-apt-cookbook-in-the-default-recipe&quot;&gt;Include the Apt Cookbook in the Default Recipe&lt;/h3&gt;
-
-&lt;p&gt;Open &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;site-cookbooks/main/recipes/default.rb&lt;/code&gt; and add the following code at the end:&lt;/p&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;include_recipe&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'apt::default'&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The final file looks like this:&lt;/p&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# Cookbook Name:: main&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# Recipe:: default&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# Copyright (C) 2016 YOUR_NAME&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# All rights reserved - Do Not Redistribute&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;include_recipe&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'apt::default'&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;test&quot;&gt;Test&lt;/h3&gt;
-
-&lt;p&gt;This will generate Berksfile.lock&lt;/p&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;berks&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;install&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;create-vagrantfile&quot;&gt;Create Vagrantfile&lt;/h2&gt;
-
-&lt;p&gt;Go to the Chef Repo root (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ubuntu-chef-repo&lt;/code&gt;).&lt;/p&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;touch&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Vagrantfile&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Open &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Vagrantfile&lt;/code&gt; and replace its content with the following one:&lt;/p&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# -*- mode: ruby -*-&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# vi: set ft=ruby :&lt;/span&gt;
-
-&lt;span class=&quot;no&quot;&gt;Vagrant&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;configure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# Every Vagrant development environment requires a box. You can search for&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# boxes at https://atlas.hashicorp.com/search.&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;vm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;box&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;ubuntu/trusty64&quot;&lt;/span&gt;
-
-  &lt;span class=&quot;c1&quot;&gt;# Provider-specific configuration so you can fine-tune various&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# backing providers for Vagrant. These expose provider-specific options.&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;vm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;provider&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;virtualbox&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# For a complete reference, please see the online documentation at&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# https://docs.vagrantup.com/v2/virtualbox/configuration.html&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;# Name used in Oracle VM VirtualBox Manager GUI&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;vb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;berkshelf-ubuntu-kitchen&quot;&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;# Customize the amount of memory on the VM (in MB):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;vb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;memory&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;2048&quot;&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;# Customize the amount of video memory on the VM (in MB):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;vb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;customize&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;modifyvm&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;--vram&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;128&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-
-  &lt;span class=&quot;c1&quot;&gt;# Install the latest version of Chef.&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# For more information see https://github.com/chef/vagrant-omnibus&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;omnibus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;chef_version&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:latest&lt;/span&gt;
-
-  &lt;span class=&quot;c1&quot;&gt;# Enabling the Berkshelf plugin.&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;berkshelf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;enabled&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
-
-  &lt;span class=&quot;c1&quot;&gt;# Provision with Chef Zero&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;vm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;provision&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:chef_zero&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# Specify the local paths where Chef data is stored&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;cookbooks_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'cookbooks'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'site-cookbooks'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;data_bags_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;data_bags&quot;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;nodes_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;nodes&quot;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;roles_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;roles&quot;&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;# Add a recipe&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;add_recipe&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;main::default&quot;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;test-1&quot;&gt;Test&lt;/h2&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;vagrant&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;up&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vagrant&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;provision&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><category term="berkshelf" /><category term="chef" /><category term="vagrant" /><category term="virtualbox" /><summary type="html">In this post we show how you can use Berkshelf, Chef Zero, Vagrant, and VirtualBox to provision Ubuntu 14.04 guest on Windows 10 host.</summary></entry></feed>
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><category term="nginx" /><category term="chef" /><category term="ubuntu" /><summary type="html">In this post we show how to install NGINX on Ubuntu using Chef on Windows 10 workstation.</summary></entry></feed>

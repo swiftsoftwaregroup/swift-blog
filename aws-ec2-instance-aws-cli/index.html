@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<title>Creating an AWS EC2 instance with the AWS CLI | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Swift Software Group">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/aws-ec2-instance-aws-cli/">
+
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-37864402-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-37864402-1');
+</script>
+
+</head>
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/aws-ec2-instance-aws-cli/">Creating an AWS EC2 instance with the AWS CLI</a></h1><time datetime="2021-01-22T00:00:00-08:00">January 22, 2021</time>
+</header>
+
+  <p>Step-by-step guide for creating an AWS EC2 instance with the AWS CLI.</p>
+
+<p>Make sure you go through these steps first:</p>
+
+<ol>
+  <li><a href="/setup-macos-for-aws-cloud-devops">Setup macOS for AWS Cloud DevOps</a></li>
+  <li><a href="/aws-authentication">AWS Authentication</a></li>
+</ol>
+
+<h2 id="setup">Setup</h2>
+
+<h3 id="names">Names</h3>
+
+<p>Assign resource names:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># VPC</span>
+<span class="nv">vpc</span><span class="o">=</span><span class="s2">"vpc-ec2"</span>
+
+<span class="c"># Subnets</span>
+<span class="nv">subnet_1</span><span class="o">=</span><span class="s2">"subnet-ec2-1"</span>
+<span class="nv">subnet_2</span><span class="o">=</span><span class="s2">"subnet-ec2-2"</span>
+
+<span class="c"># Internet Gateway</span>
+<span class="nv">internet_gateway</span><span class="o">=</span><span class="s2">"igw-ec2"</span>
+
+<span class="c"># Route Table</span>
+<span class="nv">route_table</span><span class="o">=</span><span class="s2">"rtb-ec2"</span>
+
+<span class="c"># Security Group</span>
+<span class="nv">security_group</span><span class="o">=</span><span class="s2">"security-ec2"</span>
+
+<span class="c"># instance</span>
+<span class="nv">instance</span><span class="o">=</span><span class="s2">"instance-ec2"</span>
+
+<span class="c"># SSH access key</span>
+<span class="nv">key</span><span class="o">=</span><span class="s2">"aws-ec2-key"</span>
+</code></pre></div></div>
+
+<h3 id="vpc">VPC</h3>
+
+<p>Create a VPC  (Virtual Private Cloud):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws ec2 create-vpc <span class="se">\</span>
+  <span class="nt">--cidr-block</span> 10.0.0.0/16  <span class="se">\</span>
+  <span class="nt">--tag-specifications</span> <span class="s1">'ResourceType=vpc,Tags=[{Key=Name,Value='</span><span class="nv">$vpc</span><span class="s1">'}]'</span>
+</code></pre></div></div>
+
+<h3 id="subnets">Subnets</h3>
+
+<p>Create 2 subnets:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">vpc_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-vpcs <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$vpc</span> | jq <span class="nt">-r</span> <span class="s1">'.Vpcs[0].VpcId'</span><span class="si">)</span>
+
+<span class="c"># 1st subnet</span>
+aws ec2 create-subnet <span class="se">\</span>
+  <span class="nt">--vpc-id</span> <span class="nv">$vpc_id</span> <span class="se">\</span>
+  <span class="nt">--cidr-block</span> 10.0.0.0/24 <span class="se">\</span>
+  <span class="nt">--availability-zone</span> us-west-2a <span class="se">\</span>
+  <span class="nt">--tag-specifications</span> <span class="s1">'ResourceType=subnet,Tags=[{Key=Name,Value='</span><span class="nv">$subnet_1</span><span class="s1">'}]'</span>  
+
+<span class="c"># 2nd subnet</span>
+aws ec2 create-subnet <span class="se">\</span>
+  <span class="nt">--vpc-id</span> <span class="nv">$vpc_id</span> <span class="se">\</span>
+  <span class="nt">--cidr-block</span> 10.0.1.0/24 <span class="se">\</span>
+  <span class="nt">--availability-zone</span> us-west-2a <span class="se">\</span>
+  <span class="nt">--tag-specifications</span> <span class="s1">'ResourceType=subnet,Tags=[{Key=Name,Value='</span><span class="nv">$subnet_2</span><span class="s1">'}]'</span>  
+</code></pre></div></div>
+
+<p>Optionally modify the public IP addressing behavior of your subnet so that an instance launched into the subnet automatically receives a public IP address. Otherwise, you should associate an Elastic IP address with your instance after launch so that it’s reachable from the Internet.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">subnet_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-subnets <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$subnet_1</span> | jq <span class="nt">-r</span> <span class="s1">'.Subnets[0].SubnetId'</span><span class="si">)</span>
+aws ec2 modify-subnet-attribute <span class="nt">--subnet-id</span> <span class="nv">$subnet_id</span> <span class="nt">--map-public-ip-on-launch</span>
+</code></pre></div></div>
+
+<h3 id="internet-gateway">Internet Gateway</h3>
+
+<p>After you’ve created the VPC and subnets, you can make one of the subnets a public subnet by attaching an Internet gateway to your VPC, creating a custom route table, and configuring routing for the subnet to the Internet gateway.</p>
+
+<h4 id="create">Create</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws ec2 create-internet-gateway <span class="se">\</span>
+  <span class="nt">--tag-specifications</span> <span class="s1">'ResourceType=internet-gateway,Tags=[{Key=Name,Value='</span><span class="nv">$internet_gateway</span><span class="s1">'}]'</span> 
+</code></pre></div></div>
+
+<h4 id="attach-to-vpc">Attach to VPC</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">vpc_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-vpcs <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$vpc</span> | jq <span class="nt">-r</span> <span class="s1">'.Vpcs[0].VpcId'</span><span class="si">)</span>
+
+<span class="nv">internet_gateway_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-internet-gateways <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$internet_gateway</span> | jq <span class="nt">-r</span> <span class="s1">'.InternetGateways[0].InternetGatewayId'</span><span class="si">)</span>
+
+aws ec2 attach-internet-gateway <span class="nt">--vpc-id</span> <span class="nv">$vpc_id</span> <span class="nt">--internet-gateway-id</span> <span class="nv">$internet_gateway_id</span>
+</code></pre></div></div>
+
+<h3 id="route-table">Route Table</h3>
+
+<p>Create:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">vpc_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-vpcs <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$vpc</span> | jq <span class="nt">-r</span> <span class="s1">'.Vpcs[0].VpcId'</span><span class="si">)</span>
+
+aws ec2 create-route-table <span class="se">\</span>
+  <span class="nt">--vpc-id</span> <span class="nv">$vpc_id</span> <span class="se">\</span>
+  <span class="nt">--tag-specifications</span> <span class="s1">'ResourceType=route-table,Tags=[{Key=Name,Value='</span><span class="nv">$route_table</span><span class="s1">'}]'</span> 
+</code></pre></div></div>
+
+<p>Associate with a subnet:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 1st subnet</span>
+<span class="nv">subnet_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-subnets <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$subnet_1</span> | jq <span class="nt">-r</span> <span class="s1">'.Subnets[0].SubnetId'</span><span class="si">)</span>
+
+<span class="nv">route_table_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-route-tables <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$route_table</span> | jq <span class="nt">-r</span> <span class="s1">'.RouteTables[0].RouteTableId'</span><span class="si">)</span>
+
+aws ec2 associate-route-table  <span class="nt">--subnet-id</span> <span class="nv">$subnet_id</span> <span class="nt">--route-table-id</span> <span class="nv">$route_table_id</span>
+</code></pre></div></div>
+
+<p>Create a route in the route table that points all traffic (<code class="language-plaintext highlighter-rouge">0.0.0.0/0</code>) to the Internet gateway:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">route_table_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-route-tables <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$route_table</span> | jq <span class="nt">-r</span> <span class="s1">'.RouteTables[0].RouteTableId'</span><span class="si">)</span>
+<span class="nv">internet_gateway_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-internet-gateways <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$internet_gateway</span> | jq <span class="nt">-r</span> <span class="s1">'.InternetGateways[0].InternetGatewayId'</span><span class="si">)</span>
+
+aws ec2 create-route <span class="se">\</span>
+  <span class="nt">--route-table-id</span> <span class="nv">$route_table_id</span> <span class="se">\</span>
+  <span class="nt">--gateway-id</span> <span class="nv">$internet_gateway_id</span> <span class="se">\</span>
+  <span class="nt">--destination-cidr-block</span> 0.0.0.0/0
+</code></pre></div></div>
+
+<p>Confirm route is active:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">route_table_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-route-tables <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$route_table</span> | jq <span class="nt">-r</span> <span class="s1">'.RouteTables[0].RouteTableId'</span><span class="si">)</span>
+aws ec2 describe-route-tables <span class="nt">--route-table-id</span> <span class="nv">$route_table_id</span>
+</code></pre></div></div>
+
+<h3 id="security-group">Security Group</h3>
+
+<p>Create a security group in your VPC:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">vpc_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-vpcs <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$vpc</span> | jq <span class="nt">-r</span> <span class="s1">'.Vpcs[0].VpcId'</span><span class="si">)</span>
+
+aws ec2 create-security-group <span class="se">\</span>
+	<span class="nt">--group-name</span> <span class="nv">$security_group</span> <span class="se">\</span>
+  <span class="nt">--description</span> <span class="s2">"Security group for instance access"</span> <span class="se">\</span>
+  <span class="nt">--vpc-id</span> <span class="nv">$vpc_id</span> <span class="se">\</span>
+  <span class="nt">--tag-specifications</span> <span class="s1">'ResourceType=security-group,Tags=[{Key=Name,Value='</span><span class="nv">$security_group</span><span class="s1">'}]'</span> 
+</code></pre></div></div>
+
+<p>Add a rule that allows SSH access from anywhere:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">group_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-security-groups <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$security_group</span> | jq <span class="nt">-r</span> <span class="s1">'.SecurityGroups[0].GroupId'</span><span class="si">)</span>
+aws ec2 authorize-security-group-ingress <span class="se">\</span>
+  <span class="nt">--group-id</span> <span class="nv">$group_id</span> <span class="se">\</span>
+  <span class="nt">--protocol</span> tcp <span class="nt">--port</span> 22 <span class="nt">--cidr</span> 0.0.0.0/0
+</code></pre></div></div>
+
+<h3 id="ec2-instance">EC2 Instance</h3>
+
+<p>List Amazon Linux images (via System Manager):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws ssm get-parameters-by-path <span class="nt">--path</span> /aws/service/ami-amazon-linux-latest <span class="nt">--query</span> <span class="s2">"Parameters[].Name"</span>
+</code></pre></div></div>
+
+<p>Launch instance:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">subnet_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-subnets <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$subnet_1</span> | jq <span class="nt">-r</span> <span class="s1">'.Subnets[0].SubnetId'</span><span class="si">)</span>
+<span class="nv">group_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-security-groups <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$security_group</span> | jq <span class="nt">-r</span> <span class="s1">'.SecurityGroups[0].GroupId'</span><span class="si">)</span>
+
+aws ec2 run-instances <span class="se">\</span>
+  <span class="nt">--subnet-id</span> <span class="nv">$subnet_id</span> <span class="se">\</span>
+  <span class="nt">--security-group-ids</span> <span class="nv">$group_id</span> <span class="se">\</span>
+  <span class="nt">--image-id</span> resolve:ssm:/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2 <span class="se">\</span>
+  <span class="nt">--instance-type</span> t2.micro <span class="se">\</span>
+  <span class="nt">--count</span> 1 <span class="se">\</span>
+  <span class="nt">--key-name</span> <span class="nv">$key</span> <span class="se">\</span>
+   <span class="nt">--tag-specifications</span> <span class="s1">'ResourceType=instance,Tags=[{Key=Name,Value='</span><span class="nv">$instance</span><span class="s1">'}]'</span>
+</code></pre></div></div>
+
+<p>Check instance status. Wait until it is <code class="language-plaintext highlighter-rouge">running</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">instance_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-instances <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$instance</span> | jq <span class="nt">-r</span> <span class="s1">'.Reservations[0].Instances[0].InstanceId'</span><span class="si">)</span>
+aws ec2 describe-instances <span class="nt">--instance-id</span> <span class="nv">$instance_id</span> | jq <span class="nt">-r</span> <span class="s1">'.Reservations[0].Instances[0].State'</span>
+</code></pre></div></div>
+
+<p>Login into the instance:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">instance_public_ip</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-instances <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$instance</span> | jq <span class="nt">-r</span> <span class="s1">'.Reservations[0].Instances[0].PublicIpAddress'</span><span class="si">)</span>
+ssh <span class="nt">-i</span> ~/.ssh/<span class="nv">$key</span> ec2-user@<span class="nv">$instance_public_ip</span>
+</code></pre></div></div>
+
+<h2 id="clean-up">Clean up</h2>
+
+<p>Delete all resources in reverse order of creation.</p>
+
+<h3 id="ec2-instance-1">EC2 Instance</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">instance_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-instances <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$instance</span> | jq <span class="nt">-r</span> <span class="s1">'.Reservations[0].Instances[0].InstanceId'</span><span class="si">)</span>
+aws ec2 terminate-instances <span class="nt">--instance-ids</span> <span class="nv">$instance_id</span>
+</code></pre></div></div>
+
+<p>Check instance status. Wait until it is <code class="language-plaintext highlighter-rouge">terminated</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws ec2 describe-instances <span class="nt">--instance-id</span> <span class="nv">$instance_id</span> | jq <span class="nt">-r</span> <span class="s1">'.Reservations[0].Instances[0].State'</span>
+</code></pre></div></div>
+
+<h3 id="security-group-1">Security Group</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">group_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-security-groups <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$security_group</span> | jq <span class="nt">-r</span> <span class="s1">'.SecurityGroups[0].GroupId'</span><span class="si">)</span>
+aws ec2 delete-security-group <span class="nt">--group-id</span> <span class="nv">$group_id</span>
+</code></pre></div></div>
+
+<h3 id="subnets-1">Subnets</h3>
+
+<p>Delete:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 1st subnet</span>
+<span class="nv">subnet_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-subnets <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$subnet_1</span> | jq <span class="nt">-r</span> <span class="s1">'.Subnets[0].SubnetId'</span><span class="si">)</span>
+aws ec2 delete-subnet <span class="nt">--subnet-id</span> <span class="nv">$subnet_id</span>
+
+<span class="c"># 2nd subnet</span>
+<span class="nv">subnet_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-subnets <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$subnet_2</span> | jq <span class="nt">-r</span> <span class="s1">'.Subnets[0].SubnetId'</span><span class="si">)</span>
+aws ec2 delete-subnet <span class="nt">--subnet-id</span> <span class="nv">$subnet_id</span>
+</code></pre></div></div>
+
+<h3 id="route-table-1">Route Table</h3>
+
+<p>Delete:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">route_table_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-route-tables <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$route_table</span> | jq <span class="nt">-r</span> <span class="s1">'.RouteTables[0].RouteTableId'</span><span class="si">)</span>
+aws ec2 delete-route-table <span class="nt">--route-table-id</span> <span class="nv">$route_table_id</span>
+</code></pre></div></div>
+
+<h3 id="internet-gateway-1">Internet Gateway</h3>
+
+<p>Detach:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">vpc_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-vpcs <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$vpc</span> | jq <span class="nt">-r</span> <span class="s1">'.Vpcs[0].VpcId'</span><span class="si">)</span>
+
+<span class="nv">internet_gateway_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-internet-gateways <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$internet_gateway</span> | jq <span class="nt">-r</span> <span class="s1">'.InternetGateways[0].InternetGatewayId'</span><span class="si">)</span>
+
+aws ec2 detach-internet-gateway <span class="nt">--internet-gateway-id</span> <span class="nv">$internet_gateway_id</span> <span class="nt">--vpc-id</span> <span class="nv">$vpc_id</span>
+</code></pre></div></div>
+
+<p>Delete:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">internet_gateway_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-internet-gateways <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$internet_gateway</span> | jq <span class="nt">-r</span> <span class="s1">'.InternetGateways[0].InternetGatewayId'</span><span class="si">)</span>
+aws ec2 delete-internet-gateway <span class="nt">--internet-gateway-id</span> <span class="nv">$internet_gateway_id</span>
+</code></pre></div></div>
+
+<h3 id="vpc-1">VPC</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">vpc_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-vpcs <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$vpc</span> | jq <span class="nt">-r</span> <span class="s1">'.Vpcs[0].VpcId'</span><span class="si">)</span>
+aws ec2 delete-vpc <span class="nt">--vpc-id</span> <span class="nv">$vpc_id</span>
+</code></pre></div></div>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>
