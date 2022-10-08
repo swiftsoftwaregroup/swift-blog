@@ -1,4 +1,62 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-06-16T22:05:06-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Signing in or out of Chrome signs you in or out of Google web services</title><link href="/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services/" rel="alternate" type="text/html" title="Signing in or out of Chrome signs you in or out of Google web services " /><published>2018-09-25T00:00:00-07:00</published><updated>2018-09-25T00:00:00-07:00</updated><id>/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services</id><content type="html" xml:base="/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services/">&lt;p&gt;Chrome 69 was released to users on September 5th, 2018. Besides the different look and feel one other annoying change is that Chrome now logs you automatically into Google services like Gmail with the same account that you use for browser syncing. Previously, users were allowed to keep those logins separate. To disable the forced login, navigate to &lt;a href=&quot;chrome://flags/#account-consistency&quot;&gt;chrome://flags/#account-consistency&lt;/a&gt;. Then set the option labeled, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Identity consistency between browser and cookie jar&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Disabled&lt;/code&gt; and restart your browser.&lt;/p&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Chrome 69 was released to users on September 5th, 2018. Besides the different look and feel one other annoying change is that Chrome now logs you automatically into Google services like Gmail with the same account that you use for browser syncing. Previously, users were allowed to keep those logins separate. To disable the forced login, navigate to chrome://flags/#account-consistency. Then set the option labeled, Identity consistency between browser and cookie jar to Disabled and restart your browser.</summary></entry><entry><title type="html">How to Streamline Working Relationships with Multiple Parties</title><link href="/how-to-streamline-working-relationships-with-multiple-parties/" rel="alternate" type="text/html" title="How to Streamline Working Relationships with Multiple Parties" /><published>2018-09-07T00:00:00-07:00</published><updated>2018-09-07T00:00:00-07:00</updated><id>/how-to-streamline-working-relationships-with-multiple-parties</id><content type="html" xml:base="/how-to-streamline-working-relationships-with-multiple-parties/">&lt;p&gt;If you want to facilitate a smooth and efficient working relationship, all relevant parties must first agree on a few critical aspects of the project. The ability to communicate ideas is integral to the creation of any stable working relationship. Before starting a joint project, discuss these five elements with each party.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-10-07T17:01:17-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">AWS Authentication</title><link href="/aws-authentication/" rel="alternate" type="text/html" title="AWS Authentication" /><published>2020-12-30T00:00:00-08:00</published><updated>2020-12-30T00:00:00-08:00</updated><id>/aws-authentication</id><content type="html" xml:base="/aws-authentication/">&lt;p&gt;Set up your AWS credentials. For more information, see &lt;a href=&quot;https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html&quot;&gt;Configuration and credential file settings&lt;/a&gt;. Request access key ID and secret access key from you AWS admin.&lt;/p&gt;
+
+&lt;h2 id=&quot;aws-cli&quot;&gt;AWS CLI&lt;/h2&gt;
+
+&lt;p&gt;Run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;aws configure&lt;/code&gt; to configure access key ID and secret access key, default region.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# To configure the default profile:&lt;/span&gt;
+aws configure
+
+&lt;span class=&quot;c&quot;&gt;# To configure a specific named profile, e.g. `swift`:&lt;/span&gt;
+aws configure &lt;span class=&quot;nt&quot;&gt;--profile&lt;/span&gt; swift
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Specify Access key ID&lt;/li&gt;
+  &lt;li&gt;Specify  Secret access key&lt;/li&gt;
+  &lt;li&gt;Set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;us-west-2&lt;/code&gt; for region&lt;/li&gt;
+  &lt;li&gt;Set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json&lt;/code&gt; for output format&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;IMPORTANT&lt;/strong&gt;: Disable CLI pager. Otherwise you will not be able to parse AWS CLI json responses:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws configure &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;cli_pager &lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The files generated by the CLI for a default profile configured with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;aws configure&lt;/code&gt; looks similar to the following.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; ~/.aws/credentials
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[default]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;aws_access_key_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;QWERTYUIOPASDFGHJKLZ&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;aws_secret_access_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;abcdEfgHijklm/NOPQARS/BxcfghGHEXAMPLEKEY&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; ~/.aws/config
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[default]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;region&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;us-west-2&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;json&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Test:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws ec2 describe-instances
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;ec2-key-pair&quot;&gt;EC2 Key Pair&lt;/h2&gt;
+
+&lt;p&gt;Generate EC2 SSH key pair:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh-keygen &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; rsa &lt;span class=&quot;nt&quot;&gt;-C&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;aws-ec2-key&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; ~/.ssh/aws-ec2-key
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Import the key in AWS EC2:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws ec2 import-key-pair &lt;span class=&quot;nt&quot;&gt;--key-name&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;aws-ec2-key&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--public-key-material&lt;/span&gt; fileb://~/.ssh/aws-ec2-key.pub
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Set up your AWS credentials. For more information, see Configuration and credential file settings. Request access key ID and secret access key from you AWS admin.</summary></entry><entry><title type="html">Signing in or out of Chrome signs you in or out of Google web services</title><link href="/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services/" rel="alternate" type="text/html" title="Signing in or out of Chrome signs you in or out of Google web services " /><published>2018-09-25T00:00:00-07:00</published><updated>2018-09-25T00:00:00-07:00</updated><id>/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services</id><content type="html" xml:base="/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services/">&lt;p&gt;Chrome 69 was released to users on September 5th, 2018. Besides the different look and feel one other annoying change is that Chrome now logs you automatically into Google services like Gmail with the same account that you use for browser syncing. Previously, users were allowed to keep those logins separate. To disable the forced login, navigate to &lt;a href=&quot;chrome://flags/#account-consistency&quot;&gt;chrome://flags/#account-consistency&lt;/a&gt;. Then set the option labeled, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Identity consistency between browser and cookie jar&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Disabled&lt;/code&gt; and restart your browser.&lt;/p&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Chrome 69 was released to users on September 5th, 2018. Besides the different look and feel one other annoying change is that Chrome now logs you automatically into Google services like Gmail with the same account that you use for browser syncing. Previously, users were allowed to keep those logins separate. To disable the forced login, navigate to chrome://flags/#account-consistency. Then set the option labeled, Identity consistency between browser and cookie jar to Disabled and restart your browser.</summary></entry><entry><title type="html">How to Streamline Working Relationships with Multiple Parties</title><link href="/how-to-streamline-working-relationships-with-multiple-parties/" rel="alternate" type="text/html" title="How to Streamline Working Relationships with Multiple Parties" /><published>2018-09-07T00:00:00-07:00</published><updated>2018-09-07T00:00:00-07:00</updated><id>/how-to-streamline-working-relationships-with-multiple-parties</id><content type="html" xml:base="/how-to-streamline-working-relationships-with-multiple-parties/">&lt;p&gt;If you want to facilitate a smooth and efficient working relationship, all relevant parties must first agree on a few critical aspects of the project. The ability to communicate ideas is integral to the creation of any stable working relationship. Before starting a joint project, discuss these five elements with each party.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/how-to-streamline-working-relationships-with-multiple-parties/image_1049626304.jpg&quot; alt=&quot;&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
@@ -1985,81 +2043,4 @@ end script
 
 &lt;div class=&quot;language-posh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;vagrant&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;reload&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vagrant&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;provision&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><category term="chef" /><category term="vagrant" /><summary type="html">In this post we show how you can use VirtualBox and Vagrant to launch an Ubuntu 14.04 guest and install the latest Chef client on it using Windows 10 as a host.</summary></entry><entry><title type="html">Provision Chef with Vagrant-Omnibus Plugin</title><link href="/provision-chef-vagrant-omnibus-plugin/" rel="alternate" type="text/html" title="Provision Chef with Vagrant-Omnibus Plugin" /><published>2015-11-22T00:00:00-08:00</published><updated>2015-11-22T00:00:00-08:00</updated><id>/provision-chef-vagrant-omnibus-plugin</id><content type="html" xml:base="/provision-chef-vagrant-omnibus-plugin/">&lt;p&gt;In this post we show how you can provision &lt;a href=&quot;https://www.chef.io/chef/&quot;&gt;Chef&lt;/a&gt; from Vagrant using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vagrant-omnibus&lt;/code&gt; plugin. This post is for Ubuntu 14.04 guest running in VirtualBox on Windows 10 host.&lt;/p&gt;
-
-&lt;h2 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h2&gt;
-
-&lt;p&gt;You need VirtualBox and Vagrant installed. To do that, you can follow the steps described in &lt;a href=&quot;http://www.swiftsoftwaregroup.com/ubuntu-with-vagrant-and-virtualbox-on-windows/&quot;&gt;Ubuntu with Vagrant and VirtualBox on Windows&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;install-chef-development-kit-chefdk&quot;&gt;Install Chef Development Kit (ChefDK)&lt;/h2&gt;
-
-&lt;p&gt;In PowerShell as &lt;em&gt;Administrator&lt;/em&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;choco&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;install&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;chefdk&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;provision-chef&quot;&gt;Provision Chef&lt;/h2&gt;
-
-&lt;p&gt;Before you can use Chef Solo, Chef Zero, or Chef Client for provisioning, you need to install the latest Chef client on the guest. This can be done with a shell script or with a Vagrant plugin called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vagrant-omnibus&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;In PowerShell:&lt;/p&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;vagrant&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;plugin&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;install&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;vagrant-omnibus&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Open &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Vagrantfile&lt;/code&gt; and add the following code at the end of the configuration:&lt;/p&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Install the latest version of Chef.&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# For more information see https://github.com/chef/vagrant-omnibus&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;omnibus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;chef_version&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:latest&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The complete &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Vagrantfile&lt;/code&gt; file should look like this:&lt;/p&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# -*- mode: ruby -*-&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# vi: set ft=ruby :&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# All Vagrant configuration is done below. The &quot;2&quot; in Vagrant.configure&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# configures the configuration version (we support older styles for&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# backwards compatibility). Please don't change it unless you know what&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# you're doing.&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;Vagrant&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;configure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-
-  &lt;span class=&quot;c1&quot;&gt;# Every Vagrant development environment requires a box. You can search for&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# boxes at https://atlas.hashicorp.com/search.&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;vm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;box&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;ubuntu/trusty64&quot;&lt;/span&gt;
-
-  &lt;span class=&quot;c1&quot;&gt;# Provider-specific configuration so you can fine-tune various&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# backing providers for Vagrant. These expose provider-specific options.&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;vm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;provider&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;virtualbox&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# For a complete reference, please see the online documentation at&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# https://docs.vagrantup.com/v2/virtualbox/configuration.html&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;# Name used in Oracle VM VirtualBox Manager GUI&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;vb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Ubuntu-x64-Vagrant&quot;&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;# Customize the amount of memory on the VM (in MB):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;vb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;memory&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;2048&quot;&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;# Customize the amount of video memory on the VM (in MB):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;vb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;customize&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;modifyvm&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;--vram&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;128&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-
-  &lt;span class=&quot;c1&quot;&gt;# Install the latest version of Chef.&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# For more information see https://github.com/chef/vagrant-omnibus&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;omnibus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;chef_version&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:latest&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;test&quot;&gt;Test&lt;/h2&gt;
-
-&lt;p&gt;Finally launch and provision the Vagrant box. It should install the latest Chef Client:&lt;/p&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;vagrant&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;reload&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vagrant&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;provision&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><category term="chef" /><category term="vagrant" /><summary type="html">In this post we show how you can provision Chef from Vagrant using the vagrant-omnibus plugin. This post is for Ubuntu 14.04 guest running in VirtualBox on Windows 10 host.</summary></entry></feed>
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><category term="chef" /><category term="vagrant" /><summary type="html">In this post we show how you can use VirtualBox and Vagrant to launch an Ubuntu 14.04 guest and install the latest Chef client on it using Windows 10 as a host.</summary></entry></feed>
