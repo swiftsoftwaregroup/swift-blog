@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<title>Setup macOS for AWS Cloud DevOps | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Swift Software Group">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/setup-macos-for-aws-cloud-devops/">
+
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-37864402-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-37864402-1');
+</script>
+
+</head>
+
+
+
+
+<header>
+  <a href="/" class="title">Swift Software Group</a>
+  <nav><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="" href="" ><span aria-hidden="true"></span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/setup-macos-for-aws-cloud-devops/">Setup macOS for AWS Cloud DevOps</a></h1><time datetime="2020-11-15T00:00:00-08:00">November 15, 2020</time>
+</header>
+
+  <p>Step-by-step AWS DevOps environment setup for macOS.</p>
+
+<blockquote>
+  <p>Scripts are <code class="language-plaintext highlighter-rouge">bash</code></p>
+</blockquote>
+
+<h2 id="misc">Misc</h2>
+
+<h3 id="finder">Finder</h3>
+
+<p>Show hidden files:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>defaults write com.apple.finder AppleShowAllFiles YES
+</code></pre></div></div>
+
+<p>Hold the ‘Option/alt’ key, then right click on the Finder icon in the dock and click Relaunch</p>
+
+<h2 id="tools">Tools</h2>
+
+<h3 id="aws-cli">AWS CLI</h3>
+
+<p>Install:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/Downloads
+curl <span class="s2">"https://awscli.amazonaws.com/AWSCLIV2.pkg"</span> <span class="nt">-o</span> <span class="s2">"AWSCLIV2.pkg"</span>
+<span class="nb">sudo </span>installer <span class="nt">-pkg</span> AWSCLIV2.pkg <span class="nt">-target</span> /
+</code></pre></div></div>
+
+<p>Test:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>which aws
+aws <span class="nt">--version</span>
+<span class="c"># /usr/local/bin/aws</span>
+<span class="c"># aws-cli/2.8.2 Python/3.9.11 Darwin/21.6.0 exe/x86_64 prompt/off</span>
+</code></pre></div></div>
+
+<p>Enable  <code class="language-plaintext highlighter-rouge">bash</code> auto-completion:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">complete</span> <span class="nt">-C</span> aws_completer aws
+</code></pre></div></div>
+
+<h3 id="homebrew">Homebrew</h3>
+
+<p>Install Homebrew:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/bin/ruby <span class="nt">-e</span> <span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-fsSL</span> https://raw.githubusercontent.com/Homebrew/install/master/install<span class="si">)</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<h3 id="bash-5">bash 5+</h3>
+
+<blockquote>
+  <p>macOS comes with outdated version of bash. Install latest version.</p>
+</blockquote>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew update
+brew <span class="nb">install </span>bash
+</code></pre></div></div>
+
+<h3 id="gnupg">gnupg</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>gnupg
+</code></pre></div></div>
+
+<h3 id="jq">jq</h3>
+
+<p>See <a href="https://stedolan.github.io/jq/">jq</a> for details. Install via Homebrew:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>jq
+</code></pre></div></div>
+
+<h3 id="mo">mo</h3>
+
+<blockquote>
+  <p>Mustache Templates in Bash.</p>
+
+  <p>See: <a href="https://github.com/tests-always-included/mo">https://github.com/tests-always-included/mo</a></p>
+</blockquote>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Download</span>
+curl <span class="nt">-sSL</span> https://git.io/get-mo <span class="nt">-o</span> mo
+
+<span class="c"># Make executable</span>
+<span class="nb">chmod</span> +x mo
+
+<span class="c"># Move to the right folder</span>
+<span class="nb">sudo mv </span>mo /usr/local/bin/
+
+<span class="c"># Test</span>
+<span class="nb">echo</span> <span class="s2">"works"</span> | mo
+</code></pre></div></div>
+
+<h3 id="reg">reg</h3>
+
+<p><code class="language-plaintext highlighter-rouge">reg</code> is Docker registry v2 command line client and repo listing generator.</p>
+
+<p>Switch to root:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>su -
+</code></pre></div></div>
+
+<p>Install:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Export the sha256sum for verification.</span>
+<span class="nb">export </span><span class="nv">REG_SHA256</span><span class="o">=</span><span class="s2">"2768ac56ad640e8ee5b74752fc9bbeaf37f37a34c7e1ddcb6d0e384a3096b1c2"</span>
+
+<span class="c"># Download and check the sha256sum.</span>
+curl <span class="nt">-fSL</span> <span class="s2">"https://github.com/genuinetools/reg/releases/download/v0.16.1/reg-darwin-amd64"</span> <span class="nt">-o</span> <span class="s2">"/usr/local/bin/reg"</span> <span class="se">\</span>
+  <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">REG_SHA256</span><span class="k">}</span><span class="s2">  /usr/local/bin/reg"</span> | <span class="nb">sha256sum</span> <span class="nt">-c</span> - <span class="se">\</span>
+  <span class="o">&amp;&amp;</span> <span class="nb">chmod </span>a+x <span class="s2">"/usr/local/bin/reg"</span>
+</code></pre></div></div>
+
+<p>Test:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>reg <span class="nt">--help</span>
+</code></pre></div></div>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>
