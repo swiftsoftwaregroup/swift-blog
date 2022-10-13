@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-10-12T18:32:45-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Launch ECS container using AWS CLI - Step 1 Create Networks</title><link href="/launch-ecs-container-aws-cli-create-networks-step-1-create-networks/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 1 &lt;br&gt; Create Networks" /><published>2021-02-06T00:00:00-08:00</published><updated>2021-02-06T00:00:00-08:00</updated><id>/launch-ecs-container-aws-cli-create-networks-step-1-create-networks</id><content type="html" xml:base="/launch-ecs-container-aws-cli-create-networks-step-1-create-networks/">&lt;p&gt;Make sure you do the setup first:&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-10-12T18:35:20-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Launch ECS container using AWS CLI - Step 1 Network Setup</title><link href="/launch-ecs-container-aws-cli-create-networks-step-1-network-setup/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 1 &lt;br&gt; Network Setup" /><published>2021-02-06T00:00:00-08:00</published><updated>2021-02-06T00:00:00-08:00</updated><id>/launch-ecs-container-aws-cli-create-networks-step-1-network-setup</id><content type="html" xml:base="/launch-ecs-container-aws-cli-create-networks-step-1-network-setup/">&lt;p&gt;Make sure you do the setup first:&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;&lt;a href=&quot;/setup-macos-for-aws-cloud-devops&quot;&gt;Setup macOS for AWS Cloud DevOps&lt;/a&gt;&lt;/li&gt;
@@ -8,7 +8,7 @@
 &lt;p&gt;Steps:&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;Create Networks (this post)&lt;/li&gt;
+  &lt;li&gt;Network Setup (this post)&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h2 id=&quot;define-names&quot;&gt;Define names&lt;/h2&gt;
@@ -144,7 +144,7 @@ aws ec2 create-security-group &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
 aws ec2 authorize-security-group-ingress &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
     &lt;span class=&quot;nt&quot;&gt;--group-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$group_id&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
     &lt;span class=&quot;nt&quot;&gt;--protocol&lt;/span&gt; tcp &lt;span class=&quot;nt&quot;&gt;--port&lt;/span&gt; 22 &lt;span class=&quot;nt&quot;&gt;--cidr&lt;/span&gt; 0.0.0.0/0
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Make sure you do the setup first: Setup macOS for AWS Cloud DevOps AWS Authentication Steps: Create Networks (this post)</summary></entry><entry><title type="html">Create an AWS EC2 instance with the AWS CLI</title><link href="/create-aws-ec2-instance-aws-cli/" rel="alternate" type="text/html" title="Create an AWS EC2 instance with the AWS CLI" /><published>2021-01-22T00:00:00-08:00</published><updated>2021-01-22T00:00:00-08:00</updated><id>/create-aws-ec2-instance-aws-cli</id><content type="html" xml:base="/create-aws-ec2-instance-aws-cli/">&lt;p&gt;Make sure you do the setup first:&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Make sure you do the setup first: Setup macOS for AWS Cloud DevOps AWS Authentication Steps: Network Setup (this post)</summary></entry><entry><title type="html">Create an AWS EC2 instance with the AWS CLI</title><link href="/create-aws-ec2-instance-aws-cli/" rel="alternate" type="text/html" title="Create an AWS EC2 instance with the AWS CLI" /><published>2021-01-22T00:00:00-08:00</published><updated>2021-01-22T00:00:00-08:00</updated><id>/create-aws-ec2-instance-aws-cli</id><content type="html" xml:base="/create-aws-ec2-instance-aws-cli/">&lt;p&gt;Make sure you do the setup first:&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;&lt;a href=&quot;/setup-macos-for-aws-cloud-devops&quot;&gt;Setup macOS for AWS Cloud DevOps&lt;/a&gt;&lt;/li&gt;
