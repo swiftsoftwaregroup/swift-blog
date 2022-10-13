@@ -1,11 +1,155 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-10-07T22:55:43-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Create an AWS EC2 instance with the AWS CLI</title><link href="/create-aws-ec2-instance-aws-cli/" rel="alternate" type="text/html" title="Create an AWS EC2 instance with the AWS CLI" /><published>2021-01-22T00:00:00-08:00</published><updated>2021-01-22T00:00:00-08:00</updated><id>/create-aws-ec2-instance-aws-cli</id><content type="html" xml:base="/create-aws-ec2-instance-aws-cli/">&lt;p&gt;Step-by-step guide for creating an AWS EC2 instance with the AWS CLI.&lt;/p&gt;
-
-&lt;p&gt;Make sure you go through these steps first:&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-10-12T18:26:12-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Launch ECS container using AWS CLI - Step 3 Create Networks</title><link href="/launch-ecs-container-aws-cli-create-networks-step-3-create-networks/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 3 &lt;br&gt; Create Networks" /><published>2021-02-06T00:00:00-08:00</published><updated>2021-02-06T00:00:00-08:00</updated><id>/launch-ecs-container-aws-cli-create-networks-step-3-create-networks</id><content type="html" xml:base="/launch-ecs-container-aws-cli-create-networks-step-3-create-networks/">&lt;p&gt;Run a container on AWS ECS with the AWS CLI:&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;&lt;a href=&quot;/setup-macos-for-aws-cloud-devops&quot;&gt;Setup macOS for AWS Cloud DevOps&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;/aws-authentication&quot;&gt;AWS Authentication&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Create Networks (this post)&lt;/li&gt;
 &lt;/ol&gt;
+
+&lt;h2 id=&quot;define-names&quot;&gt;Define names&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# VPC&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;vpc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;vpc-ecs&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Subnets&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;subnet_1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;subnet-ecs-1&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;subnet_2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;subnet-ecs-2&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Internet Gateway&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;internet_gateway&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;igw-ecs&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Route Table&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;route_table&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;rtb-ecs&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Security Group&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;security_group&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;security-ecs&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# instance&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;instance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;instance-ecs&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# SSH access key&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;aws-ecs-key&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;create-vpc&quot;&gt;Create VPC&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# VPC&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Create a VPC  (Virtual Private Cloud) ...&quot;&lt;/span&gt;
+
+aws ec2 create-vpc &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--cidr-block&lt;/span&gt; 10.0.0.0/16  &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--tag-specifications&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ResourceType=vpc,Tags=[{Key=Name,Value='&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$vpc&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'}]'&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;vpc_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-vpcs &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$vpc&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Vpcs[0].VpcId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;create-subnets&quot;&gt;Create Subnets&lt;/h2&gt;
+
+&lt;p&gt;Create 2 subnets in the VPC. First subnet will be our public interface. The second subnet will be private.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Subnets&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Create subnet 1 ...&quot;&lt;/span&gt;
+
+aws ec2 create-subnet &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--vpc-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$vpc_id&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--cidr-block&lt;/span&gt; 10.0.0.0/24 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--availability-zone&lt;/span&gt; us-west-2a &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--tag-specifications&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ResourceType=subnet,Tags=[{Key=Name,Value='&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$subnet_1&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'}]'&lt;/span&gt;  
+
+&lt;span class=&quot;nv&quot;&gt;subnet_1_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-subnets &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$subnet_1&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Subnets[0].SubnetId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Create subnet 2 ...&quot;&lt;/span&gt;
+
+aws ec2 create-subnet &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--vpc-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$vpc_id&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--cidr-block&lt;/span&gt; 10.0.1.0/24 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--availability-zone&lt;/span&gt; us-west-2a &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--tag-specifications&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ResourceType=subnet,Tags=[{Key=Name,Value='&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$subnet_2&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'}]'&lt;/span&gt;  
+
+&lt;span class=&quot;nv&quot;&gt;subnet_2_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-subnets &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$subnet_2&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Subnets[0].SubnetId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;## Automatically assign Elastic IP address after launch to all instances in subnet 1 &lt;/span&gt;
+aws ec2 modify-subnet-attribute &lt;span class=&quot;nt&quot;&gt;--subnet-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$subnet_1_id&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--map-public-ip-on-launch&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;create-internet-gateway&quot;&gt;Create Internet Gateway&lt;/h2&gt;
+
+&lt;p&gt;Create an Internet gateway and attach it to the VPC. An internet gateway allows communication between your VPC and the Internet:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Internet Gateway&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Create Internet Gateway ...&quot;&lt;/span&gt;
+
+aws ec2 create-internet-gateway &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--tag-specifications&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ResourceType=internet-gateway,Tags=[{Key=Name,Value='&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$internet_gateway&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'}]'&lt;/span&gt; 
+
+&lt;span class=&quot;nv&quot;&gt;internet_gateway_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-internet-gateways &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$internet_gateway&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.InternetGateways[0].InternetGatewayId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;## Attach to VPC&lt;/span&gt;
+aws ec2 attach-internet-gateway &lt;span class=&quot;nt&quot;&gt;--vpc-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$vpc_id&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--internet-gateway-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$internet_gateway_id&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;create-route-table&quot;&gt;Create Route Table&lt;/h2&gt;
+
+&lt;p&gt;Create a route table, associate it with the public subnet, and add a route to allow all traffic to the Internet gateway.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Route Table&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Create Route Table ...&quot;&lt;/span&gt;
+
+aws ec2 create-route-table &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--vpc-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$vpc_id&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--tag-specifications&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ResourceType=route-table,Tags=[{Key=Name,Value='&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$route_table&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'}]'&lt;/span&gt; 
+
+&lt;span class=&quot;nv&quot;&gt;route_table_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-route-tables &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$route_table&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.RouteTables[0].RouteTableId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;## Associate with a subnet&lt;/span&gt;
+aws ec2 associate-route-table  &lt;span class=&quot;nt&quot;&gt;--subnet-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$subnet_1_id&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--route-table-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$route_table_id&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;## Create a route in the route table that points all traffic (`0.0.0.0/0`) to the Internet gateway:&lt;/span&gt;
+aws ec2 create-route &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--route-table-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$route_table_id&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--gateway-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$internet_gateway_id&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--destination-cidr-block&lt;/span&gt; 0.0.0.0/0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;create-security-group&quot;&gt;Create Security Group&lt;/h2&gt;
+
+&lt;p&gt;A &lt;em&gt;security group&lt;/em&gt; controls the traffic that is allowed to reach and leave the resources that it is associated with. For example, after you associate a security group with a VPC, it controls the inbound and outbound traffic for the instances in the VPC.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Security Group&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Create a Security Group ...&quot;&lt;/span&gt;
+
+aws ec2 create-security-group &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--group-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$security_group&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--description&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Security group for instance access&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--vpc-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$vpc_id&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--tag-specifications&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ResourceType=security-group,Tags=[{Key=Name,Value='&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$security_group&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'}]'&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;allow-inbound-ssh-access&quot;&gt;Allow inbound SSH access&lt;/h2&gt;
+
+&lt;p&gt;This is done by adding an ingress rule to the Security Group:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;group_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-security-groups &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$security_group&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.SecurityGroups[0].GroupId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Add a rule that allows SSH access from anywhere:&lt;/span&gt;
+aws ec2 authorize-security-group-ingress &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--group-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$group_id&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--protocol&lt;/span&gt; tcp &lt;span class=&quot;nt&quot;&gt;--port&lt;/span&gt; 22 &lt;span class=&quot;nt&quot;&gt;--cidr&lt;/span&gt; 0.0.0.0/0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Run a container on AWS ECS with the AWS CLI: Setup macOS for AWS Cloud DevOps AWS Authentication Create Networks (this post)</summary></entry><entry><title type="html">Create an AWS EC2 instance with the AWS CLI</title><link href="/create-aws-ec2-instance-aws-cli/" rel="alternate" type="text/html" title="Create an AWS EC2 instance with the AWS CLI" /><published>2021-01-22T00:00:00-08:00</published><updated>2021-01-22T00:00:00-08:00</updated><id>/create-aws-ec2-instance-aws-cli</id><content type="html" xml:base="/create-aws-ec2-instance-aws-cli/">&lt;p&gt;Create an AWS EC2 instance with the AWS CLI.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;/setup-macos-for-aws-cloud-devops&quot;&gt;Setup macOS for AWS Cloud DevOps&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/aws-authentication&quot;&gt;AWS Authentication&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Launch an AWS EC2 instance (this post)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Scripts are &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bash&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;h2 id=&quot;setup&quot;&gt;Setup&lt;/h2&gt;
 
@@ -247,9 +391,13 @@ aws ec2 delete-internet-gateway &lt;span class=&quot;nt&quot;&gt;--internet-gate
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;vpc_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-vpcs &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$vpc&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Vpcs[0].VpcId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
 aws ec2 delete-vpc &lt;span class=&quot;nt&quot;&gt;--vpc-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$vpc_id&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Step-by-step guide for creating an AWS EC2 instance with the AWS CLI. Make sure you go through these steps first: Setup macOS for AWS Cloud DevOps AWS Authentication</summary></entry><entry><title type="html">AWS Authentication</title><link href="/aws-authentication/" rel="alternate" type="text/html" title="AWS Authentication" /><published>2020-12-30T00:00:00-08:00</published><updated>2020-12-30T00:00:00-08:00</updated><id>/aws-authentication</id><content type="html" xml:base="/aws-authentication/">&lt;p&gt;Set up your AWS credentials. For more information, see &lt;a href=&quot;https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html&quot;&gt;Configuration and credential file settings&lt;/a&gt;. Request access key ID and secret access key from you AWS admin.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Create an AWS EC2 instance with the AWS CLI. Setup macOS for AWS Cloud DevOps AWS Authentication Launch an AWS EC2 instance (this post)</summary></entry><entry><title type="html">AWS Authentication</title><link href="/aws-authentication/" rel="alternate" type="text/html" title="AWS Authentication" /><published>2020-12-30T00:00:00-08:00</published><updated>2020-12-30T00:00:00-08:00</updated><id>/aws-authentication</id><content type="html" xml:base="/aws-authentication/">&lt;p&gt;Set up your AWS credentials. For more information, see &lt;a href=&quot;https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html&quot;&gt;Configuration and credential file settings&lt;/a&gt;. Request access key ID and secret access key from you AWS admin.&lt;/p&gt;
 
 &lt;p&gt;Make sure you go through this step first:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Scripts are &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bash&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;ol&gt;
   &lt;li&gt;&lt;a href=&quot;/setup-macos-for-aws-cloud-devops&quot;&gt;Setup macOS for AWS Cloud DevOps&lt;/a&gt;&lt;/li&gt;
@@ -311,7 +459,7 @@ aws configure &lt;span class=&quot;nt&quot;&gt;--profile&lt;/span&gt; swift
 &lt;p&gt;Import the key in AWS EC2:&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws ec2 import-key-pair &lt;span class=&quot;nt&quot;&gt;--key-name&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;aws-ec2-key&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--public-key-material&lt;/span&gt; fileb://~/.ssh/aws-ec2-key.pub
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Set up your AWS credentials. For more information, see Configuration and credential file settings. Request access key ID and secret access key from you AWS admin. Make sure you go through this step first: Setup macOS for AWS Cloud DevOps</summary></entry><entry><title type="html">Setup macOS for AWS Cloud DevOps</title><link href="/setup-macos-for-aws-cloud-devops/" rel="alternate" type="text/html" title="Setup macOS for AWS Cloud DevOps" /><published>2020-11-15T00:00:00-08:00</published><updated>2020-11-15T00:00:00-08:00</updated><id>/setup-macos-for-aws-cloud-devops</id><content type="html" xml:base="/setup-macos-for-aws-cloud-devops/">&lt;p&gt;Step-by-step AWS DevOps environment setup for macOS.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Set up your AWS credentials. For more information, see Configuration and credential file settings. Request access key ID and secret access key from you AWS admin. Make sure you go through this step first:</summary></entry><entry><title type="html">Setup macOS for AWS Cloud DevOps</title><link href="/setup-macos-for-aws-cloud-devops/" rel="alternate" type="text/html" title="Setup macOS for AWS Cloud DevOps" /><published>2020-11-15T00:00:00-08:00</published><updated>2020-11-15T00:00:00-08:00</updated><id>/setup-macos-for-aws-cloud-devops</id><content type="html" xml:base="/setup-macos-for-aws-cloud-devops/">&lt;p&gt;Step-by-step AWS DevOps environment setup for macOS.&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;Scripts are &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bash&lt;/code&gt;&lt;/p&gt;
@@ -425,7 +573,28 @@ curl &lt;span class=&quot;nt&quot;&gt;-fSL&lt;/span&gt; &lt;span class=&quot;s2&
 &lt;p&gt;Test:&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;reg &lt;span class=&quot;nt&quot;&gt;--help&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Step-by-step AWS DevOps environment setup for macOS.</summary></entry><entry><title type="html">Signing in or out of Chrome signs you in or out of Google web services</title><link href="/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services/" rel="alternate" type="text/html" title="Signing in or out of Chrome signs you in or out of Google web services " /><published>2018-09-25T00:00:00-07:00</published><updated>2018-09-25T00:00:00-07:00</updated><id>/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services</id><content type="html" xml:base="/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services/">&lt;p&gt;Chrome 69 was released to users on September 5th, 2018. Besides the different look and feel one other annoying change is that Chrome now logs you automatically into Google services like Gmail with the same account that you use for browser syncing. Previously, users were allowed to keep those logins separate. To disable the forced login, navigate to &lt;a href=&quot;chrome://flags/#account-consistency&quot;&gt;chrome://flags/#account-consistency&lt;/a&gt;. Then set the option labeled, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Identity consistency between browser and cookie jar&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Disabled&lt;/code&gt; and restart your browser.&lt;/p&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Chrome 69 was released to users on September 5th, 2018. Besides the different look and feel one other annoying change is that Chrome now logs you automatically into Google services like Gmail with the same account that you use for browser syncing. Previously, users were allowed to keep those logins separate. To disable the forced login, navigate to chrome://flags/#account-consistency. Then set the option labeled, Identity consistency between browser and cookie jar to Disabled and restart your browser.</summary></entry><entry><title type="html">How to Streamline Working Relationships with Multiple Parties</title><link href="/how-to-streamline-working-relationships-with-multiple-parties/" rel="alternate" type="text/html" title="How to Streamline Working Relationships with Multiple Parties" /><published>2018-09-07T00:00:00-07:00</published><updated>2018-09-07T00:00:00-07:00</updated><id>/how-to-streamline-working-relationships-with-multiple-parties</id><content type="html" xml:base="/how-to-streamline-working-relationships-with-multiple-parties/">&lt;p&gt;If you want to facilitate a smooth and efficient working relationship, all relevant parties must first agree on a few critical aspects of the project. The ability to communicate ideas is integral to the creation of any stable working relationship. Before starting a joint project, discuss these five elements with each party.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;docker-desktop&quot;&gt;Docker Desktop&lt;/h2&gt;
+
+&lt;p&gt;Install via Homebrew:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--cask&lt;/span&gt; docker
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;adjust-memory&quot;&gt;Adjust Memory&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;On macOS Docker Desktop the standard memory settings are too low (3 GB)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Start Docker Desktop&lt;/p&gt;
+
+&lt;p&gt;Open: Preferences &amp;gt; Resources &amp;gt; Advanced&lt;/p&gt;
+
+&lt;p&gt;Set Memory to 4GB or more&lt;/p&gt;
+
+&lt;p&gt;Hit Apply &amp;amp; Restart&lt;/p&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Step-by-step AWS DevOps environment setup for macOS.</summary></entry><entry><title type="html">Signing in or out of Chrome signs you in or out of Google web services</title><link href="/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services/" rel="alternate" type="text/html" title="Signing in or out of Chrome signs you in or out of Google web services " /><published>2018-09-25T00:00:00-07:00</published><updated>2018-09-25T00:00:00-07:00</updated><id>/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services</id><content type="html" xml:base="/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services/">&lt;p&gt;Chrome 69 was released to users on September 5th, 2018. Besides the different look and feel one other annoying change is that Chrome now logs you automatically into Google services like Gmail with the same account that you use for browser syncing. Previously, users were allowed to keep those logins separate. To disable the forced login, navigate to &lt;a href=&quot;chrome://flags/#account-consistency&quot;&gt;chrome://flags/#account-consistency&lt;/a&gt;. Then set the option labeled, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Identity consistency between browser and cookie jar&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Disabled&lt;/code&gt; and restart your browser.&lt;/p&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Chrome 69 was released to users on September 5th, 2018. Besides the different look and feel one other annoying change is that Chrome now logs you automatically into Google services like Gmail with the same account that you use for browser syncing. Previously, users were allowed to keep those logins separate. To disable the forced login, navigate to chrome://flags/#account-consistency. Then set the option labeled, Identity consistency between browser and cookie jar to Disabled and restart your browser.</summary></entry><entry><title type="html">How to Streamline Working Relationships with Multiple Parties</title><link href="/how-to-streamline-working-relationships-with-multiple-parties/" rel="alternate" type="text/html" title="How to Streamline Working Relationships with Multiple Parties" /><published>2018-09-07T00:00:00-07:00</published><updated>2018-09-07T00:00:00-07:00</updated><id>/how-to-streamline-working-relationships-with-multiple-parties</id><content type="html" xml:base="/how-to-streamline-working-relationships-with-multiple-parties/">&lt;p&gt;If you want to facilitate a smooth and efficient working relationship, all relevant parties must first agree on a few critical aspects of the project. The ability to communicate ideas is integral to the creation of any stable working relationship. Before starting a joint project, discuss these five elements with each party.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/how-to-streamline-working-relationships-with-multiple-parties/image_1049626304.jpg&quot; alt=&quot;&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
@@ -1887,249 +2056,4 @@ end script
   &lt;li&gt;Set a breakpoint in Main method - Ctrl+Shift+B&lt;/li&gt;
   &lt;li&gt;Compile - F11&lt;/li&gt;
   &lt;li&gt;Debug - F5&lt;/li&gt;
-&lt;/ol&gt;</content><author><name>Swift Software Group</name></author><category term="actionscript" /><category term="flash" /><category term="flashdevelop" /><summary type="html">FlashDevelop is a free IDE for Windows. You can use it to develop Adobe Flash and AIR applications using ActionScript.</summary></entry><entry><title type="html">How To Install Nginx On Ubuntu Using Chef</title><link href="/install-nginx-ubuntu-using-chef/" rel="alternate" type="text/html" title="How To Install Nginx On Ubuntu Using Chef" /><published>2016-01-13T00:00:00-08:00</published><updated>2016-01-13T00:00:00-08:00</updated><id>/install-nginx-ubuntu-using-chef</id><content type="html" xml:base="/install-nginx-ubuntu-using-chef/">&lt;p&gt;In this post we show how to install NGINX on Ubuntu using &lt;a href=&quot;https://www.chef.io/chef/&quot;&gt;Chef&lt;/a&gt; on Windows 10 workstation.&lt;/p&gt;
-
-&lt;p&gt;All commands are executed in PowerShell on a Windows workstation.&lt;/p&gt;
-
-&lt;h2 id=&quot;before-you-begin&quot;&gt;Before You Begin&lt;/h2&gt;
-
-&lt;h3 id=&quot;install-chocolatey&quot;&gt;Install Chocolatey&lt;/h3&gt;
-
-&lt;p&gt;If you do not have Chocolatey, you can install it by following the instructions on &lt;a href=&quot;https://chocolatey.org/&quot;&gt;chocolatey.org&lt;/a&gt;. You may also see &lt;a href=&quot;http://www.swiftsoftwaregroup.com/configure-download-folder-chocolatey-packages/&quot;&gt;this post&lt;/a&gt; for instructions on how to set the Chocolatey cache location.&lt;/p&gt;
-
-&lt;h3 id=&quot;install-chef-development-kit-chefdk&quot;&gt;Install Chef Development Kit (ChefDK)&lt;/h3&gt;
-
-&lt;p&gt;In PowerShell as &lt;em&gt;Administrator&lt;/em&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;choco&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;install&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;chefdk&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;install-virtualbox-and-vagrant&quot;&gt;Install VirtualBox and Vagrant&lt;/h3&gt;
-
-&lt;p&gt;To install VirtualBox and Vagrant, follow the steps described in &lt;a href=&quot;http://www.swiftsoftwaregroup.com/ubuntu-with-vagrant-and-virtualbox-on-windows/&quot;&gt;Ubuntu with Vagrant and VirtualBox on Windows&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;install-vagrant-plugins&quot;&gt;Install Vagrant Plugins&lt;/h3&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;vagrant&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;plugin&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;install&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;vagrant-omnibus&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vagrant&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;plugin&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;install&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;vagrant-berkshelf&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vagrant&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;plugin&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;install&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;vagrant-hostmanager&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;create-chef-cookbook&quot;&gt;Create Chef Cookbook&lt;/h2&gt;
-
-&lt;p&gt;This directory will become the root of your source repository:&lt;/p&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;generate&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cookbook&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;my_ubuntu_nginx&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cd&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;my_ubuntu_nginx&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;ensure-the-apt-cache-is-up-to-date&quot;&gt;Ensure the apt cache is up to date&lt;/h2&gt;
-
-&lt;h3 id=&quot;reference-the-apt-cookbook&quot;&gt;Reference the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;apt&lt;/code&gt; Cookbook&lt;/h3&gt;
-
-&lt;p&gt;Add this line to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;metadata.rb&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;depends&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'apt'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'~&amp;gt; 2.9.2'&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;To get the latest version string, run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;knife cookbook site show apt&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;knife&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cookbook&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;site&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;apt&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grep&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;latest_version&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;latest_version:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;     &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;https://supermarket.chef.io/api/v1/cookbooks/apt/versions/2.9.2&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Here is the complete file:&lt;/p&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'my_ubuntu_nginx'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;maintainer&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'The Authors'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;maintainer_email&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'you@example.com'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;license&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'all_rights'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;description&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Installs/Configures my_ubuntu_nginx'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;long_description&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Installs/Configures my_ubuntu_nginx'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;version&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'0.1.0'&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;depends&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'apt'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'~&amp;gt; 2.9.2'&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;set-the-apt-cookbooks-default-recipe-to-run&quot;&gt;Set the apt cookbook’s default recipe to run&lt;/h3&gt;
-
-&lt;p&gt;Add this line to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;recipes/default.rb&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;include_recipe&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'apt::default'&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Here is the complete file:&lt;/p&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# Cookbook Name:: my_ubuntu_nginx&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# Recipe:: default&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# Copyright (c) 2016 The Authors, All Rights Reserved.&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;include_recipe&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'apt::default'&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;test&quot;&gt;Test&lt;/h3&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;berks&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;install&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;This generates &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Berksfile.lock&lt;/code&gt; file.&lt;/p&gt;
-
-&lt;h2 id=&quot;configure-nginx&quot;&gt;Configure NGINX&lt;/h2&gt;
-
-&lt;h3 id=&quot;reference-the-nginx-cookbook&quot;&gt;Reference the nginx cookbook&lt;/h3&gt;
-
-&lt;p&gt;We need the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nginx&lt;/code&gt; cookbook for it’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nginx::repo&lt;/code&gt; recipe. Add this line to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;metadata.rb&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;depends&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'nginx'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'~&amp;gt; 2.7.6'&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;To get the latest version string, run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;knife cookbook site show nginx&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;knife&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cookbook&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;site&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;nginx&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grep&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;latest_version&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;latest_version:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;     &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;https://supermarket.chef.io/api/v1/cookbooks/nginx/versions/2.7.6&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Here is the complete file:&lt;/p&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'my_ubuntu_nginx'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;maintainer&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'The Authors'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;maintainer_email&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'you@example.com'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;license&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'all_rights'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;description&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Installs/Configures my_ubuntu_nginx'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;long_description&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Installs/Configures my_ubuntu_nginx'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;version&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'0.1.0'&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;depends&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'apt'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'~&amp;gt; 2.9.2'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;depends&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'nginx'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'~&amp;gt; 2.7.6'&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;write-the-install_nginx-recipe&quot;&gt;Write the install_nginx recipe&lt;/h3&gt;
-
-&lt;p&gt;The first step is to create the recipe file, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;install_nginx.rb&lt;/code&gt;. Run the following command to generate it:&lt;/p&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;generate&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;recipe&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;install_nginx&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Write out &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;recipes/install_nginx.rb&lt;/code&gt; like this:&lt;/p&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# Cookbook Name:: my_ubuntu_nginx&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# Recipe:: install_nginx&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# Copyright (c) 2016 The Authors, All Rights Reserved.&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# Only needed if you want to install latest stable package from nginx.org&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;include_recipe&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'nginx::repo'&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'nginx'&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;action&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:install&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;service&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'nginx'&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;supports&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;status: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;restart: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;reload: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;action&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:enable&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;set-the-install_nginx-recipe-to-run&quot;&gt;Set the install_nginx recipe to run&lt;/h3&gt;
-
-&lt;p&gt;Add this line to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cookbooks/my_web_server/recipes/default.rb&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;include_recipe&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'my_ubuntu_nginx::install_nginx'&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Here is the complete file:&lt;/p&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# Cookbook Name:: my_ubuntu_nginx&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# Recipe:: default&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# Copyright (c) 2016 The Authors, All Rights Reserved.&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;include_recipe&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'apt::default'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;include_recipe&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'my_ubuntu_nginx::install_nginx'&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;update-the-integration-test&quot;&gt;Update the integration test&lt;/h3&gt;
-
-&lt;p&gt;Replace the contents of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test/integration/default/serverspec/default_spec.rb&lt;/code&gt; with this code:&lt;/p&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'spec_helper'&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;describe&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'my_ubuntu_nginx::default'&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# Serverspec examples can be found at&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# http://serverspec.org/resource_types.html&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;describe&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;package&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'nginx'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;should&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;be_installed&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-
-  &lt;span class=&quot;n&quot;&gt;describe&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;service&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'nginx'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;should&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;be_enabled&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;should&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;be_running&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;test-1&quot;&gt;Test&lt;/h2&gt;
-
-&lt;h3 id=&quot;ruby-lint&quot;&gt;Ruby Lint&lt;/h3&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;rubocop&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;chef-lint&quot;&gt;Chef Lint&lt;/h3&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;foodcritic&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;unit-tests&quot;&gt;Unit Tests&lt;/h3&gt;
-
-&lt;p&gt;Install / Update cookbooks:&lt;/p&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;berks&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;install&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Create a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.rspec&lt;/code&gt; file:&lt;/p&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;touch&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;rspec&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Paste these lines in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.rspec&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-text highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;--color
---format documentation
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Run:&lt;/p&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;rspec&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;integration-tests&quot;&gt;Integration Tests&lt;/h3&gt;
-
-&lt;p&gt;Update &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.kitchen.yml&lt;/code&gt; to include the Ubuntu platform only. This is how it should look:&lt;/p&gt;
-
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;vagrant&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;network&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;private_network&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;dhcp&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;}]&lt;/span&gt;
-
-&lt;span class=&quot;na&quot;&gt;provisioner&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;chef_zero&lt;/span&gt;
-
-&lt;span class=&quot;na&quot;&gt;platforms&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ubuntu-14.04&lt;/span&gt;
-
-&lt;span class=&quot;na&quot;&gt;suites&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;default&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;run_list&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;recipe[my_ubuntu_nginx::default]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Run the integration tests:&lt;/p&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;kitchen&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--destroy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;never&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><category term="nginx" /><category term="chef" /><category term="ubuntu" /><summary type="html">In this post we show how to install NGINX on Ubuntu using Chef on Windows 10 workstation.</summary></entry></feed>
+&lt;/ol&gt;</content><author><name>Swift Software Group</name></author><category term="actionscript" /><category term="flash" /><category term="flashdevelop" /><summary type="html">FlashDevelop is a free IDE for Windows. You can use it to develop Adobe Flash and AIR applications using ActionScript.</summary></entry></feed>
