@@ -47,14 +47,16 @@
   <h1><a href="/launch-ecs-container-aws-cli-create-networks-step-1-network-setup/">Launch ECS container using AWS CLI - Step 1 <br> Network Setup</a></h1><time datetime="2021-02-06T00:00:00-08:00">February 06, 2021</time>
 </header>
 
-  <p>Make sure you do this setup first:</p>
+  <p>Setup network infrastructure including new VPC (Virtual Private Cloud), public and private Subnet, Internet Gateway, Security Group, and SSH access.</p>
+
+<p>Make sure you do this setup first:</p>
 
 <ol>
   <li><a href="/setup-macos-for-aws-cloud-devops">Setup macOS for AWS Cloud DevOps</a></li>
   <li><a href="/aws-authentication">AWS Authentication</a></li>
 </ol>
 
-<p>Steps:</p>
+<p>This a part of a multi-post thread involving these steps:</p>
 
 <ol>
   <li>Network Setup (this post)</li>
@@ -183,7 +185,7 @@ aws ec2 create-security-group <span class="se">\</span>
     <span class="nt">--tag-specifications</span> <span class="s1">'ResourceType=security-group,Tags=[{Key=Name,Value='</span><span class="nv">$security_group</span><span class="s1">'}]'</span> 
 </code></pre></div></div>
 
-<h2 id="allow-inbound-ssh-access">Allow inbound SSH access</h2>
+<h2 id="allow-ssh-connections">Allow SSH Connections</h2>
 
 <p>This is done by adding an ingress rule to the Security Group:</p>
 
