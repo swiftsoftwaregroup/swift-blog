@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<title>Launch ECS container using AWS CLI - Step 3 - Create Docker Image | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Swift Software Group">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/launch-ecs-container-aws-cli-step-3-create-docker-image/">
+
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-37864402-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-37864402-1');
+</script>
+
+</head>
+
+
+
+
+<header>
+  <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
+  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/launch-ecs-container-aws-cli-step-3-create-docker-image/">Launch ECS container using AWS CLI - Step 3 - Create Docker Image</a></h1><time datetime="2021-04-01T00:00:00-07:00">April 01, 2021</time>
+</header>
+
+  <p>Setup an ECS container repository, create a Docker image, and upload the Docker image to the repository.</p>
+
+<p>This is part of a multi-post thread involving these steps:</p>
+
+<ol>
+  <li><a href="/launch-ecs-container-aws-cli-step-1-network-setup">Network Setup</a></li>
+  <li><a href="/launch-ecs-container-aws-cli-step-2-launch-ec2-instance">Launch EC2 Instance</a></li>
+  <li>Create Docker Image (this post)</li>
+</ol>
+
+<h2 id="define-names">Define names</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># registry (in the form $registryId.dkr.ecr.$region.amazonaws.com)</span>
+<span class="nv">region</span><span class="o">=</span><span class="si">$(</span>aws configure get region<span class="si">)</span>
+<span class="nv">registryId</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-registry | jq <span class="nt">-r</span> <span class="s1">'.registryId'</span><span class="si">)</span>
+<span class="nv">registry</span><span class="o">=</span><span class="s2">"</span><span class="nv">$registryId</span><span class="s2">.dkr.ecr.</span><span class="nv">$region</span><span class="s2">.amazonaws.com"</span>
+
+<span class="c"># repository</span>
+<span class="nv">repository</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-repositories | jq <span class="nt">-r</span> <span class="s2">".repositories[] | select(.repositoryName==</span><span class="se">\"</span><span class="nv">$repo_name</span><span class="se">\"</span><span class="s2">) | .repositoryUri"</span><span class="si">)</span>
+
+<span class="c"># image</span>
+<span class="nv">image</span><span class="o">=</span><span class="s2">"ecs-test"</span>
+<span class="nv">tag</span><span class="o">=</span><span class="s2">"latest"</span>
+</code></pre></div></div>
+
+<h2 id="create-image-repository">Create Image Repository</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Create repository </span><span class="nv">$image</span><span class="s2"> in registry </span><span class="nv">$registry</span><span class="s2"> ..."</span>
+aws ecr create-repository <span class="nt">--repository-name</span> <span class="nv">$image</span>
+<span class="nv">repository</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-repositories | jq <span class="nt">-r</span> <span class="s2">".repositories[] | select(.repositoryName==</span><span class="se">\"</span><span class="nv">$image</span><span class="se">\"</span><span class="s2">) | .repositoryUri"</span><span class="si">)</span>
+</code></pre></div></div>
+
+<h2 id="create-docker-image">Create Docker Image</h2>
+
+<h3 id="dockerfile">Dockerfile</h3>
+
+<p>Create a <code class="language-plaintext highlighter-rouge">Dockerfile</code> with the following contents:</p>
+
+<div class="language-docker highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># See https://hub.docker.com/_/centos/ for all supported MariaDB</span>
+<span class="c"># tags from Docker Hub.</span>
+
+<span class="c"># this image will be the actual running container</span>
+<span class="k">FROM</span><span class="s">  oraclelinux:8</span>
+
+<span class="k">LABEL</span><span class="s"> Name=ecs-test</span>
+
+<span class="c">## System Config</span>
+<span class="k">ENV</span><span class="s"> TZ=America/Los_Angeles</span>
+
+<span class="c"># Packages</span>
+<span class="k">RUN </span>yum <span class="nt">-y</span> <span class="nb">install </span>bind-utils 
+
+<span class="k">CMD</span><span class="s"> ["/bin/ping", "localhost"]</span>
+</code></pre></div></div>
+
+<h3 id="build-image">Build Image</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Build image ..."</span>
+docker build <span class="nt">--tag</span> <span class="k">${</span><span class="nv">image</span><span class="k">}</span>:<span class="k">${</span><span class="nv">tag</span><span class="k">}</span> <span class="nb">.</span>
+</code></pre></div></div>
+
+<h3 id="tag-image">Tag Image</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Tag image ..."</span>
+docker tag <span class="k">${</span><span class="nv">image</span><span class="k">}</span>:<span class="k">${</span><span class="nv">tag</span><span class="k">}</span> <span class="k">${</span><span class="nv">repository</span><span class="k">}</span>:<span class="k">${</span><span class="nv">tag</span><span class="k">}</span>
+</code></pre></div></div>
+
+<h2 id="publish-image">Publish Image</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># refresh AWS token for docker</span>
+aws ecr get-login-password <span class="nt">--region</span> <span class="nv">$region</span> <span class="se">\</span>
+  | docker login <span class="nt">--username</span> AWS <span class="nt">--password-stdin</span> <span class="nv">$registry</span>
+
+<span class="c"># push image</span>
+<span class="nb">echo</span> <span class="s2">"Push image ..."</span>
+docker push <span class="k">${</span><span class="nv">repository</span><span class="k">}</span>:<span class="k">${</span><span class="nv">tag</span><span class="k">}</span>
+</code></pre></div></div>
+
+<h2 id="verify">Verify</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># verify</span>
+<span class="nv">red</span><span class="o">=</span><span class="s1">'\e[0;31m'</span>    
+<span class="nv">green</span><span class="o">=</span><span class="s1">'\e[0;32m'</span>    
+<span class="nv">clear</span><span class="o">=</span><span class="s1">'\e[0m'</span>
+
+<span class="nv">pushed_tag</span><span class="o">=</span><span class="si">$(</span>reg tags <span class="k">${</span><span class="nv">repository</span><span class="k">}</span> | <span class="nb">grep</span> <span class="s2">"</span><span class="k">${</span><span class="nv">tag</span><span class="k">}</span><span class="s2">"</span><span class="si">)</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">pushed_tag</span><span class="k">}</span><span class="s2">"</span> <span class="o">!=</span> <span class="s2">"</span><span class="k">${</span><span class="nv">tag</span><span class="k">}</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">printf</span> <span class="s2">"</span><span class="k">${</span><span class="nv">red</span><span class="k">}</span><span class="s2">Failed</span><span class="k">${</span><span class="nv">clear</span><span class="k">}</span><span class="s2">"</span><span class="p">;</span> <span class="nb">echo
+</span><span class="k">else    
+    </span><span class="nb">printf</span> <span class="s2">"</span><span class="k">${</span><span class="nv">green</span><span class="k">}</span><span class="s2">Success</span><span class="k">${</span><span class="nv">clear</span><span class="k">}</span><span class="s2">"</span><span class="p">;</span> <span class="nb">echo
+</span><span class="k">fi</span>
+</code></pre></div></div>
+
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>
