@@ -204,6 +204,19 @@ aws ec2 <span class="nb">wait </span>instance-status-ok <span class="nt">--insta
 <span class="nb">echo</span> <span class="s2">"  Instance is ready ..."</span>
 </code></pre></div></div>
 
+<h2 id="verify">Verify</h2>
+
+<p>Check that EC2 container instance has checked in to the ECS Cluster:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">cluster</span><span class="o">=</span><span class="s2">"cluster-ecs"</span>
+aws ecs list-container-instances <span class="nt">--cluster</span> <span class="nv">$cluster</span>
+</code></pre></div></div>
+
+<p>Also should be reported in <code class="language-plaintext highlighter-rouge">registeredContainerInstancesCount</code> when describing the ECS cluster:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">cluster</span><span class="o">=</span><span class="s2">"cluster-ecs"</span>
+aws ecs describe-clusters <span class="nt">--cluster</span> <span class="nv">$cluster</span>
+</code></pre></div></div>
 
   
     <hr>
