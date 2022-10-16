@@ -64,9 +64,6 @@
 <span class="nv">registryId</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-registry | jq <span class="nt">-r</span> <span class="s1">'.registryId'</span><span class="si">)</span>
 <span class="nv">registry</span><span class="o">=</span><span class="s2">"</span><span class="nv">$registryId</span><span class="s2">.dkr.ecr.</span><span class="nv">$region</span><span class="s2">.amazonaws.com"</span>
 
-<span class="c"># repository</span>
-<span class="nv">repository</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-repositories | jq <span class="nt">-r</span> <span class="s2">".repositories[] | select(.repositoryName==</span><span class="se">\"</span><span class="nv">$repo_name</span><span class="se">\"</span><span class="s2">) | .repositoryUri"</span><span class="si">)</span>
-
 <span class="c"># image</span>
 <span class="nv">image</span><span class="o">=</span><span class="s2">"ecs-test"</span>
 <span class="nv">tag</span><span class="o">=</span><span class="s2">"latest"</span>
