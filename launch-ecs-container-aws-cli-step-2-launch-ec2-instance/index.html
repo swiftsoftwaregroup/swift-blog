@@ -174,7 +174,7 @@ aws iam list-instance-profiles
 <span class="nb">echo </span><span class="nv">ECS_AVAILABLE_LOGGING_DRIVERS</span><span class="o">=</span><span class="s1">'["json-file", "awslogs"]'</span> <span class="o">&gt;&gt;</span> /etc/ecs/ecs.config
 </code></pre></div></div>
 
-<p>Launch the EC2 instance in subnet 1:</p>
+<p>Now we have everything that’s needed. Launch the EC2 instance in subnet 1:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># EC2 Instance</span>
 <span class="nb">echo</span> <span class="s2">"Launch EC2 instance in subnet 1: </span><span class="nv">$subnet_1_id</span><span class="s2"> ..."</span>
