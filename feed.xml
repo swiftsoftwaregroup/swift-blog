@@ -1,4 +1,149 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-10-15T20:41:11-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Launch ECS container using AWS CLI - Step 1:Network Setup</title><link href="/launch-ecs-container-aws-cli-step-1-network-setup/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 1:&lt;br&gt;Network Setup" /><published>2021-02-06T00:00:00-08:00</published><updated>2021-02-06T00:00:00-08:00</updated><id>/launch-ecs-container-aws-cli-step-1-network-setup</id><content type="html" xml:base="/launch-ecs-container-aws-cli-step-1-network-setup/">&lt;p&gt;Setup network infrastructure including new VPC (Virtual Private Cloud), public and private subnets, internet gateway, security group, and ssh access.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-10-15T21:05:44-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Launch ECS container using AWS CLI - Step 2:Launch EC2 Instance</title><link href="/launch-ecs-container-aws-cli-step-2-launch-ec2-instance/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 2:&lt;br&gt;Launch EC2 Instance" /><published>2021-03-02T00:00:00-08:00</published><updated>2021-03-02T00:00:00-08:00</updated><id>/launch-ecs-container-aws-cli-step-2-launch-ec2-instance</id><content type="html" xml:base="/launch-ecs-container-aws-cli-step-2-launch-ec2-instance/">&lt;p&gt;Create an ECS cluster with one EC2 instance. This will be used as a host for the ECS container instances.&lt;/p&gt;
+
+&lt;p&gt;This is part of a multi-post thread involving these steps:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;/launch-ecs-container-aws-cli-step-1-network-setup&quot;&gt;Network Setup&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Launch EC2 instance (this post)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;define-names&quot;&gt;Define names&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Subnets&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;subnet_1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;subnet-ecs-1&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;subnet_2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;subnet-ecs-2&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Security Group&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;security_group&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;security-ecs&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# cluster&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;cluster&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;cluster-ecs&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# IAM&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;instance_role&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;instance-role-ecs&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;instance_profile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;instance-profile-ecs&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# EC2&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;instance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;instance-ecs&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# SSH access key&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;aws-ec2-key&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;ecs-cluster&quot;&gt;ECS Cluster&lt;/h2&gt;
+
+&lt;p&gt;Create ECS Cluster:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Get IDs&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;group_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-security-groups &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$security_group&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.SecurityGroups[0].GroupId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;subnet_1_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-subnets &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$subnet_1&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Subnets[0].SubnetId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Create ECS cluster &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$cluster&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; ...&quot;&lt;/span&gt;
+aws ecs create-cluster &lt;span class=&quot;nt&quot;&gt;--cluster-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$cluster&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;ec2-instance-role&quot;&gt;EC2 Instance Role&lt;/h2&gt;
+
+&lt;p&gt;Create instance policy configuration and save it to a file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;instance-policy.json&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Version&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2012-10-17&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Statement&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Effect&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Allow&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Principal&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Service&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ec2.amazonaws.com&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Action&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;sts:AssumeRole&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Create the EC2 Instance Role:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# EC2 Instance Role&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Create EC2 Instance Role ...&quot;&lt;/span&gt;
+aws iam create-role &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--role-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$instance_role&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--assume-role-policy-document&lt;/span&gt; file://instance-policy.json
+
+aws iam attach-role-policy &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--role-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$instance_role&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--policy-arn&lt;/span&gt; arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;ec2-instance-profile&quot;&gt;EC2 Instance Profile&lt;/h2&gt;
+
+&lt;p&gt;Create EC2 Instance Profile:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# EC2 Instance Profile&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Create EC2 Instance Profile ...&quot;&lt;/span&gt;
+aws iam create-instance-profile &lt;span class=&quot;nt&quot;&gt;--instance-profile-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$instance_profile&lt;/span&gt;
+
+aws iam add-role-to-instance-profile &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--instance-profile-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$instance_profile&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--role-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$instance_role&lt;/span&gt;
+
+aws iam list-instance-profiles
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Wait 15 seconds for new instance profile to replicate in AWS ...&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;sleep &lt;/span&gt;15
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;ec2-instance&quot;&gt;EC2 Instance&lt;/h2&gt;
+
+&lt;p&gt;Create script to retrieve user data and save it to a file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;instance-user-data.sh&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;cluster&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;cluster-ecs&quot;&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;ECS_CLUSTER=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$cluster&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; /etc/ecs/ecs.config
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;ECS_CONTAINER_INSTANCE_TAGS={&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;ECS_CLUSTER&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$cluster&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;}&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; /etc/ecs/ecs.config
+&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ECS_AVAILABLE_LOGGING_DRIVERS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'[&quot;json-file&quot;, &quot;awslogs&quot;]'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; /etc/ecs/ecs.config
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Create block device mappings configuration and save it to a file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;instance-block-device-mappings.json&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;DeviceName&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/dev/sdf&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Ebs&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;DeleteOnTermination&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;VolumeSize&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Launch EC2 instance in subnet 1:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# EC2 Instance&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Launch EC2 instance in subnet 1: &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$subnet_1_id&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; ...&quot;&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 run-instances &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--subnet-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$subnet_1_id&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--security-group-ids&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$group_id&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--image-id&lt;/span&gt; resolve:ssm:/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--instance-type&lt;/span&gt; t2.micro &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--count&lt;/span&gt; 1 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--key-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$key&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--iam-instance-profile&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$instance_profile&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--user-data&lt;/span&gt; file://instance-user-data.sh &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--block-device-mappings&lt;/span&gt; file://instance-block-device-mappings.json &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--tag-specifications&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ResourceType=instance,Tags=[{Key=Name,Value='&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$instance&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'}]'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;instance_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$json&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Instances[0].InstanceId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+aws ec2 &lt;span class=&quot;nb&quot;&gt;wait &lt;/span&gt;instance-exists &lt;span class=&quot;nt&quot;&gt;--instance-ids&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$instance_id&lt;/span&gt;    
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;  Instance created ...&quot;&lt;/span&gt;
+
+aws ec2 &lt;span class=&quot;nb&quot;&gt;wait &lt;/span&gt;instance-running &lt;span class=&quot;nt&quot;&gt;--instance-ids&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$instance_id&lt;/span&gt;    
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;  Instance is running ...&quot;&lt;/span&gt;
+
+aws ec2 &lt;span class=&quot;nb&quot;&gt;wait &lt;/span&gt;instance-status-ok &lt;span class=&quot;nt&quot;&gt;--instance-ids&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$instance_id&lt;/span&gt;    
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;  Instance is ready ...&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Create an ECS cluster with one EC2 instance. This will be used as a host for the ECS container instances. This is part of a multi-post thread involving these steps: Network Setup Launch EC2 instance (this post)</summary></entry><entry><title type="html">Launch ECS container using AWS CLI - Step 1:Network Setup</title><link href="/launch-ecs-container-aws-cli-step-1-network-setup/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 1:&lt;br&gt;Network Setup" /><published>2021-02-06T00:00:00-08:00</published><updated>2021-02-06T00:00:00-08:00</updated><id>/launch-ecs-container-aws-cli-step-1-network-setup</id><content type="html" xml:base="/launch-ecs-container-aws-cli-step-1-network-setup/">&lt;p&gt;Setup network infrastructure including new VPC (Virtual Private Cloud), public and private subnets, internet gateway, security group, and ssh access.&lt;/p&gt;
 
 &lt;p&gt;Make sure you do this setup first:&lt;/p&gt;
 
@@ -11,6 +156,7 @@
 
 &lt;ol&gt;
   &lt;li&gt;Network Setup (this post)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/launch-ecs-container-aws-cli-step-2-launch-ec2-instance&quot;&gt;Launch EC2 Instance&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h2 id=&quot;define-names&quot;&gt;Define names&lt;/h2&gt;
@@ -146,7 +292,7 @@ aws ec2 create-security-group &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
 aws ec2 authorize-security-group-ingress &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
     &lt;span class=&quot;nt&quot;&gt;--group-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$group_id&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
     &lt;span class=&quot;nt&quot;&gt;--protocol&lt;/span&gt; tcp &lt;span class=&quot;nt&quot;&gt;--port&lt;/span&gt; 22 &lt;span class=&quot;nt&quot;&gt;--cidr&lt;/span&gt; 0.0.0.0/0
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Setup network infrastructure including new VPC (Virtual Private Cloud), public and private subnets, internet gateway, security group, and ssh access. Make sure you do this setup first: Setup macOS for AWS Cloud DevOps AWS Authentication This is part of a multi-post thread involving these steps: Network Setup (this post)</summary></entry><entry><title type="html">Create an AWS EC2 instance with the AWS CLI</title><link href="/create-aws-ec2-instance-aws-cli/" rel="alternate" type="text/html" title="Create an AWS EC2 instance with the AWS CLI" /><published>2021-01-22T00:00:00-08:00</published><updated>2021-01-22T00:00:00-08:00</updated><id>/create-aws-ec2-instance-aws-cli</id><content type="html" xml:base="/create-aws-ec2-instance-aws-cli/">&lt;p&gt;Make sure you do this setup first:&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Setup network infrastructure including new VPC (Virtual Private Cloud), public and private subnets, internet gateway, security group, and ssh access. Make sure you do this setup first: Setup macOS for AWS Cloud DevOps AWS Authentication This is part of a multi-post thread involving these steps: Network Setup (this post) Launch EC2 Instance</summary></entry><entry><title type="html">Create an AWS EC2 instance with the AWS CLI</title><link href="/create-aws-ec2-instance-aws-cli/" rel="alternate" type="text/html" title="Create an AWS EC2 instance with the AWS CLI" /><published>2021-01-22T00:00:00-08:00</published><updated>2021-01-22T00:00:00-08:00</updated><id>/create-aws-ec2-instance-aws-cli</id><content type="html" xml:base="/create-aws-ec2-instance-aws-cli/">&lt;p&gt;Make sure you do this setup first:&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;&lt;a href=&quot;/setup-macos-for-aws-cloud-devops&quot;&gt;Setup macOS for AWS Cloud DevOps&lt;/a&gt;&lt;/li&gt;
@@ -2023,49 +2169,4 @@ end script
 &lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;rake&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Open a browser and navigate to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http://default-ubuntu-1404/&lt;/code&gt;. You should see the “Hello World!” page of the my_flask application.&lt;/p&gt;</content><author><name>Swift Software Group</name></author><category term="chef" /><category term="flask" /><category term="python" /><category term="vagrant" /><summary type="html">In this post we show how you can use Chef to build an Ubuntu 14.04 LTS web server running Nginx, Python 2, virtualenv, uWSGI, and Flask - all done on Windows 10 host.</summary></entry><entry><title type="html">Getting Started with FlashDevelop on Windows 10</title><link href="/getting-started-flashdevelop-windows-10/" rel="alternate" type="text/html" title="Getting Started with FlashDevelop on Windows 10" /><published>2016-01-29T00:00:00-08:00</published><updated>2016-01-29T00:00:00-08:00</updated><id>/getting-started-flashdevelop-windows-10</id><content type="html" xml:base="/getting-started-flashdevelop-windows-10/">&lt;p&gt;FlashDevelop is a free IDE for Windows. You can use it to develop Adobe Flash and AIR applications using ActionScript.&lt;/p&gt;
-
-&lt;h2 id=&quot;install-chocolatey&quot;&gt;Install Chocolatey&lt;/h2&gt;
-
-&lt;p&gt;Chcocolatey is a package manager for Windows.&lt;/p&gt;
-
-&lt;p&gt;Open PowerShell as &lt;em&gt;Administrator&lt;/em&gt; and run the following command:&lt;/p&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new-object&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;net.webclient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;DownloadString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'https://chocolatey.org/install.ps1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;install-java-8-sdk-32-bit&quot;&gt;Install Java 8 SDK 32-bit&lt;/h2&gt;
-
-&lt;p&gt;FlashDevelop requires a 32-bit java on the system path.&lt;/p&gt;
-
-&lt;p&gt;In PowerShell as &lt;em&gt;Administrator&lt;/em&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;choco&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;install&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;jdk8&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;-params&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;x64=false&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;install-flashdevelop&quot;&gt;Install FlashDevelop&lt;/h2&gt;
-
-&lt;p&gt;Download the latest FlashDevelop setup package from &lt;a href=&quot;http://www.flashdevelop.org/&quot;&gt;www.flashdevelop.org&lt;/a&gt; and install it, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FlashDevelop-5.0.2.exe&lt;/code&gt; at the time of writing.&lt;/p&gt;
-
-&lt;h2 id=&quot;install-additional-software&quot;&gt;Install Additional Software&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Start FlashDevelop&lt;/li&gt;
-  &lt;li&gt;Install SDKs and other tools using AppMan, from Tools -&amp;gt; Install Software …
-    &lt;ul&gt;
-      &lt;li&gt;Flex SDK + AIR SDK&lt;/li&gt;
-      &lt;li&gt;Flash Player (SA)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Restart FlashDevelop, so that it can detect the installed SDKs and tools properly.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;create-new-project&quot;&gt;Create New Project&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Create a new project from: Project -&amp;gt; New Project&lt;/li&gt;
-  &lt;li&gt;For project type choose AS3 Project&lt;/li&gt;
-  &lt;li&gt;Set a breakpoint in Main method - Ctrl+Shift+B&lt;/li&gt;
-  &lt;li&gt;Compile - F11&lt;/li&gt;
-  &lt;li&gt;Debug - F5&lt;/li&gt;
-&lt;/ol&gt;</content><author><name>Swift Software Group</name></author><category term="actionscript" /><category term="flash" /><category term="flashdevelop" /><summary type="html">FlashDevelop is a free IDE for Windows. You can use it to develop Adobe Flash and AIR applications using ActionScript.</summary></entry></feed>
+&lt;p&gt;Open a browser and navigate to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http://default-ubuntu-1404/&lt;/code&gt;. You should see the “Hello World!” page of the my_flask application.&lt;/p&gt;</content><author><name>Swift Software Group</name></author><category term="chef" /><category term="flask" /><category term="python" /><category term="vagrant" /><summary type="html">In this post we show how you can use Chef to build an Ubuntu 14.04 LTS web server running Nginx, Python 2, virtualenv, uWSGI, and Flask - all done on Windows 10 host.</summary></entry></feed>

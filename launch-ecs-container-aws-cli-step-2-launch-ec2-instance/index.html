@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<title>Launch ECS container using AWS CLI - Step 2:&lt;br&gt;Launch EC2 Instance | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Swift Software Group">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/launch-ecs-container-aws-cli-step-2-launch-ec2-instance/">
+
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-37864402-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-37864402-1');
+</script>
+
+</head>
+
+
+
+
+<header>
+  <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
+  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/launch-ecs-container-aws-cli-step-2-launch-ec2-instance/">Launch ECS container using AWS CLI - Step 2:<br>Launch EC2 Instance</a></h1><time datetime="2021-03-02T00:00:00-08:00">March 02, 2021</time>
+</header>
+
+  <p>Create an ECS cluster with one EC2 instance. This will be used as a host for the ECS container instances.</p>
+
+<p>This is part of a multi-post thread involving these steps:</p>
+
+<ol>
+  <li><a href="/launch-ecs-container-aws-cli-step-1-network-setup">Network Setup</a></li>
+  <li>Launch EC2 instance (this post)</li>
+</ol>
+
+<h2 id="define-names">Define names</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Subnets</span>
+<span class="nv">subnet_1</span><span class="o">=</span><span class="s2">"subnet-ecs-1"</span>
+<span class="nv">subnet_2</span><span class="o">=</span><span class="s2">"subnet-ecs-2"</span>
+
+<span class="c"># Security Group</span>
+<span class="nv">security_group</span><span class="o">=</span><span class="s2">"security-ecs"</span>
+
+<span class="c"># cluster</span>
+<span class="nv">cluster</span><span class="o">=</span><span class="s2">"cluster-ecs"</span>
+
+<span class="c"># IAM</span>
+<span class="nv">instance_role</span><span class="o">=</span><span class="s2">"instance-role-ecs"</span>
+<span class="nv">instance_profile</span><span class="o">=</span><span class="s2">"instance-profile-ecs"</span>
+
+<span class="c"># EC2</span>
+<span class="nv">instance</span><span class="o">=</span><span class="s2">"instance-ecs"</span>
+
+<span class="c"># SSH access key</span>
+<span class="nv">key</span><span class="o">=</span><span class="s2">"aws-ec2-key"</span>
+</code></pre></div></div>
+
+<h2 id="ecs-cluster">ECS Cluster</h2>
+
+<p>Create ECS Cluster:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Get IDs</span>
+<span class="nv">group_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-security-groups <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$security_group</span> | jq <span class="nt">-r</span> <span class="s1">'.SecurityGroups[0].GroupId'</span><span class="si">)</span>
+<span class="nv">subnet_1_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-subnets <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$subnet_1</span> | jq <span class="nt">-r</span> <span class="s1">'.Subnets[0].SubnetId'</span><span class="si">)</span>
+
+<span class="nb">echo</span> <span class="s2">"Create ECS cluster </span><span class="nv">$cluster</span><span class="s2"> ..."</span>
+aws ecs create-cluster <span class="nt">--cluster-name</span> <span class="nv">$cluster</span>
+</code></pre></div></div>
+
+<h2 id="ec2-instance-role">EC2 Instance Role</h2>
+
+<p>Create instance policy configuration and save it to a file <code class="language-plaintext highlighter-rouge">instance-policy.json</code>:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-10-17"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"Statement"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Principal"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"Service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ec2.amazonaws.com"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"Action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sts:AssumeRole"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Create the EC2 Instance Role:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># EC2 Instance Role</span>
+<span class="nb">echo</span> <span class="s2">"Create EC2 Instance Role ..."</span>
+aws iam create-role <span class="se">\</span>
+    <span class="nt">--role-name</span> <span class="nv">$instance_role</span> <span class="se">\</span>
+    <span class="nt">--assume-role-policy-document</span> file://instance-policy.json
+
+aws iam attach-role-policy <span class="se">\</span>
+    <span class="nt">--role-name</span> <span class="nv">$instance_role</span> <span class="se">\</span>
+    <span class="nt">--policy-arn</span> arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role
+</code></pre></div></div>
+
+<h2 id="ec2-instance-profile">EC2 Instance Profile</h2>
+
+<p>Create EC2 Instance Profile:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># EC2 Instance Profile</span>
+<span class="nb">echo</span> <span class="s2">"Create EC2 Instance Profile ..."</span>
+aws iam create-instance-profile <span class="nt">--instance-profile-name</span> <span class="nv">$instance_profile</span>
+
+aws iam add-role-to-instance-profile <span class="se">\</span>
+    <span class="nt">--instance-profile-name</span> <span class="nv">$instance_profile</span> <span class="se">\</span>
+    <span class="nt">--role-name</span> <span class="nv">$instance_role</span>
+
+aws iam list-instance-profiles
+
+<span class="nb">echo</span> <span class="s2">"Wait 15 seconds for new instance profile to replicate in AWS ..."</span>
+<span class="nb">sleep </span>15
+</code></pre></div></div>
+
+<h2 id="ec2-instance">EC2 Instance</h2>
+
+<p>Create script to retrieve user data and save it to a file <code class="language-plaintext highlighter-rouge">instance-user-data.sh</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="nv">cluster</span><span class="o">=</span><span class="s2">"cluster-ecs"</span>
+
+<span class="nb">echo</span> <span class="s2">"ECS_CLUSTER=</span><span class="nv">$cluster</span><span class="s2">"</span> <span class="o">&gt;&gt;</span> /etc/ecs/ecs.config
+<span class="nb">echo</span> <span class="s2">"ECS_CONTAINER_INSTANCE_TAGS={</span><span class="se">\"</span><span class="s2">ECS_CLUSTER</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="nv">$cluster</span><span class="se">\"</span><span class="s2">}"</span> <span class="o">&gt;&gt;</span> /etc/ecs/ecs.config
+<span class="nb">echo </span><span class="nv">ECS_AVAILABLE_LOGGING_DRIVERS</span><span class="o">=</span><span class="s1">'["json-file", "awslogs"]'</span> <span class="o">&gt;&gt;</span> /etc/ecs/ecs.config
+</code></pre></div></div>
+
+<p>Create block device mappings configuration and save it to a file <code class="language-plaintext highlighter-rouge">instance-block-device-mappings.json</code>:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"DeviceName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/dev/sdf"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"Ebs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"DeleteOnTermination"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"VolumeSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Launch EC2 instance in subnet 1:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># EC2 Instance</span>
+<span class="nb">echo</span> <span class="s2">"Launch EC2 instance in subnet 1: </span><span class="nv">$subnet_1_id</span><span class="s2"> ..."</span>
+
+<span class="nv">json</span><span class="o">=</span><span class="si">$(</span>aws ec2 run-instances <span class="se">\</span>
+    <span class="nt">--subnet-id</span> <span class="nv">$subnet_1_id</span> <span class="se">\</span>
+    <span class="nt">--security-group-ids</span> <span class="nv">$group_id</span> <span class="se">\</span>
+    <span class="nt">--image-id</span> resolve:ssm:/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id <span class="se">\</span>
+    <span class="nt">--instance-type</span> t2.micro <span class="se">\</span>
+    <span class="nt">--count</span> 1 <span class="se">\</span>
+    <span class="nt">--key-name</span> <span class="nv">$key</span> <span class="se">\</span>
+    <span class="nt">--iam-instance-profile</span> <span class="nv">Name</span><span class="o">=</span><span class="nv">$instance_profile</span> <span class="se">\</span>
+    <span class="nt">--user-data</span> file://instance-user-data.sh <span class="se">\</span>
+    <span class="nt">--block-device-mappings</span> file://instance-block-device-mappings.json <span class="se">\</span>
+    <span class="nt">--tag-specifications</span> <span class="s1">'ResourceType=instance,Tags=[{Key=Name,Value='</span><span class="nv">$instance</span><span class="s1">'}]'</span><span class="si">)</span>
+
+<span class="nv">instance_id</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="nv">$json</span> | jq <span class="nt">-r</span> <span class="s1">'.Instances[0].InstanceId'</span><span class="si">)</span>
+
+aws ec2 <span class="nb">wait </span>instance-exists <span class="nt">--instance-ids</span> <span class="nv">$instance_id</span>    
+<span class="nb">echo</span> <span class="s2">"  Instance created ..."</span>
+
+aws ec2 <span class="nb">wait </span>instance-running <span class="nt">--instance-ids</span> <span class="nv">$instance_id</span>    
+<span class="nb">echo</span> <span class="s2">"  Instance is running ..."</span>
+
+aws ec2 <span class="nb">wait </span>instance-status-ok <span class="nt">--instance-ids</span> <span class="nv">$instance_id</span>    
+<span class="nb">echo</span> <span class="s2">"  Instance is ready ..."</span>
+</code></pre></div></div>
+
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>
