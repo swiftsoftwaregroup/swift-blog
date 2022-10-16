@@ -147,17 +147,7 @@ aws iam list-instance-profiles
 
 <h2 id="ec2-instance">EC2 Instance</h2>
 
-<p>Create script to retrieve user data and save it to a file <code class="language-plaintext highlighter-rouge">instance-user-data.sh</code>:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
-<span class="nv">cluster</span><span class="o">=</span><span class="s2">"cluster-ecs"</span>
-
-<span class="nb">echo</span> <span class="s2">"ECS_CLUSTER=</span><span class="nv">$cluster</span><span class="s2">"</span> <span class="o">&gt;&gt;</span> /etc/ecs/ecs.config
-<span class="nb">echo</span> <span class="s2">"ECS_CONTAINER_INSTANCE_TAGS={</span><span class="se">\"</span><span class="s2">ECS_CLUSTER</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="nv">$cluster</span><span class="se">\"</span><span class="s2">}"</span> <span class="o">&gt;&gt;</span> /etc/ecs/ecs.config
-<span class="nb">echo </span><span class="nv">ECS_AVAILABLE_LOGGING_DRIVERS</span><span class="o">=</span><span class="s1">'["json-file", "awslogs"]'</span> <span class="o">&gt;&gt;</span> /etc/ecs/ecs.config
-</code></pre></div></div>
-
-<p>Create block device mappings configuration and save it to a file <code class="language-plaintext highlighter-rouge">instance-block-device-mappings.json</code>:</p>
+<p>Create a “block device mappings” configuration and save it to a file <code class="language-plaintext highlighter-rouge">instance-block-device-mappings.json</code>:</p>
 
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
@@ -170,7 +160,21 @@ aws iam list-instance-profiles
 </span><span class="p">]</span><span class="w">
 </span></code></pre></div></div>
 
-<p>Launch EC2 instance in subnet 1:</p>
+<p>Create an “instance startup” script and save it to a file <code class="language-plaintext highlighter-rouge">instance-user-data.sh</code>.  You can do anything in the startup script. In our case we use it to generate <code class="language-plaintext highlighter-rouge">/etc/ecs/ecs.config</code>.</p>
+
+<blockquote>
+  <p>NOTE: This script runs on the EC2 instance after it launches.</p>
+</blockquote>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="nv">cluster</span><span class="o">=</span><span class="s2">"cluster-ecs"</span>
+
+<span class="nb">echo</span> <span class="s2">"ECS_CLUSTER=</span><span class="nv">$cluster</span><span class="s2">"</span> <span class="o">&gt;&gt;</span> /etc/ecs/ecs.config
+<span class="nb">echo</span> <span class="s2">"ECS_CONTAINER_INSTANCE_TAGS={</span><span class="se">\"</span><span class="s2">ECS_CLUSTER</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="nv">$cluster</span><span class="se">\"</span><span class="s2">}"</span> <span class="o">&gt;&gt;</span> /etc/ecs/ecs.config
+<span class="nb">echo </span><span class="nv">ECS_AVAILABLE_LOGGING_DRIVERS</span><span class="o">=</span><span class="s1">'["json-file", "awslogs"]'</span> <span class="o">&gt;&gt;</span> /etc/ecs/ecs.config
+</code></pre></div></div>
+
+<p>Launch the EC2 instance in subnet 1:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># EC2 Instance</span>
 <span class="nb">echo</span> <span class="s2">"Launch EC2 instance in subnet 1: </span><span class="nv">$subnet_1_id</span><span class="s2"> ..."</span>
