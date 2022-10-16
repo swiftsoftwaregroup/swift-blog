@@ -69,13 +69,6 @@
 <span class="nv">tag</span><span class="o">=</span><span class="s2">"latest"</span>
 </code></pre></div></div>
 
-<h2 id="create-image-repository">Create Image Repository</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Create repository </span><span class="nv">$image</span><span class="s2"> in registry </span><span class="nv">$registry</span><span class="s2"> ..."</span>
-aws ecr create-repository <span class="nt">--repository-name</span> <span class="nv">$image</span>
-<span class="nv">repository</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-repositories | jq <span class="nt">-r</span> <span class="s2">".repositories[] | select(.repositoryName==</span><span class="se">\"</span><span class="nv">$image</span><span class="se">\"</span><span class="s2">) | .repositoryUri"</span><span class="si">)</span>
-</code></pre></div></div>
-
 <h2 id="create-docker-image">Create Docker Image</h2>
 
 <h3 id="dockerfile">Dockerfile</h3>
@@ -109,6 +102,13 @@ docker build <span class="nt">--tag</span> <span class="k">${</span><span class=
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Tag image ..."</span>
 docker tag <span class="k">${</span><span class="nv">image</span><span class="k">}</span>:<span class="k">${</span><span class="nv">tag</span><span class="k">}</span> <span class="k">${</span><span class="nv">repository</span><span class="k">}</span>:<span class="k">${</span><span class="nv">tag</span><span class="k">}</span>
+</code></pre></div></div>
+
+<h2 id="create-ecs-repository">Create ECS Repository</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Create repository </span><span class="nv">$image</span><span class="s2"> in registry </span><span class="nv">$registry</span><span class="s2"> ..."</span>
+aws ecr create-repository <span class="nt">--repository-name</span> <span class="nv">$image</span>
+<span class="nv">repository</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-repositories | jq <span class="nt">-r</span> <span class="s2">".repositories[] | select(.repositoryName==</span><span class="se">\"</span><span class="nv">$image</span><span class="se">\"</span><span class="s2">) | .repositoryUri"</span><span class="si">)</span>
 </code></pre></div></div>
 
 <h2 id="publish-image">Publish Image</h2>

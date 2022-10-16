@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-10-16T14:36:57-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Launch ECS container using AWS CLI - Step 3 - Create Docker Image</title><link href="/launch-ecs-container-aws-cli-step-3-create-docker-image/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 3 - Create Docker Image" /><published>2021-04-01T00:00:00-07:00</published><updated>2021-04-01T00:00:00-07:00</updated><id>/launch-ecs-container-aws-cli-step-3-create-docker-image</id><content type="html" xml:base="/launch-ecs-container-aws-cli-step-3-create-docker-image/">&lt;p&gt;Setup an ECS container repository, create a Docker image, and upload the Docker image to the repository.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-10-16T15:06:31-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Launch ECS container using AWS CLI - Step 3 - Create Docker Image</title><link href="/launch-ecs-container-aws-cli-step-3-create-docker-image/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 3 - Create Docker Image" /><published>2021-04-01T00:00:00-07:00</published><updated>2021-04-01T00:00:00-07:00</updated><id>/launch-ecs-container-aws-cli-step-3-create-docker-image</id><content type="html" xml:base="/launch-ecs-container-aws-cli-step-3-create-docker-image/">&lt;p&gt;Setup an ECS container repository, create a Docker image, and upload the Docker image to the repository.&lt;/p&gt;
 
 &lt;p&gt;This is part of a multi-post thread involving these steps:&lt;/p&gt;
 
@@ -18,13 +18,6 @@
 &lt;span class=&quot;c&quot;&gt;# image&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ecs-test&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;latest&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;create-image-repository&quot;&gt;Create Image Repository&lt;/h2&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Create repository &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$image&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; in registry &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$registry&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; ...&quot;&lt;/span&gt;
-aws ecr create-repository &lt;span class=&quot;nt&quot;&gt;--repository-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$image&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;repository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ecr describe-repositories | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;.repositories[] | select(.repositoryName==&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$image&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;) | .repositoryUri&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;create-docker-image&quot;&gt;Create Docker Image&lt;/h2&gt;
@@ -60,6 +53,13 @@ docker build &lt;span class=&quot;nt&quot;&gt;--tag&lt;/span&gt; &lt;span class=
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Tag image ...&quot;&lt;/span&gt;
 docker tag &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;:&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;repository&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;:&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;create-ecs-repository&quot;&gt;Create ECS Repository&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Create repository &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$image&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; in registry &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$registry&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; ...&quot;&lt;/span&gt;
+aws ecr create-repository &lt;span class=&quot;nt&quot;&gt;--repository-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$image&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;repository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ecr describe-repositories | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;.repositories[] | select(.repositoryName==&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$image&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;) | .repositoryUri&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;publish-image&quot;&gt;Publish Image&lt;/h2&gt;
