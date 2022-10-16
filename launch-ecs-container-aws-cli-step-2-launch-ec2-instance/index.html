@@ -47,7 +47,7 @@
   <h1><a href="/launch-ecs-container-aws-cli-step-2-launch-ec2-instance/">Launch ECS container using AWS CLI - Step 2:<br>Launch EC2 Instance</a></h1><time datetime="2021-03-02T00:00:00-08:00">March 02, 2021</time>
 </header>
 
-  <p>Create an ECS cluster with one EC2 instance. This will be used as a host for the ECS container instances.</p>
+  <p>Create an “EC2 Contaner Service” (ECS) cluster with one EC2 instance. This will be used to host ECS tasks / container instances.</p>
 
 <p>This is part of a multi-post thread involving these steps:</p>
 
@@ -93,7 +93,7 @@ aws ecs create-cluster <span class="nt">--cluster-name</span> <span class="nv">$
 
 <h2 id="ec2-instance-role">EC2 Instance Role</h2>
 
-<p>Create instance policy configuration and save it to a file <code class="language-plaintext highlighter-rouge">instance-policy.json</code>:</p>
+<p>Create an “assume role” policy configuration and save it to a file <code class="language-plaintext highlighter-rouge">instance-policy.json</code>:</p>
 
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-10-17"</span><span class="p">,</span><span class="w">
@@ -116,8 +116,11 @@ aws ecs create-cluster <span class="nt">--cluster-name</span> <span class="nv">$
 aws iam create-role <span class="se">\</span>
     <span class="nt">--role-name</span> <span class="nv">$instance_role</span> <span class="se">\</span>
     <span class="nt">--assume-role-policy-document</span> file://instance-policy.json
+</code></pre></div></div>
 
-aws iam attach-role-policy <span class="se">\</span>
+<p>… and attach the <code class="language-plaintext highlighter-rouge">AmazonEC2ContainerServiceforEC2Role</code> policy to the instance role. When you attach a managed policy to a role, the managed policy becomes part of the role’s permission (access) policy. This allows the instance role to run ECS tasks / container instances:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws iam attach-role-policy <span class="se">\</span>
     <span class="nt">--role-name</span> <span class="nv">$instance_role</span> <span class="se">\</span>
     <span class="nt">--policy-arn</span> arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role
 </code></pre></div></div>
