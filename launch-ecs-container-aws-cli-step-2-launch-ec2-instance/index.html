@@ -118,12 +118,14 @@ aws iam create-role <span class="se">\</span>
     <span class="nt">--assume-role-policy-document</span> file://instance-policy.json
 </code></pre></div></div>
 
-<p>… and attach the <code class="language-plaintext highlighter-rouge">AmazonEC2ContainerServiceforEC2Role</code> policy to the instance role. When you attach a managed policy to a role, the managed policy becomes part of the role’s permission (access) policy. This allows the instance role to run ECS tasks / container instances:</p>
+<p>… and attach the <code class="language-plaintext highlighter-rouge">AmazonEC2ContainerServiceforEC2Role</code> policy to the instance role:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws iam attach-role-policy <span class="se">\</span>
     <span class="nt">--role-name</span> <span class="nv">$instance_role</span> <span class="se">\</span>
     <span class="nt">--policy-arn</span> arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role
 </code></pre></div></div>
+
+<p>When you attach a managed policy to a role, the managed policy becomes part of the role’s permission (access) policy.</p>
 
 <h2 id="ec2-instance-profile">EC2 Instance Profile</h2>
 
