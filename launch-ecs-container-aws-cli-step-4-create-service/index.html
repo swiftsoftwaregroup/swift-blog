@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<title>Launch ECS container using AWS CLI - Step 4 - Create Service | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Swift Software Group">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/launch-ecs-container-aws-cli-step-4-create-service/">
+
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-37864402-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-37864402-1');
+</script>
+
+</head>
+
+
+
+
+<header>
+  <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
+  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/launch-ecs-container-aws-cli-step-4-create-service/">Launch ECS container using AWS CLI - Step 4 - Create Service</a></h1><time datetime="2021-05-11T00:00:00-07:00">May 11, 2021</time>
+</header>
+
+  <p>Setup an ECS container repository, create a Docker image, and upload the Docker image to the repository.</p>
+
+<p>This is part of a multi-post thread involving these steps:</p>
+
+<ol>
+  <li><a href="/launch-ecs-container-aws-cli-step-1-network-setup">Network Setup</a></li>
+  <li><a href="/launch-ecs-container-aws-cli-step-2-launch-ec2-instance">Launch EC2 Instance</a></li>
+  <li><a href="/launch-ecs-container-aws-cli-step-3-create-docker-image">Create Docker Image</a></li>
+  <li>Create Service (this post)</li>
+</ol>
+
+<h2 id="define-names">Define Names</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># registry (in the form $registryId.dkr.ecr.$region.amazonaws.com)</span>
+<span class="nv">region</span><span class="o">=</span><span class="si">$(</span>aws configure get region<span class="si">)</span>
+<span class="nv">registryId</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-registry | jq <span class="nt">-r</span> <span class="s1">'.registryId'</span><span class="si">)</span>
+<span class="nv">registry</span><span class="o">=</span><span class="s2">"</span><span class="nv">$registryId</span><span class="s2">.dkr.ecr.</span><span class="nv">$region</span><span class="s2">.amazonaws.com"</span>
+
+<span class="nv">cluster</span><span class="o">=</span><span class="s2">"cluster-ecs"</span>
+<span class="nv">service</span><span class="o">=</span><span class="s2">"ecs-test-service"</span>
+<span class="nv">task_def_family</span><span class="o">=</span><span class="s2">"ecs-test"</span>
+<span class="nv">task</span><span class="o">=</span><span class="s2">"ecs-test"</span>
+</code></pre></div></div>
+
+<h2 id="create-task-definition">Create Task Definition</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="no">EOT</span><span class="sh"> &gt; ./test-ecs-task-def.json
+{
+    "family": "ecs-test",
+    "containerDefinitions": [
+        {
+            "image": "</span><span class="nv">$registry</span><span class="sh">/ecs-test:latest",
+            "name": "test",
+            "cpu": 512,
+            "memory": 512, 
+            "essential": true
+        }
+    ]
+}
+</span><span class="no">EOT
+</span></code></pre></div></div>
+
+<h2 id="register-task-definition">Register Task Definition</h2>
+
+<p>Register task definition:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Register task definition ..."</span>
+aws ecs register-task-definition <span class="nt">--cli-input-json</span> file://test-ecs-task-def.json
+</code></pre></div></div>
+
+<p>To list task definitions:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws ecs list-task-definitions
+</code></pre></div></div>
+
+<h2 id="create-service">Create Service</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">task_def_arn</span><span class="o">=</span><span class="si">$(</span>aws ecs list-task-definitions <span class="nt">--sort</span> DESC <span class="nt">--family-prefix</span> <span class="nv">$task_def_family</span> | jq <span class="nt">-r</span> <span class="s1">'.taskDefinitionArns[0]'</span><span class="si">)</span>
+
+<span class="nb">echo</span> <span class="s2">"Launch service </span><span class="nv">$service</span><span class="s2"> ..."</span>
+aws ecs create-service <span class="se">\</span>
+    <span class="nt">--cluster</span> <span class="nv">$cluster</span> <span class="se">\</span>
+    <span class="nt">--service-name</span> <span class="nv">$service</span> <span class="se">\</span>
+    <span class="nt">--task-definition</span> <span class="nv">$task_def_arn</span> <span class="se">\</span>
+    <span class="nt">--desired-count</span> 1
+</code></pre></div></div>
+
+<h2 id="connect-to-the-container">Connect to the Container</h2>
+
+<p>Find EC2 instance IP address:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">task_arn</span><span class="o">=</span><span class="si">$(</span>aws ecs list-tasks <span class="nt">--cluster</span><span class="o">=</span><span class="nv">$cluster</span> <span class="nt">--service-name</span><span class="o">=</span><span class="nv">$service</span> | jq <span class="nt">-r</span> <span class="s1">'.taskArns[0]'</span><span class="si">)</span>
+<span class="nv">container_instance_arn</span><span class="o">=</span><span class="si">$(</span>aws ecs describe-tasks <span class="nt">--cluster</span><span class="o">=</span><span class="nv">$cluster</span> <span class="nt">--tasks</span> <span class="nv">$task_arn</span> | jq <span class="nt">-r</span> <span class="s1">'.tasks[0].containerInstanceArn'</span><span class="si">)</span>
+
+<span class="nv">ec2_instance</span><span class="o">=</span><span class="si">$(</span>aws ecs describe-container-instances <span class="nt">--cluster</span><span class="o">=</span><span class="nv">$cluster</span> <span class="nt">--container-instances</span> <span class="nv">$container_instance_arn</span> | jq <span class="nt">-r</span> <span class="s1">'.containerInstances[0].ec2InstanceId'</span><span class="si">)</span>
+<span class="nv">ec2_ip</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-instances <span class="nt">--instance-ids</span> <span class="nv">$ec2_instance</span> | jq <span class="nt">-r</span> <span class="s1">'.Reservations[0].Instances[0].PublicIpAddress'</span><span class="si">)</span>
+
+<span class="nv">ec2_key</span><span class="o">=</span><span class="s2">"~/.ssh/aws-ec2-key"</span>
+</code></pre></div></div>
+
+<p>Connect to the EC2 instance:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-i</span> <span class="nv">$ec2_key</span> ec2-user@<span class="nv">$ec2_ip</span>
+</code></pre></div></div>
+
+<p>Connect to the Docker container:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># On the EC2 instance</span>
+<span class="nv">task</span><span class="o">=</span><span class="s2">"ecs-test"</span>
+<span class="nv">container_id</span><span class="o">=</span><span class="si">$(</span>docker ps <span class="nt">-a</span> <span class="nt">-q</span> <span class="nt">-f</span> <span class="nv">name</span><span class="o">=</span>ecs-<span class="nv">$task</span> | <span class="nb">head</span> <span class="nt">-n</span> 1<span class="si">)</span>
+docker <span class="nb">exec</span> <span class="nt">-it</span> <span class="nv">$container_id</span> bash
+</code></pre></div></div>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

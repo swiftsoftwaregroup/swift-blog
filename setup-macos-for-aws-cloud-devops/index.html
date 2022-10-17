@@ -153,9 +153,9 @@ curl <span class="nt">-sSL</span> https://git.io/get-mo <span class="nt">-o</spa
 <span class="nb">export </span><span class="nv">REG_SHA256</span><span class="o">=</span><span class="s2">"2768ac56ad640e8ee5b74752fc9bbeaf37f37a34c7e1ddcb6d0e384a3096b1c2"</span>
 
 <span class="c"># Download and check the sha256sum.</span>
-curl <span class="nt">-fSL</span> <span class="s2">"https://github.com/genuinetools/reg/releases/download/v0.16.1/reg-darwin-amd64"</span> <span class="nt">-o</span> <span class="s2">"/usr/local/bin/reg"</span> <span class="se">\</span>
+<span class="nb">sudo </span>curl <span class="nt">-fSL</span> <span class="s2">"https://github.com/genuinetools/reg/releases/download/v0.16.1/reg-darwin-amd64"</span> <span class="nt">-o</span> <span class="s2">"/usr/local/bin/reg"</span> <span class="se">\</span>
   <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">REG_SHA256</span><span class="k">}</span><span class="s2">  /usr/local/bin/reg"</span> | <span class="nb">sha256sum</span> <span class="nt">-c</span> - <span class="se">\</span>
-  <span class="o">&amp;&amp;</span> <span class="nb">chmod </span>a+x <span class="s2">"/usr/local/bin/reg"</span>
+  <span class="o">&amp;&amp;</span> <span class="nb">sudo chmod </span>a+x <span class="s2">"/usr/local/bin/reg"</span>
 </code></pre></div></div>
 
 <p>Test:</p>

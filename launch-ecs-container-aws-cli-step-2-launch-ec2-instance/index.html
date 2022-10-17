@@ -55,6 +55,7 @@
   <li><a href="/launch-ecs-container-aws-cli-step-1-network-setup">Network Setup</a></li>
   <li>Launch EC2 Instance (this post)</li>
   <li><a href="/launch-ecs-container-aws-cli-step-3-create-docker-image">Create Docker Image</a></li>
+  <li><a href="/launch-ecs-container-aws-cli-step-4-create-service">Create Service</a></li>
 </ol>
 
 <h2 id="define-names">Define names</h2>
@@ -96,18 +97,20 @@ aws ecs create-cluster <span class="nt">--cluster-name</span> <span class="nv">$
 
 <p>Create an “assume role” policy configuration and save it to a file <code class="language-plaintext highlighter-rouge">instance-policy.json</code>:</p>
 
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-10-17"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"Statement"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"Principal"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"Service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ec2.amazonaws.com"</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="nl">"Action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sts:AssumeRole"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="no">EOT</span><span class="sh"> &gt; ./instance-policy.json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+</span><span class="no">EOT
 </span></code></pre></div></div>
 
 <p>Create the EC2 Instance Role:</p>
@@ -150,15 +153,17 @@ aws iam list-instance-profiles
 
 <p>Create a “block device mappings” configuration and save it to a file <code class="language-plaintext highlighter-rouge">instance-block-device-mappings.json</code>:</p>
 
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"DeviceName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/dev/sdf"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"Ebs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"DeleteOnTermination"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"VolumeSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="no">EOT</span><span class="sh"> &gt; ./instance-block-device-mappings.json
+[
+    {
+        "DeviceName": "/dev/sdf",
+        "Ebs": {
+            "DeleteOnTermination": true,
+            "VolumeSize": 50
+        }
+    }
+]
+</span><span class="no">EOT
 </span></code></pre></div></div>
 
 <p>Create an “instance startup” script and save it to a file <code class="language-plaintext highlighter-rouge">instance-user-data.sh</code>.  You can do anything in the startup script. In our case we use it to generate <code class="language-plaintext highlighter-rouge">/etc/ecs/ecs.config</code>.</p>
@@ -167,13 +172,15 @@ aws iam list-instance-profiles
   <p>NOTE: This script runs on the EC2 instance after it launches.</p>
 </blockquote>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
-<span class="nv">cluster</span><span class="o">=</span><span class="s2">"cluster-ecs"</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="sh">"</span><span class="no">EOT</span><span class="sh">" &gt; ./instance-user-data.sh
+#!/bin/bash
+cluster="cluster-ecs"
 
-<span class="nb">echo</span> <span class="s2">"ECS_CLUSTER=</span><span class="nv">$cluster</span><span class="s2">"</span> <span class="o">&gt;&gt;</span> /etc/ecs/ecs.config
-<span class="nb">echo</span> <span class="s2">"ECS_CONTAINER_INSTANCE_TAGS={</span><span class="se">\"</span><span class="s2">ECS_CLUSTER</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="nv">$cluster</span><span class="se">\"</span><span class="s2">}"</span> <span class="o">&gt;&gt;</span> /etc/ecs/ecs.config
-<span class="nb">echo </span><span class="nv">ECS_AVAILABLE_LOGGING_DRIVERS</span><span class="o">=</span><span class="s1">'["json-file", "awslogs"]'</span> <span class="o">&gt;&gt;</span> /etc/ecs/ecs.config
-</code></pre></div></div>
+echo "ECS_CLUSTER=</span><span class="nv">$cluster</span><span class="sh">" &gt;&gt; /etc/ecs/ecs.config
+echo "ECS_CONTAINER_INSTANCE_TAGS={</span><span class="se">\"</span><span class="sh">ECS_CLUSTER</span><span class="se">\"</span><span class="sh">: </span><span class="se">\"</span><span class="nv">$cluster</span><span class="se">\"</span><span class="sh">}" &gt;&gt; /etc/ecs/ecs.config
+echo ECS_AVAILABLE_LOGGING_DRIVERS='["json-file", "awslogs"]' &gt;&gt; /etc/ecs/ecs.config
+</span><span class="no">EOT
+</span></code></pre></div></div>
 
 <p>Now we have everything that’s needed. Launch the EC2 instance in subnet 1:</p>
 
@@ -202,6 +209,7 @@ aws ec2 <span class="nb">wait </span>instance-running <span class="nt">--instanc
 
 aws ec2 <span class="nb">wait </span>instance-status-ok <span class="nt">--instance-ids</span> <span class="nv">$instance_id</span>    
 <span class="nb">echo</span> <span class="s2">"  Instance is ready ..."</span>
+
 </code></pre></div></div>
 
 <h2 id="verify">Verify</h2>

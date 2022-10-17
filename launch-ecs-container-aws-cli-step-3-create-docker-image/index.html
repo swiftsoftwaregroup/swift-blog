@@ -55,6 +55,7 @@
   <li><a href="/launch-ecs-container-aws-cli-step-1-network-setup">Network Setup</a></li>
   <li><a href="/launch-ecs-container-aws-cli-step-2-launch-ec2-instance">Launch EC2 Instance</a></li>
   <li>Create Docker Image (this post)</li>
+  <li><a href="/launch-ecs-container-aws-cli-step-4-create-service">Create Service</a></li>
 </ol>
 
 <h2 id="define-names">Define names</h2>
@@ -69,28 +70,37 @@
 <span class="nv">tag</span><span class="o">=</span><span class="s2">"latest"</span>
 </code></pre></div></div>
 
+<h2 id="create-ecs-repository">Create ECS Repository</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Create repository </span><span class="nv">$image</span><span class="s2"> in registry </span><span class="nv">$registry</span><span class="s2"> ..."</span>
+aws ecr create-repository <span class="nt">--repository-name</span> <span class="nv">$image</span>
+<span class="nv">repository</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-repositories | jq <span class="nt">-r</span> <span class="s2">".repositories[] | select(.repositoryName==</span><span class="se">\"</span><span class="nv">$image</span><span class="se">\"</span><span class="s2">) | .repositoryUri"</span><span class="si">)</span>
+</code></pre></div></div>
+
 <h2 id="create-docker-image">Create Docker Image</h2>
 
 <h3 id="dockerfile">Dockerfile</h3>
 
 <p>Create a <code class="language-plaintext highlighter-rouge">Dockerfile</code> with the following contents:</p>
 
-<div class="language-docker highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># See https://hub.docker.com/_/oraclelinux for all supported </span>
-<span class="c"># Oracle Linux tags from Docker Hub.</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="sh">"</span><span class="no">EOT</span><span class="sh">" &gt; ./Dockerfile
+# See https://hub.docker.com/_/oraclelinux for all supported 
+# Oracle Linux tags from Docker Hub.
 
-<span class="c"># this image will be the actual running container</span>
-<span class="k">FROM</span><span class="s">  oraclelinux:8</span>
+# this image will be the actual running container
+FROM  oraclelinux:8
 
-<span class="k">LABEL</span><span class="s"> Name=ecs-test</span>
+LABEL Name=ecs-test
 
-<span class="c">## System Config</span>
-<span class="k">ENV</span><span class="s"> TZ=America/Los_Angeles</span>
+## System Config
+ENV TZ=America/Los_Angeles
 
-<span class="c"># Packages</span>
-<span class="k">RUN </span>yum <span class="nt">-y</span> <span class="nb">install </span>bind-utils 
+# Packages
+RUN yum -y install bind-utils 
 
-<span class="k">CMD</span><span class="s"> ["/bin/ping", "localhost"]</span>
-</code></pre></div></div>
+CMD ["/bin/ping", "localhost"]
+</span><span class="no">EOT
+</span></code></pre></div></div>
 
 <h3 id="build-image">Build Image</h3>
 
@@ -102,13 +112,6 @@ docker build <span class="nt">--tag</span> <span class="k">${</span><span class=
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Tag image ..."</span>
 docker tag <span class="k">${</span><span class="nv">image</span><span class="k">}</span>:<span class="k">${</span><span class="nv">tag</span><span class="k">}</span> <span class="k">${</span><span class="nv">repository</span><span class="k">}</span>:<span class="k">${</span><span class="nv">tag</span><span class="k">}</span>
-</code></pre></div></div>
-
-<h2 id="create-ecs-repository">Create ECS Repository</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Create repository </span><span class="nv">$image</span><span class="s2"> in registry </span><span class="nv">$registry</span><span class="s2"> ..."</span>
-aws ecr create-repository <span class="nt">--repository-name</span> <span class="nv">$image</span>
-<span class="nv">repository</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-repositories | jq <span class="nt">-r</span> <span class="s2">".repositories[] | select(.repositoryName==</span><span class="se">\"</span><span class="nv">$image</span><span class="se">\"</span><span class="s2">) | .repositoryUri"</span><span class="si">)</span>
 </code></pre></div></div>
 
 <h2 id="publish-image">Publish Image</h2>
