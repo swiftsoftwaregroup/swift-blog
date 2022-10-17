@@ -1,4 +1,117 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-10-16T17:39:13-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Launch ECS container using AWS CLI - Step 4 - Create Service</title><link href="/launch-ecs-container-aws-cli-step-4-create-service/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 4 - Create Service" /><published>2021-05-11T00:00:00-07:00</published><updated>2021-05-11T00:00:00-07:00</updated><id>/launch-ecs-container-aws-cli-step-4-create-service</id><content type="html" xml:base="/launch-ecs-container-aws-cli-step-4-create-service/">&lt;p&gt;Setup an ECS container repository, create a Docker image, and upload the Docker image to the repository.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-10-16T17:50:22-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Launch ECS container using AWS CLI - Step 5 - Cleanup</title><link href="/launch-ecs-container-aws-cli-step-5-cleanup/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 5 - Cleanup" /><published>2021-05-12T00:00:00-07:00</published><updated>2021-05-12T00:00:00-07:00</updated><id>/launch-ecs-container-aws-cli-step-5-cleanup</id><content type="html" xml:base="/launch-ecs-container-aws-cli-step-5-cleanup/">&lt;p&gt;Setup an ECS container repository, create a Docker image, and upload the Docker image to the repository.&lt;/p&gt;
+
+&lt;p&gt;This is part of a multi-post thread involving these steps:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;/launch-ecs-container-aws-cli-step-1-network-setup&quot;&gt;Network Setup&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/launch-ecs-container-aws-cli-step-2-launch-ec2-instance&quot;&gt;Launch EC2 Instance&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/launch-ecs-container-aws-cli-step-3-create-docker-image&quot;&gt;Create Docker Image&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/launch-ecs-container-aws-cli-step-4-create-service&quot;&gt;Create Service&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Cleanup (this post)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;define-names&quot;&gt;Define Names&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# service&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;service&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ecs-test-service&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ecs-test&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# task definition&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;task_def_family&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ecs-test&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# cluster&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;cluster&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;cluster-ecs&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# IAM&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;instance_profile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;instance-profile-ecs&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;instance_role&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;instance-role-ecs&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# EC2&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;instance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;instance-ecs&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# VPC&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;vpc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;vpc-ecs&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Subnets&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;subnet_1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;subnet-ecs-1&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;subnet_2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;subnet-ecs-2&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Internet Gateway&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;internet_gateway&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;igw-ecs&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Route Table&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;route_table&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;rtb-ecs&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Security Group&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;security_group&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;security-ecs&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;cleanup&quot;&gt;Cleanup&lt;/h1&gt;
+
+&lt;p&gt;Delete all resources in reverse order of creation:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Delete service &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$service&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; ...&quot;&lt;/span&gt;
+aws ecs delete-service &lt;span class=&quot;nt&quot;&gt;--force&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--cluster&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$cluster&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--service&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$service&lt;/span&gt; 
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Deregister task definition &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; ...&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;task_def_arn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ecs list-task-definitions &lt;span class=&quot;nt&quot;&gt;--sort&lt;/span&gt; DESC &lt;span class=&quot;nt&quot;&gt;--family-prefix&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$task_def_family&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.taskDefinitionArns[0]'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+aws ecs deregister-task-definition &lt;span class=&quot;nt&quot;&gt;--task-definition&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$task_def_arn&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Delete EC2 Instance ...&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;instance_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-instances &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$instance&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;instance-state-name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;running &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+| jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Reservations[0].Instances[0].InstanceId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+aws ec2 terminate-instances &lt;span class=&quot;nt&quot;&gt;--instance-ids&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$instance_id&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Wait until EC2 instance terminates ...&quot;&lt;/span&gt;
+aws ec2 &lt;span class=&quot;nb&quot;&gt;wait &lt;/span&gt;instance-terminated &lt;span class=&quot;nt&quot;&gt;--instance-ids&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$instance_id&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Delete EC2 Instance Profile ...&quot;&lt;/span&gt;
+aws iam remove-role-from-instance-profile &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--instance-profile-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$instance_profile&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--role-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$instance_role&lt;/span&gt;
+
+aws iam delete-instance-profile &lt;span class=&quot;nt&quot;&gt;--instance-profile-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$instance_profile&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Delete EC2 Instance Role ...&quot;&lt;/span&gt;
+aws iam detach-role-policy &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--role-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$instance_role&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--policy-arn&lt;/span&gt; arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role
+
+aws iam delete-role &lt;span class=&quot;nt&quot;&gt;--role-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$instance_role&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Delete ECS cluster ...&quot;&lt;/span&gt;
+aws ecs delete-cluster &lt;span class=&quot;nt&quot;&gt;--cluster&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$cluster&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Delete Security Group ...&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;group_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-security-groups &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$security_group&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.SecurityGroups[0].GroupId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+aws ec2 delete-security-group &lt;span class=&quot;nt&quot;&gt;--group-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$group_id&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Delete Subnets ...&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;subnet_1_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-subnets &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$subnet_1&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Subnets[0].SubnetId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+aws ec2 delete-subnet &lt;span class=&quot;nt&quot;&gt;--subnet-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$subnet_1_id&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;subnet_2_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-subnets &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$subnet_2&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Subnets[0].SubnetId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+aws ec2 delete-subnet &lt;span class=&quot;nt&quot;&gt;--subnet-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$subnet_2_id&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Delete Route Table ...&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;route_table_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-route-tables &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$route_table&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.RouteTables[0].RouteTableId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+aws ec2 delete-route-table &lt;span class=&quot;nt&quot;&gt;--route-table-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$route_table_id&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Delete Internet Gateway ...&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;internet_gateway_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-internet-gateways &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$internet_gateway&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.InternetGateways[0].InternetGatewayId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;vpc_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ec2 describe-vpcs &lt;span class=&quot;nt&quot;&gt;--filters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tag:Name,Values&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$vpc&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Vpcs[0].VpcId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+aws ec2 detach-internet-gateway &lt;span class=&quot;nt&quot;&gt;--internet-gateway-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$internet_gateway_id&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--vpc-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$vpc_id&lt;/span&gt;
+
+aws ec2 delete-internet-gateway &lt;span class=&quot;nt&quot;&gt;--internet-gateway-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$internet_gateway_id&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Delete VPC ...&quot;&lt;/span&gt;
+aws ec2 delete-vpc &lt;span class=&quot;nt&quot;&gt;--vpc-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$vpc_id&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Setup an ECS container repository, create a Docker image, and upload the Docker image to the repository. This is part of a multi-post thread involving these steps: Network Setup Launch EC2 Instance Create Docker Image Create Service Cleanup (this post)</summary></entry><entry><title type="html">Launch ECS container using AWS CLI - Step 4 - Create Service</title><link href="/launch-ecs-container-aws-cli-step-4-create-service/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 4 - Create Service" /><published>2021-05-11T00:00:00-07:00</published><updated>2021-05-11T00:00:00-07:00</updated><id>/launch-ecs-container-aws-cli-step-4-create-service</id><content type="html" xml:base="/launch-ecs-container-aws-cli-step-4-create-service/">&lt;p&gt;Setup an ECS container repository, create a Docker image, and upload the Docker image to the repository.&lt;/p&gt;
 
 &lt;p&gt;This is part of a multi-post thread involving these steps:&lt;/p&gt;
 
@@ -7,6 +120,7 @@
   &lt;li&gt;&lt;a href=&quot;/launch-ecs-container-aws-cli-step-2-launch-ec2-instance&quot;&gt;Launch EC2 Instance&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;/launch-ecs-container-aws-cli-step-3-create-docker-image&quot;&gt;Create Docker Image&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Create Service (this post)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/launch-ecs-container-aws-cli-step-5-cleanup&quot;&gt;Cleanup&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h2 id=&quot;define-names&quot;&gt;Define Names&lt;/h2&gt;
@@ -89,7 +203,7 @@ aws ecs create-service &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ecs-test&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;container_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;docker ps &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-q&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ecs-&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;head&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; 1&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
 docker &lt;span class=&quot;nb&quot;&gt;exec&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$container_id&lt;/span&gt; bash
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Setup an ECS container repository, create a Docker image, and upload the Docker image to the repository. This is part of a multi-post thread involving these steps: Network Setup Launch EC2 Instance Create Docker Image Create Service (this post)</summary></entry><entry><title type="html">Launch ECS container using AWS CLI - Step 3 - Create Docker Image</title><link href="/launch-ecs-container-aws-cli-step-3-create-docker-image/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 3 - Create Docker Image" /><published>2021-04-01T00:00:00-07:00</published><updated>2021-04-01T00:00:00-07:00</updated><id>/launch-ecs-container-aws-cli-step-3-create-docker-image</id><content type="html" xml:base="/launch-ecs-container-aws-cli-step-3-create-docker-image/">&lt;p&gt;Setup an ECS container repository, create a Docker image, and upload the Docker image to the repository.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Setup an ECS container repository, create a Docker image, and upload the Docker image to the repository. This is part of a multi-post thread involving these steps: Network Setup Launch EC2 Instance Create Docker Image Create Service (this post) Cleanup</summary></entry><entry><title type="html">Launch ECS container using AWS CLI - Step 3 - Create Docker Image</title><link href="/launch-ecs-container-aws-cli-step-3-create-docker-image/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 3 - Create Docker Image" /><published>2021-04-01T00:00:00-07:00</published><updated>2021-04-01T00:00:00-07:00</updated><id>/launch-ecs-container-aws-cli-step-3-create-docker-image</id><content type="html" xml:base="/launch-ecs-container-aws-cli-step-3-create-docker-image/">&lt;p&gt;Setup an ECS container repository, create a Docker image, and upload the Docker image to the repository.&lt;/p&gt;
 
 &lt;p&gt;This is part of a multi-post thread involving these steps:&lt;/p&gt;
 
@@ -98,6 +212,7 @@ docker &lt;span class=&quot;nb&quot;&gt;exec&lt;/span&gt; &lt;span class=&quot;n
   &lt;li&gt;&lt;a href=&quot;/launch-ecs-container-aws-cli-step-2-launch-ec2-instance&quot;&gt;Launch EC2 Instance&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Create Docker Image (this post)&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;/launch-ecs-container-aws-cli-step-4-create-service&quot;&gt;Create Service&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/launch-ecs-container-aws-cli-step-5-cleanup&quot;&gt;Cleanup&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h2 id=&quot;define-names&quot;&gt;Define names&lt;/h2&gt;
@@ -180,7 +295,7 @@ docker push &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;
 &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else    
     &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;printf&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;green&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Success&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;clear&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo
 &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Setup an ECS container repository, create a Docker image, and upload the Docker image to the repository. This is part of a multi-post thread involving these steps: Network Setup Launch EC2 Instance Create Docker Image (this post) Create Service</summary></entry><entry><title type="html">Launch ECS container using AWS CLI - Step 2 - Launch EC2 Instance</title><link href="/launch-ecs-container-aws-cli-step-2-launch-ec2-instance/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 2 - Launch EC2 Instance" /><published>2021-03-02T00:00:00-08:00</published><updated>2021-03-02T00:00:00-08:00</updated><id>/launch-ecs-container-aws-cli-step-2-launch-ec2-instance</id><content type="html" xml:base="/launch-ecs-container-aws-cli-step-2-launch-ec2-instance/">&lt;p&gt;Create an “EC2 Contaner Service” (ECS) cluster with one EC2 instance. This will be used to host ECS tasks / container instances.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Setup an ECS container repository, create a Docker image, and upload the Docker image to the repository. This is part of a multi-post thread involving these steps: Network Setup Launch EC2 Instance Create Docker Image (this post) Create Service Cleanup</summary></entry><entry><title type="html">Launch ECS container using AWS CLI - Step 2 - Launch EC2 Instance</title><link href="/launch-ecs-container-aws-cli-step-2-launch-ec2-instance/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 2 - Launch EC2 Instance" /><published>2021-03-02T00:00:00-08:00</published><updated>2021-03-02T00:00:00-08:00</updated><id>/launch-ecs-container-aws-cli-step-2-launch-ec2-instance</id><content type="html" xml:base="/launch-ecs-container-aws-cli-step-2-launch-ec2-instance/">&lt;p&gt;Create an “EC2 Contaner Service” (ECS) cluster with one EC2 instance. This will be used to host ECS tasks / container instances.&lt;/p&gt;
 
 &lt;p&gt;This is part of a multi-post thread involving these steps:&lt;/p&gt;
 
@@ -189,6 +304,7 @@ docker push &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;
   &lt;li&gt;Launch EC2 Instance (this post)&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;/launch-ecs-container-aws-cli-step-3-create-docker-image&quot;&gt;Create Docker Image&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;/launch-ecs-container-aws-cli-step-4-create-service&quot;&gt;Create Service&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/launch-ecs-container-aws-cli-step-5-cleanup&quot;&gt;Cleanup&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h2 id=&quot;define-names&quot;&gt;Define names&lt;/h2&gt;
@@ -357,7 +473,7 @@ aws ecs list-container-instances &lt;span class=&quot;nt&quot;&gt;--cluster&lt;/
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;cluster&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;cluster-ecs&quot;&lt;/span&gt;
 aws ecs describe-clusters &lt;span class=&quot;nt&quot;&gt;--cluster&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$cluster&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Create an “EC2 Contaner Service” (ECS) cluster with one EC2 instance. This will be used to host ECS tasks / container instances. This is part of a multi-post thread involving these steps: Network Setup Launch EC2 Instance (this post) Create Docker Image Create Service</summary></entry><entry><title type="html">Launch ECS container using AWS CLI - Step 1 - Network Setup</title><link href="/launch-ecs-container-aws-cli-step-1-network-setup/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 1 - Network Setup" /><published>2021-02-06T00:00:00-08:00</published><updated>2021-02-06T00:00:00-08:00</updated><id>/launch-ecs-container-aws-cli-step-1-network-setup</id><content type="html" xml:base="/launch-ecs-container-aws-cli-step-1-network-setup/">&lt;p&gt;Setup network infrastructure including new VPC (Virtual Private Cloud), public and private subnets, internet gateway, security group, and ssh access.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Create an “EC2 Contaner Service” (ECS) cluster with one EC2 instance. This will be used to host ECS tasks / container instances. This is part of a multi-post thread involving these steps: Network Setup Launch EC2 Instance (this post) Create Docker Image Create Service Cleanup</summary></entry><entry><title type="html">Launch ECS container using AWS CLI - Step 1 - Network Setup</title><link href="/launch-ecs-container-aws-cli-step-1-network-setup/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 1 - Network Setup" /><published>2021-02-06T00:00:00-08:00</published><updated>2021-02-06T00:00:00-08:00</updated><id>/launch-ecs-container-aws-cli-step-1-network-setup</id><content type="html" xml:base="/launch-ecs-container-aws-cli-step-1-network-setup/">&lt;p&gt;Setup network infrastructure including new VPC (Virtual Private Cloud), public and private subnets, internet gateway, security group, and ssh access.&lt;/p&gt;
 
 &lt;p&gt;This is part of a multi-post thread involving these steps:&lt;/p&gt;
 
@@ -366,6 +482,7 @@ aws ecs describe-clusters &lt;span class=&quot;nt&quot;&gt;--cluster&lt;/span&gt
   &lt;li&gt;&lt;a href=&quot;/launch-ecs-container-aws-cli-step-2-launch-ec2-instance&quot;&gt;Launch EC2 Instance&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;/launch-ecs-container-aws-cli-step-3-create-docker-image&quot;&gt;Create Docker Image&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;/launch-ecs-container-aws-cli-step-4-create-service&quot;&gt;Create Service&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/launch-ecs-container-aws-cli-step-5-cleanup&quot;&gt;Cleanup&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;Make sure you do this setup first:&lt;/p&gt;
@@ -508,7 +625,7 @@ aws ec2 create-security-group &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
 aws ec2 authorize-security-group-ingress &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
     &lt;span class=&quot;nt&quot;&gt;--group-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$group_id&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
     &lt;span class=&quot;nt&quot;&gt;--protocol&lt;/span&gt; tcp &lt;span class=&quot;nt&quot;&gt;--port&lt;/span&gt; 22 &lt;span class=&quot;nt&quot;&gt;--cidr&lt;/span&gt; 0.0.0.0/0
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Setup network infrastructure including new VPC (Virtual Private Cloud), public and private subnets, internet gateway, security group, and ssh access. This is part of a multi-post thread involving these steps: Network Setup (this post) Launch EC2 Instance Create Docker Image Create Service</summary></entry><entry><title type="html">Create an AWS EC2 instance with the AWS CLI</title><link href="/create-aws-ec2-instance-aws-cli/" rel="alternate" type="text/html" title="Create an AWS EC2 instance with the AWS CLI" /><published>2021-01-22T00:00:00-08:00</published><updated>2021-01-22T00:00:00-08:00</updated><id>/create-aws-ec2-instance-aws-cli</id><content type="html" xml:base="/create-aws-ec2-instance-aws-cli/">&lt;p&gt;Make sure you do this setup first:&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Setup network infrastructure including new VPC (Virtual Private Cloud), public and private subnets, internet gateway, security group, and ssh access. This is part of a multi-post thread involving these steps: Network Setup (this post) Launch EC2 Instance Create Docker Image Create Service Cleanup</summary></entry><entry><title type="html">Create an AWS EC2 instance with the AWS CLI</title><link href="/create-aws-ec2-instance-aws-cli/" rel="alternate" type="text/html" title="Create an AWS EC2 instance with the AWS CLI" /><published>2021-01-22T00:00:00-08:00</published><updated>2021-01-22T00:00:00-08:00</updated><id>/create-aws-ec2-instance-aws-cli</id><content type="html" xml:base="/create-aws-ec2-instance-aws-cli/">&lt;p&gt;Make sure you do this setup first:&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;&lt;a href=&quot;/setup-macos-for-aws-cloud-devops&quot;&gt;Setup macOS for AWS Cloud DevOps&lt;/a&gt;&lt;/li&gt;
@@ -1000,32 +1117,4 @@ curl &lt;span class=&quot;nt&quot;&gt;-sSL&lt;/span&gt; https://git.io/get-mo &l
 
 &lt;p&gt;Ultimately, every successful relationship is built on a bedrock of trust. It can take time and experience to develop real confidence in another party, but you may initially have to make a small leap of faith based upon research and second-hand information. Once the project begins, you must trust the other party to be competent and professional when doing their job. If you don’t, the relationship could be irrevocably impaired before it even gets going.&lt;/p&gt;
 
-&lt;p&gt;Working with other businesses can lead to great things. The ability of two or more parties to come together is helped immeasurably by agreeing upon a clear and defined plan of action. Take the time to adequately communicate your ideas, intentions, and worries with the other parties. A more cohesive and profitable working relationship will be your reward.&lt;/p&gt;</content><author><name>Swift Software Group</name></author><category term="startups" /><summary type="html">If you want to facilitate a smooth and efficient working relationship, all relevant parties must first agree on a few critical aspects of the project. The ability to communicate ideas is integral to the creation of any stable working relationship. Before starting a joint project, discuss these five elements with each party.</summary></entry><entry><title type="html">3 Ways Blockchain Technology is Transforming the World of Advertising</title><link href="/3-ways-blockchain-technology-transforming-world/" rel="alternate" type="text/html" title="3 Ways Blockchain Technology is Transforming the World of Advertising" /><published>2018-09-05T16:26:00-07:00</published><updated>2018-09-05T16:26:00-07:00</updated><id>/3-ways-blockchain-technology-transforming-world</id><content type="html" xml:base="/3-ways-blockchain-technology-transforming-world/">&lt;p&gt;If you work as an investment advisor or are part of the banking industry, you already know how blockchain technology is transforming your workplace and changing the rules of the game.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/3-ways-blockchain-technology-transforming-world/blockchain-3581920_1280.jpg&quot; alt=&quot;&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Investment advisors can barely go a day without at least one Bitcoin inquiry, and financial professionals are constantly looking for new ways to incorporate cryptocurrencies and blockchain technology into their day-to-day operations.&lt;/p&gt;
-
-&lt;p&gt;For those in other industries, the recognition of blockchain technology and its inherent transformative power is often slower, but that does not mean it is not happening. Indeed, blockchain technology has the power to change virtually every industry, and those who fail to adapt to the shifting landscape could find themselves left behind.&lt;/p&gt;
-
-&lt;p&gt;The advertising industry is a case in point and an illustrative example of how blockchain technology is already changing the world. Whether you work in the advertising industry or are just an interested observer, it pays to know what to expect, and how blockchain technology could transform the world of marketing in just a few short years. Here are three ways blockchain technology is already changing the world of advertising.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Transformation #1 - Advertising Will Become More Transparent&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Throughout the years, the advertising industry has been called many things, but transparent has rarely been one of them. Indeed, many consumers have complained that advertising was often opaque and even deceptive, with unproven claims, dishonest operators and a host of other problems.&lt;/p&gt;
-
-&lt;p&gt;In the future, blockchain technology could make advertising far more transparent than it is today. Many of these changes are already underway., with voluntary reporting on the origin of social media ads and other types of marketing outreach. In the future, blockchain technology will make advertising even more accessible and transparent, benefitting consumers and businesses alike.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Transformation #2 - Video Content Advertising Will Be Changed Forever&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;The widespread adoption of high-speed internet has changed the media landscape forever, and those alterations are still underway. Video content is quickly supplementing its text-only counterparts, as content production gets easier and less expensive and bandwidth capabilities expand.&lt;/p&gt;
-
-&lt;p&gt;The power of the blockchain will change the creation and distribution of content just as much, allowing even the smallest businesses to produce and distribute high-quality video. From simple animations to studio-quality video, the world of advertising will be transformed, thanks to the power of the blockchain.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Transformation #3 - Direct Access to the Consumer&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;From the earliest days of the advertising industry, there has always been a middleman standing between consumers with money to spend and advertisers with something sell. Initially, those middlemen were newspaper publishers and magazine owners, then the owners of television studios and finally the operators of search engines and online directories.&lt;/p&gt;
-
-&lt;p&gt;Thanks to the transformational power of the blockchain, those middlemen may soon become a thing of the past. Blockchain technology is already allowing more direct contact between consumers and advertisers, increasingly making the middlemen obsolete. This change promises to revolutionize the world of advertising, changing the publishing business in countless ways and disrupting the industry like never before.&lt;/p&gt;
-
-&lt;p&gt;Blockchain technology is changing the world in many different ways, from the way we bank and invest to the way we work and create business relationships. For those in the advertising industry, the transformational power of blockchain technology could be even greater, and the time to get ready for the changes is now.&lt;/p&gt;</content><author><name>Swift Software Group</name></author><category term="blockchain" /><category term="advertising" /><category term="media" /><category term="video" /><summary type="html">If you work as an investment advisor or are part of the banking industry, you already know how blockchain technology is transforming your workplace and changing the rules of the game.</summary></entry></feed>
+&lt;p&gt;Working with other businesses can lead to great things. The ability of two or more parties to come together is helped immeasurably by agreeing upon a clear and defined plan of action. Take the time to adequately communicate your ideas, intentions, and worries with the other parties. A more cohesive and profitable working relationship will be your reward.&lt;/p&gt;</content><author><name>Swift Software Group</name></author><category term="startups" /><summary type="html">If you want to facilitate a smooth and efficient working relationship, all relevant parties must first agree on a few critical aspects of the project. The ability to communicate ideas is integral to the creation of any stable working relationship. Before starting a joint project, discuss these five elements with each party.</summary></entry></feed>

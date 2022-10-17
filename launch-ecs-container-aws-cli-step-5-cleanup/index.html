@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<title>Launch ECS container using AWS CLI - Step 5 - Cleanup | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Swift Software Group">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/launch-ecs-container-aws-cli-step-5-cleanup/">
+
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-37864402-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-37864402-1');
+</script>
+
+</head>
+
+
+
+
+<header>
+  <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
+  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/launch-ecs-container-aws-cli-step-5-cleanup/">Launch ECS container using AWS CLI - Step 5 - Cleanup</a></h1><time datetime="2021-05-12T00:00:00-07:00">May 12, 2021</time>
+</header>
+
+  <p>Setup an ECS container repository, create a Docker image, and upload the Docker image to the repository.</p>
+
+<p>This is part of a multi-post thread involving these steps:</p>
+
+<ol>
+  <li><a href="/launch-ecs-container-aws-cli-step-1-network-setup">Network Setup</a></li>
+  <li><a href="/launch-ecs-container-aws-cli-step-2-launch-ec2-instance">Launch EC2 Instance</a></li>
+  <li><a href="/launch-ecs-container-aws-cli-step-3-create-docker-image">Create Docker Image</a></li>
+  <li><a href="/launch-ecs-container-aws-cli-step-4-create-service">Create Service</a></li>
+  <li>Cleanup (this post)</li>
+</ol>
+
+<h2 id="define-names">Define Names</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># service</span>
+<span class="nv">service</span><span class="o">=</span><span class="s2">"ecs-test-service"</span>
+<span class="nv">task</span><span class="o">=</span><span class="s2">"ecs-test"</span>
+
+<span class="c"># task definition</span>
+<span class="nv">task_def_family</span><span class="o">=</span><span class="s2">"ecs-test"</span>
+
+<span class="c"># cluster</span>
+<span class="nv">cluster</span><span class="o">=</span><span class="s2">"cluster-ecs"</span>
+
+<span class="c"># IAM</span>
+<span class="nv">instance_profile</span><span class="o">=</span><span class="s2">"instance-profile-ecs"</span>
+<span class="nv">instance_role</span><span class="o">=</span><span class="s2">"instance-role-ecs"</span>
+
+<span class="c"># EC2</span>
+<span class="nv">instance</span><span class="o">=</span><span class="s2">"instance-ecs"</span>
+
+<span class="c"># VPC</span>
+<span class="nv">vpc</span><span class="o">=</span><span class="s2">"vpc-ecs"</span>
+
+<span class="c"># Subnets</span>
+<span class="nv">subnet_1</span><span class="o">=</span><span class="s2">"subnet-ecs-1"</span>
+<span class="nv">subnet_2</span><span class="o">=</span><span class="s2">"subnet-ecs-2"</span>
+
+<span class="c"># Internet Gateway</span>
+<span class="nv">internet_gateway</span><span class="o">=</span><span class="s2">"igw-ecs"</span>
+
+<span class="c"># Route Table</span>
+<span class="nv">route_table</span><span class="o">=</span><span class="s2">"rtb-ecs"</span>
+
+<span class="c"># Security Group</span>
+<span class="nv">security_group</span><span class="o">=</span><span class="s2">"security-ecs"</span>
+</code></pre></div></div>
+
+<h1 id="cleanup">Cleanup</h1>
+
+<p>Delete all resources in reverse order of creation:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Delete service </span><span class="nv">$service</span><span class="s2"> ..."</span>
+aws ecs delete-service <span class="nt">--force</span> <span class="nt">--cluster</span> <span class="nv">$cluster</span> <span class="nt">--service</span> <span class="nv">$service</span> 
+
+<span class="nb">echo</span> <span class="s2">"Deregister task definition </span><span class="nv">$task</span><span class="s2"> ..."</span>
+<span class="nv">task_def_arn</span><span class="o">=</span><span class="si">$(</span>aws ecs list-task-definitions <span class="nt">--sort</span> DESC <span class="nt">--family-prefix</span> <span class="nv">$task_def_family</span> | jq <span class="nt">-r</span> <span class="s1">'.taskDefinitionArns[0]'</span><span class="si">)</span>
+aws ecs deregister-task-definition <span class="nt">--task-definition</span> <span class="nv">$task_def_arn</span>
+
+<span class="nb">echo</span> <span class="s2">"Delete EC2 Instance ..."</span>
+<span class="nv">instance_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-instances <span class="se">\</span>
+    <span class="nt">--filters</span> <span class="se">\</span>
+        <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$instance</span> <span class="se">\</span>
+        <span class="nv">Name</span><span class="o">=</span>instance-state-name,Values<span class="o">=</span>running <span class="se">\</span>
+| jq <span class="nt">-r</span> <span class="s1">'.Reservations[0].Instances[0].InstanceId'</span><span class="si">)</span>
+
+aws ec2 terminate-instances <span class="nt">--instance-ids</span> <span class="nv">$instance_id</span>
+
+<span class="nb">echo</span> <span class="s2">"Wait until EC2 instance terminates ..."</span>
+aws ec2 <span class="nb">wait </span>instance-terminated <span class="nt">--instance-ids</span> <span class="nv">$instance_id</span>
+
+<span class="nb">echo</span> <span class="s2">"Delete EC2 Instance Profile ..."</span>
+aws iam remove-role-from-instance-profile <span class="se">\</span>
+    <span class="nt">--instance-profile-name</span> <span class="nv">$instance_profile</span> <span class="se">\</span>
+    <span class="nt">--role-name</span> <span class="nv">$instance_role</span>
+
+aws iam delete-instance-profile <span class="nt">--instance-profile-name</span> <span class="nv">$instance_profile</span>
+
+<span class="nb">echo</span> <span class="s2">"Delete EC2 Instance Role ..."</span>
+aws iam detach-role-policy <span class="se">\</span>
+    <span class="nt">--role-name</span> <span class="nv">$instance_role</span> <span class="se">\</span>
+    <span class="nt">--policy-arn</span> arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role
+
+aws iam delete-role <span class="nt">--role-name</span> <span class="nv">$instance_role</span>
+
+<span class="nb">echo</span> <span class="s2">"Delete ECS cluster ..."</span>
+aws ecs delete-cluster <span class="nt">--cluster</span> <span class="nv">$cluster</span>
+
+<span class="nb">echo</span> <span class="s2">"Delete Security Group ..."</span>
+<span class="nv">group_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-security-groups <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$security_group</span> | jq <span class="nt">-r</span> <span class="s1">'.SecurityGroups[0].GroupId'</span><span class="si">)</span>
+aws ec2 delete-security-group <span class="nt">--group-id</span> <span class="nv">$group_id</span>
+
+<span class="nb">echo</span> <span class="s2">"Delete Subnets ..."</span>
+<span class="nv">subnet_1_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-subnets <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$subnet_1</span> | jq <span class="nt">-r</span> <span class="s1">'.Subnets[0].SubnetId'</span><span class="si">)</span>
+aws ec2 delete-subnet <span class="nt">--subnet-id</span> <span class="nv">$subnet_1_id</span>
+
+<span class="nv">subnet_2_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-subnets <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$subnet_2</span> | jq <span class="nt">-r</span> <span class="s1">'.Subnets[0].SubnetId'</span><span class="si">)</span>
+aws ec2 delete-subnet <span class="nt">--subnet-id</span> <span class="nv">$subnet_2_id</span>
+
+<span class="nb">echo</span> <span class="s2">"Delete Route Table ..."</span>
+<span class="nv">route_table_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-route-tables <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$route_table</span> | jq <span class="nt">-r</span> <span class="s1">'.RouteTables[0].RouteTableId'</span><span class="si">)</span>
+aws ec2 delete-route-table <span class="nt">--route-table-id</span> <span class="nv">$route_table_id</span>
+
+<span class="nb">echo</span> <span class="s2">"Delete Internet Gateway ..."</span>
+<span class="nv">internet_gateway_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-internet-gateways <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$internet_gateway</span> | jq <span class="nt">-r</span> <span class="s1">'.InternetGateways[0].InternetGatewayId'</span><span class="si">)</span>
+<span class="nv">vpc_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-vpcs <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$vpc</span> | jq <span class="nt">-r</span> <span class="s1">'.Vpcs[0].VpcId'</span><span class="si">)</span>
+aws ec2 detach-internet-gateway <span class="nt">--internet-gateway-id</span> <span class="nv">$internet_gateway_id</span> <span class="nt">--vpc-id</span> <span class="nv">$vpc_id</span>
+
+aws ec2 delete-internet-gateway <span class="nt">--internet-gateway-id</span> <span class="nv">$internet_gateway_id</span>
+
+<span class="nb">echo</span> <span class="s2">"Delete VPC ..."</span>
+aws ec2 delete-vpc <span class="nt">--vpc-id</span> <span class="nv">$vpc_id</span>
+
+</code></pre></div></div>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>
