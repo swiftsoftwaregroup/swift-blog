@@ -46,49 +46,102 @@
   
   <article>
     <header>
-  <h1><a href="/ubuntu-chef-vagrant-virtualbox-windows/">Ubuntu and Chef with Vagrant and VirtualBox on Windows</a></h1><time datetime="2015-11-22T00:00:00-08:00">November 22, 2015</time>
+  <h1><a href="/upgrade-gcc-4-7-ubuntu-12-04/">How to upgrade GCC to 4.7+ on Ubuntu 12.04</a></h1><time datetime="2013-10-02T00:00:00-07:00">October 02, 2013</time>
 </header>
 
-    <p>In this post we show how you can use <a href="https://www.virtualbox.org/">VirtualBox</a> and <a href="https://www.vagrantup.com/">Vagrant</a> to launch an Ubuntu 14.04 guest and install the latest <a href="https://www.chef.io/chef/">Chef</a> client on it using Windows 10 as a host.</p>
+    <p>Note: This is only needed on Ubuntu 12.04. Ubuntu 12.10 already comes with GNU C++ 4.7 and above.</p>
 
-    <div class="more"><a href="/ubuntu-chef-vagrant-virtualbox-windows/">read more</a></div>
+    <div class="more"><a href="/upgrade-gcc-4-7-ubuntu-12-04/">read more</a></div>
   </article>
 
   <article>
     <header>
-  <h1><a href="/provision-chef-vagrant-omnibus-plugin/">Provision Chef with Vagrant-Omnibus Plugin</a></h1><time datetime="2015-11-22T00:00:00-08:00">November 22, 2015</time>
+  <h1><a href="/configuring-phpcurl-root-certificates-windows-server/">Configuring PHP / CURL root certificates on Windows Server</a></h1><time datetime="2013-09-05T00:00:00-07:00">September 05, 2013</time>
 </header>
 
-    <p>In this post we show how you can provision <a href="https://www.chef.io/chef/">Chef</a> from Vagrant using the <code class="language-plaintext highlighter-rouge">vagrant-omnibus</code> plugin. This post is for Ubuntu 14.04 guest running in VirtualBox on Windows 10 host.</p>
+    <p>This post is about configuring PHP/CURL root certificates for a WordPress installation running on Windows Server 2008 R2 / IIS 7.5.</p>
 
-    <div class="more"><a href="/provision-chef-vagrant-omnibus-plugin/">read more</a></div>
+    <div class="more"><a href="/configuring-phpcurl-root-certificates-windows-server/">read more</a></div>
   </article>
 
   <article>
     <header>
-  <h1><a href="/install-jekyll-windows/">How to Install Jekyll on Windows</a></h1><time datetime="2015-09-12T00:00:00-07:00">September 12, 2015</time>
+  <h1><a href="/setup-google-analytics-for-a-bitbucket-repository/">Setup Google Analytics for a Bitbucket repository</a></h1><time datetime="2013-08-19T00:00:00-07:00">August 19, 2013</time>
 </header>
 
-    <p>This post shows how to install Ruby and Jekyll via Chocolatey on Windows 8.1 or Windows Server 2012 R2 Update 1.</p>
+    <p>The idea is to create a new Google Analytics property for Bitbucket and then have a separate Google Analytics profiles for each repository. That way I end up with one profile per repository neatly grouped under the Bitbucket property. In the profiles, I also use filters to include only the traffic for the corresponding repository.</p>
 
-    <div class="more"><a href="/install-jekyll-windows/">read more</a></div>
+    <div class="more"><a href="/setup-google-analytics-for-a-bitbucket-repository/">read more</a></div>
   </article>
 
   <article>
     <header>
-  <h1><a href="/ubuntu-with-vagrant-and-virtualbox-on-windows/">Ubuntu with Vagrant and VirtualBox on Windows</a></h1><time datetime="2015-08-20T00:00:00-07:00">August 20, 2015</time>
+  <h1><a href="/super-agile-accept-that-your-product-will-never-be-100-complete/">Super Agile: Accept that your product will never be 100% complete</a></h1><time datetime="2013-06-04T00:00:00-07:00">June 04, 2013</time>
 </header>
 
-    <p>In this post I show how you can use <a href="https://www.virtualbox.org/">VirtualBox</a> and <a href="https://www.vagrantup.com/">Vagrant</a> to create and launch an Ubuntu 14.04 virtual machine on Windows 8.1 host.</p>
+    <p>We now follow thesesimple rules for all our projects:</p>
 
-    <div class="more"><a href="/ubuntu-with-vagrant-and-virtualbox-on-windows/">read more</a></div>
+<ul>
+  <li>Have a clear product vision / master plan / strategy. This is essential.</li>
+  <li>A grand product vision can be realized only in small incremental steps.</li>
+  <li>Version 1.0 should have the bare minimum of features, not more, not less.</li>
+  <li>Each incremental release <em>must</em> add value for your customers.</li>
+  <li>A high-quality and feature complete product is a natural result of all of the above.</li>
+</ul>
+
+    <div class="more"><a href="/super-agile-accept-that-your-product-will-never-be-100-complete/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/aps-net-mvc-4-could-not-load-file-or-assembly-dotnetopenauth-core-version-4-0-0-0/">ASP.NET MVC 4: Could not load file or assembly DotNetOpenAuth.Core, Version=4.0.0.0</a></h1><time datetime="2013-05-12T00:00:00-07:00">May 12, 2013</time>
+</header>
+
+    <p>I got this error in an ASP.NET MVC 4 application after installing DotnetOpenAuth via the Package Manager Console:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Could not load file or assembly 'DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246' or one of its dependencies. The located assembly's manifest definition does not match the assembly reference. (Exception from HRESULT: 0x80131040)
+</code></pre></div></div>
+
+<p>The application was actually upgraded earlier from ASP.NET MVC 3, i.e. it was not autogenerated by Visual Studio 2012. The pre-binding info in the exception was:</p>
+
+    <div class="more"><a href="/aps-net-mvc-4-could-not-load-file-or-assembly-dotnetopenauth-core-version-4-0-0-0/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/upgrading-a-web-app-from-asp-net-mvc-3-to-asp-net-mvc-4/">Upgrading a web app from ASP.NET MVC 3 to ASP.NET MVC 4</a></h1><time datetime="2013-05-10T00:00:00-07:00">May 10, 2013</time>
+</header>
+
+    <p>I recently had to update a web application from ASP.NET MVC 3 to ASP.NET MVC 4. Here are the the steps I had to go through to do that:</p>
+
+    <div class="more"><a href="/upgrading-a-web-app-from-asp-net-mvc-3-to-asp-net-mvc-4/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/powershell-prompt-here/">PowerShell Prompt Here</a></h1><time datetime="2013-04-27T00:00:00-07:00">April 27, 2013</time>
+</header>
+
+    <p>I have been doing some scripting in PowerShell 3.0 lately and I found this <a href="http://www.hanselman.com/blog/IntroducingPowerShellPromptHere.aspx" title="PowerShell Prompt Here">post</a> by Scott Hanselman. Just go to that post and download powershellhere.inf, right click on it and click Install. It will give you a nice “PowerShell Prompt Here” context menu in Windows Explorer.</p>
+
+    <div class="more"><a href="/powershell-prompt-here/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/mercurial-sourcetree-and-bitbucket-on-mac/">Starting with Mercurial, BitBucket and SourceTree on Mac</a></h1><time datetime="2013-04-18T00:00:00-07:00">April 18, 2013</time>
+</header>
+
+    <p>This is a quick step-by-step tutorial on starting with Mercurial and BitBucket on Mac. This tutorial was done on Mac OS 10.8.2.</p>
+
+    <div class="more"><a href="/mercurial-sourcetree-and-bitbucket-on-mac/">read more</a></div>
   </article>
 
 
 
   <footer>
     <a href="/page4">« newer posts</a>
-    <span>page 5 of 18</span>
+    <span>page 5 of 9</span>
     <a href="/page6">older posts »</a>
   </footer>
 

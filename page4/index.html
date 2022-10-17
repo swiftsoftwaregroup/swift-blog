@@ -46,49 +46,90 @@
   
   <article>
     <header>
-  <h1><a href="/build-nginx-server-deploy-python-flask-app-using-chef/">How to Build an NGINX Server and Deploy a Python Flask App Using Chef</a></h1><time datetime="2016-02-13T00:00:00-08:00">February 13, 2016</time>
+  <h1><a href="/fix-tortoisehg-nautilus-ubuntu-13-04/">How to fix Tortoisehg Nautilus extension on Ubuntu 13.04</a></h1><time datetime="2014-05-01T00:00:00-07:00">May 01, 2014</time>
 </header>
 
-    <p>In this post we show how you can use <a href="https://www.chef.io/chef/">Chef</a> to build an Ubuntu 14.04 LTS web server running Nginx, Python 2, virtualenv, uWSGI, and Flask - all done on Windows 10 host.</p>
+    <p>The TortoiseHg Nautilus extension stopped working after upgrading one of my Ubuntu machines from 12.10 to 13.04. It turned out the problem was it could not find <code class="language-plaintext highlighter-rouge">libpython2.7.so.1.0</code>.</p>
 
-    <div class="more"><a href="/build-nginx-server-deploy-python-flask-app-using-chef/">read more</a></div>
+    <div class="more"><a href="/fix-tortoisehg-nautilus-ubuntu-13-04/">read more</a></div>
   </article>
 
   <article>
     <header>
-  <h1><a href="/getting-started-flashdevelop-windows-10/">Getting Started with FlashDevelop on Windows 10</a></h1><time datetime="2016-01-29T00:00:00-08:00">January 29, 2016</time>
+  <h1><a href="/executable-shell-scripts-open-gedit-ubuntu/">Executable shell scripts open in Gedit on Ubuntu</a></h1><time datetime="2014-05-01T00:00:00-07:00">May 01, 2014</time>
 </header>
 
-    <p>FlashDevelop is a free IDE for Windows. You can use it to develop Adobe Flash and AIR applications using ActionScript.</p>
+    <p>This started happening after an upgrade to Ubuntu 13.04. We have shell scripts here and there saved as .run files, e.g. <code class="language-plaintext highlighter-rouge">Build.linux.auto.run</code>, to automate <a href="https://avblocks.com">AVBlocks</a> builds on Linux. Normally Nautilus will ask you whether you want to run the script when you double click a <code class="language-plaintext highlighter-rouge">.run</code> file, but on Ubuntu 13.04, Nautilus suddenly started opening <code class="language-plaintext highlighter-rouge">.run</code> files in Gedit. It turns out there is a setting in Gnome for that. Here is how to fix it:</p>
 
-    <div class="more"><a href="/getting-started-flashdevelop-windows-10/">read more</a></div>
+    <div class="more"><a href="/executable-shell-scripts-open-gedit-ubuntu/">read more</a></div>
   </article>
 
   <article>
     <header>
-  <h1><a href="/install-nginx-ubuntu-using-chef/">How To Install Nginx On Ubuntu Using Chef</a></h1><time datetime="2016-01-13T00:00:00-08:00">January 13, 2016</time>
+  <h1><a href="/dual-boot-windows-8-1-virtualbox-hyper-v/">Dual boot Windows 8.1 for VirtualBox and Hyper-V</a></h1><time datetime="2014-01-20T00:00:00-08:00">January 20, 2014</time>
 </header>
 
-    <p>In this post we show how to install NGINX on Ubuntu using <a href="https://www.chef.io/chef/">Chef</a> on Windows 10 workstation.</p>
+    <p>Most of the time I use VirtualBox to run Linux distros like Ubuntu and Debian. At the same time, I have to work with Windows Phone SDK which needs Hyper-V to run the Windows Phone emulator. Understandably VirtualBox and Hyper-V will not run at the same time. The easiest way I found to solve that problem is creating a dual boot configuration where one of the boot options has Hyper-V disabled. Here is how to do it:</p>
 
-    <div class="more"><a href="/install-nginx-ubuntu-using-chef/">read more</a></div>
+    <div class="more"><a href="/dual-boot-windows-8-1-virtualbox-hyper-v/">read more</a></div>
   </article>
 
   <article>
     <header>
-  <h1><a href="/how-to-use-berkshelf-chef-zero-vagrant-and-virtualbox/">How to use Berkshelf, Chef Zero, Vagrant and VirtualBox</a></h1><time datetime="2015-11-25T00:00:00-08:00">November 25, 2015</time>
+  <h1><a href="/super-agile-possible-without-unit-tests/">Super Agile: Not possible without unit tests</a></h1><time datetime="2013-12-29T00:00:00-08:00">December 29, 2013</time>
 </header>
 
-    <p>In this post we show how you can use <a href="http://berkshelf.com/">Berkshelf</a>, <a href="https://www.chef.io/chef/">Chef Zero</a>, <a href="https://www.vagrantup.com/">Vagrant</a>, and <a href="https://www.virtualbox.org/">VirtualBox</a> to provision Ubuntu 14.04 guest on Windows 10 host.</p>
+    <p>It is never too late to start writing unit tests. Add unit tests to your “Definition of Done” document. Automate your build process, so it runs unit tests with every code change.</p>
 
-    <div class="more"><a href="/how-to-use-berkshelf-chef-zero-vagrant-and-virtualbox/">read more</a></div>
+
+    <div class="more"><a href="/super-agile-possible-without-unit-tests/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/nvidia-driver-mismatch-upgrading-ubuntu-12-04-3-lts/">Nvidia driver mismatch after upgrading to Ubuntu 12.04.3 LTS</a></h1><time datetime="2013-12-28T00:00:00-08:00">December 28, 2013</time>
+</header>
+
+    <p>After upgrading to Ubuntu 12.04.3 LTS, I could not boot in GUI / X anymore. I got this when trying to start X:</p>
+
+    <div class="more"><a href="/nvidia-driver-mismatch-upgrading-ubuntu-12-04-3-lts/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/debian-wheezy-guest-windows-8-1-host-using-virtualbox/">Debian "Wheezy" guest on Windows 8.1 host using VirtualBox</a></h1><time datetime="2013-11-15T00:00:00-08:00">November 15, 2013</time>
+</header>
+
+    <p>This post is about using Oracle VirtualBox to install a Debian 7.2 x86_64 guest virtual machine on Windows 8.1 host.</p>
+
+    <div class="more"><a href="/debian-wheezy-guest-windows-8-1-host-using-virtualbox/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/save-xdocument-xml-use-single-quotes-attribute-values/">How to save XDocument to xml and use single quotes for attribute values</a></h1><time datetime="2013-10-17T00:00:00-07:00">October 17, 2013</time>
+</header>
+
+    <p>I had to do this for <a href="https://avblocks.com">AVBlocks</a> xml licenses recently. It is not straightforward, but here is the C# code.</p>
+
+    <div class="more"><a href="/save-xdocument-xml-use-single-quotes-attribute-values/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/install-configure-tortoisehg-mac/">How to install and configure TortoiseHg on Mac</a></h1><time datetime="2013-10-11T00:00:00-07:00">October 11, 2013</time>
+</header>
+
+    <p>I finally got fed up with SourceTree and installed TortoiseHg on my Mac development machine. Read on:</p>
+
+    <div class="more"><a href="/install-configure-tortoisehg-mac/">read more</a></div>
   </article>
 
 
 
   <footer>
     <a href="/page3">« newer posts</a>
-    <span>page 4 of 18</span>
+    <span>page 4 of 9</span>
     <a href="/page5">older posts »</a>
   </footer>
 
