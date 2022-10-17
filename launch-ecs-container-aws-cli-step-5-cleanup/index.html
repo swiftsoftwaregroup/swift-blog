@@ -162,6 +162,34 @@ aws ec2 delete-vpc <span class="nt">--vpc-id</span> <span class="nv">$vpc_id</sp
 
 </code></pre></div></div>
 
+<h2 id="-danger-">!!! DANGER !!!</h2>
+
+<h3 id="delete-latest-image">Delete <code class="language-plaintext highlighter-rouge">latest</code> image</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">repo</span><span class="o">=</span><span class="s2">"ecs-test"</span>
+<span class="nv">registryId</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-registry | jq <span class="nt">-r</span> <span class="s1">'.registryId'</span><span class="si">)</span>
+
+aws ecr batch-delete-image <span class="se">\</span>
+  <span class="nt">--registry-id</span> <span class="nv">$registryId</span> <span class="se">\</span>
+  <span class="nt">--repository-name</span> <span class="nv">$repo</span> <span class="se">\</span>
+  <span class="nt">--image-ids</span> <span class="nv">imageTag</span><span class="o">=</span>latest
+</code></pre></div></div>
+
+<h3 id="delete-repository">Delete repository</h3>
+
+<blockquote>
+  <p>NOTE: This will delete all images in that repo and the repo itself:</p>
+</blockquote>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">repo</span><span class="o">=</span><span class="s2">"ecs-test"</span>
+<span class="nv">registryId</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-registry | jq <span class="nt">-r</span> <span class="s1">'.registryId'</span><span class="si">)</span>
+
+aws ecr delete-repository <span class="se">\</span>
+  <span class="nt">--force</span> <span class="se">\</span>
+  <span class="nt">--registry-id</span> <span class="nv">$registryId</span> <span class="se">\</span>
+  <span class="nt">--repository-name</span> <span class="nv">$repo</span>
+</code></pre></div></div>
+
   
     <hr>
     <div id="disqus_thread"></div>

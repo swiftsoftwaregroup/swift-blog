@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-10-16T17:54:41-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Launch ECS container using AWS CLI - Step 5 - Cleanup</title><link href="/launch-ecs-container-aws-cli-step-5-cleanup/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 5 - Cleanup" /><published>2021-05-12T00:00:00-07:00</published><updated>2021-05-12T00:00:00-07:00</updated><id>/launch-ecs-container-aws-cli-step-5-cleanup</id><content type="html" xml:base="/launch-ecs-container-aws-cli-step-5-cleanup/">&lt;p&gt;Delete all the resources that were created in this series.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-10-16T18:00:29-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Launch ECS container using AWS CLI - Step 5 - Cleanup</title><link href="/launch-ecs-container-aws-cli-step-5-cleanup/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 5 - Cleanup" /><published>2021-05-12T00:00:00-07:00</published><updated>2021-05-12T00:00:00-07:00</updated><id>/launch-ecs-container-aws-cli-step-5-cleanup</id><content type="html" xml:base="/launch-ecs-container-aws-cli-step-5-cleanup/">&lt;p&gt;Delete all the resources that were created in this series.&lt;/p&gt;
 
 &lt;p&gt;This is the last part of a multi-post thread involving these steps:&lt;/p&gt;
 
@@ -111,6 +111,34 @@ aws ec2 delete-internet-gateway &lt;span class=&quot;nt&quot;&gt;--internet-gate
 &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Delete VPC ...&quot;&lt;/span&gt;
 aws ec2 delete-vpc &lt;span class=&quot;nt&quot;&gt;--vpc-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$vpc_id&lt;/span&gt;
 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;-danger-&quot;&gt;!!! DANGER !!!&lt;/h2&gt;
+
+&lt;h3 id=&quot;delete-latest-image&quot;&gt;Delete &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;latest&lt;/code&gt; image&lt;/h3&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;repo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ecs-test&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;registryId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ecr describe-registry | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.registryId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+aws ecr batch-delete-image &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--registry-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$registryId&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--repository-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$repo&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--image-ids&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;imageTag&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;latest
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;delete-repository&quot;&gt;Delete repository&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;NOTE: This will delete all images in that repo and the repo itself:&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;repo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ecs-test&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;registryId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ecr describe-registry | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.registryId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+aws ecr delete-repository &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--force&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--registry-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$registryId&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--repository-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$repo&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Delete all the resources that were created in this series. This is the last part of a multi-post thread involving these steps: Network Setup Launch EC2 Instance Create Docker Image Create Service Cleanup (this post)</summary></entry><entry><title type="html">Launch ECS container using AWS CLI - Step 4 - Create Service</title><link href="/launch-ecs-container-aws-cli-step-4-create-service/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 4 - Create Service" /><published>2021-05-11T00:00:00-07:00</published><updated>2021-05-11T00:00:00-07:00</updated><id>/launch-ecs-container-aws-cli-step-4-create-service</id><content type="html" xml:base="/launch-ecs-container-aws-cli-step-4-create-service/">&lt;p&gt;Setup an ECS container repository, create a Docker image, and upload the Docker image to the repository.&lt;/p&gt;
 
 &lt;p&gt;This is part of a multi-post thread involving these steps:&lt;/p&gt;
