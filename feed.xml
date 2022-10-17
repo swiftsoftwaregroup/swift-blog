@@ -1,4 +1,307 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-10-16T18:01:52-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Launch ECS container using AWS CLI - Step 5 - Cleanup</title><link href="/launch-ecs-container-aws-cli-step-5-cleanup/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 5 - Cleanup" /><published>2021-05-12T00:00:00-07:00</published><updated>2021-05-12T00:00:00-07:00</updated><id>/launch-ecs-container-aws-cli-step-5-cleanup</id><content type="html" xml:base="/launch-ecs-container-aws-cli-step-5-cleanup/">&lt;p&gt;Delete all the resources that were created in this series.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-10-17T15:44:37-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Launch ECS container using AWS ECS CLI</title><link href="/launch-ecs-container-ecs-cli/" rel="alternate" type="text/html" title="Launch ECS container using AWS ECS CLI" /><published>2021-06-20T00:00:00-07:00</published><updated>2021-06-20T00:00:00-07:00</updated><id>/launch-ecs-container-ecs-cli</id><content type="html" xml:base="/launch-ecs-container-ecs-cli/">&lt;p&gt;The Amazon ECS Command Line Interface (CLI) is a command line tool for Amazon Elastic Container Service (Amazon ECS) that provides high-level commands to simplify creating, updating, and monitoring clusters and tasks from a local development environment.&lt;/p&gt;
+
+&lt;p&gt;Make sure you do this setup first:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;/setup-macos-for-aws-cloud-devops&quot;&gt;Setup macOS for AWS Cloud DevOps&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/aws-authentication&quot;&gt;AWS Authentication&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;install-aws-ecs-cli&quot;&gt;Install AWS ECS CLI&lt;/h2&gt;
+
+&lt;p&gt;Install:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; ~/ecs-cli
+&lt;span class=&quot;nb&quot;&gt;pushd&lt;/span&gt; ~/ecs-cli
+
+&lt;span class=&quot;c&quot;&gt;# Download&lt;/span&gt;
+curl &lt;span class=&quot;nt&quot;&gt;-Lo&lt;/span&gt; ecs-cli https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-darwin-amd64-latest
+curl &lt;span class=&quot;nt&quot;&gt;-Lo&lt;/span&gt; ecs-cli.asc https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-darwin-amd64-latest.asc
+
+&lt;span class=&quot;c&quot;&gt;# Verify signature&lt;/span&gt;
+gpg &lt;span class=&quot;nt&quot;&gt;--keyserver&lt;/span&gt; hkp://keys.gnupg.net &lt;span class=&quot;nt&quot;&gt;--recv&lt;/span&gt; BCE9D9A42D51784F
+gpg &lt;span class=&quot;nt&quot;&gt;--verify&lt;/span&gt; ecs-cli.asc ecs-cli
+
+&lt;span class=&quot;c&quot;&gt;# Copy to path&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;sudo cp &lt;/span&gt;ecs-cli /usr/local/bin
+&lt;span class=&quot;nb&quot;&gt;sudo chmod &lt;/span&gt;a+x /usr/local/bin/ecs-cli
+
+&lt;span class=&quot;nb&quot;&gt;popd&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Test:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ecs-cli &lt;span class=&quot;nt&quot;&gt;--version&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;define-variables&quot;&gt;Define Variables&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ecs-test&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;latest&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;service_name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;test&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;ecs-cli-setup&quot;&gt;ECS CLI Setup&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Configuration information is stored in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.ecs&lt;/code&gt; directory on macOS and Linux systems and in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\Users\&amp;lt;username&amp;gt;\AppData\local\ecs&lt;/code&gt; on Windows systems.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Create a profile using your access key and secret key:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;AWS_ACCESS_KEY_ID&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws configure get aws_access_key_id&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;AWS_SECRET_ACCESS_KEY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws configure get aws_secret_access_key&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;AWS_REGION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws configure get region&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+ecs-cli configure profile &lt;span class=&quot;nt&quot;&gt;--profile-name&lt;/span&gt; swift
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;ecs-cluster-configuration&quot;&gt;ECS Cluster Configuration&lt;/h2&gt;
+
+&lt;p&gt;Create a cluster configuration:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;AWS_REGION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws configure get region&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+ecs-cli configure &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--config-name&lt;/span&gt; test-ecs &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--region&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$AWS_REGION&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--cluster&lt;/span&gt; test-ecs &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--default-launch-type&lt;/span&gt; EC2
+  
+ecs-cli configure default &lt;span class=&quot;nt&quot;&gt;--config-name&lt;/span&gt; test-ecs  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;launch-ecs-cluster&quot;&gt;Launch ECS Cluster&lt;/h2&gt;
+
+&lt;p&gt;This will take a few minutes to complete:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ecs-cli up &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--ecs-profile&lt;/span&gt; swift &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--cluster-config&lt;/span&gt; test-ecs &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--keypair&lt;/span&gt; aws-ec2-key &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--capability-iam&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--instance-type&lt;/span&gt; t2.micro &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--size&lt;/span&gt; 1 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--port&lt;/span&gt; 22
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In addition to EC2 Instances, other resources created by default include:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Autoscaling Group&lt;/li&gt;
+  &lt;li&gt;Autoscaling Launch Configuration&lt;/li&gt;
+  &lt;li&gt;EC2 VPC&lt;/li&gt;
+  &lt;li&gt;EC2 Internet Gateway&lt;/li&gt;
+  &lt;li&gt;EC2 VPC Gateway Attachment&lt;/li&gt;
+  &lt;li&gt;EC2 Route Table&lt;/li&gt;
+  &lt;li&gt;EC2 Route&lt;/li&gt;
+  &lt;li&gt;2 Public EC2 Subnets&lt;/li&gt;
+  &lt;li&gt;2 EC2 SubnetRouteTableAssociations&lt;/li&gt;
+  &lt;li&gt;EC2 Security Group&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;create-ecs-repository&quot;&gt;Create ECS Repository&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# registry (in the form $registryId.dkr.ecr.$region.amazonaws.com)&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;region&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws configure get region&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;registryId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ecr describe-registry | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.registryId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;registry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$registryId&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.dkr.ecr.&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$region&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.amazonaws.com&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# repository&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;repository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ecr describe-repositories | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;.repositories[] | select(.repositoryName==&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$image&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;) | .repositoryUri&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# create if it does not exist&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-z&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$repository&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; aws ecr create-repository &lt;span class=&quot;nt&quot;&gt;--repository-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$image&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;repository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ecr describe-repositories | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;.repositories[] | select(.repositoryName==&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$image&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;) | .repositoryUri&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;create-docker-image&quot;&gt;Create Docker image&lt;/h2&gt;
+
+&lt;h3 id=&quot;dockerfile&quot;&gt;Dockerfile&lt;/h3&gt;
+
+&lt;p&gt;Create a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Dockerfile&lt;/code&gt; with the following contents:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;sh&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;EOT&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;&quot; &amp;gt; ./Dockerfile
+# See https://hub.docker.com/_/oraclelinux for all supported 
+# Oracle Linux tags from Docker Hub.
+
+# this image will be the actual running container
+FROM  oraclelinux:8
+
+LABEL Name=ecs-test
+
+## System Config
+ENV TZ=America/Los_Angeles
+
+# Packages
+RUN yum -y install bind-utils 
+
+CMD [&quot;/bin/ping&quot;, &quot;localhost&quot;]
+&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;EOT
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;build-image&quot;&gt;Build Image&lt;/h3&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Build image ...&quot;&lt;/span&gt;
+docker build &lt;span class=&quot;nt&quot;&gt;--tag&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;:&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;tag-image&quot;&gt;Tag Image&lt;/h3&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;repository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ecr describe-repositories | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;.repositories[] | select(.repositoryName==&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$image&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;) | .repositoryUri&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Tag image ...&quot;&lt;/span&gt;
+docker tag &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;:&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;repository&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;:&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;publish-image&quot;&gt;Publish Image&lt;/h3&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# refresh AWS token for docker&lt;/span&gt;
+aws ecr get-login-password &lt;span class=&quot;nt&quot;&gt;--region&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$region&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  | docker login &lt;span class=&quot;nt&quot;&gt;--username&lt;/span&gt; AWS &lt;span class=&quot;nt&quot;&gt;--password-stdin&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$registry&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# push image&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Push image ...&quot;&lt;/span&gt;
+docker push &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;repository&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;:&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;verify&quot;&gt;Verify&lt;/h3&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# verify&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'\e[0;31m'&lt;/span&gt;    
+&lt;span class=&quot;nv&quot;&gt;green&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'\e[0;32m'&lt;/span&gt;    
+&lt;span class=&quot;nv&quot;&gt;clear&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'\e[0m'&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;pushed_tag&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;reg tags &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;repository&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pushed_tag&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+    &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;printf&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Failed&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;clear&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else    
+    &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;printf&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;green&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Success&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;clear&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;launch-ecs-task&quot;&gt;Launch ECS Task&lt;/h2&gt;
+
+&lt;h3 id=&quot;service-description&quot;&gt;Service Description&lt;/h3&gt;
+
+&lt;p&gt;Create &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker-compose.yml&lt;/code&gt; file:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;EOT&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt; &amp;gt; ./docker-compose.yml
+version: '3'
+
+services:
+  ecs-test:
+    image: &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$repository&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$tag&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
+
+    logging:
+      driver: awslogs
+      options: 
+        awslogs-group: test-ecs
+        awslogs-region: us-west-2
+        awslogs-stream-prefix: test
+&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;EOT
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;task-definition&quot;&gt;Task Definition&lt;/h3&gt;
+
+&lt;p&gt;Create &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ecs-params.yml&lt;/code&gt; file:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;EOT&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt; &amp;gt; ./ecs-params.yml
+version: 1
+task_definition:
+  services:
+    ecs-test:
+      cpu_shares: 100
+      mem_limit: 524288000
+&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;EOT
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;launch-service&quot;&gt;Launch Service&lt;/h3&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# create service&lt;/span&gt;
+ecs-cli compose &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--project-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$service_name&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--file&lt;/span&gt; ./docker-compose.yml &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--ecs-params&lt;/span&gt; ./ecs-params.yml &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    service up &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--create-log-groups&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--cluster-config&lt;/span&gt; test-ecs &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--ecs-profile&lt;/span&gt; swift
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Login to the first task of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test&lt;/code&gt; service:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;CLUSTER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;test-ecs
+&lt;span class=&quot;nv&quot;&gt;SERVICE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;test
+
+&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;TASK_ARN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt; aws ecs list-tasks &lt;span class=&quot;nt&quot;&gt;--cluster&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$CLUSTER&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--service-name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$SERVICE&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.taskArns[0]'&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;CONTAINER_INSTANCE_ARN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt; aws ecs describe-tasks &lt;span class=&quot;nt&quot;&gt;--cluster&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$CLUSTER&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--tasks&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$TASK_ARN&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.tasks[0].containerInstanceArn'&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;EC2_INSTANCE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt; aws ecs describe-container-instances &lt;span class=&quot;nt&quot;&gt;--cluster&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$CLUSTER&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--container-instances&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$CONTAINER_INSTANCE_ARN&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.containerInstances[0].ec2InstanceId'&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;EC2_IP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt; aws ec2 describe-instances &lt;span class=&quot;nt&quot;&gt;--instance-ids&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$EC2_INSTANCE&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.Reservations[0].Instances[0].PublicIpAddress'&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;EC2_KEY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;~/.ssh/aws-ec2-key&quot;&lt;/span&gt;
+
+ssh &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$EC2_KEY&lt;/span&gt; ec2-user@&lt;span class=&quot;nv&quot;&gt;$EC2_IP&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'bash -c &quot;docker exec -it $( docker ps -a -q -f name=ecs-'&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$SERVICE&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;' | head -n 1 ) bash&quot;'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Check task logs:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;task_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt; aws ecs list-tasks &lt;span class=&quot;nt&quot;&gt;--cluster&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;test-ecs &lt;span class=&quot;nt&quot;&gt;--service-name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt; | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.taskArns[0]'&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;cut&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;/&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; 3 &lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+ecs-cli logs &lt;span class=&quot;nt&quot;&gt;--task-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$task_id&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;cleanup&quot;&gt;Cleanup&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;WARNING&lt;/strong&gt;: These scripts destroy the created AWS resources. Proceed with caution!!!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;stop-services&quot;&gt;Stop services&lt;/h3&gt;
+
+&lt;p&gt;Stop running tasks and remove service:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ecs-cli compose &lt;span class=&quot;nt&quot;&gt;--project-name&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;test &lt;/span&gt;service down
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;delete-cluster&quot;&gt;Delete cluster&lt;/h3&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ecs-cli down &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--force&lt;/span&gt;  &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--ecs-profile&lt;/span&gt; swift &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--cluster-config&lt;/span&gt; test-ecs
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;delete-log-group&quot;&gt;Delete log group&lt;/h3&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws logs delete-log-group &lt;span class=&quot;nt&quot;&gt;--log-group-name&lt;/span&gt; test-ecs
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;delete-image&quot;&gt;Delete image&lt;/h3&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;repo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ecs-test
+&lt;span class=&quot;nv&quot;&gt;registryId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ecr describe-registry | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.registryId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+aws ecr batch-delete-image &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--registry-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$registryId&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--repository-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$repo&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--image-ids&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;imageTag&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;latest
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;delete-image-repository&quot;&gt;Delete image repository&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;This will delete all images in the repo and the repo itself&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;repo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ecs-test&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;registryId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;aws ecr describe-registry | jq &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'.registryId'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+aws ecr delete-repository &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--force&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--registry-id&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$registryId&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--repository-name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$repo&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">The Amazon ECS Command Line Interface (CLI) is a command line tool for Amazon Elastic Container Service (Amazon ECS) that provides high-level commands to simplify creating, updating, and monitoring clusters and tasks from a local development environment.</summary></entry><entry><title type="html">Launch ECS container using AWS CLI - Step 5 - Cleanup</title><link href="/launch-ecs-container-aws-cli-step-5-cleanup/" rel="alternate" type="text/html" title="Launch ECS container using AWS CLI - Step 5 - Cleanup" /><published>2021-05-12T00:00:00-07:00</published><updated>2021-05-12T00:00:00-07:00</updated><id>/launch-ecs-container-aws-cli-step-5-cleanup</id><content type="html" xml:base="/launch-ecs-container-aws-cli-step-5-cleanup/">&lt;p&gt;Delete all the resources that were created in this series.&lt;/p&gt;
 
 &lt;p&gt;This is the last part of a multi-post thread involving these steps:&lt;/p&gt;
 
@@ -1113,36 +1416,4 @@ curl &lt;span class=&quot;nt&quot;&gt;-sSL&lt;/span&gt; https://git.io/get-mo &l
 
 &lt;p&gt;Set Memory to 4GB or more&lt;/p&gt;
 
-&lt;p&gt;Hit Apply &amp;amp; Restart&lt;/p&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Step-by-step AWS DevOps environment setup for macOS.</summary></entry><entry><title type="html">Signing in or out of Chrome signs you in or out of Google web services</title><link href="/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services/" rel="alternate" type="text/html" title="Signing in or out of Chrome signs you in or out of Google web services " /><published>2018-09-25T00:00:00-07:00</published><updated>2018-09-25T00:00:00-07:00</updated><id>/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services</id><content type="html" xml:base="/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services/">&lt;p&gt;Chrome 69 was released to users on September 5th, 2018. Besides the different look and feel one other annoying change is that Chrome now logs you automatically into Google services like Gmail with the same account that you use for browser syncing. Previously, users were allowed to keep those logins separate. To disable the forced login, navigate to &lt;a href=&quot;chrome://flags/#account-consistency&quot;&gt;chrome://flags/#account-consistency&lt;/a&gt;. Then set the option labeled, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Identity consistency between browser and cookie jar&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Disabled&lt;/code&gt; and restart your browser.&lt;/p&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Chrome 69 was released to users on September 5th, 2018. Besides the different look and feel one other annoying change is that Chrome now logs you automatically into Google services like Gmail with the same account that you use for browser syncing. Previously, users were allowed to keep those logins separate. To disable the forced login, navigate to chrome://flags/#account-consistency. Then set the option labeled, Identity consistency between browser and cookie jar to Disabled and restart your browser.</summary></entry><entry><title type="html">How to Streamline Working Relationships with Multiple Parties</title><link href="/how-to-streamline-working-relationships-with-multiple-parties/" rel="alternate" type="text/html" title="How to Streamline Working Relationships with Multiple Parties" /><published>2018-09-07T00:00:00-07:00</published><updated>2018-09-07T00:00:00-07:00</updated><id>/how-to-streamline-working-relationships-with-multiple-parties</id><content type="html" xml:base="/how-to-streamline-working-relationships-with-multiple-parties/">&lt;p&gt;If you want to facilitate a smooth and efficient working relationship, all relevant parties must first agree on a few critical aspects of the project. The ability to communicate ideas is integral to the creation of any stable working relationship. Before starting a joint project, discuss these five elements with each party.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/how-to-streamline-working-relationships-with-multiple-parties/image_1049626304.jpg&quot; alt=&quot;&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;1. Wants&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;What does each team member want to get out of the shared project? You may assume that your goals naturally match everyone else’s, but that might not be the case. Ask every party to outline their wants and desires openly. Agreeing with an entity whose goals differ significantly from your own may lead to organizational difficulties.&lt;/p&gt;
-
-&lt;p&gt;Ideally, to preserve consistency and efficiency throughout the project, your goals should be in sync. Identify and explain to the other parties your company values and the ethics upon which you would want your enterprise judged. Open and unambiguous dialogue is the best way to remove the opportunity for misunderstanding.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;2. Policies&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Policies are self-imposed rules to which an organization adheres. It’s essential for all parties to declare any plan they have regarding the project on which they will be working. Whether the other parties agree to follow the same policy is a matter of compromise. Each entity involved in the shared project may have plans of their own, so you should decide as a group which ones would benefit the project if adopted by every party.&lt;/p&gt;
-
-&lt;p&gt;Likewise, it may be necessary to temporarily alter some of your policies to facilitate a more efficient working relationship. Be willing to compromise to a degree but don’t infringe upon your own moral or ethical view if it makes you uncomfortable to do so.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;3. Milestones&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Before starting work, identify and outline any critical milestones of the project, to ensure completion according to schedule and at a satisfactory standard. It’s essential to agree to a timeline of events before beginning the project to avoid any misunderstandings or miscommunications further down the line.&lt;/p&gt;
-
-&lt;p&gt;Discuss which performance indicators you will use and agree upon a time and method for analyzing your collective performance. Once you reach an agreed milestone, make sure you establish a plan of communication that facilitates a smooth and professional discourse if needed. By acknowledging set milestones, the project will benefit from an added cohesiveness and increased efficiency.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;4. Information&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;The success of any working relationship is wholly dependent on the smooth and straightforward sharing of information between all relevant parties. In the digital age, there are many options available to business for sharing data, but you still need to agree on which method to use. Discuss the benefits of each communication option before starting work, and decide on a regular schedule to keep every party updated.&lt;/p&gt;
-
-&lt;p&gt;Every member of the project should be able to access any information that is relevant to their work. If new data becomes available, it needs to get shared quickly. Once you’ve agreed on a method and schedule for doing so, make sure every individual is aware of the decision.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;5. Trust&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Ultimately, every successful relationship is built on a bedrock of trust. It can take time and experience to develop real confidence in another party, but you may initially have to make a small leap of faith based upon research and second-hand information. Once the project begins, you must trust the other party to be competent and professional when doing their job. If you don’t, the relationship could be irrevocably impaired before it even gets going.&lt;/p&gt;
-
-&lt;p&gt;Working with other businesses can lead to great things. The ability of two or more parties to come together is helped immeasurably by agreeing upon a clear and defined plan of action. Take the time to adequately communicate your ideas, intentions, and worries with the other parties. A more cohesive and profitable working relationship will be your reward.&lt;/p&gt;</content><author><name>Swift Software Group</name></author><category term="startups" /><summary type="html">If you want to facilitate a smooth and efficient working relationship, all relevant parties must first agree on a few critical aspects of the project. The ability to communicate ideas is integral to the creation of any stable working relationship. Before starting a joint project, discuss these five elements with each party.</summary></entry></feed>
+&lt;p&gt;Hit Apply &amp;amp; Restart&lt;/p&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Step-by-step AWS DevOps environment setup for macOS.</summary></entry><entry><title type="html">Signing in or out of Chrome signs you in or out of Google web services</title><link href="/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services/" rel="alternate" type="text/html" title="Signing in or out of Chrome signs you in or out of Google web services " /><published>2018-09-25T00:00:00-07:00</published><updated>2018-09-25T00:00:00-07:00</updated><id>/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services</id><content type="html" xml:base="/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services/">&lt;p&gt;Chrome 69 was released to users on September 5th, 2018. Besides the different look and feel one other annoying change is that Chrome now logs you automatically into Google services like Gmail with the same account that you use for browser syncing. Previously, users were allowed to keep those logins separate. To disable the forced login, navigate to &lt;a href=&quot;chrome://flags/#account-consistency&quot;&gt;chrome://flags/#account-consistency&lt;/a&gt;. Then set the option labeled, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Identity consistency between browser and cookie jar&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Disabled&lt;/code&gt; and restart your browser.&lt;/p&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Chrome 69 was released to users on September 5th, 2018. Besides the different look and feel one other annoying change is that Chrome now logs you automatically into Google services like Gmail with the same account that you use for browser syncing. Previously, users were allowed to keep those logins separate. To disable the forced login, navigate to chrome://flags/#account-consistency. Then set the option labeled, Identity consistency between browser and cookie jar to Disabled and restart your browser.</summary></entry></feed>

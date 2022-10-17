@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<title>Launch ECS container using AWS ECS CLI | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Swift Software Group">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/launch-ecs-container-ecs-cli/">
+
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-37864402-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-37864402-1');
+</script>
+
+</head>
+
+
+
+
+<header>
+  <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
+  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/launch-ecs-container-ecs-cli/">Launch ECS container using AWS ECS CLI</a></h1><time datetime="2021-06-20T00:00:00-07:00">June 20, 2021</time>
+</header>
+
+  <p>The Amazon ECS Command Line Interface (CLI) is a command line tool for Amazon Elastic Container Service (Amazon ECS) that provides high-level commands to simplify creating, updating, and monitoring clusters and tasks from a local development environment.</p>
+
+<p>Make sure you do this setup first:</p>
+
+<ol>
+  <li><a href="/setup-macos-for-aws-cloud-devops">Setup macOS for AWS Cloud DevOps</a></li>
+  <li><a href="/aws-authentication">AWS Authentication</a></li>
+</ol>
+
+<h2 id="install-aws-ecs-cli">Install AWS ECS CLI</h2>
+
+<p>Install:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ~/ecs-cli
+<span class="nb">pushd</span> ~/ecs-cli
+
+<span class="c"># Download</span>
+curl <span class="nt">-Lo</span> ecs-cli https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-darwin-amd64-latest
+curl <span class="nt">-Lo</span> ecs-cli.asc https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-darwin-amd64-latest.asc
+
+<span class="c"># Verify signature</span>
+gpg <span class="nt">--keyserver</span> hkp://keys.gnupg.net <span class="nt">--recv</span> BCE9D9A42D51784F
+gpg <span class="nt">--verify</span> ecs-cli.asc ecs-cli
+
+<span class="c"># Copy to path</span>
+<span class="nb">sudo cp </span>ecs-cli /usr/local/bin
+<span class="nb">sudo chmod </span>a+x /usr/local/bin/ecs-cli
+
+<span class="nb">popd</span>
+</code></pre></div></div>
+
+<p>Test:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ecs-cli <span class="nt">--version</span>
+</code></pre></div></div>
+
+<h2 id="define-variables">Define Variables</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">image</span><span class="o">=</span><span class="s2">"ecs-test"</span>
+<span class="nv">tag</span><span class="o">=</span><span class="s2">"latest"</span>
+<span class="nv">service_name</span><span class="o">=</span><span class="s2">"test"</span>
+</code></pre></div></div>
+
+<h2 id="ecs-cli-setup">ECS CLI Setup</h2>
+
+<blockquote>
+  <p>Configuration information is stored in the <code class="language-plaintext highlighter-rouge">~/.ecs</code> directory on macOS and Linux systems and in <code class="language-plaintext highlighter-rouge">C:\Users\&lt;username&gt;\AppData\local\ecs</code> on Windows systems.</p>
+</blockquote>
+
+<p>Create a profile using your access key and secret key:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span><span class="si">$(</span>aws configure get aws_access_key_id<span class="si">)</span>
+<span class="nb">export </span><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span><span class="si">$(</span>aws configure get aws_secret_access_key<span class="si">)</span>
+<span class="nb">export </span><span class="nv">AWS_REGION</span><span class="o">=</span><span class="si">$(</span>aws configure get region<span class="si">)</span>
+
+ecs-cli configure profile <span class="nt">--profile-name</span> swift
+</code></pre></div></div>
+
+<h2 id="ecs-cluster-configuration">ECS Cluster Configuration</h2>
+
+<p>Create a cluster configuration:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">AWS_REGION</span><span class="o">=</span><span class="si">$(</span>aws configure get region<span class="si">)</span>
+
+ecs-cli configure <span class="se">\</span>
+  <span class="nt">--config-name</span> test-ecs <span class="se">\</span>
+  <span class="nt">--region</span> <span class="nv">$AWS_REGION</span> <span class="se">\</span>
+  <span class="nt">--cluster</span> test-ecs <span class="se">\</span>
+  <span class="nt">--default-launch-type</span> EC2
+  
+ecs-cli configure default <span class="nt">--config-name</span> test-ecs  
+</code></pre></div></div>
+
+<h2 id="launch-ecs-cluster">Launch ECS Cluster</h2>
+
+<p>This will take a few minutes to complete:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ecs-cli up <span class="se">\</span>
+  <span class="nt">--ecs-profile</span> swift <span class="se">\</span>
+  <span class="nt">--cluster-config</span> test-ecs <span class="se">\</span>
+  <span class="nt">--keypair</span> aws-ec2-key <span class="se">\</span>
+  <span class="nt">--capability-iam</span> <span class="se">\</span>
+  <span class="nt">--instance-type</span> t2.micro <span class="se">\</span>
+  <span class="nt">--size</span> 1 <span class="se">\</span>
+  <span class="nt">--port</span> 22
+</code></pre></div></div>
+
+<p>In addition to EC2 Instances, other resources created by default include:</p>
+
+<ul>
+  <li>Autoscaling Group</li>
+  <li>Autoscaling Launch Configuration</li>
+  <li>EC2 VPC</li>
+  <li>EC2 Internet Gateway</li>
+  <li>EC2 VPC Gateway Attachment</li>
+  <li>EC2 Route Table</li>
+  <li>EC2 Route</li>
+  <li>2 Public EC2 Subnets</li>
+  <li>2 EC2 SubnetRouteTableAssociations</li>
+  <li>EC2 Security Group</li>
+</ul>
+
+<h2 id="create-ecs-repository">Create ECS Repository</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># registry (in the form $registryId.dkr.ecr.$region.amazonaws.com)</span>
+<span class="nv">region</span><span class="o">=</span><span class="si">$(</span>aws configure get region<span class="si">)</span>
+<span class="nv">registryId</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-registry | jq <span class="nt">-r</span> <span class="s1">'.registryId'</span><span class="si">)</span>
+<span class="nv">registry</span><span class="o">=</span><span class="s2">"</span><span class="nv">$registryId</span><span class="s2">.dkr.ecr.</span><span class="nv">$region</span><span class="s2">.amazonaws.com"</span>
+
+<span class="c"># repository</span>
+<span class="nv">repository</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-repositories | jq <span class="nt">-r</span> <span class="s2">".repositories[] | select(.repositoryName==</span><span class="se">\"</span><span class="nv">$image</span><span class="se">\"</span><span class="s2">) | .repositoryUri"</span><span class="si">)</span>
+
+<span class="c"># create if it does not exist</span>
+<span class="o">[</span> <span class="nt">-z</span> <span class="s2">"</span><span class="nv">$repository</span><span class="s2">"</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> aws ecr create-repository <span class="nt">--repository-name</span> <span class="nv">$image</span>
+<span class="nv">repository</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-repositories | jq <span class="nt">-r</span> <span class="s2">".repositories[] | select(.repositoryName==</span><span class="se">\"</span><span class="nv">$image</span><span class="se">\"</span><span class="s2">) | .repositoryUri"</span><span class="si">)</span>
+</code></pre></div></div>
+
+<h2 id="create-docker-image">Create Docker image</h2>
+
+<h3 id="dockerfile">Dockerfile</h3>
+
+<p>Create a <code class="language-plaintext highlighter-rouge">Dockerfile</code> with the following contents:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="sh">"</span><span class="no">EOT</span><span class="sh">" &gt; ./Dockerfile
+# See https://hub.docker.com/_/oraclelinux for all supported 
+# Oracle Linux tags from Docker Hub.
+
+# this image will be the actual running container
+FROM  oraclelinux:8
+
+LABEL Name=ecs-test
+
+## System Config
+ENV TZ=America/Los_Angeles
+
+# Packages
+RUN yum -y install bind-utils 
+
+CMD ["/bin/ping", "localhost"]
+</span><span class="no">EOT
+</span></code></pre></div></div>
+
+<h3 id="build-image">Build Image</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Build image ..."</span>
+docker build <span class="nt">--tag</span> <span class="k">${</span><span class="nv">image</span><span class="k">}</span>:<span class="k">${</span><span class="nv">tag</span><span class="k">}</span> <span class="nb">.</span>
+</code></pre></div></div>
+
+<h3 id="tag-image">Tag Image</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">repository</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-repositories | jq <span class="nt">-r</span> <span class="s2">".repositories[] | select(.repositoryName==</span><span class="se">\"</span><span class="nv">$image</span><span class="se">\"</span><span class="s2">) | .repositoryUri"</span><span class="si">)</span>
+
+<span class="nb">echo</span> <span class="s2">"Tag image ..."</span>
+docker tag <span class="k">${</span><span class="nv">image</span><span class="k">}</span>:<span class="k">${</span><span class="nv">tag</span><span class="k">}</span> <span class="k">${</span><span class="nv">repository</span><span class="k">}</span>:<span class="k">${</span><span class="nv">tag</span><span class="k">}</span>
+</code></pre></div></div>
+
+<h3 id="publish-image">Publish Image</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># refresh AWS token for docker</span>
+aws ecr get-login-password <span class="nt">--region</span> <span class="nv">$region</span> <span class="se">\</span>
+  | docker login <span class="nt">--username</span> AWS <span class="nt">--password-stdin</span> <span class="nv">$registry</span>
+
+<span class="c"># push image</span>
+<span class="nb">echo</span> <span class="s2">"Push image ..."</span>
+docker push <span class="k">${</span><span class="nv">repository</span><span class="k">}</span>:<span class="k">${</span><span class="nv">tag</span><span class="k">}</span>
+</code></pre></div></div>
+
+<h3 id="verify">Verify</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># verify</span>
+<span class="nv">red</span><span class="o">=</span><span class="s1">'\e[0;31m'</span>    
+<span class="nv">green</span><span class="o">=</span><span class="s1">'\e[0;32m'</span>    
+<span class="nv">clear</span><span class="o">=</span><span class="s1">'\e[0m'</span>
+
+<span class="nv">pushed_tag</span><span class="o">=</span><span class="si">$(</span>reg tags <span class="k">${</span><span class="nv">repository</span><span class="k">}</span> | <span class="nb">grep</span> <span class="s2">"</span><span class="k">${</span><span class="nv">tag</span><span class="k">}</span><span class="s2">"</span><span class="si">)</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">pushed_tag</span><span class="k">}</span><span class="s2">"</span> <span class="o">!=</span> <span class="s2">"</span><span class="k">${</span><span class="nv">tag</span><span class="k">}</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">printf</span> <span class="s2">"</span><span class="k">${</span><span class="nv">red</span><span class="k">}</span><span class="s2">Failed</span><span class="k">${</span><span class="nv">clear</span><span class="k">}</span><span class="s2">"</span><span class="p">;</span> <span class="nb">echo
+</span><span class="k">else    
+    </span><span class="nb">printf</span> <span class="s2">"</span><span class="k">${</span><span class="nv">green</span><span class="k">}</span><span class="s2">Success</span><span class="k">${</span><span class="nv">clear</span><span class="k">}</span><span class="s2">"</span><span class="p">;</span> <span class="nb">echo
+</span><span class="k">fi</span>
+</code></pre></div></div>
+
+<h2 id="launch-ecs-task">Launch ECS Task</h2>
+
+<h3 id="service-description">Service Description</h3>
+
+<p>Create <code class="language-plaintext highlighter-rouge">docker-compose.yml</code> file:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="no">EOT</span><span class="sh"> &gt; ./docker-compose.yml
+version: '3'
+
+services:
+  ecs-test:
+    image: </span><span class="nv">$repository</span><span class="sh">:</span><span class="nv">$tag</span><span class="sh">
+
+    logging:
+      driver: awslogs
+      options: 
+        awslogs-group: test-ecs
+        awslogs-region: us-west-2
+        awslogs-stream-prefix: test
+</span><span class="no">EOT
+</span></code></pre></div></div>
+
+<h3 id="task-definition">Task Definition</h3>
+
+<p>Create <code class="language-plaintext highlighter-rouge">ecs-params.yml</code> file:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="no">EOT</span><span class="sh"> &gt; ./ecs-params.yml
+version: 1
+task_definition:
+  services:
+    ecs-test:
+      cpu_shares: 100
+      mem_limit: 524288000
+</span><span class="no">EOT
+</span></code></pre></div></div>
+
+<h3 id="launch-service">Launch Service</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># create service</span>
+ecs-cli compose <span class="se">\</span>
+    <span class="nt">--project-name</span> <span class="nv">$service_name</span> <span class="se">\</span>
+    <span class="nt">--file</span> ./docker-compose.yml <span class="se">\</span>
+    <span class="nt">--ecs-params</span> ./ecs-params.yml <span class="se">\</span>
+    service up <span class="se">\</span>
+    <span class="nt">--create-log-groups</span> <span class="se">\</span>
+    <span class="nt">--cluster-config</span> test-ecs <span class="se">\</span>
+    <span class="nt">--ecs-profile</span> swift
+</code></pre></div></div>
+
+<p>Login to the first task of the <code class="language-plaintext highlighter-rouge">test</code> service:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">CLUSTER</span><span class="o">=</span>test-ecs
+<span class="nv">SERVICE</span><span class="o">=</span><span class="nb">test
+
+</span><span class="nv">TASK_ARN</span><span class="o">=</span><span class="si">$(</span> aws ecs list-tasks <span class="nt">--cluster</span><span class="o">=</span><span class="nv">$CLUSTER</span> <span class="nt">--service-name</span><span class="o">=</span><span class="nv">$SERVICE</span> | jq <span class="nt">-r</span> <span class="s1">'.taskArns[0]'</span> <span class="si">)</span>
+<span class="nv">CONTAINER_INSTANCE_ARN</span><span class="o">=</span><span class="si">$(</span> aws ecs describe-tasks <span class="nt">--cluster</span><span class="o">=</span><span class="nv">$CLUSTER</span> <span class="nt">--tasks</span> <span class="nv">$TASK_ARN</span> | jq <span class="nt">-r</span> <span class="s1">'.tasks[0].containerInstanceArn'</span> <span class="si">)</span>
+
+<span class="nv">EC2_INSTANCE</span><span class="o">=</span><span class="si">$(</span> aws ecs describe-container-instances <span class="nt">--cluster</span><span class="o">=</span><span class="nv">$CLUSTER</span> <span class="nt">--container-instances</span> <span class="nv">$CONTAINER_INSTANCE_ARN</span> | jq <span class="nt">-r</span> <span class="s1">'.containerInstances[0].ec2InstanceId'</span> <span class="si">)</span>
+<span class="nv">EC2_IP</span><span class="o">=</span><span class="si">$(</span> aws ec2 describe-instances <span class="nt">--instance-ids</span> <span class="nv">$EC2_INSTANCE</span> | jq <span class="nt">-r</span> <span class="s1">'.Reservations[0].Instances[0].PublicIpAddress'</span> <span class="si">)</span>
+
+<span class="nv">EC2_KEY</span><span class="o">=</span><span class="s2">"~/.ssh/aws-ec2-key"</span>
+
+ssh <span class="nt">-i</span> <span class="nv">$EC2_KEY</span> ec2-user@<span class="nv">$EC2_IP</span> <span class="nt">-t</span> <span class="s1">'bash -c "docker exec -it $( docker ps -a -q -f name=ecs-'</span><span class="nv">$SERVICE</span><span class="s1">' | head -n 1 ) bash"'</span>
+</code></pre></div></div>
+
+<p>Check task logs:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">task_id</span><span class="o">=</span><span class="si">$(</span> aws ecs list-tasks <span class="nt">--cluster</span><span class="o">=</span>test-ecs <span class="nt">--service-name</span><span class="o">=</span><span class="nb">test</span> | jq <span class="nt">-r</span> <span class="s1">'.taskArns[0]'</span> | <span class="nb">cut</span> <span class="nt">-d</span> <span class="s2">"/"</span> <span class="nt">-f</span> 3 <span class="si">)</span>
+ecs-cli logs <span class="nt">--task-id</span> <span class="nv">$task_id</span>
+</code></pre></div></div>
+
+<h2 id="cleanup">Cleanup</h2>
+
+<blockquote>
+  <p><strong>WARNING</strong>: These scripts destroy the created AWS resources. Proceed with caution!!!</p>
+</blockquote>
+
+<h3 id="stop-services">Stop services</h3>
+
+<p>Stop running tasks and remove service:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ecs-cli compose <span class="nt">--project-name</span> <span class="nb">test </span>service down
+</code></pre></div></div>
+
+<h3 id="delete-cluster">Delete cluster</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ecs-cli down <span class="se">\</span>
+  <span class="nt">--force</span>  <span class="se">\</span>
+  <span class="nt">--ecs-profile</span> swift <span class="se">\</span>
+  <span class="nt">--cluster-config</span> test-ecs
+</code></pre></div></div>
+
+<h3 id="delete-log-group">Delete log group</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws logs delete-log-group <span class="nt">--log-group-name</span> test-ecs
+</code></pre></div></div>
+
+<h3 id="delete-image">Delete image</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">repo</span><span class="o">=</span>ecs-test
+<span class="nv">registryId</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-registry | jq <span class="nt">-r</span> <span class="s1">'.registryId'</span><span class="si">)</span>
+
+aws ecr batch-delete-image <span class="se">\</span>
+  <span class="nt">--registry-id</span> <span class="nv">$registryId</span> <span class="se">\</span>
+  <span class="nt">--repository-name</span> <span class="nv">$repo</span> <span class="se">\</span>
+  <span class="nt">--image-ids</span> <span class="nv">imageTag</span><span class="o">=</span>latest
+</code></pre></div></div>
+
+<h3 id="delete-image-repository">Delete image repository</h3>
+
+<blockquote>
+  <p>This will delete all images in the repo and the repo itself</p>
+</blockquote>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">repo</span><span class="o">=</span><span class="s2">"ecs-test"</span>
+<span class="nv">registryId</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-registry | jq <span class="nt">-r</span> <span class="s1">'.registryId'</span><span class="si">)</span>
+
+aws ecr delete-repository <span class="se">\</span>
+  <span class="nt">--force</span> <span class="se">\</span>
+  <span class="nt">--registry-id</span> <span class="nv">$registryId</span> <span class="se">\</span>
+  <span class="nt">--repository-name</span> <span class="nv">$repo</span>
+</code></pre></div></div>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>
