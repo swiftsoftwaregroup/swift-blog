@@ -46,7 +46,24 @@
   
   <article>
     <header>
-  <h1><a href="/setup-podman-macos/">Setup Podman on macOS</a></h1><time datetime="2023-05-24T00:00:00-07:00">May 24, 2023</time>
+  <h1><a href="/run-mongodb-with-podman/">Run MongoDB with Podman</a></h1><time datetime="2023-05-23T00:00:00-07:00">May 23, 2023</time>
+</header>
+
+    <p>Before you start install <a href="/setup-podman-macos">Podman</a>.</p>
+
+<h2 id="set-machine-to-rootful">Set machine to <code class="language-plaintext highlighter-rouge">rootful</code></h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman machine stop
+podman machine <span class="nb">set</span> <span class="nt">--rootful</span>
+podman machine start
+</code></pre></div></div>
+
+    <div class="more"><a href="/run-mongodb-with-podman/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/setup-podman-macos/">Setup Podman on macOS</a></h1><time datetime="2023-05-22T00:00:00-07:00">May 22, 2023</time>
 </header>
 
     <p>Podman is a utility that can be used to create and maintain containers. This post will teach you how to set up Podman on macOS and perform some basic commands.</p>
@@ -162,27 +179,6 @@
 </ol>
 
     <div class="more"><a href="/launch-ecs-container-aws-cli-step-1-network-setup/">read more</a></div>
-  </article>
-
-  <article>
-    <header>
-  <h1><a href="/create-aws-ec2-instance-aws-cli/">Create an AWS EC2 instance with the AWS CLI</a></h1><time datetime="2021-01-22T00:00:00-08:00">January 22, 2021</time>
-</header>
-
-    <p>Make sure you do this setup first:</p>
-
-<ol>
-  <li><a href="/setup-macos-for-aws-cloud-devops">Setup macOS for AWS Cloud DevOps</a></li>
-  <li><a href="/aws-authentication">AWS Authentication</a></li>
-</ol>
-
-<p>Steps:</p>
-
-<ol>
-  <li>Launch an AWS EC2 instance (this post)</li>
-</ol>
-
-    <div class="more"><a href="/create-aws-ec2-instance-aws-cli/">read more</a></div>
   </article>
 
 

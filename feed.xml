@@ -1,4 +1,69 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-05-24T21:03:11-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Setup Podman on macOS</title><link href="/setup-podman-macos/" rel="alternate" type="text/html" title="Setup Podman on macOS" /><published>2023-05-24T00:00:00-07:00</published><updated>2023-05-24T00:00:00-07:00</updated><id>/setup-podman-macos</id><content type="html" xml:base="/setup-podman-macos/">&lt;p&gt;Podman is a utility that can be used to create and maintain containers. This post will teach you how to set up Podman on macOS and perform some basic commands.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-05-24T22:05:56-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Run MongoDB with Podman</title><link href="/run-mongodb-with-podman/" rel="alternate" type="text/html" title="Run MongoDB with Podman" /><published>2023-05-23T00:00:00-07:00</published><updated>2023-05-23T00:00:00-07:00</updated><id>/run-mongodb-with-podman</id><content type="html" xml:base="/run-mongodb-with-podman/">&lt;p&gt;Before you start install &lt;a href=&quot;/setup-podman-macos&quot;&gt;Podman&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;set-machine-to-rootful&quot;&gt;Set machine to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rootful&lt;/code&gt;&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;podman machine stop
+podman machine &lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--rootful&lt;/span&gt;
+podman machine start
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;create-a-data-directory&quot;&gt;Create a data directory&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-rf&lt;/span&gt; ~/podman/mongo/data/db
+&lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; ~/podman/mongo/data/db
+&lt;span class=&quot;nb&quot;&gt;chmod&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-R&lt;/span&gt; a+wxr ~/podman
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;setup-mongodb-authentication&quot;&gt;Setup MongoDB Authentication&lt;/h2&gt;
+
+&lt;p&gt;First run the MongoDb container without authentication:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;podman run &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--detach&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--tty&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--user&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--user&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;:&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--group&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; mongo-dev &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--publish&lt;/span&gt; 27017:27017 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--volume&lt;/span&gt; ~/podman/mongo/data/db:/data/db &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    mongo
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Start a shell in the container:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;podman &lt;span class=&quot;nb&quot;&gt;exec&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-it&lt;/span&gt; mongo-dev bash
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In the container:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mongosh
+
+&lt;span class=&quot;c&quot;&gt;# in mongo shell now&lt;/span&gt;
+use admin
+db.createUser&lt;span class=&quot;o&quot;&gt;({&lt;/span&gt;user:&lt;span class=&quot;s2&quot;&gt;&quot;test&quot;&lt;/span&gt;, &lt;span class=&quot;nb&quot;&gt;pwd&lt;/span&gt;:&lt;span class=&quot;s2&quot;&gt;&quot;test&quot;&lt;/span&gt;, roles:[&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;role:&lt;span class=&quot;s2&quot;&gt;&quot;root&quot;&lt;/span&gt;, db:&lt;span class=&quot;s2&quot;&gt;&quot;admin&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}]})&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;exit
+
+exit&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;restart-mongodb-with-authentication&quot;&gt;Restart MongoDB with Authentication&lt;/h2&gt;
+
+&lt;p&gt;Stop and remove the container:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;podman stop mongo-dev
+podman &lt;span class=&quot;nb&quot;&gt;rm &lt;/span&gt;mongo-dev
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Start the container with authentication:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;podman run &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--detach&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--tty&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--user&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--user&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;:&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--group&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; mongo-dev &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--publish&lt;/span&gt; 27017:27017 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--volume&lt;/span&gt; ~/podman/mongo/data/db:/data/db &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    mongo &lt;span class=&quot;nt&quot;&gt;--auth&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><category term="podman" /><category term="mongodb" /><summary type="html">Before you start install Podman. Set machine to rootful podman machine stop podman machine set --rootful podman machine start</summary></entry><entry><title type="html">Setup Podman on macOS</title><link href="/setup-podman-macos/" rel="alternate" type="text/html" title="Setup Podman on macOS" /><published>2023-05-22T00:00:00-07:00</published><updated>2023-05-22T00:00:00-07:00</updated><id>/setup-podman-macos</id><content type="html" xml:base="/setup-podman-macos/">&lt;p&gt;Podman is a utility that can be used to create and maintain containers. This post will teach you how to set up Podman on macOS and perform some basic commands.&lt;/p&gt;
 
 &lt;h2 id=&quot;preparation&quot;&gt;Preparation&lt;/h2&gt;
 
@@ -1349,139 +1414,4 @@ aws configure &lt;span class=&quot;nt&quot;&gt;--profile&lt;/span&gt; swift
 &lt;p&gt;Import the key in AWS EC2:&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws ec2 import-key-pair &lt;span class=&quot;nt&quot;&gt;--key-name&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;aws-ec2-key&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--public-key-material&lt;/span&gt; fileb://~/.ssh/aws-ec2-key.pub
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Set up your AWS credentials. For more information, see Configuration and credential file settings.</summary></entry><entry><title type="html">Setup macOS for AWS Cloud DevOps</title><link href="/setup-macos-for-aws-cloud-devops/" rel="alternate" type="text/html" title="Setup macOS for AWS Cloud DevOps" /><published>2020-11-15T00:00:00-08:00</published><updated>2020-11-15T00:00:00-08:00</updated><id>/setup-macos-for-aws-cloud-devops</id><content type="html" xml:base="/setup-macos-for-aws-cloud-devops/">&lt;p&gt;Step-by-step AWS DevOps environment setup for macOS.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Scripts are &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bash&lt;/code&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;misc&quot;&gt;Misc&lt;/h2&gt;
-
-&lt;h3 id=&quot;finder&quot;&gt;Finder&lt;/h3&gt;
-
-&lt;p&gt;Show hidden files:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;defaults write com.apple.finder AppleShowAllFiles YES
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Hold the ‘Option/alt’ key, then right click on the Finder icon in the dock and click Relaunch&lt;/p&gt;
-
-&lt;h2 id=&quot;tools&quot;&gt;Tools&lt;/h2&gt;
-
-&lt;h3 id=&quot;aws-cli&quot;&gt;AWS CLI&lt;/h3&gt;
-
-&lt;p&gt;Install:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/Downloads
-curl &lt;span class=&quot;s2&quot;&gt;&quot;https://awscli.amazonaws.com/AWSCLIV2.pkg&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;AWSCLIV2.pkg&quot;&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;installer &lt;span class=&quot;nt&quot;&gt;-pkg&lt;/span&gt; AWSCLIV2.pkg &lt;span class=&quot;nt&quot;&gt;-target&lt;/span&gt; /
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Test:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;which aws
-aws &lt;span class=&quot;nt&quot;&gt;--version&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# /usr/local/bin/aws&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# aws-cli/2.8.2 Python/3.9.11 Darwin/21.6.0 exe/x86_64 prompt/off&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Enable  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bash&lt;/code&gt; auto-completion:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;complete&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-C&lt;/span&gt; aws_completer aws
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;homebrew&quot;&gt;Homebrew&lt;/h3&gt;
-
-&lt;p&gt;Install Homebrew:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/usr/bin/ruby &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-fsSL&lt;/span&gt; https://raw.githubusercontent.com/Homebrew/install/master/install&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;bash-5&quot;&gt;bash 5+&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;macOS comes with outdated version of bash. Install latest version.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew update
-brew &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;bash
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;gnupg&quot;&gt;gnupg&lt;/h3&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;gnupg
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;jq&quot;&gt;jq&lt;/h3&gt;
-
-&lt;p&gt;See &lt;a href=&quot;https://stedolan.github.io/jq/&quot;&gt;jq&lt;/a&gt; for details. Install via Homebrew:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;jq
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;mo&quot;&gt;mo&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Mustache Templates in Bash.&lt;/p&gt;
-
-  &lt;p&gt;See: &lt;a href=&quot;https://github.com/tests-always-included/mo&quot;&gt;https://github.com/tests-always-included/mo&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Download&lt;/span&gt;
-curl &lt;span class=&quot;nt&quot;&gt;-sSL&lt;/span&gt; https://git.io/get-mo &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; mo
-
-&lt;span class=&quot;c&quot;&gt;# Make executable&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;chmod&lt;/span&gt; +x mo
-
-&lt;span class=&quot;c&quot;&gt;# Move to the right folder&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;sudo mv &lt;/span&gt;mo /usr/local/bin/
-
-&lt;span class=&quot;c&quot;&gt;# Test&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;works&quot;&lt;/span&gt; | mo
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;reg&quot;&gt;reg&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;reg&lt;/code&gt; is Docker registry v2 command line client and repo listing generator.&lt;/p&gt;
-
-&lt;p&gt;Switch to root:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;su -
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Install:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Export the sha256sum for verification.&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;REG_SHA256&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2768ac56ad640e8ee5b74752fc9bbeaf37f37a34c7e1ddcb6d0e384a3096b1c2&quot;&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# Download and check the sha256sum.&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-fSL&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;https://github.com/genuinetools/reg/releases/download/v0.16.1/reg-darwin-amd64&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;/usr/local/bin/reg&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;REG_SHA256&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;  /usr/local/bin/reg&quot;&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;sha256sum&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; - &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sudo chmod &lt;/span&gt;a+x &lt;span class=&quot;s2&quot;&gt;&quot;/usr/local/bin/reg&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Test:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;reg &lt;span class=&quot;nt&quot;&gt;--help&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;docker-desktop&quot;&gt;Docker Desktop&lt;/h2&gt;
-
-&lt;p&gt;Install via Homebrew:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--cask&lt;/span&gt; docker
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;adjust-memory&quot;&gt;Adjust Memory&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;On macOS Docker Desktop the standard memory settings are too low (3 GB)&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Start Docker Desktop&lt;/p&gt;
-
-&lt;p&gt;Open: Preferences &amp;gt; Resources &amp;gt; Advanced&lt;/p&gt;
-
-&lt;p&gt;Set Memory to 4GB or more&lt;/p&gt;
-
-&lt;p&gt;Hit Apply &amp;amp; Restart&lt;/p&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Step-by-step AWS DevOps environment setup for macOS.</summary></entry></feed>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Set up your AWS credentials. For more information, see Configuration and credential file settings.</summary></entry></feed>

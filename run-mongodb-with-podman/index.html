@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<title>Run MongoDB with Podman | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Swift Software Group">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/run-mongodb-with-podman/">
+
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-37864402-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-37864402-1');
+</script>
+
+</head>
+
+
+
+
+<header>
+  <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
+  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/run-mongodb-with-podman/">Run MongoDB with Podman</a></h1><time datetime="2023-05-23T00:00:00-07:00">May 23, 2023</time>
+</header>
+
+  <p>Before you start install <a href="/setup-podman-macos">Podman</a>.</p>
+
+<h2 id="set-machine-to-rootful">Set machine to <code class="language-plaintext highlighter-rouge">rootful</code></h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman machine stop
+podman machine <span class="nb">set</span> <span class="nt">--rootful</span>
+podman machine start
+</code></pre></div></div>
+
+<h2 id="create-a-data-directory">Create a data directory</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">rm</span> <span class="nt">-rf</span> ~/podman/mongo/data/db
+<span class="nb">mkdir</span> <span class="nt">-p</span> ~/podman/mongo/data/db
+<span class="nb">chmod</span> <span class="nt">-R</span> a+wxr ~/podman
+</code></pre></div></div>
+
+<h2 id="setup-mongodb-authentication">Setup MongoDB Authentication</h2>
+
+<p>First run the MongoDb container without authentication:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman run <span class="se">\</span>
+    <span class="nt">--detach</span> <span class="se">\</span>
+    <span class="nt">--tty</span> <span class="se">\</span>
+    <span class="nt">--user</span> <span class="si">$(</span><span class="nb">id</span> <span class="nt">--user</span><span class="si">)</span>:<span class="si">$(</span><span class="nb">id</span> <span class="nt">--group</span><span class="si">)</span> <span class="se">\</span>
+    <span class="nt">--name</span> mongo-dev <span class="se">\</span>
+    <span class="nt">--publish</span> 27017:27017 <span class="se">\</span>
+    <span class="nt">--volume</span> ~/podman/mongo/data/db:/data/db <span class="se">\</span>
+    mongo
+</code></pre></div></div>
+
+<p>Start a shell in the container:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman <span class="nb">exec</span> <span class="nt">-it</span> mongo-dev bash
+</code></pre></div></div>
+
+<p>In the container:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mongosh
+
+<span class="c"># in mongo shell now</span>
+use admin
+db.createUser<span class="o">({</span>user:<span class="s2">"test"</span>, <span class="nb">pwd</span>:<span class="s2">"test"</span>, roles:[<span class="o">{</span>role:<span class="s2">"root"</span>, db:<span class="s2">"admin"</span><span class="o">}]})</span>
+<span class="nb">exit
+
+exit</span>
+</code></pre></div></div>
+
+<h2 id="restart-mongodb-with-authentication">Restart MongoDB with Authentication</h2>
+
+<p>Stop and remove the container:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman stop mongo-dev
+podman <span class="nb">rm </span>mongo-dev
+</code></pre></div></div>
+
+<p>Start the container with authentication:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman run <span class="se">\</span>
+    <span class="nt">--detach</span> <span class="se">\</span>
+    <span class="nt">--tty</span> <span class="se">\</span>
+    <span class="nt">--user</span> <span class="si">$(</span><span class="nb">id</span> <span class="nt">--user</span><span class="si">)</span>:<span class="si">$(</span><span class="nb">id</span> <span class="nt">--group</span><span class="si">)</span> <span class="se">\</span>
+    <span class="nt">--name</span> mongo-dev <span class="se">\</span>
+    <span class="nt">--publish</span> 27017:27017 <span class="se">\</span>
+    <span class="nt">--volume</span> ~/podman/mongo/data/db:/data/db <span class="se">\</span>
+    mongo <span class="nt">--auth</span>
+</code></pre></div></div>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>
