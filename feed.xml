@@ -1,4 +1,72 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-10-17T15:44:37-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Launch ECS container using AWS ECS CLI</title><link href="/launch-ecs-container-ecs-cli/" rel="alternate" type="text/html" title="Launch ECS container using AWS ECS CLI" /><published>2021-06-20T00:00:00-07:00</published><updated>2021-06-20T00:00:00-07:00</updated><id>/launch-ecs-container-ecs-cli</id><content type="html" xml:base="/launch-ecs-container-ecs-cli/">&lt;p&gt;The Amazon ECS Command Line Interface (CLI) is a command line tool for Amazon Elastic Container Service (Amazon ECS) that provides high-level commands to simplify creating, updating, and monitoring clusters and tasks from a local development environment.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-05-24T20:40:46-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Setup Podman on macOS</title><link href="/setup-podman-macos/" rel="alternate" type="text/html" title="Setup Podman on macOS" /><published>2023-05-24T00:00:00-07:00</published><updated>2023-05-24T00:00:00-07:00</updated><id>/setup-podman-macos</id><content type="html" xml:base="/setup-podman-macos/">&lt;p&gt;Podman is a utility that can be used to create and maintain containers. This post will teach you how to set up Podman on macOS and perform some basic commands.&lt;/p&gt;
+
+&lt;h2 id=&quot;preparation&quot;&gt;Preparation&lt;/h2&gt;
+
+&lt;h3 id=&quot;homebrew&quot;&gt;Homebrew&lt;/h3&gt;
+
+&lt;p&gt;Install &lt;a href=&quot;https://brew.sh/&quot;&gt;Homebrew&lt;/a&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/bin/bash &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-fsSL&lt;/span&gt; https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;bash-5&quot;&gt;bash 5&lt;/h3&gt;
+
+&lt;p&gt;Install via Homebrew:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;bash
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;podman&quot;&gt;Podman&lt;/h2&gt;
+
+&lt;p&gt;Install via Homebrew:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;podman
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;podman-machine&quot;&gt;Podman Machine&lt;/h2&gt;
+
+&lt;p&gt;Create and start your first Podman machine (2 CPUs, 100GB disk, 4GB memory). Podman machines are backed by &lt;a href=&quot;https://www.qemu.org/&quot;&gt;QEMU&lt;/a&gt;. This will become the default Podman machine:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;podman machine init &lt;span class=&quot;nt&quot;&gt;--cpus&lt;/span&gt; 2 &lt;span class=&quot;nt&quot;&gt;--disk-size&lt;/span&gt; 100 &lt;span class=&quot;nt&quot;&gt;--memory&lt;/span&gt; 4096
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;List all machines:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;podman machine &lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NAME                     VM TYPE     CREATED             LAST UP             CPUS        MEMORY      DISK SIZE
+podman-machine-default*  qemu        About a minute ago  About a minute ago  2           4.295GB     107.4GB
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Start the default machine:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;podman machine start
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Verify the installation:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;podman info
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The machine will be configured in rootless mode. If your containers require root permissions (e.g. ports &amp;lt; 1024), or if you run into compatibility issues with non-podman clients, you can switch using the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;podman machine &lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--rootful&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;test&quot;&gt;Test&lt;/h2&gt;
+
+&lt;p&gt;Run the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Hello World&lt;/code&gt; container:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;podman run hello-world
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;podman-desktop&quot;&gt;Podman Desktop&lt;/h2&gt;
+
+&lt;p&gt;To start a podman machine automatically at login, also install the Podman Desktop:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--cask&lt;/span&gt; podman-desktop
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Swift Software Group</name></author><category term="podman" /><summary type="html">Podman is a utility that can be used to create and maintain containers. This post will teach you how to set up Podman on macOS and perform some basic commands.</summary></entry><entry><title type="html">Launch ECS container using AWS ECS CLI</title><link href="/launch-ecs-container-ecs-cli/" rel="alternate" type="text/html" title="Launch ECS container using AWS ECS CLI" /><published>2021-06-20T00:00:00-07:00</published><updated>2021-06-20T00:00:00-07:00</updated><id>/launch-ecs-container-ecs-cli</id><content type="html" xml:base="/launch-ecs-container-ecs-cli/">&lt;p&gt;The Amazon ECS Command Line Interface (CLI) is a command line tool for Amazon Elastic Container Service (Amazon ECS) that provides high-level commands to simplify creating, updating, and monitoring clusters and tasks from a local development environment.&lt;/p&gt;
 
 &lt;p&gt;Make sure you do this setup first:&lt;/p&gt;
 
@@ -1416,4 +1484,4 @@ curl &lt;span class=&quot;nt&quot;&gt;-sSL&lt;/span&gt; https://git.io/get-mo &l
 
 &lt;p&gt;Set Memory to 4GB or more&lt;/p&gt;
 
-&lt;p&gt;Hit Apply &amp;amp; Restart&lt;/p&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Step-by-step AWS DevOps environment setup for macOS.</summary></entry><entry><title type="html">Signing in or out of Chrome signs you in or out of Google web services</title><link href="/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services/" rel="alternate" type="text/html" title="Signing in or out of Chrome signs you in or out of Google web services " /><published>2018-09-25T00:00:00-07:00</published><updated>2018-09-25T00:00:00-07:00</updated><id>/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services</id><content type="html" xml:base="/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services/">&lt;p&gt;Chrome 69 was released to users on September 5th, 2018. Besides the different look and feel one other annoying change is that Chrome now logs you automatically into Google services like Gmail with the same account that you use for browser syncing. Previously, users were allowed to keep those logins separate. To disable the forced login, navigate to &lt;a href=&quot;chrome://flags/#account-consistency&quot;&gt;chrome://flags/#account-consistency&lt;/a&gt;. Then set the option labeled, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Identity consistency between browser and cookie jar&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Disabled&lt;/code&gt; and restart your browser.&lt;/p&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Chrome 69 was released to users on September 5th, 2018. Besides the different look and feel one other annoying change is that Chrome now logs you automatically into Google services like Gmail with the same account that you use for browser syncing. Previously, users were allowed to keep those logins separate. To disable the forced login, navigate to chrome://flags/#account-consistency. Then set the option labeled, Identity consistency between browser and cookie jar to Disabled and restart your browser.</summary></entry></feed>
+&lt;p&gt;Hit Apply &amp;amp; Restart&lt;/p&gt;</content><author><name>Swift Software Group</name></author><summary type="html">Step-by-step AWS DevOps environment setup for macOS.</summary></entry></feed>

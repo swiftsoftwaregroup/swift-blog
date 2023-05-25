@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<title>Setup Podman on macOS | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Swift Software Group">
+<meta name="generator" content="Jekyll v4.2.0">
+<link rel="canonical" href="/setup-podman-macos/">
+
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-37864402-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-37864402-1');
+</script>
+
+</head>
+
+
+
+
+<header>
+  <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
+  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/setup-podman-macos/">Setup Podman on macOS</a></h1><time datetime="2023-05-24T00:00:00-07:00">May 24, 2023</time>
+</header>
+
+  <p>Podman is a utility that can be used to create and maintain containers. This post will teach you how to set up Podman on macOS and perform some basic commands.</p>
+
+<h2 id="preparation">Preparation</h2>
+
+<h3 id="homebrew">Homebrew</h3>
+
+<p>Install <a href="https://brew.sh/">Homebrew</a>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/bin/bash <span class="nt">-c</span> <span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-fsSL</span> https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="si">)</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<h3 id="bash-5">bash 5</h3>
+
+<p>Install via Homebrew:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>bash
+</code></pre></div></div>
+
+<h2 id="podman">Podman</h2>
+
+<p>Install via Homebrew:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>podman
+</code></pre></div></div>
+
+<h2 id="podman-machine">Podman Machine</h2>
+
+<p>Create and start your first Podman machine (2 CPUs, 100GB disk, 4GB memory). Podman machines are backed by <a href="https://www.qemu.org/">QEMU</a>. This will become the default Podman machine:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman machine init <span class="nt">--cpus</span> 2 <span class="nt">--disk-size</span> 100 <span class="nt">--memory</span> 4096
+</code></pre></div></div>
+
+<p>List all machines:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman machine <span class="nb">ls</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>NAME                     VM TYPE     CREATED             LAST UP             CPUS        MEMORY      DISK SIZE
+podman-machine-default*  qemu        About a minute ago  About a minute ago  2           4.295GB     107.4GB
+</code></pre></div></div>
+
+<p>Start the default machine:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman machine start
+</code></pre></div></div>
+
+<p>Verify the installation:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman info
+</code></pre></div></div>
+
+<p>The machine will be configured in rootless mode. If your containers require root permissions (e.g. ports &lt; 1024), or if you run into compatibility issues with non-podman clients, you can switch using the following command:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman machine <span class="nb">set</span> <span class="nt">--rootful</span>
+</code></pre></div></div>
+
+<h2 id="test">Test</h2>
+
+<p>Run the <code class="language-plaintext highlighter-rouge">Hello World</code> container:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman run hello-world
+</code></pre></div></div>
+
+<h2 id="podman-desktop">Podman Desktop</h2>
+
+<p>To start a podman machine automatically at login, also install the Podman Desktop:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install</span> <span class="nt">--cask</span> podman-desktop
+</code></pre></div></div>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>
