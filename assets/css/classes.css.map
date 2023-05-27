@@ -3,8 +3,8 @@
 	"file": "classes.css",
 	"sources": [
 		"classes.sass",
-		"site/_sass/index.scss",
-		"site/_sass/highlight.scss"
+		"_sass/index.scss",
+		"_sass/highlight.scss"
 	],
 	"sourcesContent": [
 		"@import \"index\", \"highlight\";\n\n.title {\n  font-size: 1.4em; }\n\n.archive {\n  font-size: 1.1em; }\n\n.archive time {\n  display: inline-block;\n  min-width: 10ch;\n  margin: 0 .2em; }\n\n\n\n.icon {\n  height: 1em;\n  width: 1em;\n  fill: currentColor;\n  transition: .2s color;\n  vertical-align: middle;\n  margin-bottom: .15em; }\n\na:hover .icon {\n  color: reduce(100); }\n\n\n\n\n\n.more {\n  margin: 2em 0 1em; }\n\n.more a {\n  border-radius: 2px;\n  border: 1.5px solid $link-color;\n  padding: .4em .8em;\n  transition: .2s background, .2s color; }\n\n.more a:hover {\n  color: #fff;\n  background: $link-color;\n  text-decoration: inherit; }\n\n\n",

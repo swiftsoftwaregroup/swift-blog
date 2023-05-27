@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="Swift Software Group">
-<meta name="generator" content="Jekyll v4.2.0">
+<meta name="generator" content="Jekyll v4.2.2">
 <link rel="canonical" href="/">
 
 
@@ -44,6 +44,23 @@
 
 
   
+  <article>
+    <header>
+  <h1><a href="/configure-ruby-environment-windows/">Configure Ruby Environment on Windows</a></h1><time datetime="2023-05-27T00:00:00-07:00">May 27, 2023</time>
+</header>
+
+    <p>This is a simple guide for configuring a Ruby 2 environment on Windows 11. All scripts are PowerShell.</p>
+
+<h2 id="powershell">PowerShell</h2>
+
+<p>This will allow you to execute PowerShell scripts locally on your machine. In PowerShell as Administrator:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Set-ExecutionPolicy</span><span class="w"> </span><span class="nt">-ExecutionPolicy</span><span class="w"> </span><span class="nx">RemoteSigned</span><span class="w"> </span><span class="nt">-Scope</span><span class="w"> </span><span class="nx">LocalMachine</span><span class="w">
+</span></code></pre></div></div>
+
+    <div class="more"><a href="/configure-ruby-environment-windows/">read more</a></div>
+  </article>
+
   <article>
     <header>
   <h1><a href="/run-mongodb-with-podman/">Run MongoDB with Podman</a></h1><time datetime="2023-05-23T00:00:00-07:00">May 23, 2023</time>
@@ -161,31 +178,11 @@ podman machine start
     <div class="more"><a href="/launch-ecs-container-aws-cli-step-2-launch-ec2-instance/">read more</a></div>
   </article>
 
-  <article>
-    <header>
-  <h1><a href="/launch-ecs-container-aws-cli-step-1-network-setup/">Launch ECS container using AWS CLI - Step 1 - Network Setup</a></h1><time datetime="2021-02-06T00:00:00-08:00">February 06, 2021</time>
-</header>
-
-    <p>Setup network infrastructure including new VPC (Virtual Private Cloud), public and private subnets, internet gateway, security group, and ssh access.</p>
-
-<p>This is part of a multi-post thread involving these steps:</p>
-
-<ol>
-  <li>Network Setup (this post)</li>
-  <li><a href="/launch-ecs-container-aws-cli-step-2-launch-ec2-instance">Launch EC2 Instance</a></li>
-  <li><a href="/launch-ecs-container-aws-cli-step-3-create-docker-image">Create Docker Image</a></li>
-  <li><a href="/launch-ecs-container-aws-cli-step-4-create-service">Create Service</a></li>
-  <li><a href="/launch-ecs-container-aws-cli-step-5-cleanup">Cleanup</a></li>
-</ol>
-
-    <div class="more"><a href="/launch-ecs-container-aws-cli-step-1-network-setup/">read more</a></div>
-  </article>
-
 
 
   <footer>
     <span></span>
-    <span>page 1 of 9</span>
+    <span>page 1 of 10</span>
     <a href="/page2">older posts »</a>
   </footer>
 

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<title>Configure Ruby Environment on Windows | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Swift Software Group">
+<meta name="generator" content="Jekyll v4.2.2">
+<link rel="canonical" href="/configure-ruby-environment-windows/">
+
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-37864402-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-37864402-1');
+</script>
+
+</head>
+
+
+
+
+<header>
+  <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
+  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/configure-ruby-environment-windows/">Configure Ruby Environment on Windows</a></h1><time datetime="2023-05-27T00:00:00-07:00">May 27, 2023</time>
+</header>
+
+  <p>This is a simple guide for configuring a Ruby 2 environment on Windows 11. All scripts are PowerShell.</p>
+
+<h2 id="powershell">PowerShell</h2>
+
+<p>This will allow you to execute PowerShell scripts locally on your machine. In PowerShell as Administrator:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Set-ExecutionPolicy</span><span class="w"> </span><span class="nt">-ExecutionPolicy</span><span class="w"> </span><span class="nx">RemoteSigned</span><span class="w"> </span><span class="nt">-Scope</span><span class="w"> </span><span class="nx">LocalMachine</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="chocolatey">Chocolatey</h2>
+
+<p>In PowerShell as Administrator:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Set-ExecutionPolicy</span><span class="w"> </span><span class="nx">AllSigned</span><span class="w">
+</span><span class="n">Set-ExecutionPolicy</span><span class="w"> </span><span class="nx">Bypass</span><span class="w"> </span><span class="nt">-Scope</span><span class="w"> </span><span class="nx">Process</span><span class="w"> </span><span class="nt">-Force</span><span class="w">
+</span><span class="n">iex</span><span class="w"> </span><span class="p">((</span><span class="n">New-Object</span><span class="w"> </span><span class="nx">System.Net.WebClient</span><span class="p">)</span><span class="o">.</span><span class="nf">DownloadString</span><span class="p">(</span><span class="s1">'https://chocolatey.org/install.ps1'</span><span class="p">))</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Close and reopen PowerShell after that.</p>
+
+<h3 id="set-cache-directory">Set cache directory</h3>
+
+<p>In PowerShell as Administrator:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">choco</span><span class="w"> </span><span class="nx">config</span><span class="w"> </span><span class="nx">set</span><span class="w"> </span><span class="nx">cacheLocation</span><span class="w"> </span><span class="nx">C:/ChocoCache</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="upgrade">Upgrade</h3>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">choco</span><span class="w"> </span><span class="nx">upgrade</span><span class="w"> </span><span class="nx">chocolatey</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="ruby">Ruby</h2>
+
+<p>In PowerShell as <em>Administrator</em>:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">choco</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">ruby</span><span class="w"> </span><span class="nt">-version</span><span class="w"> </span><span class="nx">2.7.2.1</span><span class="w"> </span><span class="nt">-m</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="ruby-devkit-20">Ruby DevKit (2.0+)</h2>
+
+<h3 id="install">Install</h3>
+
+<p>Open PowerShell as Administrator and run the following command:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">choco</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">ruby2.devkit</span><span class="w">
+</span></code></pre></div></div>
+
+<p>This will install Ruby DevKit 2.0+ and its dependencies- in <code class="language-plaintext highlighter-rouge">C:\tools\DevKit2</code>.</p>
+
+<h3 id="configure">Configure</h3>
+
+<p>Open <code class="language-plaintext highlighter-rouge">C:\tools\DevKit2\config.yml</code>and add <code class="language-plaintext highlighter-rouge">C:\tools\ruby27</code> path at the end. The complete <code class="language-plaintext highlighter-rouge">config.yml</code> should look like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># This configuration file contains the absolute path locations of all
+# installed Rubies to be enhanced to work with the DevKit. This config
+# file is generated by the 'ruby dk.rb init' step and may be modified
+# before running the 'ruby dk.rb install' step. To include any installed
+# Rubies that were not automagically discovered, simply add a line below
+# the triple hyphens with the absolute path to the Ruby root directory.
+#
+# Example:
+#
+# ---
+# - C:/ruby19trunk
+# - C:/ruby192dev
+#
+---
+ - C:/tools/ruby27
+</code></pre></div></div>
+
+<p>Run the DevKit installer:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cd</span><span class="w"> </span><span class="nx">C:/tools/DevKit2</span><span class="w">
+</span><span class="n">ruby</span><span class="w"> </span><span class="nx">dk.rb</span><span class="w"> </span><span class="nx">install</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="ruby-version-manager">Ruby Version Manager</h2>
+
+<p>Download latest uru.x.y.z.nupkg from <a href="https://bitbucket.org/jonforums/uru/downloads">uru’s downloads</a>. This was <code class="language-plaintext highlighter-rouge">uru.0.8.5.nupkg</code> at the time of writing.</p>
+
+<p>In PowerShell as <em>Administrator</em>:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cd</span><span class="w"> </span><span class="nx">~/Downloads</span><span class="w">
+</span><span class="n">Invoke-WebRequest</span><span class="w"> </span><span class="nt">-Uri</span><span class="w"> </span><span class="s2">"https://bitbucket.org/jonforums/uru/downloads/uru.0.8.5.nupkg"</span><span class="w"> </span><span class="nt">-outfile</span><span class="w"> </span><span class="s2">"uru.0.8.5.nupkg"</span><span class="w">
+</span><span class="n">choco</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">uru.0.8.5.nupkg</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="register-ruby-versions">Register Ruby Versions</h3>
+
+<p>This will work only if you previously have installed Ruby via Chocolatey.</p>
+
+<p>In PowerShell:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">uru</span><span class="w"> </span><span class="nx">admin</span><span class="w"> </span><span class="nx">rm</span><span class="w"> </span><span class="nt">--all</span><span class="w">
+</span><span class="n">uru</span><span class="w"> </span><span class="nx">admin</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="nt">--recurse</span><span class="w"> </span><span class="nx">C:\tools</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Test:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">uru</span><span class="w"> </span><span class="nx">ls</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="install-ruby-native-environment">Install Ruby Native Environment</h3>
+
+<p>This is needed for gems that requre antive compilation.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># activate Ruby 2.7</span><span class="w">
+</span><span class="n">uru</span><span class="w"> </span><span class="nx">2.7.2</span><span class="w">
+
+</span><span class="c"># use a recent MSYS2 version</span><span class="w">
+</span><span class="nv">$</span><span class="nn">env</span><span class="p">:</span><span class="nv">MSYS2_VERSION</span><span class="o">=</span><span class="s2">"20230526"</span><span class="w">
+
+</span><span class="c"># install</span><span class="w">
+</span><span class="n">ridk</span><span class="w"> </span><span class="nx">install</span><span class="w">
+</span></code></pre></div></div>
+
+<p>A list of the available MSYS2 versions is available <a href="https://repo.msys2.org/distrib/x86_64/">here</a>.</p>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

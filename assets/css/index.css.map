@@ -3,10 +3,10 @@
 	"file": "index.css",
 	"sources": [
 		"index.sass",
-		"site/_sass/index.scss",
-		"site/_sass/font.scss",
-		"site/_sass/basic.scss",
-		"site/_sass/layout.scss"
+		"_sass/index.scss",
+		"_sass/font.scss",
+		"_sass/basic.scss",
+		"_sass/layout.scss"
 	],
 	"sourcesContent": [
 		"@import \"index\", \"font\", \"basic\", \"layout\";\n\nbody > header, body > article, body > footer {\n  padding: 1.5em; }\n\n@media (min-width: 32em) {\n  body > header, body > article, body > footer {\n    padding: 1.7em calc(38% - 12em); } }\n\nbody > header {\n  box-shadow: 0 0 .6em rgba($dark, 0.05);\n  border-bottom: 1px solid reduce(16); }\n\nbody > footer {\n  box-shadow: 0 0 .6em rgba($dark, 0.04) inset;\n  border-top: 1px solid reduce(16);\n  opacity: .9; }\n",
