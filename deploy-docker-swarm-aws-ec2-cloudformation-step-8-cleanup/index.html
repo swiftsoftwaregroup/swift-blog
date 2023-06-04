@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<title>Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 8 - Cleanup | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Swift Software Group">
+<meta name="generator" content="Jekyll v4.2.2">
+<link rel="canonical" href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup/">
+
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-37864402-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-37864402-1');
+</script>
+
+</head>
+
+
+
+
+<header>
+  <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
+  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup/">Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 8 - Cleanup</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
+</header>
+
+  <p>In this step we cleanup the resources that we creater for the Docker Swarm cluster on EC2.</p>
+
+<p>This post is part of a thread that includes these steps:</p>
+
+<ol>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
+  <li>Cleanup (this post)</li>
+</ol>
+
+<h1 id="cleanup">Cleanup</h1>
+
+<h2 id="docker-swarm">Docker Swarm</h2>
+
+<h3 id="login-to-manager-machine">Login to manager machine</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./ssh/ssh-manager.sh
+</code></pre></div></div>
+
+<p>Switch user to the <code class="language-plaintext highlighter-rouge">worker</code> user:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>su - worker
+</code></pre></div></div>
+
+<h3 id="remove-all-nodes-from-swarm">Remove all nodes from Swarm</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pssh <span class="nt">--hosts</span><span class="o">=</span><span class="nv">$HOME</span>/nodes/hosts <span class="nt">--inline</span> <span class="s1">'docker swarm leave'</span>
+</code></pre></div></div>
+
+<h3 id="destroy-swarm">Destroy Swarm</h3>
+
+<p>On manager machine:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker swarm leave <span class="nt">--force</span> 
+</code></pre></div></div>
+
+<h3 id="clean-up-dangling-networks">Clean up dangling networks</h3>
+
+<p>After destroying the Swarm make sure that you do not have dangling networks <code class="language-plaintext highlighter-rouge">ingress</code> and <code class="language-plaintext highlighter-rouge">docker_gwbridge</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network <span class="nb">ls</span>
+</code></pre></div></div>
+
+<p>If you see <code class="language-plaintext highlighter-rouge">ingress</code> or <code class="language-plaintext highlighter-rouge">docker_gwbridge</code>, force remove them:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network disconnect <span class="nt">--force</span> docker_gwbridge
+docker network <span class="nb">rm </span>docker_gwbridge
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network disconnect <span class="nt">--force</span> ingress
+docker network <span class="nb">rm </span>ingress
+</code></pre></div></div>
+
+<p>Also you have to do the same for all nodes:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pssh <span class="nt">--hosts</span><span class="o">=</span><span class="nv">$HOME</span>/nodes/hosts <span class="nt">--inline</span> <span class="s1">'docker network rm docker_gwbridge'</span>
+pssh <span class="nt">--hosts</span><span class="o">=</span><span class="nv">$HOME</span>/nodes/hosts <span class="nt">--inline</span> <span class="s1">'docker network rm ingress'</span>
+</code></pre></div></div>
+
+<p>Remove <code class="language-plaintext highlighter-rouge">swift_default</code> network:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network <span class="nb">rm </span>swift_default
+</code></pre></div></div>
+
+<h3 id="docker-cleanup">Docker Cleanup</h3>
+
+<p>These commands will remove all stopped containers and all images that do not have a running container on <strong>all nodes</strong>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># stop and femove containers</span>
+pssh <span class="nt">--timeout</span> 300 <span class="nt">--hosts</span><span class="o">=</span><span class="nv">$HOME</span>/nodes/hosts <span class="nt">--inline</span> <span class="se">\</span>
+  <span class="s1">'docker container prune --force'</span>
+
+<span class="c"># delete unused images</span>
+pssh <span class="nt">--timeout</span> 300 <span class="nt">--hosts</span><span class="o">=</span><span class="nv">$HOME</span>/nodes/hosts <span class="nt">--inline</span> <span class="se">\</span>
+  <span class="s1">'docker image prune --all --force'</span>
+  
+<span class="c"># check root file system</span>
+pssh <span class="nt">--timeout</span> 300 <span class="nt">--hosts</span><span class="o">=</span><span class="nv">$HOME</span>/nodes/hosts <span class="nt">--inline</span> <span class="se">\</span>
+  <span class="s1">'df --human-readable /ebs/docker'</span>  
+</code></pre></div></div>
+
+<h2 id="route-53-cleanup-script">Route 53 Cleanup Script</h2>
+
+<p>Start in the project directory:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/swift-aws-ec2-swarm
+</code></pre></div></div>
+
+<p>Create a folder <code class="language-plaintext highlighter-rouge">route53</code> and a <code class="language-plaintext highlighter-rouge">route53-delete-record.sh</code> file in it.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> route53
+<span class="nb">touch </span>route53/route53-delete-record.sh
+nano route53/route53-delete-record.sh
+</code></pre></div></div>
+
+<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">route53-delete-record.sh</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+<span class="c"># =============================================================================================================</span>
+<span class="c"># Usage:</span>
+<span class="c">#   ./route53-delete-record.sh [HostedZoneName] [Hostname] [Type]</span>
+<span class="c">#</span>
+<span class="c"># Example:</span>
+<span class="c">#   ./route53-delete-record.sh example.org dummy.example.org</span>
+<span class="c">#   ./route53-delete-record.sh example.org dummy.example.org TXT</span>
+<span class="c">#   ./route53-delete-record.sh example.org dummy.example.org txt</span>
+<span class="c">#   ./route53-delete-record.sh example.org dummy.example.org CNAME</span>
+<span class="c"># =============================================================================================================</span>
+
+<span class="c"># output coloring</span>
+<span class="nv">RED</span><span class="o">=</span><span class="si">$(</span>tput setaf 1<span class="si">)</span>
+<span class="nv">GREEN</span><span class="o">=</span><span class="si">$(</span>tput setaf 2<span class="si">)</span>
+<span class="nv">YELLOW</span><span class="o">=</span><span class="si">$(</span>tput setaf 3<span class="si">)</span>
+<span class="nv">CLEAR</span><span class="o">=</span><span class="si">$(</span>tput sgr0<span class="si">)</span>
+
+<span class="c"># put your value here</span>
+<span class="c"># note that jq can work with env var</span>
+<span class="nv">HOSTED_ZONE</span><span class="o">=</span><span class="k">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">example</span><span class="p">.org</span><span class="k">}</span>
+<span class="nv">DNS_NAME</span><span class="o">=</span><span class="k">${</span><span class="nv">2</span><span class="k">:-</span><span class="nv">test</span><span class="p">.example.org</span><span class="k">}</span>
+<span class="nv">DNS_TYPE</span><span class="o">=</span><span class="k">${</span><span class="nv">3</span><span class="k">:-</span><span class="nv">A</span><span class="k">}</span>
+
+<span class="o">[[</span> <span class="nt">-z</span> <span class="s2">"</span><span class="nv">$HOSTED_ZONE</span><span class="s2">"</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">HOSTED_ZONE</span><span class="o">=</span>example.org
+
+<span class="c"># add . to the end</span>
+<span class="nv">DNS_NAME</span><span class="o">=</span><span class="s2">"</span><span class="nv">$DNS_NAME</span><span class="s2">."</span>
+
+<span class="c"># capitalize</span>
+<span class="nv">DNS_TYPE</span><span class="o">=</span><span class="k">${</span><span class="nv">DNS_TYPE</span><span class="p">^^</span><span class="k">}</span>
+
+<span class="nb">echo </span>Deleting record: <span class="se">\'</span><span class="nv">$DNS_TYPE</span><span class="se">\'</span> <span class="se">\'</span><span class="nv">$DNS_NAME</span><span class="se">\'</span> from hosted zone <span class="se">\'</span><span class="nv">$HOSTED_ZONE</span><span class="se">\'</span> ... 
+
+<span class="c"># find Zone ID</span>
+<span class="nv">ZONE_ID</span><span class="o">=</span><span class="si">$(</span>aws route53 list-hosted-zones-by-name <span class="nt">--dns-name</span> <span class="nv">$HOSTED_ZONE</span> <span class="nt">--output</span> json <span class="se">\</span>
+  | jq .HostedZones[].Id <span class="nt">--raw-output</span> <span class="se">\</span>
+  | <span class="nb">awk</span> <span class="nt">-F</span> / <span class="s1">'{print $3}'</span><span class="si">)</span>
+
+<span class="k">if</span> <span class="o">[[</span> <span class="nt">-z</span> <span class="s2">"</span><span class="nv">$ZONE_ID</span><span class="s2">"</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then
+  </span><span class="nb">echo</span> <span class="k">${</span><span class="nv">RED</span><span class="k">}</span><span class="nv">$HOSTED_ZONE</span> hosted zone not found!<span class="nv">$CLEAR</span>
+  <span class="nb">exit </span>1
+<span class="k">fi
+
+</span><span class="nb">echo </span>Zone ID: <span class="nv">$YELLOW$ZONE_ID$CLEAR</span>
+<span class="nb">echo</span>
+
+<span class="c"># find resource record set</span>
+<span class="nv">RECORD_SETS</span><span class="o">=</span><span class="si">$(</span>aws route53 list-resource-record-sets <span class="nt">--hosted-zone-id</span><span class="o">=</span><span class="nv">$ZONE_ID</span> <span class="nt">--output</span> json <span class="se">\</span>
+  | jq <span class="s1">'.ResourceRecordSets[] | select ((.Name == '</span><span class="se">\"</span><span class="nv">$DNS_NAME</span><span class="se">\"</span><span class="s1">') and (.Type=='</span><span class="se">\"</span><span class="nv">$DNS_TYPE</span><span class="se">\"</span><span class="s1">'))'</span><span class="si">)</span>
+
+<span class="k">if</span> <span class="o">[[</span> <span class="nt">-z</span> <span class="s2">"</span><span class="nv">$RECORD_SETS</span><span class="s2">"</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then
+  </span><span class="nb">echo</span> <span class="k">${</span><span class="nv">RED</span><span class="k">}</span><span class="nv">$DNS_NAME</span> <span class="nv">$DNS_TYPE</span> record not found!<span class="nv">$CLEAR</span>
+  <span class="nb">exit </span>1
+<span class="k">fi
+
+</span><span class="nb">echo </span>Resource Record Sets:
+jq <span class="o">&lt;&lt;&lt;</span> <span class="s2">"</span><span class="nv">$RECORD_SETS</span><span class="s2">"</span>
+<span class="nb">echo</span>
+
+<span class="c"># prepare the change batch value</span>
+<span class="nv">CHANGE_BATCH</span><span class="o">=</span><span class="si">$(</span><span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="no">EOF</span><span class="sh">
+{
+    "Comment": "delete this record",
+    "Changes": [
+        {
+            "Action": "DELETE",
+            "ResourceRecordSet":
+              </span><span class="nv">$RECORD_SETS</span><span class="sh">
+
+        }
+    ]
+}
+</span><span class="no">EOF
+</span><span class="si">)</span>
+
+<span class="nb">echo </span>Change batch:
+jq <span class="o">&lt;&lt;&lt;</span> <span class="s2">"</span><span class="nv">$CHANGE_BATCH</span><span class="s2">"</span>
+<span class="nb">echo</span>
+
+<span class="c"># perform the deletion</span>
+aws route53 change-resource-record-sets <span class="nt">--hosted-zone-id</span><span class="o">=</span><span class="nv">$ZONE_ID</span> <span class="nt">--change-batch</span> <span class="s2">"</span><span class="nv">$CHANGE_BATCH</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>Make the script executable:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x route53/route53-delete-record.sh
+</code></pre></div></div>
+
+<h2 id="delete-aws-resources">Delete AWS resources</h2>
+
+<h3 id="instances">Instances</h3>
+
+<h4 id="worker">Worker</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./ec2-worker/rm-ec2-worker.sh
+./ec2-worker-lt/rm-ec2-worker-lt.sh
+</code></pre></div></div>
+
+<h4 id="manager">Manager</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./ec2-manager/rm-ec2-manager.sh
+</code></pre></div></div>
+
+<h3 id="iam-roles--instance-profiles">IAM Roles / Instance Profiles</h3>
+
+<h4 id="worker-1">Worker</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./iam/rm-iam-worker.sh
+</code></pre></div></div>
+
+<h4 id="manager-1">Manager</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./iam/rm-iam-manager.sh
+</code></pre></div></div>
+
+<h3 id="elastic-block-storage-ebs">Elastic Block Storage (EBS)</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./ebs/rm-ebs.sh
+</code></pre></div></div>
+
+<h3 id="route-53">Route 53</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./route53/route53-delete-record.sh swift.internal manager.swift.internal
+
+./route53/route53-delete-record.sh swift.internal worker-1.swift.internal
+./route53/route53-delete-record.sh swift.internal worker-2.swift.internal
+</code></pre></div></div>
+
+<h3 id="vpc">VPC</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./vpc/rm-vpc.sh
+</code></pre></div></div>
+
+<p>Congratulations!</p>
+
+<p>We are done with <code class="language-plaintext highlighter-rouge">Step 8. Cleanup</code>. This is the final step of this series.</p>
+
+<p>Here are all the steps again for reference:</p>
+
+<ol>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
+  <li>Cleanup (this post)</li>
+</ol>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

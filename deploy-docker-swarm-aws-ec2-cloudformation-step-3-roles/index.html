@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<title>Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 3 - Roles | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Swift Software Group">
+<meta name="generator" content="Jekyll v4.2.2">
+<link rel="canonical" href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles/">
+
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-37864402-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-37864402-1');
+</script>
+
+</head>
+
+
+
+
+<header>
+  <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
+  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles/">Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 3 - Roles</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
+</header>
+
+  <p>In this step we create the IAM roles and policies needed by the EC2 instances.</p>
+
+<p>This post is part of a thread that includes these steps:</p>
+
+<ol>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
+  <li>Roles (this post)</li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
+</ol>
+
+<h2 id="identity-and-access-management-aws-iam">Identity and Access Management (AWS IAM)</h2>
+
+<p>Start in the project directory:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/swift-aws-ec2-swarm
+</code></pre></div></div>
+
+<h3 id="cloudformation-template">CloudFormation Template</h3>
+
+<p>We need to create IAM Role and Instance Profile for two types of instances:</p>
+
+<ol>
+  <li>Manager - this will be used by the Manager instance</li>
+  <li>Worker - this will be used by the Worker instances</li>
+</ol>
+
+<h4 id="manager">Manager</h4>
+
+<p>Create a folder <code class="language-plaintext highlighter-rouge">iam</code> and a <code class="language-plaintext highlighter-rouge">iam-manager.yml</code> file in it.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> iam
+<span class="nb">touch </span>iam/iam-manager.yml
+nano iam/iam-manager.yml
+</code></pre></div></div>
+
+<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">iam-manager.yml</code>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Description</span><span class="pi">:</span>  <span class="s">IAM role and instance profile for the Manager instance</span>
+
+<span class="na">Parameters</span><span class="pi">:</span>
+  <span class="na">Prefix</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">An environment name that is prefixed to resource names</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
+
+<span class="c1"># Permissions for the Manager instance</span>
+<span class="na">Resources</span><span class="pi">:</span>
+  <span class="na">Role</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::IAM::Role</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">Tags</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-iam-role-manager</span>
+      <span class="na">AssumeRolePolicyDocument</span><span class="pi">:</span>
+        <span class="na">Version</span><span class="pi">:</span> <span class="s">2012-10-17</span>
+        <span class="na">Statement</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">Effect</span><span class="pi">:</span> <span class="s">Allow</span>
+            <span class="na">Principal</span><span class="pi">:</span>
+              <span class="na">Service</span><span class="pi">:</span> <span class="s">ec2.amazonaws.com</span>
+            <span class="na">Action</span><span class="pi">:</span> <span class="s">sts:AssumeRole</span>
+      <span class="na">ManagedPolicyArns</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly</span>
+      <span class="na">Policies</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">PolicyName</span><span class="pi">:</span> <span class="s">root</span>
+          <span class="na">PolicyDocument</span><span class="pi">:</span>
+            <span class="na">Version</span><span class="pi">:</span> <span class="s">2012-10-17</span>
+            <span class="na">Statement</span><span class="pi">:</span>
+              <span class="pi">-</span> <span class="na">Effect</span><span class="pi">:</span> <span class="s">Allow</span>
+                <span class="na">Action</span><span class="pi">:</span> 
+                  <span class="pi">-</span> <span class="s">ec2:DescribeTags</span>
+                  <span class="pi">-</span> <span class="s">ec2:AttachVolume</span>
+                  <span class="pi">-</span> <span class="s">ec2:DetachVolume</span>
+                  <span class="pi">-</span> <span class="s">ecr:DescribeRegistry</span>
+                  <span class="pi">-</span> <span class="s">route53:*</span>
+                <span class="na">Resource</span><span class="pi">:</span> <span class="s1">'</span><span class="s">*'</span>
+
+  <span class="na">InstanceProfile</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::IAM::InstanceProfile</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">Roles</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="kt">!Ref</span> <span class="s">Role</span>
+
+<span class="na">Outputs</span><span class="pi">:</span>
+  <span class="na">InstanceProfile</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the created InstanceProfile</span>
+    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">InstanceProfile</span>
+</code></pre></div></div>
+
+<h4 id="worker">Worker</h4>
+
+<p>Create a file <code class="language-plaintext highlighter-rouge">iam/iam-worker.yml</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">touch </span>iam/iam-worker.yml
+nano iam/iam-worker.yml
+</code></pre></div></div>
+
+<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">iam-worker.yml</code>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Description</span><span class="pi">:</span>  <span class="s">IAM role and instance profile for the Worker instances</span>
+
+<span class="na">Parameters</span><span class="pi">:</span>
+  <span class="na">Prefix</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">An environment name that is prefixed to resource names</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
+
+<span class="c1"># Permissions for the Worker instance(s)</span>
+<span class="na">Resources</span><span class="pi">:</span>
+  <span class="na">Role</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::IAM::Role</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">Tags</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-iam-role-worker</span>
+      <span class="na">AssumeRolePolicyDocument</span><span class="pi">:</span>
+        <span class="na">Version</span><span class="pi">:</span> <span class="s">2012-10-17</span>
+        <span class="na">Statement</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">Effect</span><span class="pi">:</span> <span class="s">Allow</span>
+            <span class="na">Principal</span><span class="pi">:</span>
+              <span class="na">Service</span><span class="pi">:</span> <span class="s">ec2.amazonaws.com</span>
+            <span class="na">Action</span><span class="pi">:</span> <span class="s">sts:AssumeRole</span>
+      <span class="na">ManagedPolicyArns</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly</span>
+      <span class="na">Policies</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">PolicyName</span><span class="pi">:</span> <span class="s">root</span>
+          <span class="na">PolicyDocument</span><span class="pi">:</span>
+            <span class="na">Version</span><span class="pi">:</span> <span class="s">2012-10-17</span>
+            <span class="na">Statement</span><span class="pi">:</span>
+              <span class="pi">-</span> <span class="na">Effect</span><span class="pi">:</span> <span class="s">Allow</span>
+                <span class="na">Action</span><span class="pi">:</span> 
+                  <span class="pi">-</span> <span class="s">ec2:DescribeTags</span>
+                  <span class="pi">-</span> <span class="s">ec2:AttachVolume</span>
+                  <span class="pi">-</span> <span class="s">ec2:DetachVolume</span>
+                  <span class="pi">-</span> <span class="s">ecr:DescribeRegistry</span>
+                  <span class="pi">-</span> <span class="s">route53:*</span>
+                <span class="na">Resource</span><span class="pi">:</span> <span class="s1">'</span><span class="s">*'</span>
+
+  <span class="na">InstanceProfile</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::IAM::InstanceProfile</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">Roles</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="kt">!Ref</span> <span class="s">Role</span>
+
+<span class="na">Outputs</span><span class="pi">:</span>
+  <span class="na">InstanceProfile</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the created InstanceProfile</span>
+    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">InstanceProfile</span>
+</code></pre></div></div>
+
+<h2 id="scripts">Scripts</h2>
+
+<h3 id="manager-1">Manager</h3>
+
+<p>Add a script <code class="language-plaintext highlighter-rouge">iam/deploy-iam-manager.sh</code> and paste this code in it:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+<span class="c"># switch to parent directory</span>
+<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
+<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
+
+<span class="nb">source </span>config/names.sh
+
+<span class="nb">echo
+echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_iam_manager</span><span class="s2"> stack via CloudFormation:"</span>
+<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
+<span class="nb">echo
+
+set</span> <span class="nt">-x</span>
+
+<span class="c"># NOTE: `--capabilities CAPABILITY_IAM` is needed because the `iam.yml` CloudFormation template creates roles and instance profiles.</span>
+
+aws cloudformation deploy <span class="se">\</span>
+    <span class="nt">--capabilities</span> CAPABILITY_IAM <span class="se">\</span>
+    <span class="nt">--template-file</span> iam/iam-manager.yml <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_manager</span> <span class="se">\</span>
+    <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span><span class="nv">$prefix</span>
+
+<span class="nb">popd</span>
+</code></pre></div></div>
+<h3 id="worker-1">Worker</h3>
+
+<p>Add a script <code class="language-plaintext highlighter-rouge">iam/deploy-iam-worker.sh</code> and paste this code in it:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+<span class="c"># switch to parent directory</span>
+<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
+<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
+
+<span class="nb">source </span>config/names.sh
+
+<span class="nb">echo
+echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_iam_worker</span><span class="s2"> stack via CloudFormation:"</span>
+<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
+<span class="nb">echo
+
+set</span> <span class="nt">-x</span>
+
+<span class="c"># NOTE: `--capabilities CAPABILITY_IAM` is needed because the `iam.yml` CloudFormation template creates roles and instance profiles.</span>
+
+aws cloudformation deploy <span class="se">\</span>
+    <span class="nt">--capabilities</span> CAPABILITY_IAM <span class="se">\</span>
+    <span class="nt">--template-file</span> iam/iam-worker.yml <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_worker</span> <span class="se">\</span>
+    <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span><span class="nv">$prefix</span>
+
+<span class="nb">popd</span>
+</code></pre></div></div>
+
+<p>Let’s also add clean up scripts. First the <code class="language-plaintext highlighter-rouge">rm-iam-manager.sh</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+<span class="c"># switch to parent directory</span>
+<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
+<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
+
+<span class="nb">source </span>config/names.sh
+
+<span class="nb">echo
+echo</span> <span class="s2">"Removing </span><span class="nv">$stack_iam_manager</span><span class="s2"> stack via CloudFormation:"</span>
+<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
+<span class="nb">echo
+
+set</span> <span class="nt">-x</span>
+
+aws cloudformation delete-stack <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_manager</span> 
+
+aws cloudformation <span class="nb">wait </span>stack-delete-complete <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_manager</span>
+
+<span class="nb">popd</span>
+</code></pre></div></div>
+
+<p>and another one for the worker - <code class="language-plaintext highlighter-rouge">rm-iam-worker.sh</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+<span class="c"># switch to parent directory</span>
+<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
+<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
+
+<span class="nb">source </span>config/names.sh
+
+<span class="nb">echo
+echo</span> <span class="s2">"Removing </span><span class="nv">$stack_iam_worker</span><span class="s2"> stack via CloudFormation:"</span>
+<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
+<span class="nb">echo
+
+set</span> <span class="nt">-x</span>
+
+aws cloudformation delete-stack <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_worker</span> 
+
+aws cloudformation <span class="nb">wait </span>stack-delete-complete <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_worker</span>
+
+<span class="nb">popd</span>
+</code></pre></div></div>
+
+<p>Make all scripts executable:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x iam/deploy-iam-manager.sh 
+<span class="nb">chmod</span> +x iam/rm-iam-manager.sh
+
+<span class="nb">chmod</span> +x iam/deploy-iam-worker.sh 
+<span class="nb">chmod</span> +x iam/rm-iam-worker.sh
+</code></pre></div></div>
+
+<h3 id="deploy">Deploy</h3>
+
+<p>Finally let’s run the “deploy” scripts to create the IAM roles. First for the Manager:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./iam/deploy-iam-manager.sh
+</code></pre></div></div>
+
+<p>You should see output similar to this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-iam-manager stack via CloudFormation:
+https://us-west-2.console.aws.amazon.com/cloudformation/home
+
++ aws cloudformation deploy <span class="nt">--capabilities</span> CAPABILITY_IAM <span class="nt">--template-file</span> iam/iam-manager.yml <span class="nt">--stack-name</span> swift-swarm-iam-manager <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span>swift-swarm
+
+Waiting <span class="k">for </span>changeset to be created..
+Waiting <span class="k">for </span>stack create/update to <span class="nb">complete
+</span>Successfully created/updated stack - swift-swarm-iam-manager
+</code></pre></div></div>
+
+<p>then for the Worker:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./iam/deploy-iam-worker.sh
+</code></pre></div></div>
+
+<p>You should see output similar to this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-iam-worker stack via CloudFormation:
+https://us-west-2.console.aws.amazon.com/cloudformation/home
+
++ aws cloudformation deploy <span class="nt">--capabilities</span> CAPABILITY_IAM <span class="nt">--template-file</span> iam/iam-worker.yml <span class="nt">--stack-name</span> swift-swarm-iam-worker <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span>swift-swarm
+
+Waiting <span class="k">for </span>changeset to be created..
+Waiting <span class="k">for </span>stack create/update to <span class="nb">complete
+</span>Successfully created/updated stack - swift-swarm-iam-worker
+</code></pre></div></div>
+
+<p>At this point your project structure should look like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.
+├── config
+│   └── names.sh
+├── ebs
+│   ├── deploy-ebs.sh
+│   ├── ebs.yml
+│   └── rm-ebs.sh
+├── iam
+│   ├── deploy-iam-manager.sh
+│   ├── deploy-iam-worker.sh
+│   ├── iam-manager.yml
+│   ├── iam-worker.yml
+│   ├── rm-iam-manager.sh
+│   └── rm-iam-worker.sh
+└── vpc
+    ├── deploy-vpc.sh
+    ├── rm-vpc.sh
+    └── vpc.yml
+</code></pre></div></div>
+
+<p>Congratulations!</p>
+
+<p>We are done with <code class="language-plaintext highlighter-rouge">Step 3. Roles</code>.</p>
+
+<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Step 4. Manager Instance</a></p>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

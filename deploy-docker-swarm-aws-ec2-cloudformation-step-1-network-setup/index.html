@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<title>Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 1 - Network Setup | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Swift Software Group">
+<meta name="generator" content="Jekyll v4.2.2">
+<link rel="canonical" href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup/">
+
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-37864402-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-37864402-1');
+</script>
+
+</head>
+
+
+
+
+<header>
+  <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
+  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup/">Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 1 - Network Setup</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
+</header>
+
+  <p>Setup network infrastructure including new VPC (Virtual Private Cloud), public and private subnets, internet gateway, security group, and ssh access.</p>
+
+<p>This post is part of a thread that includes these steps:</p>
+
+<ol>
+  <li>Network Setup (this post)</li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
+</ol>
+
+<p>Make sure you do this setup first:</p>
+
+<ol>
+  <li><a href="/setup-macos-for-aws-cloud-devops">Setup macOS for AWS Cloud DevOps</a></li>
+  <li><a href="/aws-authentication">AWS Authentication</a></li>
+</ol>
+
+<h2 id="project-structure">Project Structure</h2>
+
+<p>For this deployment we will create 2 separate code repositories. The first one will be named <code class="language-plaintext highlighter-rouge">swift-aws-ec2-swarm</code> and the second one will be named <code class="language-plaintext highlighter-rouge">swift-aws-ec2-docker</code>.</p>
+
+<p>As a start, create the <code class="language-plaintext highlighter-rouge">swift-aws-ec2-swarm</code> directory in your home dir and switch to it. We will call this the “project dir”.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ~/swift-aws-ec2-swarm
+<span class="nb">cd</span> ~/swift-aws-ec2-swarm
+</code></pre></div></div>
+
+<p>The rest of this post assumes we work from within the “project dir”.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>Create a folder <code class="language-plaintext highlighter-rouge">config</code> and <code class="language-plaintext highlighter-rouge">names.sh</code> file in it.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> config
+<span class="nb">touch </span>config/names.sh
+nano config/names.sh
+</code></pre></div></div>
+
+<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">names.sh</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">AWS_DEFAULT_PROFILE</span><span class="o">=</span>swift
+
+<span class="nv">prefix</span><span class="o">=</span><span class="s2">"swift-swarm"</span>
+
+<span class="nv">ec2_key_pair</span><span class="o">=</span><span class="s2">"aws-ec2-key"</span>
+
+<span class="nv">stack_vpc</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-vpc"</span>
+
+<span class="nv">stack_ebs</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-ebs"</span>
+
+<span class="nv">stack_iam_manager</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-iam-manager"</span>
+<span class="nv">stack_ec2_manager</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-ec2-manager"</span>
+
+<span class="nv">stack_iam_worker</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-iam-worker"</span>
+<span class="nv">stack_ec2_worker</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-ec2-worker"</span>
+<span class="nv">stack_ec2_worker_lt</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-ec2-worker-lt"</span>
+
+<span class="nv">vpc</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-vpc-1"</span>
+
+<span class="nv">subnet_pub_1</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-sn-pub-1"</span>
+<span class="nv">subnet_priv_1</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-sn-priv-1"</span>
+
+<span class="nv">security_group_pub_1</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-sg-pub-1"</span>
+<span class="nv">security_group_priv_1</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-sg-priv-1"</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>IMPORTANT: Replace <code class="language-plaintext highlighter-rouge">swift</code> in the first line with the name of your AWS CLI profile or set to <code class="language-plaintext highlighter-rouge">default</code> if you don;t use different profiles.</p>
+</blockquote>
+
+<h2 id="virtual-private-cloud-aws-vpc">Virtual Private Cloud (AWS VPC)</h2>
+
+<h3 id="cloudformation-template">CloudFormation Template</h3>
+
+<p>Create a folder <code class="language-plaintext highlighter-rouge">network</code> and a <code class="language-plaintext highlighter-rouge">vpc.yml</code> file in it.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> vpc
+<span class="nb">touch </span>vpc/vpc.yml
+nano vpc/vpc.yml
+</code></pre></div></div>
+
+<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">vpc.yml</code>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Description</span><span class="pi">:</span> <span class="s">Create VPC, public subnet, private subnet, Internet gateway, NAT gateway, security groups, and Route53 hosted zone for the VPC.</span> 
+
+<span class="na">Parameters</span><span class="pi">:</span>
+  <span class="na">Prefix</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">An environment name that is prefixed to resource names</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
+
+  <span class="na">VpcCIDR</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">Please enter the IP range (CIDR notation) for this VPC</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
+    <span class="na">Default</span><span class="pi">:</span> <span class="s">10.0.0.0/16</span>
+
+  <span class="na">PublicSubnetCIDR</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">Please enter the IP range (CIDR notation) for the public subnet in the first Availability Zone</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
+    <span class="na">Default</span><span class="pi">:</span> <span class="s">10.0.10.0/24</span>
+
+  <span class="na">PrivateSubnetCIDR</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">Please enter the IP range (CIDR notation) for the private subnet in the first Availability Zone</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
+    <span class="na">Default</span><span class="pi">:</span> <span class="s">10.0.20.0/24</span>
+
+<span class="na">Resources</span><span class="pi">:</span>
+  <span class="c1"># VPC</span>
+  <span class="na">Vpc</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::VPC</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">CidrBlock</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">VpcCIDR</span>
+      <span class="na">EnableDnsSupport</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="na">EnableDnsHostnames</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="na">Tags</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-vpc-1</span>
+
+  <span class="c1"># Internet Gateway</span>
+  <span class="na">InternetGateway</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::InternetGateway</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">Tags</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-igw-1</span>
+
+  <span class="na">InternetGatewayAttachment</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::VPCGatewayAttachment</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
+      <span class="na">InternetGatewayId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">InternetGateway</span>
+
+  <span class="c1"># Public Subnet</span>
+  <span class="na">PublicSubnet</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::Subnet</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
+      <span class="na">CidrBlock</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicSubnetCIDR</span>
+      <span class="na">AvailabilityZone</span><span class="pi">:</span> <span class="kt">!Select</span> <span class="pi">[</span> <span class="nv">0</span><span class="pi">,</span> <span class="kt">!GetAZs</span> <span class="s1">'</span><span class="s">'</span> <span class="pi">]</span>
+      <span class="na">MapPublicIpOnLaunch</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="na">Tags</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-sn-pub-1</span>
+
+  <span class="c1"># Private Subnet</span>
+  <span class="na">PrivateSubnet</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::Subnet</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
+      <span class="na">CidrBlock</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PrivateSubnetCIDR</span>
+      <span class="na">AvailabilityZone</span><span class="pi">:</span> <span class="kt">!Select</span> <span class="pi">[</span> <span class="nv">0</span><span class="pi">,</span> <span class="kt">!GetAZs</span>  <span class="s1">'</span><span class="s">'</span> <span class="pi">]</span>
+      <span class="na">MapPublicIpOnLaunch</span><span class="pi">:</span> <span class="no">false</span>
+      <span class="na">Tags</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-sn-priv-1</span>
+
+  <span class="c1"># NAT Elastic IP</span>
+  <span class="na">NatGatewayEIP</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::EIP</span>
+    <span class="na">DependsOn</span><span class="pi">:</span> <span class="s">InternetGatewayAttachment</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">Domain</span><span class="pi">:</span> <span class="s">vpc</span>
+      <span class="na">Tags</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-eip-1</span>
+
+  <span class="c1"># NAT Gateway</span>
+  <span class="na">NatGateway</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::NatGateway</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">AllocationId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="s">NatGatewayEIP.AllocationId</span>
+      <span class="na">SubnetId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicSubnet</span>
+      <span class="na">Tags</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-ng-1</span>
+
+  <span class="c1"># Public route table</span>
+  <span class="na">PublicRouteTable</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::RouteTable</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
+      <span class="na">Tags</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-rt-pub-1</span>
+
+  <span class="c1"># Route to internet gateway</span>
+  <span class="na">DefaultPublicRoute</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::Route</span>
+    <span class="na">DependsOn</span><span class="pi">:</span> <span class="s">InternetGatewayAttachment</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">RouteTableId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicRouteTable</span>
+      <span class="na">DestinationCidrBlock</span><span class="pi">:</span> <span class="s">0.0.0.0/0</span>
+      <span class="na">GatewayId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">InternetGateway</span>
+
+  <span class="c1"># Routes for public subnet</span>
+  <span class="na">PublicSubnetRouteTableAssociation</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SubnetRouteTableAssociation</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">RouteTableId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicRouteTable</span>
+      <span class="na">SubnetId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicSubnet</span>
+
+  <span class="c1"># Routes for private subnet</span>
+  <span class="na">PrivateRouteTable</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::RouteTable</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
+      <span class="na">Tags</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-rt-priv-1</span>
+
+  <span class="na">DefaultPrivateRoute</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::Route</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">RouteTableId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PrivateRouteTable</span>
+      <span class="na">DestinationCidrBlock</span><span class="pi">:</span> <span class="s">0.0.0.0/0</span>
+      <span class="na">NatGatewayId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">NatGateway</span>          
+
+  <span class="na">PrivateSubnetRouteTableAssociation</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SubnetRouteTableAssociation</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">RouteTableId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PrivateRouteTable</span>
+      <span class="na">SubnetId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PrivateSubnet</span>
+
+  <span class="c1">## Security groups</span>
+  <span class="c1"># Public</span>
+  <span class="na">PublicSecurityGroup</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroup</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">GroupDescription</span><span class="pi">:</span> <span class="s">Security group for manager nodes</span>
+      <span class="na">Tags</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-sg-pub-1</span>
+      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
+      <span class="na">SecurityGroupIngress</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">IpProtocol</span><span class="pi">:</span> <span class="s">tcp</span>
+          <span class="na">FromPort</span><span class="pi">:</span> <span class="m">22</span>
+          <span class="na">ToPort</span><span class="pi">:</span> <span class="m">22</span>
+          <span class="na">CidrIp</span><span class="pi">:</span> <span class="s">0.0.0.0/0</span>
+
+  <span class="c1"># Private</span>
+  <span class="na">PrivateSecurityGroup</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroup</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">GroupDescription</span><span class="pi">:</span> <span class="s">Security group for worker nodes</span>
+      <span class="na">Tags</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-sg-priv-1</span>
+      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
+
+  <span class="c1">## Ingress rules</span>
+  <span class="c1"># Public</span>
+  <span class="na">PublicSecurityGroupIngressFromSelf</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroupIngress</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">GroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PublicSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
+      <span class="na">IpProtocol</span><span class="pi">:</span> <span class="s">-1</span>
+      <span class="na">SourceSecurityGroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PublicSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
+
+  <span class="na">PublicSecurityGroupIngressFromPrivate</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroupIngress</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">GroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PublicSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
+      <span class="na">IpProtocol</span><span class="pi">:</span> <span class="s">-1</span>
+      <span class="na">SourceSecurityGroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PrivateSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
+
+  <span class="c1"># Private</span>
+  <span class="na">PrivateSecurityGroupIngressFromSelf</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroupIngress</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">GroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PrivateSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
+      <span class="na">IpProtocol</span><span class="pi">:</span> <span class="s">-1</span>
+      <span class="na">SourceSecurityGroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PrivateSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
+
+  <span class="na">PrivateSecurityGroupIngressFromPublic</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroupIngress</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">GroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PrivateSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
+      <span class="na">IpProtocol</span><span class="pi">:</span> <span class="s">-1</span>
+      <span class="na">SourceSecurityGroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PublicSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
+
+  <span class="c1"># Add DNS zone for our VPC</span>
+  <span class="na">HostedZone</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">AWS::Route53::HostedZone'</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">Name</span><span class="pi">:</span> <span class="s">swift.internal.</span>
+      <span class="na">VPCs</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">VPCId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
+          <span class="na">VPCRegion</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s2">"</span><span class="s">AWS::Region"</span>
+      <span class="na">HostedZoneConfig</span><span class="pi">:</span>
+        <span class="na">Comment</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Hosted</span><span class="nv"> </span><span class="s">zone</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">swift.internal'</span>      
+
+<span class="na">Outputs</span><span class="pi">:</span>
+  <span class="na">VpcId</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the created VPC</span>
+    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
+
+  <span class="na">PublicSubnetId</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the public subnet in the 1st Availability Zone</span>
+    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicSubnet</span>
+
+  <span class="na">PrivateSubnetId</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the private subnet in the 1st Availability Zone</span>
+    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PrivateSubnet</span>
+
+  <span class="na">PublicSecurityGroupId</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the public SecurityGroup</span>
+    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicSecurityGroup</span>
+
+  <span class="na">PrivateSecurityGroupId</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the private SecurityGroup</span>
+    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PrivateSecurityGroup</span>
+
+  <span class="na">HostedZoneId</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the Route53 HostedZone</span>
+    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">HostedZone</span>
+</code></pre></div></div>
+
+<h3 id="scripts">Scripts</h3>
+
+<p>Next add a script <code class="language-plaintext highlighter-rouge">deploy-vpc.sh</code> and paste this code in it:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+<span class="c"># switch to parent directory</span>
+<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
+<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
+
+<span class="nb">source </span>config/names.sh
+
+<span class="nb">echo
+echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_vpc</span><span class="s2"> stack via CloudFormation:"</span>
+<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
+<span class="nb">echo
+
+set</span> <span class="nt">-x</span>
+
+aws cloudformation deploy <span class="se">\</span>
+    <span class="nt">--profile</span> swift <span class="se">\</span>
+    <span class="nt">--template-file</span> vpc/vpc.yml <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_vpc</span> <span class="se">\</span>
+    <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span><span class="nv">$prefix</span>
+
+<span class="nb">popd</span>
+</code></pre></div></div>
+
+<p>Let’s also add a clean up script <code class="language-plaintext highlighter-rouge">rm-vpc.sh</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+<span class="c"># switch to parent directory</span>
+<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
+<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
+
+<span class="nb">source </span>config/names.sh
+
+<span class="nb">echo
+echo</span> <span class="s2">"Removing </span><span class="nv">$stack_vpc</span><span class="s2"> stack via CloudFormation:"</span>
+<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
+<span class="nb">echo
+
+set</span> <span class="nt">-x</span>
+
+aws cloudformation delete-stack <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_vpc</span> 
+
+aws cloudformation <span class="nb">wait </span>stack-delete-complete <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_vpc</span>
+
+<span class="nb">popd</span>
+</code></pre></div></div>
+
+<p>Make the scripts executable:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x vpc/deploy-vpc.sh 
+<span class="nb">chmod</span> +x vpc/rm-vpc.sh
+</code></pre></div></div>
+
+<h3 id="deploy">Deploy</h3>
+
+<p>Finally let’s run the “deploy” script to setup our network:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./vpc/deploy-vpc.sh
+</code></pre></div></div>
+
+<p>You should see output similar to this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-vpc stack via CloudFormation:
+https://us-west-2.console.aws.amazon.com/cloudformation/home
+
++ aws cloudformation deploy <span class="nt">--template-file</span> network/vpc.yml <span class="nt">--stack-name</span> swift-swarm-vpc <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span>swift-swarm
+
+Waiting <span class="k">for </span>changeset to be created..
+Waiting <span class="k">for </span>stack create/update to <span class="nb">complete
+</span>Successfully created/updated stack - swift-swarm-vpc
+</code></pre></div></div>
+
+<p>At this point your project structure should look like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.
+├── config
+│   └── names.sh
+└── vpc
+    ├── deploy-vpc.sh
+    ├── rm-vpc.sh
+    └── vpc.yml
+</code></pre></div></div>
+
+<p>Congratulations!</p>
+
+<p>We are done with <code class="language-plaintext highlighter-rouge">Step 1. Network Setup</code>.</p>
+
+<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Step 2. Storage</a></p>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<title>Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 2 - Storage | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Swift Software Group">
+<meta name="generator" content="Jekyll v4.2.2">
+<link rel="canonical" href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage/">
+
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-37864402-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-37864402-1');
+</script>
+
+</head>
+
+
+
+
+<header>
+  <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
+  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage/">Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 2 - Storage</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
+</header>
+
+  <p>In this step we will create a shared EBS volume which will be used as a home directory for the Linux users.</p>
+
+<p>This post is part of a thread that includes these steps:</p>
+
+<ol>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
+  <li>Storage (this post)</li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
+</ol>
+
+<h1 id="elastic-block-storage-aws-ebs">Elastic Block Storage (AWS EBS)</h1>
+
+<p>Start in the project directory:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/swift-aws-ec2-swarm
+</code></pre></div></div>
+
+<h3 id="cloudformation-template">CloudFormation Template</h3>
+
+<p>Create a folder <code class="language-plaintext highlighter-rouge">ebs</code> and a <code class="language-plaintext highlighter-rouge">ebs.yml</code> file in it.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ebs
+<span class="nb">touch </span>ebs/ebs.yml
+nano ebs/ebs.yml
+</code></pre></div></div>
+
+<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">ebs.yml</code>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Description</span><span class="pi">:</span> <span class="s">Shared EBS volumes for the Docker Swarm instances</span>  
+
+<span class="na">Resources</span><span class="pi">:</span>
+  <span class="na">HomeVolume</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">AWS::EC2::Volume'</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">VolumeType</span><span class="pi">:</span> <span class="s">io2</span>
+      <span class="na">Iops</span><span class="pi">:</span> <span class="s">3000</span>      
+      <span class="na">Size</span><span class="pi">:</span> <span class="m">30</span>
+      <span class="na">Encrypted</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="na">AvailabilityZone</span><span class="pi">:</span> <span class="kt">!Select</span> <span class="pi">[</span> <span class="nv">0</span><span class="pi">,</span> <span class="kt">!GetAZs</span> <span class="s1">'</span><span class="s">'</span> <span class="pi">]</span>
+      <span class="na">MultiAttachEnabled</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="na">Tags</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="s">shared-volume-home</span>
+
+<span class="na">Outputs</span><span class="pi">:</span>
+  <span class="na">HomeVolumeId</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">The ID of the created home EBS volume</span>
+    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">HomeVolume</span>
+</code></pre></div></div>
+
+<h2 id="scripts">Scripts</h2>
+
+<p>Next add a script <code class="language-plaintext highlighter-rouge">deploy-ebs.sh</code> and paste this code in it:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+<span class="c"># switch to parent directory</span>
+<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
+<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
+
+<span class="nb">source </span>config/names.sh
+
+<span class="nb">echo
+echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_ebs</span><span class="s2"> stack via CloudFormation:"</span>
+<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
+<span class="nb">echo
+
+set</span> <span class="nt">-x</span>
+
+aws cloudformation deploy <span class="se">\</span>
+    <span class="nt">--template-file</span> ebs/ebs.yml <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_ebs</span>
+
+<span class="nb">popd</span>
+</code></pre></div></div>
+
+<p>Let’s also add a clean up script <code class="language-plaintext highlighter-rouge">rm-ebs.sh</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+
+<span class="c"># switch to parent directory</span>
+<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
+<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
+
+<span class="nb">source </span>config/names.sh
+
+<span class="nb">echo
+echo</span> <span class="s2">"Destroying </span><span class="nv">$stack_ebs</span><span class="s2"> stack via CloudFormation:"</span>
+<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
+<span class="nb">echo
+
+set</span> <span class="nt">-x</span>
+
+aws cloudformation delete-stack <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_ebs</span> 
+
+aws cloudformation <span class="nb">wait </span>stack-delete-complete <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_ebs</span>
+</code></pre></div></div>
+
+<p>Make the scripts executable:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x ebs/deploy-ebs.sh 
+<span class="nb">chmod</span> +x ebs/rm-ebs.sh
+</code></pre></div></div>
+
+<h3 id="deploy">Deploy</h3>
+
+<p>Finally let’s run the “deploy” script to create the EBS volumes:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./ebs/deploy-ebs.sh
+</code></pre></div></div>
+
+<p>You should see output similar to this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-ebs stack via CloudFormation:
+https://us-west-2.console.aws.amazon.com/cloudformation/home
+
++ aws cloudformation deploy <span class="nt">--template-file</span> ebs/ebs.yml <span class="nt">--stack-name</span> swift-swarm-ebs
+
+Waiting <span class="k">for </span>changeset to be created..
+Waiting <span class="k">for </span>stack create/update to <span class="nb">complete
+</span>Successfully created/updated stack - swift-swarm-ebs
+</code></pre></div></div>
+
+<p>At this point your project structure should look like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.
+├── config
+│   └── names.sh
+├── ebs
+│   ├── deploy-ebs.sh
+│   ├── ebs.yml
+│   └── rm-ebs.sh
+└── vpc
+    ├── deploy-vpc.sh
+    ├── rm-vpc.sh
+    └── vpc.yml
+</code></pre></div></div>
+
+<p>Congratulations!</p>
+
+<p>We are done with <code class="language-plaintext highlighter-rouge">Step 2. Storage</code>.</p>
+
+<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Step 3. Roles</a></p>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

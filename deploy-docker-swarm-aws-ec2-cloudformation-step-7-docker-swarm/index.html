@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<title>Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 7 - Docker Swarm | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Swift Software Group">
+<meta name="generator" content="Jekyll v4.2.2">
+<link rel="canonical" href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm/">
+
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-37864402-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-37864402-1');
+</script>
+
+</head>
+
+
+
+
+<header>
+  <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
+  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm/">Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 7 - Docker Swarm</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
+</header>
+
+  <p>In this step we will create a Docker Swarm cluster.</p>
+
+<p>This post is part of a thread that includes these steps:</p>
+
+<ol>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
+  <li>Docker Swarm (this post)</li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
+</ol>
+
+<h1 id="docker-swarm">Docker Swarm</h1>
+
+<h2 id="manager-machine">Manager Machine</h2>
+
+<blockquote>
+  <p>IMPORTANT: On the manager machine port 2377 (Docker Swarm)  must be open / accessible from other nodes in order for them to be able to join the swarm</p>
+</blockquote>
+
+<p>We are using Docker Swarm. At least one machine should be designated as a “manager”. The “manager” machine is where all cluster managment operations will be done from, including also all the stack deployments.</p>
+
+<p>The manager machine on AWS is named  <code class="language-plaintext highlighter-rouge">manager</code>.</p>
+
+<h2 id="login-to-manager-machine">Login to manager machine</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./ssh/ssh-manager.sh
+</code></pre></div></div>
+
+<p>Switch user to the <code class="language-plaintext highlighter-rouge">worker</code> user:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>su - worker
+</code></pre></div></div>
+
+<h2 id="clean-slate">Clean Slate</h2>
+
+<blockquote>
+  <p>It is recommended to start from clean Docker installation.</p>
+</blockquote>
+
+<p><em><strong>Warning</strong>:</em> This <em>will</em> destroy <em>all</em> your images and containers. There is no way to restore them!</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker stop <span class="si">$(</span>docker ps <span class="nt">--all</span> <span class="nt">--quiet</span><span class="si">)</span>
+docker <span class="nb">rm</span> <span class="si">$(</span>docker ps <span class="nt">--all</span> <span class="nt">--quiet</span><span class="si">)</span>
+docker rmi <span class="si">$(</span>docker images <span class="nt">--quiet</span><span class="si">)</span>
+</code></pre></div></div>
+
+<h2 id="docker-swarm-1">Docker Swarm</h2>
+
+<h3 id="init">Init</h3>
+
+<p>Initialize Docker Swarm. This will make the machine Swarm manager:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">dev</span><span class="o">=</span>eth0
+<span class="nb">export </span><span class="nv">host_ip</span><span class="o">=</span><span class="sb">`</span>ip <span class="nt">-4</span> <span class="nt">-o</span> addr show <span class="nv">$dev</span> | perl <span class="nt">-lane</span> <span class="s1">'print $F[3]'</span> | <span class="nb">cut</span> <span class="nt">-d</span>/ <span class="nt">-f1</span><span class="sb">`</span>
+docker swarm init <span class="nt">--advertise-addr</span> <span class="nv">$host_ip</span> <span class="nt">--default-addr-pool</span> 192.168.0.0/16
+</code></pre></div></div>
+
+<h3 id="manager-node">Manager Node</h3>
+
+<p>The node on which we ran  <code class="language-plaintext highlighter-rouge">docker swarm init</code> is now the manager node. The manager node is also the first worker node.</p>
+
+<h3 id="worker-nodes">Worker Nodes</h3>
+
+<p>To add another worker to the swarm, run this and follow the instructions:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker swarm join-token worker
+</code></pre></div></div>
+
+<p>To remove node from the swarm, login to the node and run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker swarm leave
+</code></pre></div></div>
+
+<h4 id="pssh">pssh</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ~/nodes
+<span class="nb">cd</span> ~/nodes
+</code></pre></div></div>
+
+<h5 id="install-parallel-ssh">Install parallel-ssh</h5>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/nodes
+git clone https://github.com/nplanel/parallel-ssh
+<span class="nb">cd </span>parallel-ssh
+python3 setup.py <span class="nb">install</span> <span class="nt">--user</span>
+</code></pre></div></div>
+
+<h5 id="install-pssh">Install pssh</h5>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/nodes
+git clone https://github.com/lilydjwg/pssh
+<span class="nb">cd </span>pssh
+pip3 <span class="nb">install</span> <span class="nt">--user</span> <span class="nb">.</span>
+</code></pre></div></div>
+
+<p>Simple test:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pssh <span class="se">\</span>
+  <span class="nt">--host</span><span class="o">=</span>worker-1.swift.internal <span class="nt">--option</span><span class="o">=</span><span class="s2">"StrictHostKeyChecking=no"</span> <span class="se">\</span>
+  <span class="nt">--user</span><span class="o">=</span><span class="nv">$USER</span> <span class="nt">--inline</span> <span class="s1">'uptime'</span>
+</code></pre></div></div>
+
+<p>Test that you can execute a simple command on all hosts:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/nodes
+
+<span class="c"># for all nodes</span>
+<span class="nb">printf</span> <span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span> worker-<span class="o">{</span>1..2<span class="o">}</span> <span class="o">&gt;</span> hosts
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pssh <span class="se">\</span>
+  <span class="nt">--hosts</span><span class="o">=</span><span class="nv">$HOME</span>/nodes/hosts <span class="nt">--option</span><span class="o">=</span><span class="s2">"StrictHostKeyChecking=no"</span> <span class="se">\</span>
+  <span class="nt">--user</span><span class="o">=</span><span class="nv">$USER</span> <span class="s1">'echo hi'</span>
+</code></pre></div></div>
+
+<h4 id="add-nodes-to-swarm">Add Nodes to Swarm</h4>
+
+<p>Run this on the manager machine. Copy the join command from the output:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker swarm join-token worker
+</code></pre></div></div>
+
+<p>Paste the join command which should look similar to this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker swarm <span class="nb">join</span> <span class="nt">--token</span> &lt;very-long-token&gt; &lt;ip-address&gt;:2377
+</code></pre></div></div>
+
+<p>Use <code class="language-plaintext highlighter-rouge">pssh</code> (parallel ssh) to execute the join command on large number of nodes:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pssh <span class="nt">--hosts</span><span class="o">=</span><span class="nv">$HOME</span>/nodes/hosts <span class="nt">--inline</span> <span class="se">\</span>
+<span class="s1">'docker swarm join --token &lt;very-long-token&gt; &lt;ip-address&gt;:2377'</span>    
+</code></pre></div></div>
+
+<p>Example (but note that your token will be different):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pssh <span class="nt">--hosts</span><span class="o">=</span><span class="nv">$HOME</span>/nodes/hosts <span class="nt">--option</span><span class="o">=</span><span class="s2">"StrictHostKeyChecking=no"</span> <span class="nt">--inline</span> <span class="se">\</span>
+<span class="s1">'docker swarm join --token SWMTKN-1-0nvgk6xtg0lcdcrb7a4mow6978g5tftb4wu5big52bbcpajq82-bq2j7uh6kos1s192h42a853so 10.0.10.175:2377'</span>
+</code></pre></div></div>
+
+<p>Verify:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker node <span class="nb">ls</span>
+</code></pre></div></div>
+
+<p>Congratulations!</p>
+
+<p>We are done with <code class="language-plaintext highlighter-rouge">Step 7. Docker Swarm</code>.</p>
+
+<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Step 8. Cleanup</a></p>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

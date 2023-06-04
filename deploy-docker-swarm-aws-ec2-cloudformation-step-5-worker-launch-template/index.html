@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<title>Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 5 - Worker Launch Template | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Swift Software Group">
+<meta name="generator" content="Jekyll v4.2.2">
+<link rel="canonical" href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template/">
+
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-37864402-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-37864402-1');
+</script>
+
+</head>
+
+
+
+
+<header>
+  <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
+  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template/">Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 5 - Worker Launch Template</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
+</header>
+
+  <p>In this step we will create the a launch templat for the  EC2 Worker instances.</p>
+
+<p>This post is part of a thread that includes these steps:</p>
+
+<ol>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
+  <li>Worker Launch Template (this post)</li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
+</ol>
+
+<h1 id="worker-launch-template">Worker Launch Template</h1>
+
+<p>Start in the project directory:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/swift-aws-ec2-swarm
+</code></pre></div></div>
+
+<h3 id="cloudformation-template">CloudFormation Template</h3>
+
+<p>Create a folder <code class="language-plaintext highlighter-rouge">ec2-worker-lt</code> and a <code class="language-plaintext highlighter-rouge">ec2-worker-lt.yml</code> file in it.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ec2-worker-lt
+<span class="nb">touch </span>ec2-worker-lt/ec2-worker-lt.yml
+nano ec2-worker-lt/ec2-worker-lt.yml
+</code></pre></div></div>
+
+<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">ec2-worker-lt.yml</code>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Description</span><span class="pi">:</span> <span class="s">Launch template for Docker Swarm worker instances</span>
+
+<span class="na">Parameters</span><span class="pi">:</span>
+  <span class="na">LatestAmiId</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::SSM::Parameter::Value&lt;AWS::EC2::Image::Id&gt;</span>
+    <span class="na">Default</span><span class="pi">:</span> <span class="s">/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2</span>
+
+  <span class="na">HostedZoneId</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::Route53::HostedZone::Id</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">ID of the Route53 HostedZone</span>
+
+  <span class="na">HomeVolumeId</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::Volume::Id</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">ID of the volume to be mounted as /home</span>
+
+<span class="na">Resources</span><span class="pi">:</span>
+  <span class="na">LaunchTemplate</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::LaunchTemplate</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">LaunchTemplateData</span><span class="pi">:</span>
+        <span class="na">ImageId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">LatestAmiId</span>
+
+        <span class="na">BlockDeviceMappings</span><span class="pi">:</span> 
+          <span class="c1"># Docker volume</span>
+          <span class="pi">-</span> <span class="na">DeviceName</span><span class="pi">:</span> <span class="s">/dev/sdi</span>
+            <span class="na">Ebs</span><span class="pi">:</span> 
+              <span class="na">Encrypted</span><span class="pi">:</span> <span class="no">true</span>
+              <span class="na">DeleteOnTermination</span><span class="pi">:</span> <span class="no">true</span>
+              <span class="na">VolumeSize</span><span class="pi">:</span> <span class="m">100</span>
+              <span class="na">VolumeType</span><span class="pi">:</span> <span class="s">gp2</span>          
+
+        <span class="na">UserData</span><span class="pi">:</span>
+          <span class="s">Fn::Base64:</span>
+            <span class="s">!Sub |</span>
+              <span class="s">#!/bin/bash -x</span>
+
+              <span class="s"># !!! DO NOT ENABLE THIS !!! Use in case of boot problems only</span>
+              <span class="s"># usermod --password $(echo test123 | openssl passwd -1 -stdin) ec2-user</span>
+
+              <span class="s"># see</span><span class="err">:</span> <span class="s">https://aws.amazon.com/premiumsupport/knowledge-center/ec2-linux-log-user-data/</span>
+              <span class="s">exec &gt; &gt;(tee /var/log/user-data.log|logger -t user-data -s 2&gt;/dev/console) 2&gt;&amp;1</span>
+
+              <span class="s">EC2_INSTANCE_ID=$(ec2-metadata --instance-id | awk '{print $2}')</span>
+              <span class="s">EC2_REGION=$(ec2-metadata --availability-zone | awk '{print $2}' | sed 's/.$//')</span>
+
+              <span class="s">## Timezone</span>
+              <span class="s"># see</span><span class="err">:</span> <span class="s">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html#change_time_zone</span>
+              <span class="s">timedatectl set-timezone America/Los_Angeles</span>
+
+              <span class="s">## DNS</span>
+              <span class="s">PRIVATE_IP=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)</span>
+              <span class="s">DNS_NAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$EC2_INSTANCE_ID" "Name=key,Values=Name" --region $EC2_REGION --output=text | cut -f5)</span>
+              <span class="s">aws route53 change-resource-record-sets --hosted-zone-id ${HostedZoneId} --change-batch '{</span>
+                <span class="s">"Changes"</span><span class="err">:</span> <span class="pi">[</span>
+                  <span class="pi">{</span>
+                    <span class="s2">"</span><span class="s">Action"</span><span class="pi">:</span> <span class="s2">"</span><span class="s">UPSERT"</span><span class="pi">,</span>
+                    <span class="s2">"</span><span class="s">ResourceRecordSet"</span><span class="pi">:</span> <span class="pi">{</span>
+                      <span class="s2">"</span><span class="s">Name"</span><span class="pi">:</span> <span class="s2">"</span><span class="s">'$DNS_NAME'.swift.internal."</span><span class="pi">,</span>
+                      <span class="s2">"</span><span class="s">Type"</span><span class="pi">:</span> <span class="s2">"</span><span class="s">A"</span><span class="pi">,</span>
+                      <span class="s2">"</span><span class="s">TTL"</span><span class="pi">:</span> <span class="nv">60</span><span class="pi">,</span>
+                      <span class="s2">"</span><span class="s">ResourceRecords"</span><span class="pi">:</span> <span class="pi">[</span>
+                        <span class="pi">{</span>
+                          <span class="s2">"</span><span class="s">Value"</span><span class="pi">:</span> <span class="s2">"</span><span class="s">'$PRIVATE_IP'"</span>
+                        <span class="pi">}</span>
+                      <span class="pi">]</span>
+                    <span class="pi">}</span>
+                  <span class="pi">}</span>
+                <span class="pi">]</span>
+              <span class="err">}</span><span class="s1">'</span>
+
+              <span class="s">#</span><span class="nv"> </span><span class="s">Add</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">.swift.internal</span><span class="nv"> </span><span class="s">domain</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">list</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">searchable</span><span class="nv"> </span><span class="s">domains</span>
+              <span class="s">echo</span><span class="nv"> </span><span class="s">search</span><span class="nv"> </span><span class="s">swift.internal</span><span class="nv"> </span><span class="s">&gt;&gt;</span><span class="nv"> </span><span class="s">/etc/resolv.conf</span>
+
+              <span class="s">#</span><span class="nv"> </span><span class="s">Amazon</span><span class="nv"> </span><span class="s">Linux</span><span class="nv"> </span><span class="s">specific</span><span class="nv"> </span><span class="s">hack</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">preserve</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">domain</span><span class="nv"> </span><span class="s">search</span><span class="nv"> </span><span class="s">config</span><span class="nv"> </span><span class="s">between</span><span class="nv"> </span><span class="s">reboots</span>
+              <span class="s">echo</span><span class="nv"> </span><span class="s">'prepend domain-search "swift.internal";' &gt;&gt; /etc/dhcp/dhclient.conf</span>
+
+              <span class="s">## Hostname</span>
+              <span class="s"># Change hostname to the DNS NAME, which in turn is the name tag of the instance</span> 
+              <span class="s">hostnamectl set-hostname $DNS_NAME.swift.internal</span>
+
+              <span class="s"># Amazon EC2 specific hack to preserve hostname between reboots</span>
+              <span class="s">echo 'preserve_hostname</span><span class="err">:</span> <span class="no">true</span><span class="s">' &gt;&gt; /etc/cloud/cloud.cfg</span>
+
+
+              <span class="s">## Attach the EBS volumes</span>
+              <span class="s"># see</span><span class="err">:</span> <span class="s">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html</span>
+
+              <span class="s"># Home</span>
+              <span class="s">aws ec2 attach-volume --region $EC2_REGION --instance-id $EC2_INSTANCE_ID --volume-id ${HomeVolumeId} --device /dev/sdh</span>
+              <span class="s">while [ ! -e /dev/sdh ]; do</span> 
+                <span class="s">echo Waiting for Home EBS volume to attach</span>
+                <span class="s">sleep </span><span class="m">30</span>
+              <span class="s">done</span>
+
+              <span class="s"># Docker</span>
+              <span class="s"># Docker volume is already attached as /dev/sdi</span>
+
+
+              <span class="s">## Format EBS volumes</span>
+              <span class="s"># Check if formatted and if not, format using ext4</span>
+
+              <span class="s"># Home</span>
+              <span class="s"># Home volume is shared between manager and worker nodes</span>
+
+              <span class="s"># Docker</span>
+              <span class="s"># Docker volume is not shared. Each instance has its own Docker volume</span> 
+              <span class="s">device_fs_type=`file -sL /dev/sdi`</span>
+              <span class="s">if [[ $device_fs_type != *"ext4"* ]]; then</span>
+                  <span class="s">mkfs --type ext4 /dev/sdi</span>
+              <span class="s">fi</span>              
+
+
+              <span class="s">## Mount EBS file systems</span>
+              
+              <span class="s"># home</span>
+              <span class="s">mkdir -p /ebs/home</span>
+              <span class="s">echo '/dev/sdh /ebs/home ext4 defaults,nofail 0 2' | tee -a /etc/fstab</span>
+              
+              <span class="s"># docker</span>
+              <span class="s">mkdir -p /ebs/docker</span>
+              <span class="s">echo '/dev/sdi /ebs/docker ext4 defaults,nofail 0 2' | tee -a /etc/fstab</span>
+              
+              <span class="s">mount --all</span>
+
+
+              <span class="s">## Users</span>
+
+              <span class="s"># add users</span>
+              <span class="s"># runner</span>
+              <span class="s">groupadd --gid 200000 runner</span> 
+              <span class="s">useradd --gid runner --uid 200000  runner</span>
+
+              <span class="s"># worker</span>
+              <span class="s">useradd --create-home --home-dir /ebs/home/worker worker</span>
+
+              <span class="s"># install software</span>
+              <span class="s">yum update -y</span>
+              <span class="s">yum install docker git jq htop -y</span>
+
+
+              <span class="s">## Docker config</span>
+              <span class="s">#see</span><span class="err">:</span> <span class="s">https://docs.docker.com/engine/security/userns-remap/</span>
+
+              <span class="s"># - Use `/ebs/docker` as data-root (for containers and volumes)</span>
+              <span class="s"># - Map container `root` user to host `runner` user</span>             
+              <span class="s">cat &gt; /etc/docker/daemon.json &lt;&lt;EOF</span>
+              <span class="s">{</span>
+                <span class="s">"data-root"</span><span class="err">:</span> <span class="s2">"</span><span class="s">/ebs/docker"</span><span class="err">,</span>
+                <span class="s2">"</span><span class="s">userns-remap"</span><span class="err">:</span> <span class="s2">"</span><span class="s">runner"</span>
+              <span class="err">}</span>            
+              <span class="s">EOF</span>
+
+              <span class="s"># additional config needed for the Docker user namespace mapping</span>
+              <span class="s">touch /etc/subuid /etc/subgid</span>
+              <span class="s">echo "runner:$(id -u runner):65536" | sudo tee -a /etc/subuid</span>
+              <span class="s">echo "runner:$(id -g runner):65536" | sudo tee -a /etc/subgid</span>
+
+              <span class="s"># Enable Docker to run at boot and start it</span>
+              <span class="s">systemctl enable docker</span>
+              <span class="s">systemctl start docker</span>
+
+              <span class="s"># add users to the docker group</span>
+              <span class="s">usermod --append --groups docker ec2-user</span>
+              <span class="s">usermod --append --groups docker worker</span>
+
+              <span class="s"># download and install docker compose (optional)</span>
+              <span class="s"># platform=$(uname -s)-$(uname -m)</span>
+              <span class="s"># wget https://github.com/docker/compose/releases/latest/download/docker-compose-$platform</span> 
+              <span class="s"># mv docker-compose-$platform /usr/local/bin/docker-compose</span>
+              <span class="s"># chmod -v +x /usr/local/bin/docker-compose</span> 
+
+              <span class="s">## Install AWS CLI v2</span>
+              <span class="s">curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"</span>
+              <span class="s">unzip awscliv2.zip</span>
+              <span class="s">./aws/install</span>
+
+<span class="na">Outputs</span><span class="pi">:</span>
+  <span class="na">LaunchTemplateId</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">Launch template ID</span>
+    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">LaunchTemplate</span>
+</code></pre></div></div>
+
+<h2 id="scripts">Scripts</h2>
+
+<p>Add a script <code class="language-plaintext highlighter-rouge">deploy-ec2-worker-lt.sh</code> and paste this code in it:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+<span class="c"># switch to parent directory</span>
+<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
+<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
+
+<span class="nb">source </span>config/names.sh
+
+<span class="nb">echo
+echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_ec2_worker_lt</span><span class="s2"> stack via CloudFormation:"</span>
+<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
+<span class="nb">echo
+
+</span><span class="nv">hosted_zone_id</span><span class="o">=</span><span class="si">$(</span>aws cloudformation describe-stacks <span class="nt">--stack-name</span> <span class="nv">$stack_vpc</span> | jq <span class="nt">-r</span> <span class="s1">'.Stacks[0].Outputs[] | select(.OutputKey == "HostedZoneId") | .OutputValue'</span><span class="si">)</span>
+
+<span class="c"># home volume is shared between manager and worker(s)</span>
+<span class="nv">home_volume_id</span><span class="o">=</span><span class="si">$(</span>aws cloudformation describe-stacks <span class="nt">--stack-name</span> <span class="nv">$stack_ebs</span> | jq <span class="nt">-r</span> <span class="s1">'.Stacks[0].Outputs[] | select(.OutputKey == "HomeVolumeId") | .OutputValue'</span><span class="si">)</span>
+
+<span class="nb">set</span> <span class="nt">-x</span>
+
+aws cloudformation deploy <span class="se">\</span>
+    <span class="nt">--template-file</span> ec2-worker-lt/ec2-worker-lt.yml <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_ec2_worker_lt</span> <span class="se">\</span>
+    <span class="nt">--parameter-overrides</span> <span class="se">\</span>
+        <span class="nv">HostedZoneId</span><span class="o">=</span><span class="nv">$hosted_zone_id</span> <span class="se">\</span>
+        <span class="nv">HomeVolumeId</span><span class="o">=</span><span class="nv">$home_volume_id</span>
+
+<span class="nb">popd</span>
+</code></pre></div></div>
+
+<p>Let’s also add a clean up script <code class="language-plaintext highlighter-rouge">rm-ec2-worker-lt.sh</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+<span class="c"># switch to parent directory</span>
+<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
+<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
+
+<span class="nb">source </span>config/names.sh
+
+<span class="nb">echo
+echo</span> <span class="s2">"Destroying </span><span class="nv">$stack_ec2_worker_lt</span><span class="s2"> stack via CloudFormation:"</span>
+<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
+<span class="nb">echo
+
+set</span> <span class="nt">-x</span>
+
+aws cloudformation delete-stack <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_ec2_worker_lt</span>
+
+aws cloudformation <span class="nb">wait </span>stack-delete-complete <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_ec2_worker_lt</span>
+
+<span class="nb">popd</span>
+</code></pre></div></div>
+
+<p>Make the scripts executable:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x ec2-worker-lt/deploy-ec2-worker-lt.sh 
+<span class="nb">chmod</span> +x ec2-worker-lt/rm-ec2-worker-lt.sh
+</code></pre></div></div>
+
+<h3 id="deploy">Deploy</h3>
+
+<p>Finally let’s run the “deploy” script to create the Worker launch template:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./ec2-worker-lt/deploy-ec2-worker-lt.sh
+</code></pre></div></div>
+
+<p>You should see output similar to this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-ec2-worker-lt stack via CloudFormation:
+https://us-west-2.console.aws.amazon.com/cloudformation/home
+
++ aws cloudformation deploy <span class="nt">--profile</span> swift <span class="nt">--template-file</span> ec2-worker/ec2-worker-lt.yml <span class="nt">--stack-name</span> swift-swarm-ec2-worker-lt <span class="nt">--parameter-overrides</span> <span class="nv">HostedZoneId</span><span class="o">=</span>Z07362313E0WMP6Y4DBYT <span class="nv">HomeVolumeId</span><span class="o">=</span>vol-08b4fb87713440e48
+
+Waiting <span class="k">for </span>changeset to be created..
+Waiting <span class="k">for </span>stack create/update to <span class="nb">complete
+</span>Successfully created/updated stack - swift-swarm-ec2-worker-lt
+</code></pre></div></div>
+
+<p>At this point your project structure should look like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.
+├── config
+│   └── names.sh
+├── ebs
+│   ├── deploy-ebs.sh
+│   ├── ebs.yml
+│   └── rm-ebs.sh
+├── ec2-manager
+│   ├── deploy-ec2-manager.sh
+│   ├── ec2-manager.yml
+│   └── rm-ec2-manager.sh
+├── ec2-worker-lt
+│   ├── deploy-ec2-worker-lt.sh
+│   ├── ec2-worker-lt.yml
+│   └── rm-ec2-worker-lt.sh
+├── iam
+│   ├── deploy-iam-manager.sh
+│   ├── deploy-iam-worker.sh
+│   ├── iam-manager.yml
+│   ├── iam-worker.yml
+│   ├── rm-iam-manager.sh
+│   └── rm-iam-worker.sh
+├── ssh
+│   └── ssh-manager.sh
+└── vpc
+    ├── deploy-vpc.sh
+    ├── rm-vpc.sh
+    └── vpc.yml
+</code></pre></div></div>
+
+<p>Congratulations!</p>
+
+<p>We are done with <code class="language-plaintext highlighter-rouge">Step 5. Worker Launch Template</code>.</p>
+
+<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Step 6. Worker Instances</a></p>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

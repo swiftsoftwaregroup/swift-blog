@@ -46,110 +46,168 @@
   
   <article>
     <header>
-  <h1><a href="/launch-ecs-container-aws-cli-step-1-network-setup/">Launch ECS container using AWS CLI - Step 1 - Network Setup</a></h1><time datetime="2021-02-06T00:00:00-08:00">February 06, 2021</time>
+  <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles/">Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 3 - Roles</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
+</header>
+
+    <p>In this step we create the IAM roles and policies needed by the EC2 instances.</p>
+
+<p>This post is part of a thread that includes these steps:</p>
+
+<ol>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
+  <li>Roles (this post)</li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
+</ol>
+
+    <div class="more"><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage/">Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 2 - Storage</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
+</header>
+
+    <p>In this step we will create a shared EBS volume which will be used as a home directory for the Linux users.</p>
+
+<p>This post is part of a thread that includes these steps:</p>
+
+<ol>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
+  <li>Storage (this post)</li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
+</ol>
+
+    <div class="more"><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup/">Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 1 - Network Setup</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
 </header>
 
     <p>Setup network infrastructure including new VPC (Virtual Private Cloud), public and private subnets, internet gateway, security group, and ssh access.</p>
 
-<p>This is part of a multi-post thread involving these steps:</p>
+<p>This post is part of a thread that includes these steps:</p>
 
 <ol>
   <li>Network Setup (this post)</li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
+</ol>
+
+    <div class="more"><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/launch-ecs-container-ecs-cli/">Launch ECS container using AWS ECS CLI</a></h1><time datetime="2021-06-20T00:00:00-07:00">June 20, 2021</time>
+</header>
+
+    <p>The Amazon ECS Command Line Interface (CLI) is a command line tool for Amazon Elastic Container Service (Amazon ECS) that provides high-level commands to simplify creating, updating, and monitoring clusters and tasks from a local development environment.</p>
+
+    <div class="more"><a href="/launch-ecs-container-ecs-cli/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/launch-ecs-container-aws-cli-step-5-cleanup/">Launch ECS container using AWS CLI - Step 5 - Cleanup</a></h1><time datetime="2021-05-12T00:00:00-07:00">May 12, 2021</time>
+</header>
+
+    <p>Delete all the resources that were created in this series.</p>
+
+<p>This is the last part of a multi-post thread involving these steps:</p>
+
+<ol>
+  <li><a href="/launch-ecs-container-aws-cli-step-1-network-setup">Network Setup</a></li>
   <li><a href="/launch-ecs-container-aws-cli-step-2-launch-ec2-instance">Launch EC2 Instance</a></li>
+  <li><a href="/launch-ecs-container-aws-cli-step-3-create-docker-image">Create Docker Image</a></li>
+  <li><a href="/launch-ecs-container-aws-cli-step-4-create-service">Create Service</a></li>
+  <li>Cleanup (this post)</li>
+</ol>
+
+    <div class="more"><a href="/launch-ecs-container-aws-cli-step-5-cleanup/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/launch-ecs-container-aws-cli-step-4-create-service/">Launch ECS container using AWS CLI - Step 4 - Create Service</a></h1><time datetime="2021-05-11T00:00:00-07:00">May 11, 2021</time>
+</header>
+
+    <p>Setup an ECS container repository, create a Docker image, and upload the Docker image to the repository.</p>
+
+<p>This is part of a multi-post thread involving these steps:</p>
+
+<ol>
+  <li><a href="/launch-ecs-container-aws-cli-step-1-network-setup">Network Setup</a></li>
+  <li><a href="/launch-ecs-container-aws-cli-step-2-launch-ec2-instance">Launch EC2 Instance</a></li>
+  <li><a href="/launch-ecs-container-aws-cli-step-3-create-docker-image">Create Docker Image</a></li>
+  <li>Create Service (this post)</li>
+  <li><a href="/launch-ecs-container-aws-cli-step-5-cleanup">Cleanup</a></li>
+</ol>
+
+    <div class="more"><a href="/launch-ecs-container-aws-cli-step-4-create-service/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/launch-ecs-container-aws-cli-step-3-create-docker-image/">Launch ECS container using AWS CLI - Step 3 - Create Docker Image</a></h1><time datetime="2021-04-01T00:00:00-07:00">April 01, 2021</time>
+</header>
+
+    <p>Setup an ECS container repository, create a Docker image, and upload the Docker image to the repository.</p>
+
+<p>This is part of a multi-post thread involving these steps:</p>
+
+<ol>
+  <li><a href="/launch-ecs-container-aws-cli-step-1-network-setup">Network Setup</a></li>
+  <li><a href="/launch-ecs-container-aws-cli-step-2-launch-ec2-instance">Launch EC2 Instance</a></li>
+  <li>Create Docker Image (this post)</li>
+  <li><a href="/launch-ecs-container-aws-cli-step-4-create-service">Create Service</a></li>
+  <li><a href="/launch-ecs-container-aws-cli-step-5-cleanup">Cleanup</a></li>
+</ol>
+
+    <div class="more"><a href="/launch-ecs-container-aws-cli-step-3-create-docker-image/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/launch-ecs-container-aws-cli-step-2-launch-ec2-instance/">Launch ECS container using AWS CLI - Step 2 - Launch EC2 Instance</a></h1><time datetime="2021-03-02T00:00:00-08:00">March 02, 2021</time>
+</header>
+
+    <p>Create an “EC2 Contaner Service” (ECS) cluster with one EC2 instance. This will be used to host ECS tasks / container instances.</p>
+
+<p>This is part of a multi-post thread involving these steps:</p>
+
+<ol>
+  <li><a href="/launch-ecs-container-aws-cli-step-1-network-setup">Network Setup</a></li>
+  <li>Launch EC2 Instance (this post)</li>
   <li><a href="/launch-ecs-container-aws-cli-step-3-create-docker-image">Create Docker Image</a></li>
   <li><a href="/launch-ecs-container-aws-cli-step-4-create-service">Create Service</a></li>
   <li><a href="/launch-ecs-container-aws-cli-step-5-cleanup">Cleanup</a></li>
 </ol>
 
-    <div class="more"><a href="/launch-ecs-container-aws-cli-step-1-network-setup/">read more</a></div>
-  </article>
-
-  <article>
-    <header>
-  <h1><a href="/create-aws-ec2-instance-aws-cli/">Create an AWS EC2 instance with the AWS CLI</a></h1><time datetime="2021-01-22T00:00:00-08:00">January 22, 2021</time>
-</header>
-
-    <p>Make sure you do this setup first:</p>
-
-<ol>
-  <li><a href="/setup-macos-for-aws-cloud-devops">Setup macOS for AWS Cloud DevOps</a></li>
-  <li><a href="/aws-authentication">AWS Authentication</a></li>
-</ol>
-
-<p>Steps:</p>
-
-<ol>
-  <li>Launch an AWS EC2 instance (this post)</li>
-</ol>
-
-    <div class="more"><a href="/create-aws-ec2-instance-aws-cli/">read more</a></div>
-  </article>
-
-  <article>
-    <header>
-  <h1><a href="/aws-authentication/">AWS Authentication</a></h1><time datetime="2020-12-30T00:00:00-08:00">December 30, 2020</time>
-</header>
-
-    <p>Set up your AWS credentials. For more information, see <a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html">Configuration and credential file settings</a>.</p>
-
-    <div class="more"><a href="/aws-authentication/">read more</a></div>
-  </article>
-
-  <article>
-    <header>
-  <h1><a href="/setup-macos-for-aws-cloud-devops/">Setup macOS for AWS Cloud DevOps</a></h1><time datetime="2020-11-15T00:00:00-08:00">November 15, 2020</time>
-</header>
-
-    <p>Step-by-step AWS DevOps environment setup for macOS.</p>
-
-    <div class="more"><a href="/setup-macos-for-aws-cloud-devops/">read more</a></div>
-  </article>
-
-  <article>
-    <header>
-  <h1><a href="/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services/">Signing in or out of Chrome signs you in or out of Google web services </a></h1><time datetime="2018-09-25T00:00:00-07:00">September 25, 2018</time>
-</header>
-
-    <p>Chrome 69 was released to users on September 5th, 2018. Besides the different look and feel one other annoying change is that Chrome now logs you automatically into Google services like Gmail with the same account that you use for browser syncing. Previously, users were allowed to keep those logins separate. To disable the forced login, navigate to <a href="chrome://flags/#account-consistency">chrome://flags/#account-consistency</a>. Then set the option labeled, <code class="language-plaintext highlighter-rouge">Identity consistency between browser and cookie jar</code> to <code class="language-plaintext highlighter-rouge">Disabled</code> and restart your browser.</p>
-
-    <div class="more"><a href="/signing-in-or-out-of-chrome-signs-you-in-or-out-of-google-web-services/">read more</a></div>
-  </article>
-
-  <article>
-    <header>
-  <h1><a href="/how-to-streamline-working-relationships-with-multiple-parties/">How to Streamline Working Relationships with Multiple Parties</a></h1><time datetime="2018-09-07T00:00:00-07:00">September 07, 2018</time>
-</header>
-
-    <p>If you want to facilitate a smooth and efficient working relationship, all relevant parties must first agree on a few critical aspects of the project. The ability to communicate ideas is integral to the creation of any stable working relationship. Before starting a joint project, discuss these five elements with each party.</p>
-
-    <div class="more"><a href="/how-to-streamline-working-relationships-with-multiple-parties/">read more</a></div>
-  </article>
-
-  <article>
-    <header>
-  <h1><a href="/3-ways-blockchain-technology-transforming-world/">3 Ways Blockchain Technology is Transforming the World of Advertising</a></h1><time datetime="2018-09-05T16:26:00-07:00">September 05, 2018</time>
-</header>
-
-    <p>If you work as an investment advisor or are part of the banking industry, you already know how blockchain technology is transforming your workplace and changing the rules of the game.</p>
-
-    <div class="more"><a href="/3-ways-blockchain-technology-transforming-world/">read more</a></div>
-  </article>
-
-  <article>
-    <header>
-  <h1><a href="/installing-an-older-version-of-xcode-alongside-xcode-9/">Installing an Older Version of Xcode Alongside Xcode 9</a></h1><time datetime="2017-09-23T00:00:00-07:00">September 23, 2017</time>
-</header>
-
-    <p>Today I started working on updating <a href="https://itunes.apple.com/us/app/apport/id1140306404?mt=8">Apport</a> code from Swift 2 to Swift 4. So I got everything ready, made a fresh cup of coffee and opened the project workspace in Xcode 9. And then I got this message:</p>
-
-    <div class="more"><a href="/installing-an-older-version-of-xcode-alongside-xcode-9/">read more</a></div>
+    <div class="more"><a href="/launch-ecs-container-aws-cli-step-2-launch-ec2-instance/">read more</a></div>
   </article>
 
 
 
   <footer>
     <a href="/">« newer posts</a>
-    <span>page 2 of 10</span>
+    <span>page 2 of 11</span>
     <a href="/page3">older posts »</a>
   </footer>
 
