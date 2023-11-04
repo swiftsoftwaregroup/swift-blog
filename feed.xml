@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-06-04T12:41:21-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Configure Ruby Environment on Windows</title><link href="/configure-ruby-environment-windows/" rel="alternate" type="text/html" title="Configure Ruby Environment on Windows" /><published>2023-05-27T00:00:00-07:00</published><updated>2023-05-27T00:00:00-07:00</updated><id>/configure-ruby-environment-windows</id><content type="html" xml:base="/configure-ruby-environment-windows/"><![CDATA[<p>This is a simple guide for configuring a Ruby 2 environment on Windows 11. All scripts are PowerShell.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-11-03T21:10:26-07:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Configure Ruby Environment on Windows</title><link href="/configure-ruby-environment-windows/" rel="alternate" type="text/html" title="Configure Ruby Environment on Windows" /><published>2023-05-27T00:00:00-07:00</published><updated>2023-05-27T00:00:00-07:00</updated><id>/configure-ruby-environment-windows</id><content type="html" xml:base="/configure-ruby-environment-windows/"><![CDATA[<p>This is a simple guide for configuring a Ruby 2 environment on Windows 11. All scripts are PowerShell.</p>
 
 <h2 id="powershell">PowerShell</h2>
 
@@ -115,7 +115,7 @@
 </span><span class="n">ridk</span><span class="w"> </span><span class="nx">install</span><span class="w">
 </span></code></pre></div></div>
 
-<p>A list of the available MSYS2 versions is available <a href="https://repo.msys2.org/distrib/x86_64/">here</a>.</p>]]></content><author><name>Swift Software Group</name></author><category term="development" /><category term="ruby" /><category term="windows" /><summary type="html"><![CDATA[This is a simple guide for configuring a Ruby 2 environment on Windows 11. All scripts are PowerShell. PowerShell This will allow you to execute PowerShell scripts locally on your machine. In PowerShell as Administrator: Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine]]></summary></entry><entry><title type="html">Run MongoDB with Podman</title><link href="/run-mongodb-with-podman/" rel="alternate" type="text/html" title="Run MongoDB with Podman" /><published>2023-05-23T00:00:00-07:00</published><updated>2023-05-23T00:00:00-07:00</updated><id>/run-mongodb-with-podman</id><content type="html" xml:base="/run-mongodb-with-podman/"><![CDATA[<p>Before you start install <a href="/setup-podman-macos">Podman</a>.</p>
+<p>A list of the available MSYS2 versions is available <a href="https://repo.msys2.org/distrib/x86_64/">here</a>.</p>]]></content><author><name>Swift Software Group</name></author><category term="ruby" /><category term="windows" /><summary type="html"><![CDATA[This is a simple guide for configuring a Ruby 2 environment on Windows 11. All scripts are PowerShell. PowerShell This will allow you to execute PowerShell scripts locally on your machine. In PowerShell as Administrator: Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine]]></summary></entry><entry><title type="html">Run MongoDB with Podman</title><link href="/run-mongodb-with-podman/" rel="alternate" type="text/html" title="Run MongoDB with Podman" /><published>2023-05-23T00:00:00-07:00</published><updated>2023-05-23T00:00:00-07:00</updated><id>/run-mongodb-with-podman</id><content type="html" xml:base="/run-mongodb-with-podman/"><![CDATA[<p>Before you start install <a href="/setup-podman-macos">Podman</a>.</p>
 
 <h2 id="set-machine-to-rootful">Set machine to <code class="language-plaintext highlighter-rouge">rootful</code></h2>
 
@@ -180,7 +180,7 @@ podman <span class="nb">rm </span>mongo-dev
     <span class="nt">--publish</span> 27017:27017 <span class="se">\</span>
     <span class="nt">--volume</span> ~/podman/mongo/data/db:/data/db <span class="se">\</span>
     mongo <span class="nt">--auth</span>
-</code></pre></div></div>]]></content><author><name>Swift Software Group</name></author><category term="development" /><category term="podman" /><category term="mongodb" /><summary type="html"><![CDATA[Before you start install Podman. Set machine to rootful podman machine stop podman machine set --rootful podman machine start]]></summary></entry><entry><title type="html">Setup Podman on macOS</title><link href="/setup-podman-macos/" rel="alternate" type="text/html" title="Setup Podman on macOS" /><published>2023-05-22T00:00:00-07:00</published><updated>2023-05-22T00:00:00-07:00</updated><id>/setup-podman-macos</id><content type="html" xml:base="/setup-podman-macos/"><![CDATA[<p>Podman is a utility that can be used to create and maintain containers. This post will teach you how to set up Podman on macOS and perform some basic commands.</p>
+</code></pre></div></div>]]></content><author><name>Swift Software Group</name></author><category term="podman" /><category term="mongodb" /><summary type="html"><![CDATA[Before you start install Podman. Set machine to rootful podman machine stop podman machine set --rootful podman machine start]]></summary></entry><entry><title type="html">Setup Podman on macOS</title><link href="/setup-podman-macos/" rel="alternate" type="text/html" title="Setup Podman on macOS" /><published>2023-05-22T00:00:00-07:00</published><updated>2023-05-22T00:00:00-07:00</updated><id>/setup-podman-macos</id><content type="html" xml:base="/setup-podman-macos/"><![CDATA[<p>Podman is a utility that can be used to create and maintain containers. This post will teach you how to set up Podman on macOS and perform some basic commands.</p>
 
 <h2 id="preparation">Preparation</h2>
 
@@ -248,7 +248,7 @@ podman-machine-default*  qemu        About a minute ago  About a minute ago  2  
 <p>To start a podman machine automatically at login, also install the Podman Desktop:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install</span> <span class="nt">--cask</span> podman-desktop
-</code></pre></div></div>]]></content><author><name>Swift Software Group</name></author><category term="development" /><category term="podman" /><summary type="html"><![CDATA[Podman is a utility that can be used to create and maintain containers. This post will teach you how to set up Podman on macOS and perform some basic commands.]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 7 - Docker Swarm</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 7 - Docker Swarm" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm/"><![CDATA[<p>In this step we will create a Docker Swarm cluster.</p>
+</code></pre></div></div>]]></content><author><name>Swift Software Group</name></author><category term="podman" /><category term="macos" /><summary type="html"><![CDATA[Podman is a utility that can be used to create and maintain containers. This post will teach you how to set up Podman on macOS and perform some basic commands.]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 7 - Docker Swarm</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 7 - Docker Swarm" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm/"><![CDATA[<p>In this step we will create a Docker Swarm cluster.</p>
 
 <p>This post is part of a thread that includes these steps:</p>
 
@@ -400,7 +400,7 @@ pip3 <span class="nb">install</span> <span class="nt">--user</span> <span class=
 
 <p>We are done with <code class="language-plaintext highlighter-rouge">Step 7. Docker Swarm</code>.</p>
 
-<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Step 8. Cleanup</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloudfront" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we will create a Docker Swarm cluster. This post is part of a thread that includes these steps: Network Setup Storage Roles Manager Instance Worker Launch Template Worker Instances Docker Swarm (this post) Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 6 - Worker Instances</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 6 - Worker Instances" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances/"><![CDATA[<p>In this step we will launch the Worker EC2 instances.</p>
+<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Step 8. Cleanup</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we will create a Docker Swarm cluster. This post is part of a thread that includes these steps: Network Setup Storage Roles Manager Instance Worker Launch Template Worker Instances Docker Swarm (this post) Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 6 - Worker Instances</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 6 - Worker Instances" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances/"><![CDATA[<p>In this step we will launch the Worker EC2 instances.</p>
 
 <p>This post is part of a thread that includes these steps:</p>
 
@@ -422,7 +422,7 @@ pip3 <span class="nb">install</span> <span class="nt">--user</span> <span class=
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/swift-aws-ec2-swarm
 </code></pre></div></div>
 
-<h3 id="cloudformation-template">CloudFormation Template</h3>
+<h3 id="cloud-formation-template">cloud-formation Template</h3>
 
 <p>Create a folder <code class="language-plaintext highlighter-rouge">ec2-worker</code> and a <code class="language-plaintext highlighter-rouge">ec2-worker.yml</code> file in it.</p>
 
@@ -479,7 +479,7 @@ nano ec2-worker/ec2-worker.yml
         <span class="na">LaunchTemplateId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">LaunchTemplateId</span>
         <span class="na">Version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">1"</span>
 
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Name"</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">worker-1"</span>
 
@@ -501,7 +501,7 @@ nano ec2-worker/ec2-worker.yml
         <span class="na">LaunchTemplateId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">LaunchTemplateId</span>
         <span class="na">Version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">1"</span>
 
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Name"</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">worker-2"</span>
 
@@ -527,7 +527,7 @@ nano ec2-worker/ec2-worker.yml
 <span class="nb">source </span>config/names.sh
 
 <span class="nb">echo
-echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_ec2_worker</span><span class="s2"> stack via CloudFormation:"</span>
+echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_ec2_worker</span><span class="s2"> stack via cloud-formation:"</span>
 <span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
 <span class="nb">echo
 
@@ -563,7 +563,7 @@ aws cloudformation deploy <span class="se">\</span>
 
 <span class="nb">source </span>config/names.sh
 <span class="nb">echo
-echo</span> <span class="s2">"Destroying </span><span class="nv">$stack_ec2_worker</span><span class="s2"> stack via CloudFormation:"</span>
+echo</span> <span class="s2">"Destroying </span><span class="nv">$stack_ec2_worker</span><span class="s2"> stack via cloud-formation:"</span>
 <span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
 <span class="nb">echo
 
@@ -593,7 +593,7 @@ aws cloudformation <span class="nb">wait </span>stack-delete-complete <span clas
 
 <p>You should see output similar to this:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-ec2-worker stack via CloudFormation:
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-ec2-worker stack via cloud-formation:
 https://us-west-2.console.aws.amazon.com/cloudformation/home
 
 + aws cloudformation deploy <span class="nt">--profile</span> swift <span class="nt">--template-file</span> ec2-worker/ec2-worker.yml <span class="nt">--stack-name</span> swift-swarm-ec2-worker <span class="nt">--parameter-overrides</span> <span class="nv">KeyPair</span><span class="o">=</span>aws-ec2-key <span class="nv">SubnetId</span><span class="o">=</span>subnet-0b019a9e1c3f56adb <span class="nv">SecurityGroupId</span><span class="o">=</span>sg-07c3b321f35b08b18 <span class="nv">InstanceProfile</span><span class="o">=</span>swift-swarm-iam-worker-InstanceProfile-qF4QqiJApx6p <span class="nv">LaunchTemplateId</span><span class="o">=</span>lt-06f34a0e6c33a503a
@@ -643,7 +643,7 @@ Waiting <span class="k">for </span>stack create/update to <span class="nb">compl
 
 <p>We are done with <code class="language-plaintext highlighter-rouge">Step 6. Worker Instances</code>.</p>
 
-<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Step 7. Docker Swarm</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloudfront" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we will launch the Worker EC2 instances. This post is part of a thread that includes these steps: Network Setup Storage Roles Manager Instance Worker Launch Template Worker Instances (this post) Docker Swarm Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 5 - Worker Launch Template</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 5 - Worker Launch Template" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template/"><![CDATA[<p>In this step we will create the a launch templat for the  EC2 Worker instances.</p>
+<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Step 7. Docker Swarm</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we will launch the Worker EC2 instances. This post is part of a thread that includes these steps: Network Setup Storage Roles Manager Instance Worker Launch Template Worker Instances (this post) Docker Swarm Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 5 - Worker Launch Template</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 5 - Worker Launch Template" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template/"><![CDATA[<p>In this step we will create the a launch templat for the  EC2 Worker instances.</p>
 
 <p>This post is part of a thread that includes these steps:</p>
 
@@ -665,7 +665,7 @@ Waiting <span class="k">for </span>stack create/update to <span class="nb">compl
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/swift-aws-ec2-swarm
 </code></pre></div></div>
 
-<h3 id="cloudformation-template">CloudFormation Template</h3>
+<h3 id="cloud-formation-template">cloud-formation Template</h3>
 
 <p>Create a folder <code class="language-plaintext highlighter-rouge">ec2-worker-lt</code> and a <code class="language-plaintext highlighter-rouge">ec2-worker-lt.yml</code> file in it.</p>
 
@@ -871,7 +871,7 @@ nano ec2-worker-lt/ec2-worker-lt.yml
 <span class="nb">source </span>config/names.sh
 
 <span class="nb">echo
-echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_ec2_worker_lt</span><span class="s2"> stack via CloudFormation:"</span>
+echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_ec2_worker_lt</span><span class="s2"> stack via cloud-formation:"</span>
 <span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
 <span class="nb">echo
 
@@ -903,7 +903,7 @@ aws cloudformation deploy <span class="se">\</span>
 <span class="nb">source </span>config/names.sh
 
 <span class="nb">echo
-echo</span> <span class="s2">"Destroying </span><span class="nv">$stack_ec2_worker_lt</span><span class="s2"> stack via CloudFormation:"</span>
+echo</span> <span class="s2">"Destroying </span><span class="nv">$stack_ec2_worker_lt</span><span class="s2"> stack via cloud-formation:"</span>
 <span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
 <span class="nb">echo
 
@@ -933,7 +933,7 @@ aws cloudformation <span class="nb">wait </span>stack-delete-complete <span clas
 
 <p>You should see output similar to this:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-ec2-worker-lt stack via CloudFormation:
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-ec2-worker-lt stack via cloud-formation:
 https://us-west-2.console.aws.amazon.com/cloudformation/home
 
 + aws cloudformation deploy <span class="nt">--profile</span> swift <span class="nt">--template-file</span> ec2-worker/ec2-worker-lt.yml <span class="nt">--stack-name</span> swift-swarm-ec2-worker-lt <span class="nt">--parameter-overrides</span> <span class="nv">HostedZoneId</span><span class="o">=</span>Z07362313E0WMP6Y4DBYT <span class="nv">HomeVolumeId</span><span class="o">=</span>vol-08b4fb87713440e48
@@ -979,7 +979,7 @@ Waiting <span class="k">for </span>stack create/update to <span class="nb">compl
 
 <p>We are done with <code class="language-plaintext highlighter-rouge">Step 5. Worker Launch Template</code>.</p>
 
-<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Step 6. Worker Instances</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloudfront" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we will create the a launch templat for the EC2 Worker instances. This post is part of a thread that includes these steps: Network Setup Storage Roles Manager Instance Worker Launch Template (this post) Worker Instances Docker Swarm Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 4 - Manager Instance</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 4 - Manager Instance" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance/"><![CDATA[<p>In this step we will configure and launch the Manager EC2 instance.</p>
+<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Step 6. Worker Instances</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we will create the a launch templat for the EC2 Worker instances. This post is part of a thread that includes these steps: Network Setup Storage Roles Manager Instance Worker Launch Template (this post) Worker Instances Docker Swarm Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 4 - Manager Instance</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 4 - Manager Instance" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance/"><![CDATA[<p>In this step we will configure and launch the Manager EC2 instance.</p>
 
 <p>This post is part of a thread that includes these steps:</p>
 
@@ -1001,7 +1001,7 @@ Waiting <span class="k">for </span>stack create/update to <span class="nb">compl
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/swift-aws-ec2-swarm
 </code></pre></div></div>
 
-<h3 id="cloudformation-template">CloudFormation Template</h3>
+<h3 id="cloud-formation-template">cloud-formation Template</h3>
 
 <p>Create a folder <code class="language-plaintext highlighter-rouge">ec2-manager</code> and a <code class="language-plaintext highlighter-rouge">ec2-manager.yml</code> file in it.</p>
 
@@ -1073,7 +1073,7 @@ nano ec2-manager/ec2-manager.yml
             <span class="na">VolumeSize</span><span class="pi">:</span> <span class="m">100</span>
             <span class="na">VolumeType</span><span class="pi">:</span> <span class="s">gp2</span>          
 
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="s">manager</span>
 
@@ -1257,7 +1257,7 @@ nano ec2-manager/ec2-manager.yml
 <span class="nb">source </span>config/names.sh
 
 <span class="nb">echo
-echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_ec2_manager</span><span class="s2"> stack via CloudFormation:"</span>
+echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_ec2_manager</span><span class="s2"> stack via cloud-formation:"</span>
 <span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
 <span class="nb">echo
 
@@ -1298,7 +1298,7 @@ aws cloudformation deploy <span class="se">\</span>
 <span class="nb">source </span>config/names.sh
 
 <span class="nb">echo
-echo</span> <span class="s2">"Destroying </span><span class="nv">$stack_ec2_manager</span><span class="s2"> stack via CloudFormation:"</span>
+echo</span> <span class="s2">"Destroying </span><span class="nv">$stack_ec2_manager</span><span class="s2"> stack via cloud-formation:"</span>
 <span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
 <span class="nb">echo
 
@@ -1328,7 +1328,7 @@ aws cloudformation <span class="nb">wait </span>stack-delete-complete <span clas
 
 <p>You should see output similar to this:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-ec2-manager stack via CloudFormation:
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-ec2-manager stack via cloud-formation:
 https://us-west-2.console.aws.amazon.com/cloudformation/home
 
 + aws cloudformation deploy <span class="nt">--template-file</span> ec2-manager/ec2-manager.yml <span class="nt">--stack-name</span> swift-swarm-ec2-manager <span class="nt">--parameter-overrides</span> <span class="nv">KeyPair</span><span class="o">=</span>aws-ec2-key <span class="nv">SubnetId</span><span class="o">=</span>subnet-008f06da59b0f682a <span class="nv">SecurityGroupId</span><span class="o">=</span>sg-0668991ca731a2201 <span class="nv">InstanceProfile</span><span class="o">=</span>swift-swarm-iam-manager-InstanceProfile-qeqXudscgUtM <span class="nv">HostedZoneId</span><span class="o">=</span>Z07362313E0WMP6Y4DBYT <span class="nv">HomeVolumeId</span><span class="o">=</span>vol-08b4fb87713440e48
@@ -1404,7 +1404,7 @@ ssh <span class="nt">-i</span> <span class="nv">$ec2_key</span> ec2-user@<span c
 
 <p>We are done with <code class="language-plaintext highlighter-rouge">Step 4. Manager Instance</code>.</p>
 
-<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Step 5. Worker Launch Template</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloudfront" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we will configure and launch the Manager EC2 instance. This post is part of a thread that includes these steps: Network Setup Storage Roles Manager Instance (this post) Worker Launch Template Worker Instances Docker Swarm Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 3 - Roles</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 3 - Roles" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles/"><![CDATA[<p>In this step we create the IAM roles and policies needed by the EC2 instances.</p>
+<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Step 5. Worker Launch Template</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we will configure and launch the Manager EC2 instance. This post is part of a thread that includes these steps: Network Setup Storage Roles Manager Instance (this post) Worker Launch Template Worker Instances Docker Swarm Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 3 - Roles</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 3 - Roles" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles/"><![CDATA[<p>In this step we create the IAM roles and policies needed by the EC2 instances.</p>
 
 <p>This post is part of a thread that includes these steps:</p>
 
@@ -1426,7 +1426,7 @@ ssh <span class="nt">-i</span> <span class="nv">$ec2_key</span> ec2-user@<span c
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/swift-aws-ec2-swarm
 </code></pre></div></div>
 
-<h3 id="cloudformation-template">CloudFormation Template</h3>
+<h3 id="cloud-formation-template">cloud-formation Template</h3>
 
 <p>We need to create IAM Role and Instance Profile for two types of instances:</p>
 
@@ -1458,7 +1458,7 @@ nano iam/iam-manager.yml
   <span class="na">Role</span><span class="pi">:</span>
     <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::IAM::Role</span>
     <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-iam-role-manager</span>
       <span class="na">AssumeRolePolicyDocument</span><span class="pi">:</span>
@@ -1518,7 +1518,7 @@ nano iam/iam-worker.yml
   <span class="na">Role</span><span class="pi">:</span>
     <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::IAM::Role</span>
     <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-iam-role-worker</span>
       <span class="na">AssumeRolePolicyDocument</span><span class="pi">:</span>
@@ -1571,13 +1571,13 @@ nano iam/iam-worker.yml
 <span class="nb">source </span>config/names.sh
 
 <span class="nb">echo
-echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_iam_manager</span><span class="s2"> stack via CloudFormation:"</span>
+echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_iam_manager</span><span class="s2"> stack via cloud-formation:"</span>
 <span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
 <span class="nb">echo
 
 set</span> <span class="nt">-x</span>
 
-<span class="c"># NOTE: `--capabilities CAPABILITY_IAM` is needed because the `iam.yml` CloudFormation template creates roles and instance profiles.</span>
+<span class="c"># NOTE: `--capabilities CAPABILITY_IAM` is needed because the `iam.yml` cloud-formation template creates roles and instance profiles.</span>
 
 aws cloudformation deploy <span class="se">\</span>
     <span class="nt">--capabilities</span> CAPABILITY_IAM <span class="se">\</span>
@@ -1600,13 +1600,13 @@ aws cloudformation deploy <span class="se">\</span>
 <span class="nb">source </span>config/names.sh
 
 <span class="nb">echo
-echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_iam_worker</span><span class="s2"> stack via CloudFormation:"</span>
+echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_iam_worker</span><span class="s2"> stack via cloud-formation:"</span>
 <span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
 <span class="nb">echo
 
 set</span> <span class="nt">-x</span>
 
-<span class="c"># NOTE: `--capabilities CAPABILITY_IAM` is needed because the `iam.yml` CloudFormation template creates roles and instance profiles.</span>
+<span class="c"># NOTE: `--capabilities CAPABILITY_IAM` is needed because the `iam.yml` cloud-formation template creates roles and instance profiles.</span>
 
 aws cloudformation deploy <span class="se">\</span>
     <span class="nt">--capabilities</span> CAPABILITY_IAM <span class="se">\</span>
@@ -1628,7 +1628,7 @@ aws cloudformation deploy <span class="se">\</span>
 <span class="nb">source </span>config/names.sh
 
 <span class="nb">echo
-echo</span> <span class="s2">"Removing </span><span class="nv">$stack_iam_manager</span><span class="s2"> stack via CloudFormation:"</span>
+echo</span> <span class="s2">"Removing </span><span class="nv">$stack_iam_manager</span><span class="s2"> stack via cloud-formation:"</span>
 <span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
 <span class="nb">echo
 
@@ -1654,7 +1654,7 @@ aws cloudformation <span class="nb">wait </span>stack-delete-complete <span clas
 <span class="nb">source </span>config/names.sh
 
 <span class="nb">echo
-echo</span> <span class="s2">"Removing </span><span class="nv">$stack_iam_worker</span><span class="s2"> stack via CloudFormation:"</span>
+echo</span> <span class="s2">"Removing </span><span class="nv">$stack_iam_worker</span><span class="s2"> stack via cloud-formation:"</span>
 <span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
 <span class="nb">echo
 
@@ -1687,7 +1687,7 @@ aws cloudformation <span class="nb">wait </span>stack-delete-complete <span clas
 
 <p>You should see output similar to this:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-iam-manager stack via CloudFormation:
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-iam-manager stack via cloud-formation:
 https://us-west-2.console.aws.amazon.com/cloudformation/home
 
 + aws cloudformation deploy <span class="nt">--capabilities</span> CAPABILITY_IAM <span class="nt">--template-file</span> iam/iam-manager.yml <span class="nt">--stack-name</span> swift-swarm-iam-manager <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span>swift-swarm
@@ -1704,7 +1704,7 @@ Waiting <span class="k">for </span>stack create/update to <span class="nb">compl
 
 <p>You should see output similar to this:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-iam-worker stack via CloudFormation:
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-iam-worker stack via cloud-formation:
 https://us-west-2.console.aws.amazon.com/cloudformation/home
 
 + aws cloudformation deploy <span class="nt">--capabilities</span> CAPABILITY_IAM <span class="nt">--template-file</span> iam/iam-worker.yml <span class="nt">--stack-name</span> swift-swarm-iam-worker <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span>swift-swarm
@@ -1740,7 +1740,7 @@ Waiting <span class="k">for </span>stack create/update to <span class="nb">compl
 
 <p>We are done with <code class="language-plaintext highlighter-rouge">Step 3. Roles</code>.</p>
 
-<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Step 4. Manager Instance</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloudfront" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we create the IAM roles and policies needed by the EC2 instances. This post is part of a thread that includes these steps: Network Setup Storage Roles (this post) Manager Instance Worker Launch Template Worker Instances Docker Swarm Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 2 - Storage</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 2 - Storage" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage/"><![CDATA[<p>In this step we will create a shared EBS volume which will be used as a home directory for the Linux users.</p>
+<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Step 4. Manager Instance</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we create the IAM roles and policies needed by the EC2 instances. This post is part of a thread that includes these steps: Network Setup Storage Roles (this post) Manager Instance Worker Launch Template Worker Instances Docker Swarm Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 2 - Storage</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 2 - Storage" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage/"><![CDATA[<p>In this step we will create a shared EBS volume which will be used as a home directory for the Linux users.</p>
 
 <p>This post is part of a thread that includes these steps:</p>
 
@@ -1762,7 +1762,7 @@ Waiting <span class="k">for </span>stack create/update to <span class="nb">compl
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/swift-aws-ec2-swarm
 </code></pre></div></div>
 
-<h3 id="cloudformation-template">CloudFormation Template</h3>
+<h3 id="cloud-formation-template">cloud-formation Template</h3>
 
 <p>Create a folder <code class="language-plaintext highlighter-rouge">ebs</code> and a <code class="language-plaintext highlighter-rouge">ebs.yml</code> file in it.</p>
 
@@ -1785,7 +1785,7 @@ nano ebs/ebs.yml
       <span class="na">Encrypted</span><span class="pi">:</span> <span class="no">true</span>
       <span class="na">AvailabilityZone</span><span class="pi">:</span> <span class="kt">!Select</span> <span class="pi">[</span> <span class="nv">0</span><span class="pi">,</span> <span class="kt">!GetAZs</span> <span class="s1">'</span><span class="s">'</span> <span class="pi">]</span>
       <span class="na">MultiAttachEnabled</span><span class="pi">:</span> <span class="no">true</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="s">shared-volume-home</span>
 
@@ -1808,7 +1808,7 @@ nano ebs/ebs.yml
 <span class="nb">source </span>config/names.sh
 
 <span class="nb">echo
-echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_ebs</span><span class="s2"> stack via CloudFormation:"</span>
+echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_ebs</span><span class="s2"> stack via cloud-formation:"</span>
 <span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
 <span class="nb">echo
 
@@ -1833,7 +1833,7 @@ aws cloudformation deploy <span class="se">\</span>
 <span class="nb">source </span>config/names.sh
 
 <span class="nb">echo
-echo</span> <span class="s2">"Destroying </span><span class="nv">$stack_ebs</span><span class="s2"> stack via CloudFormation:"</span>
+echo</span> <span class="s2">"Destroying </span><span class="nv">$stack_ebs</span><span class="s2"> stack via cloud-formation:"</span>
 <span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
 <span class="nb">echo
 
@@ -1861,7 +1861,7 @@ aws cloudformation <span class="nb">wait </span>stack-delete-complete <span clas
 
 <p>You should see output similar to this:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-ebs stack via CloudFormation:
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-ebs stack via cloud-formation:
 https://us-west-2.console.aws.amazon.com/cloudformation/home
 
 + aws cloudformation deploy <span class="nt">--template-file</span> ebs/ebs.yml <span class="nt">--stack-name</span> swift-swarm-ebs
@@ -1890,7 +1890,7 @@ Waiting <span class="k">for </span>stack create/update to <span class="nb">compl
 
 <p>We are done with <code class="language-plaintext highlighter-rouge">Step 2. Storage</code>.</p>
 
-<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Step 3. Roles</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloudfront" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we will create a shared EBS volume which will be used as a home directory for the Linux users. This post is part of a thread that includes these steps: Network Setup Storage (this post) Roles Manager Instance Worker Launch Template Worker Instances Docker Swarm Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 1 - Network Setup</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 1 - Network Setup" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup/"><![CDATA[<p>Setup network infrastructure including new VPC (Virtual Private Cloud), public and private subnets, internet gateway, security group, and ssh access.</p>
+<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Step 3. Roles</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we will create a shared EBS volume which will be used as a home directory for the Linux users. This post is part of a thread that includes these steps: Network Setup Storage (this post) Roles Manager Instance Worker Launch Template Worker Instances Docker Swarm Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 1 - Network Setup</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 1 - Network Setup" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup/"><![CDATA[<p>Setup network infrastructure including new VPC (Virtual Private Cloud), public and private subnets, internet gateway, security group, and ssh access.</p>
 
 <p>This post is part of a thread that includes these steps:</p>
 
@@ -1967,7 +1967,7 @@ nano config/names.sh
 
 <h2 id="virtual-private-cloud-aws-vpc">Virtual Private Cloud (AWS VPC)</h2>
 
-<h3 id="cloudformation-template">CloudFormation Template</h3>
+<h3 id="cloud-formation-template">cloud-formation Template</h3>
 
 <p>Create a folder <code class="language-plaintext highlighter-rouge">network</code> and a <code class="language-plaintext highlighter-rouge">vpc.yml</code> file in it.</p>
 
@@ -2008,7 +2008,7 @@ nano vpc/vpc.yml
       <span class="na">CidrBlock</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">VpcCIDR</span>
       <span class="na">EnableDnsSupport</span><span class="pi">:</span> <span class="no">true</span>
       <span class="na">EnableDnsHostnames</span><span class="pi">:</span> <span class="no">true</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-vpc-1</span>
 
@@ -2016,7 +2016,7 @@ nano vpc/vpc.yml
   <span class="na">InternetGateway</span><span class="pi">:</span>
     <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::InternetGateway</span>
     <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-igw-1</span>
 
@@ -2034,7 +2034,7 @@ nano vpc/vpc.yml
       <span class="na">CidrBlock</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicSubnetCIDR</span>
       <span class="na">AvailabilityZone</span><span class="pi">:</span> <span class="kt">!Select</span> <span class="pi">[</span> <span class="nv">0</span><span class="pi">,</span> <span class="kt">!GetAZs</span> <span class="s1">'</span><span class="s">'</span> <span class="pi">]</span>
       <span class="na">MapPublicIpOnLaunch</span><span class="pi">:</span> <span class="no">true</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-sn-pub-1</span>
 
@@ -2046,7 +2046,7 @@ nano vpc/vpc.yml
       <span class="na">CidrBlock</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PrivateSubnetCIDR</span>
       <span class="na">AvailabilityZone</span><span class="pi">:</span> <span class="kt">!Select</span> <span class="pi">[</span> <span class="nv">0</span><span class="pi">,</span> <span class="kt">!GetAZs</span>  <span class="s1">'</span><span class="s">'</span> <span class="pi">]</span>
       <span class="na">MapPublicIpOnLaunch</span><span class="pi">:</span> <span class="no">false</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-sn-priv-1</span>
 
@@ -2056,7 +2056,7 @@ nano vpc/vpc.yml
     <span class="na">DependsOn</span><span class="pi">:</span> <span class="s">InternetGatewayAttachment</span>
     <span class="na">Properties</span><span class="pi">:</span>
       <span class="na">Domain</span><span class="pi">:</span> <span class="s">vpc</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-eip-1</span>
 
@@ -2066,7 +2066,7 @@ nano vpc/vpc.yml
     <span class="na">Properties</span><span class="pi">:</span>
       <span class="na">AllocationId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="s">NatGatewayEIP.AllocationId</span>
       <span class="na">SubnetId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicSubnet</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-ng-1</span>
 
@@ -2075,7 +2075,7 @@ nano vpc/vpc.yml
     <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::RouteTable</span>
     <span class="na">Properties</span><span class="pi">:</span>
       <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-rt-pub-1</span>
 
@@ -2100,7 +2100,7 @@ nano vpc/vpc.yml
     <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::RouteTable</span>
     <span class="na">Properties</span><span class="pi">:</span>
       <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-rt-priv-1</span>
 
@@ -2123,7 +2123,7 @@ nano vpc/vpc.yml
     <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroup</span>
     <span class="na">Properties</span><span class="pi">:</span>
       <span class="na">GroupDescription</span><span class="pi">:</span> <span class="s">Security group for manager nodes</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-sg-pub-1</span>
       <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
@@ -2138,7 +2138,7 @@ nano vpc/vpc.yml
     <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroup</span>
     <span class="na">Properties</span><span class="pi">:</span>
       <span class="na">GroupDescription</span><span class="pi">:</span> <span class="s">Security group for worker nodes</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-sg-priv-1</span>
       <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
@@ -2224,7 +2224,7 @@ nano vpc/vpc.yml
 <span class="nb">source </span>config/names.sh
 
 <span class="nb">echo
-echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_vpc</span><span class="s2"> stack via CloudFormation:"</span>
+echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_vpc</span><span class="s2"> stack via cloud-formation:"</span>
 <span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
 <span class="nb">echo
 
@@ -2250,7 +2250,7 @@ aws cloudformation deploy <span class="se">\</span>
 <span class="nb">source </span>config/names.sh
 
 <span class="nb">echo
-echo</span> <span class="s2">"Removing </span><span class="nv">$stack_vpc</span><span class="s2"> stack via CloudFormation:"</span>
+echo</span> <span class="s2">"Removing </span><span class="nv">$stack_vpc</span><span class="s2"> stack via cloud-formation:"</span>
 <span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
 <span class="nb">echo
 
@@ -2280,7 +2280,7 @@ aws cloudformation <span class="nb">wait </span>stack-delete-complete <span clas
 
 <p>You should see output similar to this:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-vpc stack via CloudFormation:
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-vpc stack via cloud-formation:
 https://us-west-2.console.aws.amazon.com/cloudformation/home
 
 + aws cloudformation deploy <span class="nt">--template-file</span> network/vpc.yml <span class="nt">--stack-name</span> swift-swarm-vpc <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span>swift-swarm
@@ -2305,4 +2305,4 @@ Waiting <span class="k">for </span>stack create/update to <span class="nb">compl
 
 <p>We are done with <code class="language-plaintext highlighter-rouge">Step 1. Network Setup</code>.</p>
 
-<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Step 2. Storage</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloudfront" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[Setup network infrastructure including new VPC (Virtual Private Cloud), public and private subnets, internet gateway, security group, and ssh access. This post is part of a thread that includes these steps: Network Setup (this post) Storage Roles Manager Instance Worker Launch Template Worker Instances Docker Swarm Cleanup]]></summary></entry></feed>
+<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Step 2. Storage</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[Setup network infrastructure including new VPC (Virtual Private Cloud), public and private subnets, internet gateway, security group, and ssh access. This post is part of a thread that includes these steps: Network Setup (this post) Storage Roles Manager Instance Worker Launch Template Worker Instances Docker Swarm Cleanup]]></summary></entry></feed>

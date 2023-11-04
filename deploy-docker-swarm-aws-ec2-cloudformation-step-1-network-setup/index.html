@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>  
-<title>Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 1 - Network Setup | Swift Software Group</title>
+<title>Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 1 - Network Setup | Swift Software Group</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="Swift Software Group">
@@ -38,13 +38,13 @@
 
 <header>
   <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
-  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a></nav>
+  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="Archive" href="/archive/" ><span aria-hidden="true">Archive</span></a></nav>
 
 </header>
 
 <article>
   <header>
-  <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup/">Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 1 - Network Setup</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
+  <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup/">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 1 - Network Setup</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
 </header>
 
   <p>Setup network infrastructure including new VPC (Virtual Private Cloud), public and private subnets, internet gateway, security group, and ssh access.</p>
@@ -124,7 +124,7 @@ nano config/names.sh
 
 <h2 id="virtual-private-cloud-aws-vpc">Virtual Private Cloud (AWS VPC)</h2>
 
-<h3 id="cloudformation-template">CloudFormation Template</h3>
+<h3 id="cloud-formation-template">cloud-formation Template</h3>
 
 <p>Create a folder <code class="language-plaintext highlighter-rouge">network</code> and a <code class="language-plaintext highlighter-rouge">vpc.yml</code> file in it.</p>
 
@@ -165,7 +165,7 @@ nano vpc/vpc.yml
       <span class="na">CidrBlock</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">VpcCIDR</span>
       <span class="na">EnableDnsSupport</span><span class="pi">:</span> <span class="no">true</span>
       <span class="na">EnableDnsHostnames</span><span class="pi">:</span> <span class="no">true</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-vpc-1</span>
 
@@ -173,7 +173,7 @@ nano vpc/vpc.yml
   <span class="na">InternetGateway</span><span class="pi">:</span>
     <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::InternetGateway</span>
     <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-igw-1</span>
 
@@ -191,7 +191,7 @@ nano vpc/vpc.yml
       <span class="na">CidrBlock</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicSubnetCIDR</span>
       <span class="na">AvailabilityZone</span><span class="pi">:</span> <span class="kt">!Select</span> <span class="pi">[</span> <span class="nv">0</span><span class="pi">,</span> <span class="kt">!GetAZs</span> <span class="s1">'</span><span class="s">'</span> <span class="pi">]</span>
       <span class="na">MapPublicIpOnLaunch</span><span class="pi">:</span> <span class="no">true</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-sn-pub-1</span>
 
@@ -203,7 +203,7 @@ nano vpc/vpc.yml
       <span class="na">CidrBlock</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PrivateSubnetCIDR</span>
       <span class="na">AvailabilityZone</span><span class="pi">:</span> <span class="kt">!Select</span> <span class="pi">[</span> <span class="nv">0</span><span class="pi">,</span> <span class="kt">!GetAZs</span>  <span class="s1">'</span><span class="s">'</span> <span class="pi">]</span>
       <span class="na">MapPublicIpOnLaunch</span><span class="pi">:</span> <span class="no">false</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-sn-priv-1</span>
 
@@ -213,7 +213,7 @@ nano vpc/vpc.yml
     <span class="na">DependsOn</span><span class="pi">:</span> <span class="s">InternetGatewayAttachment</span>
     <span class="na">Properties</span><span class="pi">:</span>
       <span class="na">Domain</span><span class="pi">:</span> <span class="s">vpc</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-eip-1</span>
 
@@ -223,7 +223,7 @@ nano vpc/vpc.yml
     <span class="na">Properties</span><span class="pi">:</span>
       <span class="na">AllocationId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="s">NatGatewayEIP.AllocationId</span>
       <span class="na">SubnetId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicSubnet</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-ng-1</span>
 
@@ -232,7 +232,7 @@ nano vpc/vpc.yml
     <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::RouteTable</span>
     <span class="na">Properties</span><span class="pi">:</span>
       <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-rt-pub-1</span>
 
@@ -257,7 +257,7 @@ nano vpc/vpc.yml
     <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::RouteTable</span>
     <span class="na">Properties</span><span class="pi">:</span>
       <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-rt-priv-1</span>
 
@@ -280,7 +280,7 @@ nano vpc/vpc.yml
     <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroup</span>
     <span class="na">Properties</span><span class="pi">:</span>
       <span class="na">GroupDescription</span><span class="pi">:</span> <span class="s">Security group for manager nodes</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-sg-pub-1</span>
       <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
@@ -295,7 +295,7 @@ nano vpc/vpc.yml
     <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroup</span>
     <span class="na">Properties</span><span class="pi">:</span>
       <span class="na">GroupDescription</span><span class="pi">:</span> <span class="s">Security group for worker nodes</span>
-      <span class="na">Tags</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
         <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
           <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-sg-priv-1</span>
       <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
@@ -381,7 +381,7 @@ nano vpc/vpc.yml
 <span class="nb">source </span>config/names.sh
 
 <span class="nb">echo
-echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_vpc</span><span class="s2"> stack via CloudFormation:"</span>
+echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_vpc</span><span class="s2"> stack via cloud-formation:"</span>
 <span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
 <span class="nb">echo
 
@@ -407,7 +407,7 @@ aws cloudformation deploy <span class="se">\</span>
 <span class="nb">source </span>config/names.sh
 
 <span class="nb">echo
-echo</span> <span class="s2">"Removing </span><span class="nv">$stack_vpc</span><span class="s2"> stack via CloudFormation:"</span>
+echo</span> <span class="s2">"Removing </span><span class="nv">$stack_vpc</span><span class="s2"> stack via cloud-formation:"</span>
 <span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
 <span class="nb">echo
 
@@ -437,7 +437,7 @@ aws cloudformation <span class="nb">wait </span>stack-delete-complete <span clas
 
 <p>You should see output similar to this:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-vpc stack via CloudFormation:
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-vpc stack via cloud-formation:
 https://us-west-2.console.aws.amazon.com/cloudformation/home
 
 + aws cloudformation deploy <span class="nt">--template-file</span> network/vpc.yml <span class="nt">--stack-name</span> swift-swarm-vpc <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span>swift-swarm

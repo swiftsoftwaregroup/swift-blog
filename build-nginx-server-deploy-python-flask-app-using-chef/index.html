@@ -38,7 +38,7 @@
 
 <header>
   <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
-  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a></nav>
+  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="Archive" href="/archive/" ><span aria-hidden="true">Archive</span></a></nav>
 
 </header>
 
@@ -300,7 +300,7 @@
   <span class="n">desc</span> <span class="s1">'Run Chef style checks'</span>
   <span class="no">FoodCritic</span><span class="o">::</span><span class="no">Rake</span><span class="o">::</span><span class="no">LintTask</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">:chef</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
     <span class="n">t</span><span class="p">.</span><span class="nf">options</span> <span class="o">=</span> <span class="p">{</span>
-      <span class="ss">fail_tags: </span><span class="p">[</span><span class="s1">'any'</span><span class="p">]</span>
+      <span class="n">fail_</span><span class="c1"># tags: ['any']</span>
     <span class="p">}</span>
   <span class="k">end</span>
 <span class="k">end</span>

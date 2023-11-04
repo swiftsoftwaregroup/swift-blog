@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>  
-<title>Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 5 - Worker Launch Template | Swift Software Group</title>
+<title>Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 5 - Worker Launch Template | Swift Software Group</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="Swift Software Group">
@@ -38,13 +38,13 @@
 
 <header>
   <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
-  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a></nav>
+  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="Archive" href="/archive/" ><span aria-hidden="true">Archive</span></a></nav>
 
 </header>
 
 <article>
   <header>
-  <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template/">Deploy Docker Swarm on AWS EC2 via CloudFormation templates - Step 5 - Worker Launch Template</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
+  <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template/">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 5 - Worker Launch Template</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
 </header>
 
   <p>In this step we will create the a launch templat for the  EC2 Worker instances.</p>
@@ -69,7 +69,7 @@
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/swift-aws-ec2-swarm
 </code></pre></div></div>
 
-<h3 id="cloudformation-template">CloudFormation Template</h3>
+<h3 id="cloud-formation-template">cloud-formation Template</h3>
 
 <p>Create a folder <code class="language-plaintext highlighter-rouge">ec2-worker-lt</code> and a <code class="language-plaintext highlighter-rouge">ec2-worker-lt.yml</code> file in it.</p>
 
@@ -275,7 +275,7 @@ nano ec2-worker-lt/ec2-worker-lt.yml
 <span class="nb">source </span>config/names.sh
 
 <span class="nb">echo
-echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_ec2_worker_lt</span><span class="s2"> stack via CloudFormation:"</span>
+echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_ec2_worker_lt</span><span class="s2"> stack via cloud-formation:"</span>
 <span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
 <span class="nb">echo
 
@@ -307,7 +307,7 @@ aws cloudformation deploy <span class="se">\</span>
 <span class="nb">source </span>config/names.sh
 
 <span class="nb">echo
-echo</span> <span class="s2">"Destroying </span><span class="nv">$stack_ec2_worker_lt</span><span class="s2"> stack via CloudFormation:"</span>
+echo</span> <span class="s2">"Destroying </span><span class="nv">$stack_ec2_worker_lt</span><span class="s2"> stack via cloud-formation:"</span>
 <span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
 <span class="nb">echo
 
@@ -337,7 +337,7 @@ aws cloudformation <span class="nb">wait </span>stack-delete-complete <span clas
 
 <p>You should see output similar to this:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-ec2-worker-lt stack via CloudFormation:
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-ec2-worker-lt stack via cloud-formation:
 https://us-west-2.console.aws.amazon.com/cloudformation/home
 
 + aws cloudformation deploy <span class="nt">--profile</span> swift <span class="nt">--template-file</span> ec2-worker/ec2-worker-lt.yml <span class="nt">--stack-name</span> swift-swarm-ec2-worker-lt <span class="nt">--parameter-overrides</span> <span class="nv">HostedZoneId</span><span class="o">=</span>Z07362313E0WMP6Y4DBYT <span class="nv">HomeVolumeId</span><span class="o">=</span>vol-08b4fb87713440e48
