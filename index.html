@@ -46,6 +46,85 @@
   
   <article>
     <header>
+  <h1><a href="/getting-started-cpp-visual-studio-code-macos/">Getting Started with C++ and Visual Studio Code on macOS</a></h1><time datetime="2023-10-07T00:00:00-07:00">October 07, 2023</time>
+</header>
+
+    <p>Before going through these steps make sure you have done <a href="/setup-cpp-development-environment-macos">Setup C++ development environment on macOS</a></p>
+
+<h2 id="visual-studio-code">Visual Studio Code</h2>
+
+<p>Download and install from <a href="https://code.visualstudio.com/download">Visual Studio Code</a> site.</p>
+
+<p>Open Visual Studio Code and press <code class="language-plaintext highlighter-rouge">Cmd + Shift + p</code>. Select <code class="language-plaintext highlighter-rouge">Shell Command: Install 'code' command in PATH</code>.</p>
+
+    <div class="more"><a href="/getting-started-cpp-visual-studio-code-macos/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/setup-cpp-development-environment-macos/">Setup C++ development environment on macOS</a></h1><time datetime="2023-09-12T00:00:00-07:00">September 12, 2023</time>
+</header>
+
+    <h2 id="homebrew">Homebrew</h2>
+
+<p>Install Homebrew:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/bin/bash <span class="nt">-c</span> <span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-fsSL</span> https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="si">)</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<h2 id="development-tools">Development Tools</h2>
+
+<h3 id="xcode">Xcode</h3>
+
+<p>Install Command Line Tools (CLT) for Xcode:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xcode-select <span class="nt">--install</span>
+</code></pre></div></div>
+
+<h3 id="cmake">CMake</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>cmake
+</code></pre></div></div>
+
+<h3 id="ninja">ninja</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>ninja
+</code></pre></div></div>
+
+<h2 id="misc">Misc</h2>
+
+<h3 id="finder">Finder</h3>
+
+<p>Show hidden files:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>defaults write com.apple.finder AppleShowAllFiles YES
+</code></pre></div></div>
+
+<p>Hold the ‘Option/alt’ key, then right click on the Finder icon in the dock and click Relaunch</p>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<p>If you get:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xcode-select: error: <span class="nb">command </span>line tools are already installed, use <span class="s2">"Software Update"</span> to <span class="nb">install </span>updates
+</code></pre></div></div>
+
+<p>Try this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>softwareupdate <span class="nt">--all</span> <span class="nt">--install</span> <span class="nt">--force</span>
+</code></pre></div></div>
+
+<p>If that doesn’t show you any updates, run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">sudo rm</span> <span class="nt">-rf</span> /Library/Developer/CommandLineTools
+ <span class="nb">sudo </span>xcode-select <span class="nt">--install</span>
+</code></pre></div></div>
+
+    <div class="more"><a href="/setup-cpp-development-environment-macos/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
   <h1><a href="/configure-ruby-environment-windows/">Configure Ruby Environment on Windows</a></h1><time datetime="2023-05-27T00:00:00-07:00">May 27, 2023</time>
 </header>
 
@@ -157,52 +236,6 @@ podman machine start
     <div class="more"><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances/">read more</a></div>
   </article>
 
-  <article>
-    <header>
-  <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template/">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 5 - Worker Launch Template</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
-</header>
-
-    <p>In this step we will create the a launch templat for the  EC2 Worker instances.</p>
-
-<p>This post is part of a thread that includes these steps:</p>
-
-<ol>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
-  <li>Worker Launch Template (this post)</li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
-</ol>
-
-    <div class="more"><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template/">read more</a></div>
-  </article>
-
-  <article>
-    <header>
-  <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance/">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 4 - Manager Instance</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
-</header>
-
-    <p>In this step we will configure and launch the Manager EC2 instance.</p>
-
-<p>This post is part of a thread that includes these steps:</p>
-
-<ol>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
-  <li>Manager Instance (this post)</li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
-</ol>
-
-    <div class="more"><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance/">read more</a></div>
-  </article>
-
 
 
   <article>
@@ -215,9 +248,11 @@ podman machine start
     <a href="/tag/docker"><code class="highligher-rouge" style="font-size:18px;"><nobr>docker</nobr></code></a>
     <a href="/tag/cloud-formation"><code class="highligher-rouge" style="font-size:18px;"><nobr>cloud-formation</nobr></code></a>
     <a href="/tag/ecs"><code class="highligher-rouge" style="font-size:16px;"><nobr>ecs</nobr></code></a>
+    <a href="/tag/macos"><code class="highligher-rouge" style="font-size:14px;"><nobr>macos</nobr></code></a>
     <a href="/tag/podman"><code class="highligher-rouge" style="font-size:12px;"><nobr>podman</nobr></code></a>
-    <a href="/tag/macos"><code class="highligher-rouge" style="font-size:12px;"><nobr>macos</nobr></code></a>
+    <a href="/tag/c++"><code class="highligher-rouge" style="font-size:12px;"><nobr>c++</nobr></code></a>
     <a href="/tag/windows"><code class="highligher-rouge" style="font-size:11px;"><nobr>windows</nobr></code></a>
+    <a href="/tag/vscode"><code class="highligher-rouge" style="font-size:11px;"><nobr>vscode</nobr></code></a>
     <a href="/tag/ruby"><code class="highligher-rouge" style="font-size:11px;"><nobr>ruby</nobr></code></a>
     <a href="/tag/mongodb"><code class="highligher-rouge" style="font-size:11px;"><nobr>mongodb</nobr></code></a>
     
