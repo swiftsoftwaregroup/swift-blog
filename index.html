@@ -87,54 +87,6 @@
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/bin/bash <span class="nt">-c</span> <span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-fsSL</span> https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="si">)</span><span class="s2">"</span>
 </code></pre></div></div>
 
-<h2 id="development-tools">Development Tools</h2>
-
-<h3 id="xcode">Xcode</h3>
-
-<p>Install Command Line Tools (CLT) for Xcode:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xcode-select <span class="nt">--install</span>
-</code></pre></div></div>
-
-<h3 id="cmake">CMake</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>cmake
-</code></pre></div></div>
-
-<h3 id="ninja">ninja</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>ninja
-</code></pre></div></div>
-
-<h2 id="misc">Misc</h2>
-
-<h3 id="finder">Finder</h3>
-
-<p>Show hidden files:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>defaults write com.apple.finder AppleShowAllFiles YES
-</code></pre></div></div>
-
-<p>Hold the ‘Option/alt’ key, then right click on the Finder icon in the dock and click Relaunch</p>
-
-<h2 id="troubleshooting">Troubleshooting</h2>
-
-<p>If you get:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xcode-select: error: <span class="nb">command </span>line tools are already installed, use <span class="s2">"Software Update"</span> to <span class="nb">install </span>updates
-</code></pre></div></div>
-
-<p>Try this:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>softwareupdate <span class="nt">--all</span> <span class="nt">--install</span> <span class="nt">--force</span>
-</code></pre></div></div>
-
-<p>If that doesn’t show you any updates, run:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">sudo rm</span> <span class="nt">-rf</span> /Library/Developer/CommandLineTools
- <span class="nb">sudo </span>xcode-select <span class="nt">--install</span>
-</code></pre></div></div>
-
     <div class="more"><a href="/setup-cpp-development-environment-macos/">read more</a></div>
   </article>
 
