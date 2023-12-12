@@ -1,4 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-12-08T10:36:55-08:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Getting Started with C++ and Visual Studio Code on macOS</title><link href="/getting-started-cpp-visual-studio-code-macos/" rel="alternate" type="text/html" title="Getting Started with C++ and Visual Studio Code on macOS" /><published>2023-10-07T00:00:00-07:00</published><updated>2023-10-07T00:00:00-07:00</updated><id>/getting-started-cpp-visual-studio-code-macos</id><content type="html" xml:base="/getting-started-cpp-visual-studio-code-macos/"><![CDATA[<p>Before going through these steps make sure you have done <a href="/setup-cpp-development-environment-macos">Setup C++ development environment on macOS</a></p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-12-12T09:48:38-08:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Configure Ruby Environment on Ubuntu</title><link href="/configure-ruby-environment-ubuntu/" rel="alternate" type="text/html" title="Configure Ruby Environment on Ubuntu" /><published>2023-10-08T00:00:00-07:00</published><updated>2023-10-08T00:00:00-07:00</updated><id>/configure-ruby-environment-ubuntu</id><content type="html" xml:base="/configure-ruby-environment-ubuntu/"><![CDATA[<p>This is a simple guide for configuring a Ruby 2 environment on Ubuntu. This was tested for Ruby 2.7.2 on Ubuntu 22.04.3. All scripts are <code class="language-plaintext highlighter-rouge">bash</code>.</p>
+
+<h2 id="compilers">Compilers</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>build-essential
+</code></pre></div></div>
+
+<h2 id="rvm">rvm</h2>
+
+<p><code class="language-plaintext highlighter-rouge">rvm</code> is a Ruby version manager</p>
+
+<p>Install:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg <span class="nt">--keyserver</span> hkp://keyserver.ubuntu.com <span class="nt">--recv-keys</span> 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+curl <span class="nt">-sSL</span> https://get.rvm.io | bash <span class="nt">-s</span> <span class="nt">--</span> stable <span class="nt">--ignore-dotfiles</span>
+</code></pre></div></div>
+
+<p>Test:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> ~/.rvm/scripts/rvm
+rvm info
+</code></pre></div></div>
+
+<h2 id="ruby">Ruby</h2>
+
+<p>Install via <code class="language-plaintext highlighter-rouge">rvm</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> ~/.rvm/scripts/rvm
+rvm pkg <span class="nb">install </span>openssl
+rvm <span class="nb">install </span>2.7.2 <span class="nt">--with-openssl-dir</span><span class="o">=</span><span class="nv">$HOME</span>/.rvm/usr
+</code></pre></div></div>
+
+<p>Test:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rvm use
+ruby <span class="nt">--version</span>
+
+<span class="c"># you should get output similar to this:</span>
+<span class="c"># ruby 2.7.2p137 (2020-10-01 revision 5445e04352) [x86_64-linux]</span>
+</code></pre></div></div>]]></content><author><name>Swift Software Group</name></author><category term="ruby" /><category term="linux" /><category term="ubuntu" /><summary type="html"><![CDATA[This is a simple guide for configuring a Ruby 2 environment on Ubuntu. This was tested for Ruby 2.7.2 on Ubuntu 22.04.3. All scripts are bash. Compilers sudo apt install build-essential]]></summary></entry><entry><title type="html">Getting Started with C++ and Visual Studio Code on macOS</title><link href="/getting-started-cpp-visual-studio-code-macos/" rel="alternate" type="text/html" title="Getting Started with C++ and Visual Studio Code on macOS" /><published>2023-10-07T00:00:00-07:00</published><updated>2023-10-07T00:00:00-07:00</updated><id>/getting-started-cpp-visual-studio-code-macos</id><content type="html" xml:base="/getting-started-cpp-visual-studio-code-macos/"><![CDATA[<p>Before going through these steps make sure you have done <a href="/setup-cpp-development-environment-macos">Setup C++ development environment on macOS</a></p>
 
 <h2 id="visual-studio-code">Visual Studio Code</h2>
 
@@ -422,224 +461,330 @@ podman-machine-default*  qemu        About a minute ago  About a minute ago  2  
 <p>To start a podman machine automatically at login, also install the Podman Desktop:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install</span> <span class="nt">--cask</span> podman-desktop
-</code></pre></div></div>]]></content><author><name>Swift Software Group</name></author><category term="podman" /><category term="macos" /><summary type="html"><![CDATA[Podman is a utility that can be used to create and maintain containers. This post will teach you how to set up Podman on macOS and perform some basic commands.]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 5 - Worker Launch Template</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 5 - Worker Launch Template" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template/"><![CDATA[<p>In this step we will create the a launch templat for the  EC2 Worker instances.</p>
+</code></pre></div></div>]]></content><author><name>Swift Software Group</name></author><category term="podman" /><category term="macos" /><summary type="html"><![CDATA[Podman is a utility that can be used to create and maintain containers. This post will teach you how to set up Podman on macOS and perform some basic commands.]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 1 - Network Setup</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 1 - Network Setup" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup/"><![CDATA[<p>Setup network infrastructure including new VPC (Virtual Private Cloud), public and private subnets, internet gateway, security group, and ssh access.</p>
 
 <p>This post is part of a thread that includes these steps:</p>
 
 <ol>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
+  <li>Network Setup (this post)</li>
   <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
   <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
   <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
-  <li>Worker Launch Template (this post)</li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
   <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
   <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
   <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
 </ol>
 
-<h1 id="worker-launch-template">Worker Launch Template</h1>
+<p>Make sure you do this setup first:</p>
 
-<p>Start in the project directory:</p>
+<ol>
+  <li><a href="/setup-macos-for-aws-cloud-devops">Setup macOS for AWS Cloud DevOps</a></li>
+  <li><a href="/aws-authentication">AWS Authentication</a></li>
+</ol>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/swift-aws-ec2-swarm
+<h2 id="project-structure">Project Structure</h2>
+
+<p>For this deployment we will create 2 separate code repositories. The first one will be named <code class="language-plaintext highlighter-rouge">swift-aws-ec2-swarm</code> and the second one will be named <code class="language-plaintext highlighter-rouge">swift-aws-ec2-docker</code>.</p>
+
+<p>As a start, create the <code class="language-plaintext highlighter-rouge">swift-aws-ec2-swarm</code> directory in your home dir and switch to it. We will call this the “project dir”.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ~/swift-aws-ec2-swarm
+<span class="nb">cd</span> ~/swift-aws-ec2-swarm
 </code></pre></div></div>
+
+<p>The rest of this post assumes we work from within the “project dir”.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>Create a folder <code class="language-plaintext highlighter-rouge">config</code> and <code class="language-plaintext highlighter-rouge">names.sh</code> file in it.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> config
+<span class="nb">touch </span>config/names.sh
+nano config/names.sh
+</code></pre></div></div>
+
+<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">names.sh</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">AWS_DEFAULT_PROFILE</span><span class="o">=</span>swift
+
+<span class="nv">prefix</span><span class="o">=</span><span class="s2">"swift-swarm"</span>
+
+<span class="nv">ec2_key_pair</span><span class="o">=</span><span class="s2">"aws-ec2-key"</span>
+
+<span class="nv">stack_vpc</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-vpc"</span>
+
+<span class="nv">stack_ebs</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-ebs"</span>
+
+<span class="nv">stack_iam_manager</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-iam-manager"</span>
+<span class="nv">stack_ec2_manager</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-ec2-manager"</span>
+
+<span class="nv">stack_iam_worker</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-iam-worker"</span>
+<span class="nv">stack_ec2_worker</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-ec2-worker"</span>
+<span class="nv">stack_ec2_worker_lt</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-ec2-worker-lt"</span>
+
+<span class="nv">vpc</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-vpc-1"</span>
+
+<span class="nv">subnet_pub_1</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-sn-pub-1"</span>
+<span class="nv">subnet_priv_1</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-sn-priv-1"</span>
+
+<span class="nv">security_group_pub_1</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-sg-pub-1"</span>
+<span class="nv">security_group_priv_1</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-sg-priv-1"</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>IMPORTANT: Replace <code class="language-plaintext highlighter-rouge">swift</code> in the first line with the name of your AWS CLI profile or set to <code class="language-plaintext highlighter-rouge">default</code> if you don;t use different profiles.</p>
+</blockquote>
+
+<h2 id="virtual-private-cloud-aws-vpc">Virtual Private Cloud (AWS VPC)</h2>
 
 <h3 id="cloud-formation-template">cloud-formation Template</h3>
 
-<p>Create a folder <code class="language-plaintext highlighter-rouge">ec2-worker-lt</code> and a <code class="language-plaintext highlighter-rouge">ec2-worker-lt.yml</code> file in it.</p>
+<p>Create a folder <code class="language-plaintext highlighter-rouge">network</code> and a <code class="language-plaintext highlighter-rouge">vpc.yml</code> file in it.</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ec2-worker-lt
-<span class="nb">touch </span>ec2-worker-lt/ec2-worker-lt.yml
-nano ec2-worker-lt/ec2-worker-lt.yml
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> vpc
+<span class="nb">touch </span>vpc/vpc.yml
+nano vpc/vpc.yml
 </code></pre></div></div>
 
-<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">ec2-worker-lt.yml</code>:</p>
+<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">vpc.yml</code>:</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Description</span><span class="pi">:</span> <span class="s">Launch template for Docker Swarm worker instances</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Description</span><span class="pi">:</span> <span class="s">Create VPC, public subnet, private subnet, Internet gateway, NAT gateway, security groups, and Route53 hosted zone for the VPC.</span> 
 
 <span class="na">Parameters</span><span class="pi">:</span>
-  <span class="na">LatestAmiId</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::SSM::Parameter::Value&lt;AWS::EC2::Image::Id&gt;</span>
-    <span class="na">Default</span><span class="pi">:</span> <span class="s">/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2</span>
+  <span class="na">Prefix</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">An environment name that is prefixed to resource names</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
 
-  <span class="na">HostedZoneId</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::Route53::HostedZone::Id</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">ID of the Route53 HostedZone</span>
+  <span class="na">VpcCIDR</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">Please enter the IP range (CIDR notation) for this VPC</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
+    <span class="na">Default</span><span class="pi">:</span> <span class="s">10.0.0.0/16</span>
 
-  <span class="na">HomeVolumeId</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::Volume::Id</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">ID of the volume to be mounted as /home</span>
+  <span class="na">PublicSubnetCIDR</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">Please enter the IP range (CIDR notation) for the public subnet in the first Availability Zone</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
+    <span class="na">Default</span><span class="pi">:</span> <span class="s">10.0.10.0/24</span>
+
+  <span class="na">PrivateSubnetCIDR</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">Please enter the IP range (CIDR notation) for the private subnet in the first Availability Zone</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
+    <span class="na">Default</span><span class="pi">:</span> <span class="s">10.0.20.0/24</span>
 
 <span class="na">Resources</span><span class="pi">:</span>
-  <span class="na">LaunchTemplate</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::LaunchTemplate</span>
+  <span class="c1"># VPC</span>
+  <span class="na">Vpc</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::VPC</span>
     <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">LaunchTemplateData</span><span class="pi">:</span>
-        <span class="na">ImageId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">LatestAmiId</span>
+      <span class="na">CidrBlock</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">VpcCIDR</span>
+      <span class="na">EnableDnsSupport</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="na">EnableDnsHostnames</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="c1"># tags:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-vpc-1</span>
 
-        <span class="na">BlockDeviceMappings</span><span class="pi">:</span> 
-          <span class="c1"># Docker volume</span>
-          <span class="pi">-</span> <span class="na">DeviceName</span><span class="pi">:</span> <span class="s">/dev/sdi</span>
-            <span class="na">Ebs</span><span class="pi">:</span> 
-              <span class="na">Encrypted</span><span class="pi">:</span> <span class="no">true</span>
-              <span class="na">DeleteOnTermination</span><span class="pi">:</span> <span class="no">true</span>
-              <span class="na">VolumeSize</span><span class="pi">:</span> <span class="m">100</span>
-              <span class="na">VolumeType</span><span class="pi">:</span> <span class="s">gp2</span>          
+  <span class="c1"># Internet Gateway</span>
+  <span class="na">InternetGateway</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::InternetGateway</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-igw-1</span>
 
-        <span class="na">UserData</span><span class="pi">:</span>
-          <span class="s">Fn::Base64:</span>
-            <span class="s">!Sub |</span>
-              <span class="s">#!/bin/bash -x</span>
+  <span class="na">InternetGatewayAttachment</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::VPCGatewayAttachment</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
+      <span class="na">InternetGatewayId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">InternetGateway</span>
 
-              <span class="s"># !!! DO NOT ENABLE THIS !!! Use in case of boot problems only</span>
-              <span class="s"># usermod --password $(echo test123 | openssl passwd -1 -stdin) ec2-user</span>
+  <span class="c1"># Public Subnet</span>
+  <span class="na">PublicSubnet</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::Subnet</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
+      <span class="na">CidrBlock</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicSubnetCIDR</span>
+      <span class="na">AvailabilityZone</span><span class="pi">:</span> <span class="kt">!Select</span> <span class="pi">[</span> <span class="nv">0</span><span class="pi">,</span> <span class="kt">!GetAZs</span> <span class="s1">'</span><span class="s">'</span> <span class="pi">]</span>
+      <span class="na">MapPublicIpOnLaunch</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="c1"># tags:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-sn-pub-1</span>
 
-              <span class="s"># see</span><span class="err">:</span> <span class="s">https://aws.amazon.com/premiumsupport/knowledge-center/ec2-linux-log-user-data/</span>
-              <span class="s">exec &gt; &gt;(tee /var/log/user-data.log|logger -t user-data -s 2&gt;/dev/console) 2&gt;&amp;1</span>
+  <span class="c1"># Private Subnet</span>
+  <span class="na">PrivateSubnet</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::Subnet</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
+      <span class="na">CidrBlock</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PrivateSubnetCIDR</span>
+      <span class="na">AvailabilityZone</span><span class="pi">:</span> <span class="kt">!Select</span> <span class="pi">[</span> <span class="nv">0</span><span class="pi">,</span> <span class="kt">!GetAZs</span>  <span class="s1">'</span><span class="s">'</span> <span class="pi">]</span>
+      <span class="na">MapPublicIpOnLaunch</span><span class="pi">:</span> <span class="no">false</span>
+      <span class="c1"># tags:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-sn-priv-1</span>
 
-              <span class="s">EC2_INSTANCE_ID=$(ec2-metadata --instance-id | awk '{print $2}')</span>
-              <span class="s">EC2_REGION=$(ec2-metadata --availability-zone | awk '{print $2}' | sed 's/.$//')</span>
+  <span class="c1"># NAT Elastic IP</span>
+  <span class="na">NatGatewayEIP</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::EIP</span>
+    <span class="na">DependsOn</span><span class="pi">:</span> <span class="s">InternetGatewayAttachment</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">Domain</span><span class="pi">:</span> <span class="s">vpc</span>
+      <span class="c1"># tags:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-eip-1</span>
 
-              <span class="s">## Timezone</span>
-              <span class="s"># see</span><span class="err">:</span> <span class="s">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html#change_time_zone</span>
-              <span class="s">timedatectl set-timezone America/Los_Angeles</span>
+  <span class="c1"># NAT Gateway</span>
+  <span class="na">NatGateway</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::NatGateway</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">AllocationId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="s">NatGatewayEIP.AllocationId</span>
+      <span class="na">SubnetId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicSubnet</span>
+      <span class="c1"># tags:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-ng-1</span>
 
-              <span class="s">## DNS</span>
-              <span class="s">PRIVATE_IP=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)</span>
-              <span class="s">DNS_NAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$EC2_INSTANCE_ID" "Name=key,Values=Name" --region $EC2_REGION --output=text | cut -f5)</span>
-              <span class="s">aws route53 change-resource-record-sets --hosted-zone-id ${HostedZoneId} --change-batch '{</span>
-                <span class="s">"Changes"</span><span class="err">:</span> <span class="pi">[</span>
-                  <span class="pi">{</span>
-                    <span class="s2">"</span><span class="s">Action"</span><span class="pi">:</span> <span class="s2">"</span><span class="s">UPSERT"</span><span class="pi">,</span>
-                    <span class="s2">"</span><span class="s">ResourceRecordSet"</span><span class="pi">:</span> <span class="pi">{</span>
-                      <span class="s2">"</span><span class="s">Name"</span><span class="pi">:</span> <span class="s2">"</span><span class="s">'$DNS_NAME'.swift.internal."</span><span class="pi">,</span>
-                      <span class="s2">"</span><span class="s">Type"</span><span class="pi">:</span> <span class="s2">"</span><span class="s">A"</span><span class="pi">,</span>
-                      <span class="s2">"</span><span class="s">TTL"</span><span class="pi">:</span> <span class="nv">60</span><span class="pi">,</span>
-                      <span class="s2">"</span><span class="s">ResourceRecords"</span><span class="pi">:</span> <span class="pi">[</span>
-                        <span class="pi">{</span>
-                          <span class="s2">"</span><span class="s">Value"</span><span class="pi">:</span> <span class="s2">"</span><span class="s">'$PRIVATE_IP'"</span>
-                        <span class="pi">}</span>
-                      <span class="pi">]</span>
-                    <span class="pi">}</span>
-                  <span class="pi">}</span>
-                <span class="pi">]</span>
-              <span class="err">}</span><span class="s1">'</span>
+  <span class="c1"># Public route table</span>
+  <span class="na">PublicRouteTable</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::RouteTable</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
+      <span class="c1"># tags:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-rt-pub-1</span>
 
-              <span class="s">#</span><span class="nv"> </span><span class="s">Add</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">.swift.internal</span><span class="nv"> </span><span class="s">domain</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">list</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">searchable</span><span class="nv"> </span><span class="s">domains</span>
-              <span class="s">echo</span><span class="nv"> </span><span class="s">search</span><span class="nv"> </span><span class="s">swift.internal</span><span class="nv"> </span><span class="s">&gt;&gt;</span><span class="nv"> </span><span class="s">/etc/resolv.conf</span>
+  <span class="c1"># Route to internet gateway</span>
+  <span class="na">DefaultPublicRoute</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::Route</span>
+    <span class="na">DependsOn</span><span class="pi">:</span> <span class="s">InternetGatewayAttachment</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">RouteTableId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicRouteTable</span>
+      <span class="na">DestinationCidrBlock</span><span class="pi">:</span> <span class="s">0.0.0.0/0</span>
+      <span class="na">GatewayId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">InternetGateway</span>
 
-              <span class="s">#</span><span class="nv"> </span><span class="s">Amazon</span><span class="nv"> </span><span class="s">Linux</span><span class="nv"> </span><span class="s">specific</span><span class="nv"> </span><span class="s">hack</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">preserve</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">domain</span><span class="nv"> </span><span class="s">search</span><span class="nv"> </span><span class="s">config</span><span class="nv"> </span><span class="s">between</span><span class="nv"> </span><span class="s">reboots</span>
-              <span class="s">echo</span><span class="nv"> </span><span class="s">'prepend domain-search "swift.internal";' &gt;&gt; /etc/dhcp/dhclient.conf</span>
+  <span class="c1"># Routes for public subnet</span>
+  <span class="na">PublicSubnetRouteTableAssociation</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SubnetRouteTableAssociation</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">RouteTableId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicRouteTable</span>
+      <span class="na">SubnetId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicSubnet</span>
 
-              <span class="s">## Hostname</span>
-              <span class="s"># Change hostname to the DNS NAME, which in turn is the name tag of the instance</span> 
-              <span class="s">hostnamectl set-hostname $DNS_NAME.swift.internal</span>
+  <span class="c1"># Routes for private subnet</span>
+  <span class="na">PrivateRouteTable</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::RouteTable</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
+      <span class="c1"># tags:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-rt-priv-1</span>
 
-              <span class="s"># Amazon EC2 specific hack to preserve hostname between reboots</span>
-              <span class="s">echo 'preserve_hostname</span><span class="err">:</span> <span class="no">true</span><span class="s">' &gt;&gt; /etc/cloud/cloud.cfg</span>
+  <span class="na">DefaultPrivateRoute</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::Route</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">RouteTableId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PrivateRouteTable</span>
+      <span class="na">DestinationCidrBlock</span><span class="pi">:</span> <span class="s">0.0.0.0/0</span>
+      <span class="na">NatGatewayId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">NatGateway</span>          
 
+  <span class="na">PrivateSubnetRouteTableAssociation</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SubnetRouteTableAssociation</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">RouteTableId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PrivateRouteTable</span>
+      <span class="na">SubnetId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PrivateSubnet</span>
 
-              <span class="s">## Attach the EBS volumes</span>
-              <span class="s"># see</span><span class="err">:</span> <span class="s">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html</span>
+  <span class="c1">## Security groups</span>
+  <span class="c1"># Public</span>
+  <span class="na">PublicSecurityGroup</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroup</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">GroupDescription</span><span class="pi">:</span> <span class="s">Security group for manager nodes</span>
+      <span class="c1"># tags:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-sg-pub-1</span>
+      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
+      <span class="na">SecurityGroupIngress</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">IpProtocol</span><span class="pi">:</span> <span class="s">tcp</span>
+          <span class="na">FromPort</span><span class="pi">:</span> <span class="m">22</span>
+          <span class="na">ToPort</span><span class="pi">:</span> <span class="m">22</span>
+          <span class="na">CidrIp</span><span class="pi">:</span> <span class="s">0.0.0.0/0</span>
 
-              <span class="s"># Home</span>
-              <span class="s">aws ec2 attach-volume --region $EC2_REGION --instance-id $EC2_INSTANCE_ID --volume-id ${HomeVolumeId} --device /dev/sdh</span>
-              <span class="s">while [ ! -e /dev/sdh ]; do</span> 
-                <span class="s">echo Waiting for Home EBS volume to attach</span>
-                <span class="s">sleep </span><span class="m">30</span>
-              <span class="s">done</span>
+  <span class="c1"># Private</span>
+  <span class="na">PrivateSecurityGroup</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroup</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">GroupDescription</span><span class="pi">:</span> <span class="s">Security group for worker nodes</span>
+      <span class="c1"># tags:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-sg-priv-1</span>
+      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
 
-              <span class="s"># Docker</span>
-              <span class="s"># Docker volume is already attached as /dev/sdi</span>
+  <span class="c1">## Ingress rules</span>
+  <span class="c1"># Public</span>
+  <span class="na">PublicSecurityGroupIngressFromSelf</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroupIngress</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">GroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PublicSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
+      <span class="na">IpProtocol</span><span class="pi">:</span> <span class="s">-1</span>
+      <span class="na">SourceSecurityGroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PublicSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
 
+  <span class="na">PublicSecurityGroupIngressFromPrivate</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroupIngress</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">GroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PublicSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
+      <span class="na">IpProtocol</span><span class="pi">:</span> <span class="s">-1</span>
+      <span class="na">SourceSecurityGroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PrivateSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
 
-              <span class="s">## Format EBS volumes</span>
-              <span class="s"># Check if formatted and if not, format using ext4</span>
+  <span class="c1"># Private</span>
+  <span class="na">PrivateSecurityGroupIngressFromSelf</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroupIngress</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">GroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PrivateSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
+      <span class="na">IpProtocol</span><span class="pi">:</span> <span class="s">-1</span>
+      <span class="na">SourceSecurityGroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PrivateSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
 
-              <span class="s"># Home</span>
-              <span class="s"># Home volume is shared between manager and worker nodes</span>
+  <span class="na">PrivateSecurityGroupIngressFromPublic</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroupIngress</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">GroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PrivateSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
+      <span class="na">IpProtocol</span><span class="pi">:</span> <span class="s">-1</span>
+      <span class="na">SourceSecurityGroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PublicSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
 
-              <span class="s"># Docker</span>
-              <span class="s"># Docker volume is not shared. Each instance has its own Docker volume</span> 
-              <span class="s">device_fs_type=`file -sL /dev/sdi`</span>
-              <span class="s">if [[ $device_fs_type != *"ext4"* ]]; then</span>
-                  <span class="s">mkfs --type ext4 /dev/sdi</span>
-              <span class="s">fi</span>              
-
-
-              <span class="s">## Mount EBS file systems</span>
-              
-              <span class="s"># home</span>
-              <span class="s">mkdir -p /ebs/home</span>
-              <span class="s">echo '/dev/sdh /ebs/home ext4 defaults,nofail 0 2' | tee -a /etc/fstab</span>
-              
-              <span class="s"># docker</span>
-              <span class="s">mkdir -p /ebs/docker</span>
-              <span class="s">echo '/dev/sdi /ebs/docker ext4 defaults,nofail 0 2' | tee -a /etc/fstab</span>
-              
-              <span class="s">mount --all</span>
-
-
-              <span class="s">## Users</span>
-
-              <span class="s"># add users</span>
-              <span class="s"># runner</span>
-              <span class="s">groupadd --gid 200000 runner</span> 
-              <span class="s">useradd --gid runner --uid 200000  runner</span>
-
-              <span class="s"># worker</span>
-              <span class="s">useradd --create-home --home-dir /ebs/home/worker worker</span>
-
-              <span class="s"># install software</span>
-              <span class="s">yum update -y</span>
-              <span class="s">yum install docker git jq htop -y</span>
-
-
-              <span class="s">## Docker config</span>
-              <span class="s">#see</span><span class="err">:</span> <span class="s">https://docs.docker.com/engine/security/userns-remap/</span>
-
-              <span class="s"># - Use `/ebs/docker` as data-root (for containers and volumes)</span>
-              <span class="s"># - Map container `root` user to host `runner` user</span>             
-              <span class="s">cat &gt; /etc/docker/daemon.json &lt;&lt;EOF</span>
-              <span class="s">{</span>
-                <span class="s">"data-root"</span><span class="err">:</span> <span class="s2">"</span><span class="s">/ebs/docker"</span><span class="err">,</span>
-                <span class="s2">"</span><span class="s">userns-remap"</span><span class="err">:</span> <span class="s2">"</span><span class="s">runner"</span>
-              <span class="err">}</span>            
-              <span class="s">EOF</span>
-
-              <span class="s"># additional config needed for the Docker user namespace mapping</span>
-              <span class="s">touch /etc/subuid /etc/subgid</span>
-              <span class="s">echo "runner:$(id -u runner):65536" | sudo tee -a /etc/subuid</span>
-              <span class="s">echo "runner:$(id -g runner):65536" | sudo tee -a /etc/subgid</span>
-
-              <span class="s"># Enable Docker to run at boot and start it</span>
-              <span class="s">systemctl enable docker</span>
-              <span class="s">systemctl start docker</span>
-
-              <span class="s"># add users to the docker group</span>
-              <span class="s">usermod --append --groups docker ec2-user</span>
-              <span class="s">usermod --append --groups docker worker</span>
-
-              <span class="s"># download and install docker compose (optional)</span>
-              <span class="s"># platform=$(uname -s)-$(uname -m)</span>
-              <span class="s"># wget https://github.com/docker/compose/releases/latest/download/docker-compose-$platform</span> 
-              <span class="s"># mv docker-compose-$platform /usr/local/bin/docker-compose</span>
-              <span class="s"># chmod -v +x /usr/local/bin/docker-compose</span> 
-
-              <span class="s">## Install AWS CLI v2</span>
-              <span class="s">curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"</span>
-              <span class="s">unzip awscliv2.zip</span>
-              <span class="s">./aws/install</span>
+  <span class="c1"># Add DNS zone for our VPC</span>
+  <span class="na">HostedZone</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">AWS::Route53::HostedZone'</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">Name</span><span class="pi">:</span> <span class="s">swift.internal.</span>
+      <span class="na">VPCs</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">VPCId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
+          <span class="na">VPCRegion</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s2">"</span><span class="s">AWS::Region"</span>
+      <span class="na">HostedZoneConfig</span><span class="pi">:</span>
+        <span class="na">Comment</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Hosted</span><span class="nv"> </span><span class="s">zone</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">swift.internal'</span>      
 
 <span class="na">Outputs</span><span class="pi">:</span>
-  <span class="na">LaunchTemplateId</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">Launch template ID</span>
-    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">LaunchTemplate</span>
+  <span class="na">VpcId</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the created VPC</span>
+    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
+
+  <span class="na">PublicSubnetId</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the public subnet in the 1st Availability Zone</span>
+    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicSubnet</span>
+
+  <span class="na">PrivateSubnetId</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the private subnet in the 1st Availability Zone</span>
+    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PrivateSubnet</span>
+
+  <span class="na">PublicSecurityGroupId</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the public SecurityGroup</span>
+    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicSecurityGroup</span>
+
+  <span class="na">PrivateSecurityGroupId</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the private SecurityGroup</span>
+    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PrivateSecurityGroup</span>
+
+  <span class="na">HostedZoneId</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the Route53 HostedZone</span>
+    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">HostedZone</span>
 </code></pre></div></div>
 
-<h2 id="scripts">Scripts</h2>
+<h3 id="scripts">Scripts</h3>
 
-<p>Add a script <code class="language-plaintext highlighter-rouge">deploy-ec2-worker-lt.sh</code> and paste this code in it:</p>
+<p>Next add a script <code class="language-plaintext highlighter-rouge">deploy-vpc.sh</code> and paste this code in it:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
 
@@ -650,28 +795,22 @@ nano ec2-worker-lt/ec2-worker-lt.yml
 <span class="nb">source </span>config/names.sh
 
 <span class="nb">echo
-echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_ec2_worker_lt</span><span class="s2"> stack via cloud-formation:"</span>
+echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_vpc</span><span class="s2"> stack via cloud-formation:"</span>
 <span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
 <span class="nb">echo
 
-</span><span class="nv">hosted_zone_id</span><span class="o">=</span><span class="si">$(</span>aws cloudformation describe-stacks <span class="nt">--stack-name</span> <span class="nv">$stack_vpc</span> | jq <span class="nt">-r</span> <span class="s1">'.Stacks[0].Outputs[] | select(.OutputKey == "HostedZoneId") | .OutputValue'</span><span class="si">)</span>
-
-<span class="c"># home volume is shared between manager and worker(s)</span>
-<span class="nv">home_volume_id</span><span class="o">=</span><span class="si">$(</span>aws cloudformation describe-stacks <span class="nt">--stack-name</span> <span class="nv">$stack_ebs</span> | jq <span class="nt">-r</span> <span class="s1">'.Stacks[0].Outputs[] | select(.OutputKey == "HomeVolumeId") | .OutputValue'</span><span class="si">)</span>
-
-<span class="nb">set</span> <span class="nt">-x</span>
+set</span> <span class="nt">-x</span>
 
 aws cloudformation deploy <span class="se">\</span>
-    <span class="nt">--template-file</span> ec2-worker-lt/ec2-worker-lt.yml <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_ec2_worker_lt</span> <span class="se">\</span>
-    <span class="nt">--parameter-overrides</span> <span class="se">\</span>
-        <span class="nv">HostedZoneId</span><span class="o">=</span><span class="nv">$hosted_zone_id</span> <span class="se">\</span>
-        <span class="nv">HomeVolumeId</span><span class="o">=</span><span class="nv">$home_volume_id</span>
+    <span class="nt">--profile</span> swift <span class="se">\</span>
+    <span class="nt">--template-file</span> vpc/vpc.yml <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_vpc</span> <span class="se">\</span>
+    <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span><span class="nv">$prefix</span>
 
 <span class="nb">popd</span>
 </code></pre></div></div>
 
-<p>Let’s also add a clean up script <code class="language-plaintext highlighter-rouge">rm-ec2-worker-lt.sh</code>:</p>
+<p>Let’s also add a clean up script <code class="language-plaintext highlighter-rouge">rm-vpc.sh</code>:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
 
@@ -682,72 +821,51 @@ aws cloudformation deploy <span class="se">\</span>
 <span class="nb">source </span>config/names.sh
 
 <span class="nb">echo
-echo</span> <span class="s2">"Destroying </span><span class="nv">$stack_ec2_worker_lt</span><span class="s2"> stack via cloud-formation:"</span>
+echo</span> <span class="s2">"Removing </span><span class="nv">$stack_vpc</span><span class="s2"> stack via cloud-formation:"</span>
 <span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
 <span class="nb">echo
 
 set</span> <span class="nt">-x</span>
 
 aws cloudformation delete-stack <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_ec2_worker_lt</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_vpc</span> 
 
 aws cloudformation <span class="nb">wait </span>stack-delete-complete <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_ec2_worker_lt</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_vpc</span>
 
 <span class="nb">popd</span>
 </code></pre></div></div>
 
 <p>Make the scripts executable:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x ec2-worker-lt/deploy-ec2-worker-lt.sh 
-<span class="nb">chmod</span> +x ec2-worker-lt/rm-ec2-worker-lt.sh
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x vpc/deploy-vpc.sh 
+<span class="nb">chmod</span> +x vpc/rm-vpc.sh
 </code></pre></div></div>
 
 <h3 id="deploy">Deploy</h3>
 
-<p>Finally let’s run the “deploy” script to create the Worker launch template:</p>
+<p>Finally let’s run the “deploy” script to setup our network:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./ec2-worker-lt/deploy-ec2-worker-lt.sh
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./vpc/deploy-vpc.sh
 </code></pre></div></div>
 
 <p>You should see output similar to this:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-ec2-worker-lt stack via cloud-formation:
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-vpc stack via cloud-formation:
 https://us-west-2.console.aws.amazon.com/cloudformation/home
 
-+ aws cloudformation deploy <span class="nt">--profile</span> swift <span class="nt">--template-file</span> ec2-worker/ec2-worker-lt.yml <span class="nt">--stack-name</span> swift-swarm-ec2-worker-lt <span class="nt">--parameter-overrides</span> <span class="nv">HostedZoneId</span><span class="o">=</span>Z07362313E0WMP6Y4DBYT <span class="nv">HomeVolumeId</span><span class="o">=</span>vol-08b4fb87713440e48
++ aws cloudformation deploy <span class="nt">--template-file</span> network/vpc.yml <span class="nt">--stack-name</span> swift-swarm-vpc <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span>swift-swarm
 
 Waiting <span class="k">for </span>changeset to be created..
 Waiting <span class="k">for </span>stack create/update to <span class="nb">complete
-</span>Successfully created/updated stack - swift-swarm-ec2-worker-lt
+</span>Successfully created/updated stack - swift-swarm-vpc
 </code></pre></div></div>
 
 <p>At this point your project structure should look like this:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.
 ├── config
-│   └── names.sh
-├── ebs
-│   ├── deploy-ebs.sh
-│   ├── ebs.yml
-│   └── rm-ebs.sh
-├── ec2-manager
-│   ├── deploy-ec2-manager.sh
-│   ├── ec2-manager.yml
-│   └── rm-ec2-manager.sh
-├── ec2-worker-lt
-│   ├── deploy-ec2-worker-lt.sh
-│   ├── ec2-worker-lt.yml
-│   └── rm-ec2-worker-lt.sh
-├── iam
-│   ├── deploy-iam-manager.sh
-│   ├── deploy-iam-worker.sh
-│   ├── iam-manager.yml
-│   ├── iam-worker.yml
-│   ├── rm-iam-manager.sh
-│   └── rm-iam-worker.sh
-├── ssh
-│   └── ssh-manager.sh
+│   └── names.sh
 └── vpc
     ├── deploy-vpc.sh
     ├── rm-vpc.sh
@@ -756,9 +874,495 @@ Waiting <span class="k">for </span>stack create/update to <span class="nb">compl
 
 <p>Congratulations!</p>
 
-<p>We are done with <code class="language-plaintext highlighter-rouge">Step 5. Worker Launch Template</code>.</p>
+<p>We are done with <code class="language-plaintext highlighter-rouge">Step 1. Network Setup</code>.</p>
 
-<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Step 6. Worker Instances</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we will create the a launch templat for the EC2 Worker instances. This post is part of a thread that includes these steps: Network Setup Storage Roles Manager Instance Worker Launch Template (this post) Worker Instances Docker Swarm Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 4 - Manager Instance</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 4 - Manager Instance" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance/"><![CDATA[<p>In this step we will configure and launch the Manager EC2 instance.</p>
+<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Step 2. Storage</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[Setup network infrastructure including new VPC (Virtual Private Cloud), public and private subnets, internet gateway, security group, and ssh access. This post is part of a thread that includes these steps: Network Setup (this post) Storage Roles Manager Instance Worker Launch Template Worker Instances Docker Swarm Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 2 - Storage</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 2 - Storage" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage/"><![CDATA[<p>In this step we will create a shared EBS volume which will be used as a home directory for the Linux users.</p>
+
+<p>This post is part of a thread that includes these steps:</p>
+
+<ol>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
+  <li>Storage (this post)</li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
+</ol>
+
+<h1 id="elastic-block-storage-aws-ebs">Elastic Block Storage (AWS EBS)</h1>
+
+<p>Start in the project directory:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/swift-aws-ec2-swarm
+</code></pre></div></div>
+
+<h3 id="cloud-formation-template">cloud-formation Template</h3>
+
+<p>Create a folder <code class="language-plaintext highlighter-rouge">ebs</code> and a <code class="language-plaintext highlighter-rouge">ebs.yml</code> file in it.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ebs
+<span class="nb">touch </span>ebs/ebs.yml
+nano ebs/ebs.yml
+</code></pre></div></div>
+
+<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">ebs.yml</code>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Description</span><span class="pi">:</span> <span class="s">Shared EBS volumes for the Docker Swarm instances</span>  
+
+<span class="na">Resources</span><span class="pi">:</span>
+  <span class="na">HomeVolume</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">AWS::EC2::Volume'</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">VolumeType</span><span class="pi">:</span> <span class="s">io2</span>
+      <span class="na">Iops</span><span class="pi">:</span> <span class="s">3000</span>      
+      <span class="na">Size</span><span class="pi">:</span> <span class="m">30</span>
+      <span class="na">Encrypted</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="na">AvailabilityZone</span><span class="pi">:</span> <span class="kt">!Select</span> <span class="pi">[</span> <span class="nv">0</span><span class="pi">,</span> <span class="kt">!GetAZs</span> <span class="s1">'</span><span class="s">'</span> <span class="pi">]</span>
+      <span class="na">MultiAttachEnabled</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="c1"># tags:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="s">shared-volume-home</span>
+
+<span class="na">Outputs</span><span class="pi">:</span>
+  <span class="na">HomeVolumeId</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">The ID of the created home EBS volume</span>
+    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">HomeVolume</span>
+</code></pre></div></div>
+
+<h2 id="scripts">Scripts</h2>
+
+<p>Next add a script <code class="language-plaintext highlighter-rouge">deploy-ebs.sh</code> and paste this code in it:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+<span class="c"># switch to parent directory</span>
+<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
+<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
+
+<span class="nb">source </span>config/names.sh
+
+<span class="nb">echo
+echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_ebs</span><span class="s2"> stack via cloud-formation:"</span>
+<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
+<span class="nb">echo
+
+set</span> <span class="nt">-x</span>
+
+aws cloudformation deploy <span class="se">\</span>
+    <span class="nt">--template-file</span> ebs/ebs.yml <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_ebs</span>
+
+<span class="nb">popd</span>
+</code></pre></div></div>
+
+<p>Let’s also add a clean up script <code class="language-plaintext highlighter-rouge">rm-ebs.sh</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+
+<span class="c"># switch to parent directory</span>
+<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
+<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
+
+<span class="nb">source </span>config/names.sh
+
+<span class="nb">echo
+echo</span> <span class="s2">"Destroying </span><span class="nv">$stack_ebs</span><span class="s2"> stack via cloud-formation:"</span>
+<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
+<span class="nb">echo
+
+set</span> <span class="nt">-x</span>
+
+aws cloudformation delete-stack <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_ebs</span> 
+
+aws cloudformation <span class="nb">wait </span>stack-delete-complete <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_ebs</span>
+</code></pre></div></div>
+
+<p>Make the scripts executable:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x ebs/deploy-ebs.sh 
+<span class="nb">chmod</span> +x ebs/rm-ebs.sh
+</code></pre></div></div>
+
+<h3 id="deploy">Deploy</h3>
+
+<p>Finally let’s run the “deploy” script to create the EBS volumes:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./ebs/deploy-ebs.sh
+</code></pre></div></div>
+
+<p>You should see output similar to this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-ebs stack via cloud-formation:
+https://us-west-2.console.aws.amazon.com/cloudformation/home
+
++ aws cloudformation deploy <span class="nt">--template-file</span> ebs/ebs.yml <span class="nt">--stack-name</span> swift-swarm-ebs
+
+Waiting <span class="k">for </span>changeset to be created..
+Waiting <span class="k">for </span>stack create/update to <span class="nb">complete
+</span>Successfully created/updated stack - swift-swarm-ebs
+</code></pre></div></div>
+
+<p>At this point your project structure should look like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.
+├── config
+│   └── names.sh
+├── ebs
+│   ├── deploy-ebs.sh
+│   ├── ebs.yml
+│   └── rm-ebs.sh
+└── vpc
+    ├── deploy-vpc.sh
+    ├── rm-vpc.sh
+    └── vpc.yml
+</code></pre></div></div>
+
+<p>Congratulations!</p>
+
+<p>We are done with <code class="language-plaintext highlighter-rouge">Step 2. Storage</code>.</p>
+
+<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Step 3. Roles</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we will create a shared EBS volume which will be used as a home directory for the Linux users. This post is part of a thread that includes these steps: Network Setup Storage (this post) Roles Manager Instance Worker Launch Template Worker Instances Docker Swarm Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 3 - Roles</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 3 - Roles" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles/"><![CDATA[<p>In this step we create the IAM roles and policies needed by the EC2 instances.</p>
+
+<p>This post is part of a thread that includes these steps:</p>
+
+<ol>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
+  <li>Roles (this post)</li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
+  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
+</ol>
+
+<h2 id="identity-and-access-management-aws-iam">Identity and Access Management (AWS IAM)</h2>
+
+<p>Start in the project directory:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/swift-aws-ec2-swarm
+</code></pre></div></div>
+
+<h3 id="cloud-formation-template">cloud-formation Template</h3>
+
+<p>We need to create IAM Role and Instance Profile for two types of instances:</p>
+
+<ol>
+  <li>Manager - this will be used by the Manager instance</li>
+  <li>Worker - this will be used by the Worker instances</li>
+</ol>
+
+<h4 id="manager">Manager</h4>
+
+<p>Create a folder <code class="language-plaintext highlighter-rouge">iam</code> and a <code class="language-plaintext highlighter-rouge">iam-manager.yml</code> file in it.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> iam
+<span class="nb">touch </span>iam/iam-manager.yml
+nano iam/iam-manager.yml
+</code></pre></div></div>
+
+<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">iam-manager.yml</code>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Description</span><span class="pi">:</span>  <span class="s">IAM role and instance profile for the Manager instance</span>
+
+<span class="na">Parameters</span><span class="pi">:</span>
+  <span class="na">Prefix</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">An environment name that is prefixed to resource names</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
+
+<span class="c1"># Permissions for the Manager instance</span>
+<span class="na">Resources</span><span class="pi">:</span>
+  <span class="na">Role</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::IAM::Role</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-iam-role-manager</span>
+      <span class="na">AssumeRolePolicyDocument</span><span class="pi">:</span>
+        <span class="na">Version</span><span class="pi">:</span> <span class="s">2012-10-17</span>
+        <span class="na">Statement</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">Effect</span><span class="pi">:</span> <span class="s">Allow</span>
+            <span class="na">Principal</span><span class="pi">:</span>
+              <span class="na">Service</span><span class="pi">:</span> <span class="s">ec2.amazonaws.com</span>
+            <span class="na">Action</span><span class="pi">:</span> <span class="s">sts:AssumeRole</span>
+      <span class="na">ManagedPolicyArns</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly</span>
+      <span class="na">Policies</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">PolicyName</span><span class="pi">:</span> <span class="s">root</span>
+          <span class="na">PolicyDocument</span><span class="pi">:</span>
+            <span class="na">Version</span><span class="pi">:</span> <span class="s">2012-10-17</span>
+            <span class="na">Statement</span><span class="pi">:</span>
+              <span class="pi">-</span> <span class="na">Effect</span><span class="pi">:</span> <span class="s">Allow</span>
+                <span class="na">Action</span><span class="pi">:</span> 
+                  <span class="pi">-</span> <span class="s">ec2:DescribeTags</span>
+                  <span class="pi">-</span> <span class="s">ec2:AttachVolume</span>
+                  <span class="pi">-</span> <span class="s">ec2:DetachVolume</span>
+                  <span class="pi">-</span> <span class="s">ecr:DescribeRegistry</span>
+                  <span class="pi">-</span> <span class="s">route53:*</span>
+                <span class="na">Resource</span><span class="pi">:</span> <span class="s1">'</span><span class="s">*'</span>
+
+  <span class="na">InstanceProfile</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::IAM::InstanceProfile</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">Roles</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="kt">!Ref</span> <span class="s">Role</span>
+
+<span class="na">Outputs</span><span class="pi">:</span>
+  <span class="na">InstanceProfile</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the created InstanceProfile</span>
+    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">InstanceProfile</span>
+</code></pre></div></div>
+
+<h4 id="worker">Worker</h4>
+
+<p>Create a file <code class="language-plaintext highlighter-rouge">iam/iam-worker.yml</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">touch </span>iam/iam-worker.yml
+nano iam/iam-worker.yml
+</code></pre></div></div>
+
+<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">iam-worker.yml</code>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Description</span><span class="pi">:</span>  <span class="s">IAM role and instance profile for the Worker instances</span>
+
+<span class="na">Parameters</span><span class="pi">:</span>
+  <span class="na">Prefix</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">An environment name that is prefixed to resource names</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
+
+<span class="c1"># Permissions for the Worker instance(s)</span>
+<span class="na">Resources</span><span class="pi">:</span>
+  <span class="na">Role</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::IAM::Role</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="c1"># tags:</span>
+        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
+          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-iam-role-worker</span>
+      <span class="na">AssumeRolePolicyDocument</span><span class="pi">:</span>
+        <span class="na">Version</span><span class="pi">:</span> <span class="s">2012-10-17</span>
+        <span class="na">Statement</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">Effect</span><span class="pi">:</span> <span class="s">Allow</span>
+            <span class="na">Principal</span><span class="pi">:</span>
+              <span class="na">Service</span><span class="pi">:</span> <span class="s">ec2.amazonaws.com</span>
+            <span class="na">Action</span><span class="pi">:</span> <span class="s">sts:AssumeRole</span>
+      <span class="na">ManagedPolicyArns</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly</span>
+      <span class="na">Policies</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">PolicyName</span><span class="pi">:</span> <span class="s">root</span>
+          <span class="na">PolicyDocument</span><span class="pi">:</span>
+            <span class="na">Version</span><span class="pi">:</span> <span class="s">2012-10-17</span>
+            <span class="na">Statement</span><span class="pi">:</span>
+              <span class="pi">-</span> <span class="na">Effect</span><span class="pi">:</span> <span class="s">Allow</span>
+                <span class="na">Action</span><span class="pi">:</span> 
+                  <span class="pi">-</span> <span class="s">ec2:DescribeTags</span>
+                  <span class="pi">-</span> <span class="s">ec2:AttachVolume</span>
+                  <span class="pi">-</span> <span class="s">ec2:DetachVolume</span>
+                  <span class="pi">-</span> <span class="s">ecr:DescribeRegistry</span>
+                  <span class="pi">-</span> <span class="s">route53:*</span>
+                <span class="na">Resource</span><span class="pi">:</span> <span class="s1">'</span><span class="s">*'</span>
+
+  <span class="na">InstanceProfile</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::IAM::InstanceProfile</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">Roles</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="kt">!Ref</span> <span class="s">Role</span>
+
+<span class="na">Outputs</span><span class="pi">:</span>
+  <span class="na">InstanceProfile</span><span class="pi">:</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the created InstanceProfile</span>
+    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">InstanceProfile</span>
+</code></pre></div></div>
+
+<h2 id="scripts">Scripts</h2>
+
+<h3 id="manager-1">Manager</h3>
+
+<p>Add a script <code class="language-plaintext highlighter-rouge">iam/deploy-iam-manager.sh</code> and paste this code in it:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+<span class="c"># switch to parent directory</span>
+<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
+<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
+
+<span class="nb">source </span>config/names.sh
+
+<span class="nb">echo
+echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_iam_manager</span><span class="s2"> stack via cloud-formation:"</span>
+<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
+<span class="nb">echo
+
+set</span> <span class="nt">-x</span>
+
+<span class="c"># NOTE: `--capabilities CAPABILITY_IAM` is needed because the `iam.yml` cloud-formation template creates roles and instance profiles.</span>
+
+aws cloudformation deploy <span class="se">\</span>
+    <span class="nt">--capabilities</span> CAPABILITY_IAM <span class="se">\</span>
+    <span class="nt">--template-file</span> iam/iam-manager.yml <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_manager</span> <span class="se">\</span>
+    <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span><span class="nv">$prefix</span>
+
+<span class="nb">popd</span>
+</code></pre></div></div>
+<h3 id="worker-1">Worker</h3>
+
+<p>Add a script <code class="language-plaintext highlighter-rouge">iam/deploy-iam-worker.sh</code> and paste this code in it:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+<span class="c"># switch to parent directory</span>
+<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
+<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
+
+<span class="nb">source </span>config/names.sh
+
+<span class="nb">echo
+echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_iam_worker</span><span class="s2"> stack via cloud-formation:"</span>
+<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
+<span class="nb">echo
+
+set</span> <span class="nt">-x</span>
+
+<span class="c"># NOTE: `--capabilities CAPABILITY_IAM` is needed because the `iam.yml` cloud-formation template creates roles and instance profiles.</span>
+
+aws cloudformation deploy <span class="se">\</span>
+    <span class="nt">--capabilities</span> CAPABILITY_IAM <span class="se">\</span>
+    <span class="nt">--template-file</span> iam/iam-worker.yml <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_worker</span> <span class="se">\</span>
+    <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span><span class="nv">$prefix</span>
+
+<span class="nb">popd</span>
+</code></pre></div></div>
+
+<p>Let’s also add clean up scripts. First the <code class="language-plaintext highlighter-rouge">rm-iam-manager.sh</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+<span class="c"># switch to parent directory</span>
+<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
+<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
+
+<span class="nb">source </span>config/names.sh
+
+<span class="nb">echo
+echo</span> <span class="s2">"Removing </span><span class="nv">$stack_iam_manager</span><span class="s2"> stack via cloud-formation:"</span>
+<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
+<span class="nb">echo
+
+set</span> <span class="nt">-x</span>
+
+aws cloudformation delete-stack <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_manager</span> 
+
+aws cloudformation <span class="nb">wait </span>stack-delete-complete <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_manager</span>
+
+<span class="nb">popd</span>
+</code></pre></div></div>
+
+<p>and another one for the worker - <code class="language-plaintext highlighter-rouge">rm-iam-worker.sh</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+<span class="c"># switch to parent directory</span>
+<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
+<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
+
+<span class="nb">source </span>config/names.sh
+
+<span class="nb">echo
+echo</span> <span class="s2">"Removing </span><span class="nv">$stack_iam_worker</span><span class="s2"> stack via cloud-formation:"</span>
+<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
+<span class="nb">echo
+
+set</span> <span class="nt">-x</span>
+
+aws cloudformation delete-stack <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_worker</span> 
+
+aws cloudformation <span class="nb">wait </span>stack-delete-complete <span class="se">\</span>
+    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_worker</span>
+
+<span class="nb">popd</span>
+</code></pre></div></div>
+
+<p>Make all scripts executable:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x iam/deploy-iam-manager.sh 
+<span class="nb">chmod</span> +x iam/rm-iam-manager.sh
+
+<span class="nb">chmod</span> +x iam/deploy-iam-worker.sh 
+<span class="nb">chmod</span> +x iam/rm-iam-worker.sh
+</code></pre></div></div>
+
+<h3 id="deploy">Deploy</h3>
+
+<p>Finally let’s run the “deploy” scripts to create the IAM roles. First for the Manager:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./iam/deploy-iam-manager.sh
+</code></pre></div></div>
+
+<p>You should see output similar to this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-iam-manager stack via cloud-formation:
+https://us-west-2.console.aws.amazon.com/cloudformation/home
+
++ aws cloudformation deploy <span class="nt">--capabilities</span> CAPABILITY_IAM <span class="nt">--template-file</span> iam/iam-manager.yml <span class="nt">--stack-name</span> swift-swarm-iam-manager <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span>swift-swarm
+
+Waiting <span class="k">for </span>changeset to be created..
+Waiting <span class="k">for </span>stack create/update to <span class="nb">complete
+</span>Successfully created/updated stack - swift-swarm-iam-manager
+</code></pre></div></div>
+
+<p>then for the Worker:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./iam/deploy-iam-worker.sh
+</code></pre></div></div>
+
+<p>You should see output similar to this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-iam-worker stack via cloud-formation:
+https://us-west-2.console.aws.amazon.com/cloudformation/home
+
++ aws cloudformation deploy <span class="nt">--capabilities</span> CAPABILITY_IAM <span class="nt">--template-file</span> iam/iam-worker.yml <span class="nt">--stack-name</span> swift-swarm-iam-worker <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span>swift-swarm
+
+Waiting <span class="k">for </span>changeset to be created..
+Waiting <span class="k">for </span>stack create/update to <span class="nb">complete
+</span>Successfully created/updated stack - swift-swarm-iam-worker
+</code></pre></div></div>
+
+<p>At this point your project structure should look like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.
+├── config
+│   └── names.sh
+├── ebs
+│   ├── deploy-ebs.sh
+│   ├── ebs.yml
+│   └── rm-ebs.sh
+├── iam
+│   ├── deploy-iam-manager.sh
+│   ├── deploy-iam-worker.sh
+│   ├── iam-manager.yml
+│   ├── iam-worker.yml
+│   ├── rm-iam-manager.sh
+│   └── rm-iam-worker.sh
+└── vpc
+    ├── deploy-vpc.sh
+    ├── rm-vpc.sh
+    └── vpc.yml
+</code></pre></div></div>
+
+<p>Congratulations!</p>
+
+<p>We are done with <code class="language-plaintext highlighter-rouge">Step 3. Roles</code>.</p>
+
+<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Step 4. Manager Instance</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we create the IAM roles and policies needed by the EC2 instances. This post is part of a thread that includes these steps: Network Setup Storage Roles (this post) Manager Instance Worker Launch Template Worker Instances Docker Swarm Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 4 - Manager Instance</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 4 - Manager Instance" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance/"><![CDATA[<p>In this step we will configure and launch the Manager EC2 instance.</p>
 
 <p>This post is part of a thread that includes these steps:</p>
 
@@ -1183,742 +1787,4 @@ ssh <span class="nt">-i</span> <span class="nv">$ec2_key</span> ec2-user@<span c
 
 <p>We are done with <code class="language-plaintext highlighter-rouge">Step 4. Manager Instance</code>.</p>
 
-<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Step 5. Worker Launch Template</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we will configure and launch the Manager EC2 instance. This post is part of a thread that includes these steps: Network Setup Storage Roles Manager Instance (this post) Worker Launch Template Worker Instances Docker Swarm Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 3 - Roles</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 3 - Roles" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles/"><![CDATA[<p>In this step we create the IAM roles and policies needed by the EC2 instances.</p>
-
-<p>This post is part of a thread that includes these steps:</p>
-
-<ol>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
-  <li>Roles (this post)</li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
-</ol>
-
-<h2 id="identity-and-access-management-aws-iam">Identity and Access Management (AWS IAM)</h2>
-
-<p>Start in the project directory:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/swift-aws-ec2-swarm
-</code></pre></div></div>
-
-<h3 id="cloud-formation-template">cloud-formation Template</h3>
-
-<p>We need to create IAM Role and Instance Profile for two types of instances:</p>
-
-<ol>
-  <li>Manager - this will be used by the Manager instance</li>
-  <li>Worker - this will be used by the Worker instances</li>
-</ol>
-
-<h4 id="manager">Manager</h4>
-
-<p>Create a folder <code class="language-plaintext highlighter-rouge">iam</code> and a <code class="language-plaintext highlighter-rouge">iam-manager.yml</code> file in it.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> iam
-<span class="nb">touch </span>iam/iam-manager.yml
-nano iam/iam-manager.yml
-</code></pre></div></div>
-
-<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">iam-manager.yml</code>:</p>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Description</span><span class="pi">:</span>  <span class="s">IAM role and instance profile for the Manager instance</span>
-
-<span class="na">Parameters</span><span class="pi">:</span>
-  <span class="na">Prefix</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">An environment name that is prefixed to resource names</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
-
-<span class="c1"># Permissions for the Manager instance</span>
-<span class="na">Resources</span><span class="pi">:</span>
-  <span class="na">Role</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::IAM::Role</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="c1"># tags:</span>
-        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
-          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-iam-role-manager</span>
-      <span class="na">AssumeRolePolicyDocument</span><span class="pi">:</span>
-        <span class="na">Version</span><span class="pi">:</span> <span class="s">2012-10-17</span>
-        <span class="na">Statement</span><span class="pi">:</span>
-          <span class="pi">-</span> <span class="na">Effect</span><span class="pi">:</span> <span class="s">Allow</span>
-            <span class="na">Principal</span><span class="pi">:</span>
-              <span class="na">Service</span><span class="pi">:</span> <span class="s">ec2.amazonaws.com</span>
-            <span class="na">Action</span><span class="pi">:</span> <span class="s">sts:AssumeRole</span>
-      <span class="na">ManagedPolicyArns</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="s">arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly</span>
-      <span class="na">Policies</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="na">PolicyName</span><span class="pi">:</span> <span class="s">root</span>
-          <span class="na">PolicyDocument</span><span class="pi">:</span>
-            <span class="na">Version</span><span class="pi">:</span> <span class="s">2012-10-17</span>
-            <span class="na">Statement</span><span class="pi">:</span>
-              <span class="pi">-</span> <span class="na">Effect</span><span class="pi">:</span> <span class="s">Allow</span>
-                <span class="na">Action</span><span class="pi">:</span> 
-                  <span class="pi">-</span> <span class="s">ec2:DescribeTags</span>
-                  <span class="pi">-</span> <span class="s">ec2:AttachVolume</span>
-                  <span class="pi">-</span> <span class="s">ec2:DetachVolume</span>
-                  <span class="pi">-</span> <span class="s">ecr:DescribeRegistry</span>
-                  <span class="pi">-</span> <span class="s">route53:*</span>
-                <span class="na">Resource</span><span class="pi">:</span> <span class="s1">'</span><span class="s">*'</span>
-
-  <span class="na">InstanceProfile</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::IAM::InstanceProfile</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">Roles</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="kt">!Ref</span> <span class="s">Role</span>
-
-<span class="na">Outputs</span><span class="pi">:</span>
-  <span class="na">InstanceProfile</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the created InstanceProfile</span>
-    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">InstanceProfile</span>
-</code></pre></div></div>
-
-<h4 id="worker">Worker</h4>
-
-<p>Create a file <code class="language-plaintext highlighter-rouge">iam/iam-worker.yml</code></p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">touch </span>iam/iam-worker.yml
-nano iam/iam-worker.yml
-</code></pre></div></div>
-
-<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">iam-worker.yml</code>:</p>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Description</span><span class="pi">:</span>  <span class="s">IAM role and instance profile for the Worker instances</span>
-
-<span class="na">Parameters</span><span class="pi">:</span>
-  <span class="na">Prefix</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">An environment name that is prefixed to resource names</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
-
-<span class="c1"># Permissions for the Worker instance(s)</span>
-<span class="na">Resources</span><span class="pi">:</span>
-  <span class="na">Role</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::IAM::Role</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="c1"># tags:</span>
-        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
-          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-iam-role-worker</span>
-      <span class="na">AssumeRolePolicyDocument</span><span class="pi">:</span>
-        <span class="na">Version</span><span class="pi">:</span> <span class="s">2012-10-17</span>
-        <span class="na">Statement</span><span class="pi">:</span>
-          <span class="pi">-</span> <span class="na">Effect</span><span class="pi">:</span> <span class="s">Allow</span>
-            <span class="na">Principal</span><span class="pi">:</span>
-              <span class="na">Service</span><span class="pi">:</span> <span class="s">ec2.amazonaws.com</span>
-            <span class="na">Action</span><span class="pi">:</span> <span class="s">sts:AssumeRole</span>
-      <span class="na">ManagedPolicyArns</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="s">arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly</span>
-      <span class="na">Policies</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="na">PolicyName</span><span class="pi">:</span> <span class="s">root</span>
-          <span class="na">PolicyDocument</span><span class="pi">:</span>
-            <span class="na">Version</span><span class="pi">:</span> <span class="s">2012-10-17</span>
-            <span class="na">Statement</span><span class="pi">:</span>
-              <span class="pi">-</span> <span class="na">Effect</span><span class="pi">:</span> <span class="s">Allow</span>
-                <span class="na">Action</span><span class="pi">:</span> 
-                  <span class="pi">-</span> <span class="s">ec2:DescribeTags</span>
-                  <span class="pi">-</span> <span class="s">ec2:AttachVolume</span>
-                  <span class="pi">-</span> <span class="s">ec2:DetachVolume</span>
-                  <span class="pi">-</span> <span class="s">ecr:DescribeRegistry</span>
-                  <span class="pi">-</span> <span class="s">route53:*</span>
-                <span class="na">Resource</span><span class="pi">:</span> <span class="s1">'</span><span class="s">*'</span>
-
-  <span class="na">InstanceProfile</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::IAM::InstanceProfile</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">Roles</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="kt">!Ref</span> <span class="s">Role</span>
-
-<span class="na">Outputs</span><span class="pi">:</span>
-  <span class="na">InstanceProfile</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the created InstanceProfile</span>
-    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">InstanceProfile</span>
-</code></pre></div></div>
-
-<h2 id="scripts">Scripts</h2>
-
-<h3 id="manager-1">Manager</h3>
-
-<p>Add a script <code class="language-plaintext highlighter-rouge">iam/deploy-iam-manager.sh</code> and paste this code in it:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
-
-<span class="c"># switch to parent directory</span>
-<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
-<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
-
-<span class="nb">source </span>config/names.sh
-
-<span class="nb">echo
-echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_iam_manager</span><span class="s2"> stack via cloud-formation:"</span>
-<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
-<span class="nb">echo
-
-set</span> <span class="nt">-x</span>
-
-<span class="c"># NOTE: `--capabilities CAPABILITY_IAM` is needed because the `iam.yml` cloud-formation template creates roles and instance profiles.</span>
-
-aws cloudformation deploy <span class="se">\</span>
-    <span class="nt">--capabilities</span> CAPABILITY_IAM <span class="se">\</span>
-    <span class="nt">--template-file</span> iam/iam-manager.yml <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_manager</span> <span class="se">\</span>
-    <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span><span class="nv">$prefix</span>
-
-<span class="nb">popd</span>
-</code></pre></div></div>
-<h3 id="worker-1">Worker</h3>
-
-<p>Add a script <code class="language-plaintext highlighter-rouge">iam/deploy-iam-worker.sh</code> and paste this code in it:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
-
-<span class="c"># switch to parent directory</span>
-<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
-<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
-
-<span class="nb">source </span>config/names.sh
-
-<span class="nb">echo
-echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_iam_worker</span><span class="s2"> stack via cloud-formation:"</span>
-<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
-<span class="nb">echo
-
-set</span> <span class="nt">-x</span>
-
-<span class="c"># NOTE: `--capabilities CAPABILITY_IAM` is needed because the `iam.yml` cloud-formation template creates roles and instance profiles.</span>
-
-aws cloudformation deploy <span class="se">\</span>
-    <span class="nt">--capabilities</span> CAPABILITY_IAM <span class="se">\</span>
-    <span class="nt">--template-file</span> iam/iam-worker.yml <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_worker</span> <span class="se">\</span>
-    <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span><span class="nv">$prefix</span>
-
-<span class="nb">popd</span>
-</code></pre></div></div>
-
-<p>Let’s also add clean up scripts. First the <code class="language-plaintext highlighter-rouge">rm-iam-manager.sh</code>:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
-
-<span class="c"># switch to parent directory</span>
-<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
-<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
-
-<span class="nb">source </span>config/names.sh
-
-<span class="nb">echo
-echo</span> <span class="s2">"Removing </span><span class="nv">$stack_iam_manager</span><span class="s2"> stack via cloud-formation:"</span>
-<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
-<span class="nb">echo
-
-set</span> <span class="nt">-x</span>
-
-aws cloudformation delete-stack <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_manager</span> 
-
-aws cloudformation <span class="nb">wait </span>stack-delete-complete <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_manager</span>
-
-<span class="nb">popd</span>
-</code></pre></div></div>
-
-<p>and another one for the worker - <code class="language-plaintext highlighter-rouge">rm-iam-worker.sh</code>:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
-
-<span class="c"># switch to parent directory</span>
-<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
-<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
-
-<span class="nb">source </span>config/names.sh
-
-<span class="nb">echo
-echo</span> <span class="s2">"Removing </span><span class="nv">$stack_iam_worker</span><span class="s2"> stack via cloud-formation:"</span>
-<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
-<span class="nb">echo
-
-set</span> <span class="nt">-x</span>
-
-aws cloudformation delete-stack <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_worker</span> 
-
-aws cloudformation <span class="nb">wait </span>stack-delete-complete <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_worker</span>
-
-<span class="nb">popd</span>
-</code></pre></div></div>
-
-<p>Make all scripts executable:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x iam/deploy-iam-manager.sh 
-<span class="nb">chmod</span> +x iam/rm-iam-manager.sh
-
-<span class="nb">chmod</span> +x iam/deploy-iam-worker.sh 
-<span class="nb">chmod</span> +x iam/rm-iam-worker.sh
-</code></pre></div></div>
-
-<h3 id="deploy">Deploy</h3>
-
-<p>Finally let’s run the “deploy” scripts to create the IAM roles. First for the Manager:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./iam/deploy-iam-manager.sh
-</code></pre></div></div>
-
-<p>You should see output similar to this:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-iam-manager stack via cloud-formation:
-https://us-west-2.console.aws.amazon.com/cloudformation/home
-
-+ aws cloudformation deploy <span class="nt">--capabilities</span> CAPABILITY_IAM <span class="nt">--template-file</span> iam/iam-manager.yml <span class="nt">--stack-name</span> swift-swarm-iam-manager <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span>swift-swarm
-
-Waiting <span class="k">for </span>changeset to be created..
-Waiting <span class="k">for </span>stack create/update to <span class="nb">complete
-</span>Successfully created/updated stack - swift-swarm-iam-manager
-</code></pre></div></div>
-
-<p>then for the Worker:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./iam/deploy-iam-worker.sh
-</code></pre></div></div>
-
-<p>You should see output similar to this:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-iam-worker stack via cloud-formation:
-https://us-west-2.console.aws.amazon.com/cloudformation/home
-
-+ aws cloudformation deploy <span class="nt">--capabilities</span> CAPABILITY_IAM <span class="nt">--template-file</span> iam/iam-worker.yml <span class="nt">--stack-name</span> swift-swarm-iam-worker <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span>swift-swarm
-
-Waiting <span class="k">for </span>changeset to be created..
-Waiting <span class="k">for </span>stack create/update to <span class="nb">complete
-</span>Successfully created/updated stack - swift-swarm-iam-worker
-</code></pre></div></div>
-
-<p>At this point your project structure should look like this:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.
-├── config
-│   └── names.sh
-├── ebs
-│   ├── deploy-ebs.sh
-│   ├── ebs.yml
-│   └── rm-ebs.sh
-├── iam
-│   ├── deploy-iam-manager.sh
-│   ├── deploy-iam-worker.sh
-│   ├── iam-manager.yml
-│   ├── iam-worker.yml
-│   ├── rm-iam-manager.sh
-│   └── rm-iam-worker.sh
-└── vpc
-    ├── deploy-vpc.sh
-    ├── rm-vpc.sh
-    └── vpc.yml
-</code></pre></div></div>
-
-<p>Congratulations!</p>
-
-<p>We are done with <code class="language-plaintext highlighter-rouge">Step 3. Roles</code>.</p>
-
-<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Step 4. Manager Instance</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we create the IAM roles and policies needed by the EC2 instances. This post is part of a thread that includes these steps: Network Setup Storage Roles (this post) Manager Instance Worker Launch Template Worker Instances Docker Swarm Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 2 - Storage</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 2 - Storage" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage/"><![CDATA[<p>In this step we will create a shared EBS volume which will be used as a home directory for the Linux users.</p>
-
-<p>This post is part of a thread that includes these steps:</p>
-
-<ol>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
-  <li>Storage (this post)</li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
-</ol>
-
-<h1 id="elastic-block-storage-aws-ebs">Elastic Block Storage (AWS EBS)</h1>
-
-<p>Start in the project directory:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/swift-aws-ec2-swarm
-</code></pre></div></div>
-
-<h3 id="cloud-formation-template">cloud-formation Template</h3>
-
-<p>Create a folder <code class="language-plaintext highlighter-rouge">ebs</code> and a <code class="language-plaintext highlighter-rouge">ebs.yml</code> file in it.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ebs
-<span class="nb">touch </span>ebs/ebs.yml
-nano ebs/ebs.yml
-</code></pre></div></div>
-
-<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">ebs.yml</code>:</p>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Description</span><span class="pi">:</span> <span class="s">Shared EBS volumes for the Docker Swarm instances</span>  
-
-<span class="na">Resources</span><span class="pi">:</span>
-  <span class="na">HomeVolume</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">AWS::EC2::Volume'</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">VolumeType</span><span class="pi">:</span> <span class="s">io2</span>
-      <span class="na">Iops</span><span class="pi">:</span> <span class="s">3000</span>      
-      <span class="na">Size</span><span class="pi">:</span> <span class="m">30</span>
-      <span class="na">Encrypted</span><span class="pi">:</span> <span class="no">true</span>
-      <span class="na">AvailabilityZone</span><span class="pi">:</span> <span class="kt">!Select</span> <span class="pi">[</span> <span class="nv">0</span><span class="pi">,</span> <span class="kt">!GetAZs</span> <span class="s1">'</span><span class="s">'</span> <span class="pi">]</span>
-      <span class="na">MultiAttachEnabled</span><span class="pi">:</span> <span class="no">true</span>
-      <span class="c1"># tags:</span>
-        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
-          <span class="na">Value</span><span class="pi">:</span> <span class="s">shared-volume-home</span>
-
-<span class="na">Outputs</span><span class="pi">:</span>
-  <span class="na">HomeVolumeId</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">The ID of the created home EBS volume</span>
-    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">HomeVolume</span>
-</code></pre></div></div>
-
-<h2 id="scripts">Scripts</h2>
-
-<p>Next add a script <code class="language-plaintext highlighter-rouge">deploy-ebs.sh</code> and paste this code in it:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
-
-<span class="c"># switch to parent directory</span>
-<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
-<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
-
-<span class="nb">source </span>config/names.sh
-
-<span class="nb">echo
-echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_ebs</span><span class="s2"> stack via cloud-formation:"</span>
-<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
-<span class="nb">echo
-
-set</span> <span class="nt">-x</span>
-
-aws cloudformation deploy <span class="se">\</span>
-    <span class="nt">--template-file</span> ebs/ebs.yml <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_ebs</span>
-
-<span class="nb">popd</span>
-</code></pre></div></div>
-
-<p>Let’s also add a clean up script <code class="language-plaintext highlighter-rouge">rm-ebs.sh</code>:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
-
-
-<span class="c"># switch to parent directory</span>
-<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
-<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
-
-<span class="nb">source </span>config/names.sh
-
-<span class="nb">echo
-echo</span> <span class="s2">"Destroying </span><span class="nv">$stack_ebs</span><span class="s2"> stack via cloud-formation:"</span>
-<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
-<span class="nb">echo
-
-set</span> <span class="nt">-x</span>
-
-aws cloudformation delete-stack <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_ebs</span> 
-
-aws cloudformation <span class="nb">wait </span>stack-delete-complete <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_ebs</span>
-</code></pre></div></div>
-
-<p>Make the scripts executable:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x ebs/deploy-ebs.sh 
-<span class="nb">chmod</span> +x ebs/rm-ebs.sh
-</code></pre></div></div>
-
-<h3 id="deploy">Deploy</h3>
-
-<p>Finally let’s run the “deploy” script to create the EBS volumes:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./ebs/deploy-ebs.sh
-</code></pre></div></div>
-
-<p>You should see output similar to this:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-ebs stack via cloud-formation:
-https://us-west-2.console.aws.amazon.com/cloudformation/home
-
-+ aws cloudformation deploy <span class="nt">--template-file</span> ebs/ebs.yml <span class="nt">--stack-name</span> swift-swarm-ebs
-
-Waiting <span class="k">for </span>changeset to be created..
-Waiting <span class="k">for </span>stack create/update to <span class="nb">complete
-</span>Successfully created/updated stack - swift-swarm-ebs
-</code></pre></div></div>
-
-<p>At this point your project structure should look like this:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.
-├── config
-│   └── names.sh
-├── ebs
-│   ├── deploy-ebs.sh
-│   ├── ebs.yml
-│   └── rm-ebs.sh
-└── vpc
-    ├── deploy-vpc.sh
-    ├── rm-vpc.sh
-    └── vpc.yml
-</code></pre></div></div>
-
-<p>Congratulations!</p>
-
-<p>We are done with <code class="language-plaintext highlighter-rouge">Step 2. Storage</code>.</p>
-
-<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Step 3. Roles</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we will create a shared EBS volume which will be used as a home directory for the Linux users. This post is part of a thread that includes these steps: Network Setup Storage (this post) Roles Manager Instance Worker Launch Template Worker Instances Docker Swarm Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 8 - Cleanup</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 8 - Cleanup" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup/"><![CDATA[<p>In this step we cleanup the resources that we creater for the Docker Swarm cluster on EC2.</p>
-
-<p>This post is part of a thread that includes these steps:</p>
-
-<ol>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
-  <li>Cleanup (this post)</li>
-</ol>
-
-<h1 id="cleanup">Cleanup</h1>
-
-<h2 id="docker-swarm">Docker Swarm</h2>
-
-<h3 id="login-to-manager-machine">Login to manager machine</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./ssh/ssh-manager.sh
-</code></pre></div></div>
-
-<p>Switch user to the <code class="language-plaintext highlighter-rouge">worker</code> user:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>su - worker
-</code></pre></div></div>
-
-<h3 id="remove-all-nodes-from-swarm">Remove all nodes from Swarm</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pssh <span class="nt">--hosts</span><span class="o">=</span><span class="nv">$HOME</span>/nodes/hosts <span class="nt">--inline</span> <span class="s1">'docker swarm leave'</span>
-</code></pre></div></div>
-
-<h3 id="destroy-swarm">Destroy Swarm</h3>
-
-<p>On manager machine:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker swarm leave <span class="nt">--force</span> 
-</code></pre></div></div>
-
-<h3 id="clean-up-dangling-networks">Clean up dangling networks</h3>
-
-<p>After destroying the Swarm make sure that you do not have dangling networks <code class="language-plaintext highlighter-rouge">ingress</code> and <code class="language-plaintext highlighter-rouge">docker_gwbridge</code>:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network <span class="nb">ls</span>
-</code></pre></div></div>
-
-<p>If you see <code class="language-plaintext highlighter-rouge">ingress</code> or <code class="language-plaintext highlighter-rouge">docker_gwbridge</code>, force remove them:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network disconnect <span class="nt">--force</span> docker_gwbridge
-docker network <span class="nb">rm </span>docker_gwbridge
-</code></pre></div></div>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network disconnect <span class="nt">--force</span> ingress
-docker network <span class="nb">rm </span>ingress
-</code></pre></div></div>
-
-<p>Also you have to do the same for all nodes:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pssh <span class="nt">--hosts</span><span class="o">=</span><span class="nv">$HOME</span>/nodes/hosts <span class="nt">--inline</span> <span class="s1">'docker network rm docker_gwbridge'</span>
-pssh <span class="nt">--hosts</span><span class="o">=</span><span class="nv">$HOME</span>/nodes/hosts <span class="nt">--inline</span> <span class="s1">'docker network rm ingress'</span>
-</code></pre></div></div>
-
-<p>Remove <code class="language-plaintext highlighter-rouge">swift_default</code> network:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network <span class="nb">rm </span>swift_default
-</code></pre></div></div>
-
-<h3 id="docker-cleanup">Docker Cleanup</h3>
-
-<p>These commands will remove all stopped containers and all images that do not have a running container on <strong>all nodes</strong>:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># stop and femove containers</span>
-pssh <span class="nt">--timeout</span> 300 <span class="nt">--hosts</span><span class="o">=</span><span class="nv">$HOME</span>/nodes/hosts <span class="nt">--inline</span> <span class="se">\</span>
-  <span class="s1">'docker container prune --force'</span>
-
-<span class="c"># delete unused images</span>
-pssh <span class="nt">--timeout</span> 300 <span class="nt">--hosts</span><span class="o">=</span><span class="nv">$HOME</span>/nodes/hosts <span class="nt">--inline</span> <span class="se">\</span>
-  <span class="s1">'docker image prune --all --force'</span>
-  
-<span class="c"># check root file system</span>
-pssh <span class="nt">--timeout</span> 300 <span class="nt">--hosts</span><span class="o">=</span><span class="nv">$HOME</span>/nodes/hosts <span class="nt">--inline</span> <span class="se">\</span>
-  <span class="s1">'df --human-readable /ebs/docker'</span>  
-</code></pre></div></div>
-
-<h2 id="route-53-cleanup-script">Route 53 Cleanup Script</h2>
-
-<p>Start in the project directory:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/swift-aws-ec2-swarm
-</code></pre></div></div>
-
-<p>Create a folder <code class="language-plaintext highlighter-rouge">route53</code> and a <code class="language-plaintext highlighter-rouge">route53-delete-record.sh</code> file in it.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> route53
-<span class="nb">touch </span>route53/route53-delete-record.sh
-nano route53/route53-delete-record.sh
-</code></pre></div></div>
-
-<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">route53-delete-record.sh</code>:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
-
-<span class="c"># =============================================================================================================</span>
-<span class="c"># Usage:</span>
-<span class="c">#   ./route53-delete-record.sh [HostedZoneName] [Hostname] [Type]</span>
-<span class="c">#</span>
-<span class="c"># Example:</span>
-<span class="c">#   ./route53-delete-record.sh example.org dummy.example.org</span>
-<span class="c">#   ./route53-delete-record.sh example.org dummy.example.org TXT</span>
-<span class="c">#   ./route53-delete-record.sh example.org dummy.example.org txt</span>
-<span class="c">#   ./route53-delete-record.sh example.org dummy.example.org CNAME</span>
-<span class="c"># =============================================================================================================</span>
-
-<span class="c"># output coloring</span>
-<span class="nv">RED</span><span class="o">=</span><span class="si">$(</span>tput setaf 1<span class="si">)</span>
-<span class="nv">GREEN</span><span class="o">=</span><span class="si">$(</span>tput setaf 2<span class="si">)</span>
-<span class="nv">YELLOW</span><span class="o">=</span><span class="si">$(</span>tput setaf 3<span class="si">)</span>
-<span class="nv">CLEAR</span><span class="o">=</span><span class="si">$(</span>tput sgr0<span class="si">)</span>
-
-<span class="c"># put your value here</span>
-<span class="c"># note that jq can work with env var</span>
-<span class="nv">HOSTED_ZONE</span><span class="o">=</span><span class="k">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">example</span><span class="p">.org</span><span class="k">}</span>
-<span class="nv">DNS_NAME</span><span class="o">=</span><span class="k">${</span><span class="nv">2</span><span class="k">:-</span><span class="nv">test</span><span class="p">.example.org</span><span class="k">}</span>
-<span class="nv">DNS_TYPE</span><span class="o">=</span><span class="k">${</span><span class="nv">3</span><span class="k">:-</span><span class="nv">A</span><span class="k">}</span>
-
-<span class="o">[[</span> <span class="nt">-z</span> <span class="s2">"</span><span class="nv">$HOSTED_ZONE</span><span class="s2">"</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">HOSTED_ZONE</span><span class="o">=</span>example.org
-
-<span class="c"># add . to the end</span>
-<span class="nv">DNS_NAME</span><span class="o">=</span><span class="s2">"</span><span class="nv">$DNS_NAME</span><span class="s2">."</span>
-
-<span class="c"># capitalize</span>
-<span class="nv">DNS_TYPE</span><span class="o">=</span><span class="k">${</span><span class="nv">DNS_TYPE</span><span class="p">^^</span><span class="k">}</span>
-
-<span class="nb">echo </span>Deleting record: <span class="se">\'</span><span class="nv">$DNS_TYPE</span><span class="se">\'</span> <span class="se">\'</span><span class="nv">$DNS_NAME</span><span class="se">\'</span> from hosted zone <span class="se">\'</span><span class="nv">$HOSTED_ZONE</span><span class="se">\'</span> ... 
-
-<span class="c"># find Zone ID</span>
-<span class="nv">ZONE_ID</span><span class="o">=</span><span class="si">$(</span>aws route53 list-hosted-zones-by-name <span class="nt">--dns-name</span> <span class="nv">$HOSTED_ZONE</span> <span class="nt">--output</span> json <span class="se">\</span>
-  | jq .HostedZones[].Id <span class="nt">--raw-output</span> <span class="se">\</span>
-  | <span class="nb">awk</span> <span class="nt">-F</span> / <span class="s1">'{print $3}'</span><span class="si">)</span>
-
-<span class="k">if</span> <span class="o">[[</span> <span class="nt">-z</span> <span class="s2">"</span><span class="nv">$ZONE_ID</span><span class="s2">"</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then
-  </span><span class="nb">echo</span> <span class="k">${</span><span class="nv">RED</span><span class="k">}</span><span class="nv">$HOSTED_ZONE</span> hosted zone not found!<span class="nv">$CLEAR</span>
-  <span class="nb">exit </span>1
-<span class="k">fi
-
-</span><span class="nb">echo </span>Zone ID: <span class="nv">$YELLOW$ZONE_ID$CLEAR</span>
-<span class="nb">echo</span>
-
-<span class="c"># find resource record set</span>
-<span class="nv">RECORD_SETS</span><span class="o">=</span><span class="si">$(</span>aws route53 list-resource-record-sets <span class="nt">--hosted-zone-id</span><span class="o">=</span><span class="nv">$ZONE_ID</span> <span class="nt">--output</span> json <span class="se">\</span>
-  | jq <span class="s1">'.ResourceRecordSets[] | select ((.Name == '</span><span class="se">\"</span><span class="nv">$DNS_NAME</span><span class="se">\"</span><span class="s1">') and (.Type=='</span><span class="se">\"</span><span class="nv">$DNS_TYPE</span><span class="se">\"</span><span class="s1">'))'</span><span class="si">)</span>
-
-<span class="k">if</span> <span class="o">[[</span> <span class="nt">-z</span> <span class="s2">"</span><span class="nv">$RECORD_SETS</span><span class="s2">"</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then
-  </span><span class="nb">echo</span> <span class="k">${</span><span class="nv">RED</span><span class="k">}</span><span class="nv">$DNS_NAME</span> <span class="nv">$DNS_TYPE</span> record not found!<span class="nv">$CLEAR</span>
-  <span class="nb">exit </span>1
-<span class="k">fi
-
-</span><span class="nb">echo </span>Resource Record Sets:
-jq <span class="o">&lt;&lt;&lt;</span> <span class="s2">"</span><span class="nv">$RECORD_SETS</span><span class="s2">"</span>
-<span class="nb">echo</span>
-
-<span class="c"># prepare the change batch value</span>
-<span class="nv">CHANGE_BATCH</span><span class="o">=</span><span class="si">$(</span><span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="no">EOF</span><span class="sh">
-{
-    "Comment": "delete this record",
-    "Changes": [
-        {
-            "Action": "DELETE",
-            "ResourceRecordSet":
-              </span><span class="nv">$RECORD_SETS</span><span class="sh">
-
-        }
-    ]
-}
-</span><span class="no">EOF
-</span><span class="si">)</span>
-
-<span class="nb">echo </span>Change batch:
-jq <span class="o">&lt;&lt;&lt;</span> <span class="s2">"</span><span class="nv">$CHANGE_BATCH</span><span class="s2">"</span>
-<span class="nb">echo</span>
-
-<span class="c"># perform the deletion</span>
-aws route53 change-resource-record-sets <span class="nt">--hosted-zone-id</span><span class="o">=</span><span class="nv">$ZONE_ID</span> <span class="nt">--change-batch</span> <span class="s2">"</span><span class="nv">$CHANGE_BATCH</span><span class="s2">"</span>
-</code></pre></div></div>
-
-<p>Make the script executable:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x route53/route53-delete-record.sh
-</code></pre></div></div>
-
-<h2 id="delete-aws-resources">Delete AWS resources</h2>
-
-<h3 id="instances">Instances</h3>
-
-<h4 id="worker">Worker</h4>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./ec2-worker/rm-ec2-worker.sh
-./ec2-worker-lt/rm-ec2-worker-lt.sh
-</code></pre></div></div>
-
-<h4 id="manager">Manager</h4>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./ec2-manager/rm-ec2-manager.sh
-</code></pre></div></div>
-
-<h3 id="iam-roles--instance-profiles">IAM Roles / Instance Profiles</h3>
-
-<h4 id="worker-1">Worker</h4>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./iam/rm-iam-worker.sh
-</code></pre></div></div>
-
-<h4 id="manager-1">Manager</h4>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./iam/rm-iam-manager.sh
-</code></pre></div></div>
-
-<h3 id="elastic-block-storage-ebs">Elastic Block Storage (EBS)</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./ebs/rm-ebs.sh
-</code></pre></div></div>
-
-<h3 id="route-53">Route 53</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./route53/route53-delete-record.sh swift.internal manager.swift.internal
-
-./route53/route53-delete-record.sh swift.internal worker-1.swift.internal
-./route53/route53-delete-record.sh swift.internal worker-2.swift.internal
-</code></pre></div></div>
-
-<h3 id="vpc">VPC</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./vpc/rm-vpc.sh
-</code></pre></div></div>
-
-<p>Congratulations!</p>
-
-<p>We are done with <code class="language-plaintext highlighter-rouge">Step 8. Cleanup</code>. This is the final step of this series.</p>
-
-<p>Here are all the steps again for reference:</p>
-
-<ol>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
-  <li>Cleanup (this post)</li>
-</ol>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we cleanup the resources that we creater for the Docker Swarm cluster on EC2. This post is part of a thread that includes these steps: Network Setup Storage Roles Manager Instance Worker Launch Template Worker Instances Docker Swarm Cleanup (this post)]]></summary></entry></feed>
+<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Step 5. Worker Launch Template</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we will configure and launch the Manager EC2 instance. This post is part of a thread that includes these steps: Network Setup Storage Roles Manager Instance (this post) Worker Launch Template Worker Instances Docker Swarm Cleanup]]></summary></entry></feed>

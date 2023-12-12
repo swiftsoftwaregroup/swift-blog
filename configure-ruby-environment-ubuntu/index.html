@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<title>Configure Ruby Environment on Ubuntu | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Swift Software Group">
+<meta name="generator" content="Jekyll v4.2.2">
+<link rel="canonical" href="/configure-ruby-environment-ubuntu/">
+
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QP5FYNH46M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QP5FYNH46M');
+</script>
+
+</head>
+
+
+
+
+<header>
+  <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
+  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="Archive" href="/archive/" ><span aria-hidden="true">Archive</span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/configure-ruby-environment-ubuntu/">Configure Ruby Environment on Ubuntu</a></h1><time datetime="2023-10-08T00:00:00-07:00">October 08, 2023</time>
+</header>
+
+  <p>This is a simple guide for configuring a Ruby 2 environment on Ubuntu. This was tested for Ruby 2.7.2 on Ubuntu 22.04.3. All scripts are <code class="language-plaintext highlighter-rouge">bash</code>.</p>
+
+<h2 id="compilers">Compilers</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>build-essential
+</code></pre></div></div>
+
+<h2 id="rvm">rvm</h2>
+
+<p><code class="language-plaintext highlighter-rouge">rvm</code> is a Ruby version manager</p>
+
+<p>Install:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg <span class="nt">--keyserver</span> hkp://keyserver.ubuntu.com <span class="nt">--recv-keys</span> 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+curl <span class="nt">-sSL</span> https://get.rvm.io | bash <span class="nt">-s</span> <span class="nt">--</span> stable <span class="nt">--ignore-dotfiles</span>
+</code></pre></div></div>
+
+<p>Test:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> ~/.rvm/scripts/rvm
+rvm info
+</code></pre></div></div>
+
+<h2 id="ruby">Ruby</h2>
+
+<p>Install via <code class="language-plaintext highlighter-rouge">rvm</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> ~/.rvm/scripts/rvm
+rvm pkg <span class="nb">install </span>openssl
+rvm <span class="nb">install </span>2.7.2 <span class="nt">--with-openssl-dir</span><span class="o">=</span><span class="nv">$HOME</span>/.rvm/usr
+</code></pre></div></div>
+
+<p>Test:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rvm use
+ruby <span class="nt">--version</span>
+
+<span class="c"># you should get output similar to this:</span>
+<span class="c"># ruby 2.7.2p137 (2020-10-01 revision 5445e04352) [x86_64-linux]</span>
+</code></pre></div></div>
+
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>
