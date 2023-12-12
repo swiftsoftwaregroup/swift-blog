@@ -46,6 +46,41 @@
   
   <article>
     <header>
+  <h1><a href="/getting-started-net-visual-studio-code-macos/">Getting Started with .NET and Visual Studio Code on macOS</a></h1><time datetime="2023-11-15T00:00:00-08:00">November 15, 2023</time>
+</header>
+
+    <p>Before going through these steps make sure you have done <a href="/setup-net-development-environment-macos">Setup .NET development environment on macOS</a></p>
+
+<h2 id="visual-studio-code">Visual Studio Code</h2>
+
+<p>Download and install from <a href="https://code.visualstudio.com/download">Visual Studio Code</a> site.</p>
+
+<p>Open Visual Studio Code and press <code class="language-plaintext highlighter-rouge">Cmd + Shift + p</code>. Select <code class="language-plaintext highlighter-rouge">Shell Command: Install 'code' command in PATH</code>.</p>
+
+<p>Close Visual Studio Code.</p>
+
+    <div class="more"><a href="/getting-started-net-visual-studio-code-macos/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/setup-net-development-environment-macos/">Setup .NET development environment on macOS</a></h1><time datetime="2023-11-14T00:00:00-08:00">November 14, 2023</time>
+</header>
+
+    <h1 id="setup-for-macos">Setup for macOS</h1>
+
+<p>Download the <code class="language-plaintext highlighter-rouge">dotnet-install.sh</code> script</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd
+</span>curl <span class="nt">-sSL</span> https://dot.net/v1/dotnet-install.sh <span class="o">&gt;</span> dotnet-install.sh
+<span class="nb">chmod</span> +x dotnet-install.sh
+</code></pre></div></div>
+
+    <div class="more"><a href="/setup-net-development-environment-macos/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
   <h1><a href="/configure-ruby-environment-ubuntu/">Configure Ruby Environment on Ubuntu</a></h1><time datetime="2023-10-08T00:00:00-07:00">October 08, 2023</time>
 </header>
 
@@ -134,52 +169,6 @@ podman machine start
     <div class="more"><a href="/setup-podman-macos/">read more</a></div>
   </article>
 
-  <article>
-    <header>
-  <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup/">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 8 - Cleanup</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
-</header>
-
-    <p>In this step we cleanup the resources that we creater for the Docker Swarm cluster on EC2.</p>
-
-<p>This post is part of a thread that includes these steps:</p>
-
-<ol>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
-  <li>Cleanup (this post)</li>
-</ol>
-
-    <div class="more"><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup/">read more</a></div>
-  </article>
-
-  <article>
-    <header>
-  <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm/">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 7 - Docker Swarm</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
-</header>
-
-    <p>In this step we will create a Docker Swarm cluster.</p>
-
-<p>This post is part of a thread that includes these steps:</p>
-
-<ol>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
-  <li>Docker Swarm (this post)</li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
-</ol>
-
-    <div class="more"><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm/">read more</a></div>
-  </article>
-
 
 
   <article>
@@ -191,13 +180,15 @@ podman machine start
     <a href="/tag/docker-swarm"><code class="highligher-rouge" style="font-size:18px;"><nobr>docker-swarm</nobr></code></a>
     <a href="/tag/docker"><code class="highligher-rouge" style="font-size:18px;"><nobr>docker</nobr></code></a>
     <a href="/tag/cloud-formation"><code class="highligher-rouge" style="font-size:18px;"><nobr>cloud-formation</nobr></code></a>
+    <a href="/tag/macos"><code class="highligher-rouge" style="font-size:16px;"><nobr>macos</nobr></code></a>
     <a href="/tag/ecs"><code class="highligher-rouge" style="font-size:16px;"><nobr>ecs</nobr></code></a>
-    <a href="/tag/macos"><code class="highligher-rouge" style="font-size:14px;"><nobr>macos</nobr></code></a>
+    <a href="/tag/vscode"><code class="highligher-rouge" style="font-size:12px;"><nobr>vscode</nobr></code></a>
     <a href="/tag/ruby"><code class="highligher-rouge" style="font-size:12px;"><nobr>ruby</nobr></code></a>
     <a href="/tag/podman"><code class="highligher-rouge" style="font-size:12px;"><nobr>podman</nobr></code></a>
+    <a href="/tag/csharp"><code class="highligher-rouge" style="font-size:12px;"><nobr>csharp</nobr></code></a>
     <a href="/tag/c++"><code class="highligher-rouge" style="font-size:12px;"><nobr>c++</nobr></code></a>
+    <a href="/tag/.net"><code class="highligher-rouge" style="font-size:12px;"><nobr>.net</nobr></code></a>
     <a href="/tag/windows"><code class="highligher-rouge" style="font-size:11px;"><nobr>windows</nobr></code></a>
-    <a href="/tag/vscode"><code class="highligher-rouge" style="font-size:11px;"><nobr>vscode</nobr></code></a>
     <a href="/tag/ubuntu"><code class="highligher-rouge" style="font-size:11px;"><nobr>ubuntu</nobr></code></a>
     <a href="/tag/mongodb"><code class="highligher-rouge" style="font-size:11px;"><nobr>mongodb</nobr></code></a>
     <a href="/tag/linux"><code class="highligher-rouge" style="font-size:11px;"><nobr>linux</nobr></code></a>

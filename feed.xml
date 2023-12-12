@@ -1,4 +1,170 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-12-12T09:50:30-08:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Configure Ruby Environment on Ubuntu</title><link href="/configure-ruby-environment-ubuntu/" rel="alternate" type="text/html" title="Configure Ruby Environment on Ubuntu" /><published>2023-10-08T00:00:00-07:00</published><updated>2023-10-08T00:00:00-07:00</updated><id>/configure-ruby-environment-ubuntu</id><content type="html" xml:base="/configure-ruby-environment-ubuntu/"><![CDATA[<p>This is a simple guide for configuring a Ruby 2 environment on Ubuntu. This was tested for Ruby 2.7.2 on Ubuntu 22.04.3. All scripts are <code class="language-plaintext highlighter-rouge">bash</code>.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-12-12T10:05:04-08:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Getting Started with .NET and Visual Studio Code on macOS</title><link href="/getting-started-net-visual-studio-code-macos/" rel="alternate" type="text/html" title="Getting Started with .NET and Visual Studio Code on macOS" /><published>2023-11-15T00:00:00-08:00</published><updated>2023-11-15T00:00:00-08:00</updated><id>/getting-started-net-visual-studio-code-macos</id><content type="html" xml:base="/getting-started-net-visual-studio-code-macos/"><![CDATA[<p>Before going through these steps make sure you have done <a href="/setup-net-development-environment-macos">Setup .NET development environment on macOS</a></p>
+
+<h2 id="visual-studio-code">Visual Studio Code</h2>
+
+<p>Download and install from <a href="https://code.visualstudio.com/download">Visual Studio Code</a> site.</p>
+
+<p>Open Visual Studio Code and press <code class="language-plaintext highlighter-rouge">Cmd + Shift + p</code>. Select <code class="language-plaintext highlighter-rouge">Shell Command: Install 'code' command in PATH</code>.</p>
+
+<p>Close Visual Studio Code.</p>
+
+<h2 id="project-directory">Project Directory</h2>
+
+<p>Create a directory called <code class="language-plaintext highlighter-rouge">simple</code> in <code class="language-plaintext highlighter-rouge">~/net/simple</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ~/net/simple
+</code></pre></div></div>
+
+<h2 id="net-project-files">.NET Project Files</h2>
+
+<p>Create the project files:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.dotnet:</span><span class="nv">$PATH</span><span class="s2">"</span>
+
+<span class="nb">cd</span> ~/net/simple
+
+<span class="c"># Switch to use .NET SDK 6.0, 7.0 or 8.0. We do 8.0 here but give the commands for other versions </span>
+<span class="c"># dotnet new globaljson --sdk-version 6.0.417 --roll-forward latestPatch</span>
+<span class="c"># dotnet new globaljson --sdk-version 7.0.404 --roll-forward latestPatch</span>
+dotnet new globaljson <span class="nt">--sdk-version</span> 8.0.100 <span class="nt">--roll-forward</span> latestPatch
+
+<span class="c"># create new console application and project</span>
+dotnet new console <span class="nt">--framework</span> net6.0
+
+<span class="c"># create new solution and add the project to it</span>
+dotnet new sln
+dotnet sln add simple.csproj
+
+<span class="c"># add .gitignore</span>
+dotnet new gitignore
+</code></pre></div></div>
+
+<p>Open the directory in Visual Studio Code:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.dotnet:</span><span class="nv">$PATH</span><span class="s2">"</span>
+
+<span class="nb">cd</span> ~/net/simple
+code <span class="nb">.</span>
+</code></pre></div></div>
+
+<p>Install the <a href="https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit">C# Dev Kit extension</a> for Visual Studio Code.</p>
+
+<h2 id="automate-the-build">Automate the build</h2>
+
+<p>Add the following Visual Studio Code specific files to the <code class="language-plaintext highlighter-rouge">.vscode</code> subdir:</p>
+
+<h3 id="vscodetasksjson"><code class="language-plaintext highlighter-rouge">.vscode/tasks.json</code></h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"tasks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dotnet"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"task"</span><span class="p">:</span><span class="w"> </span><span class="s2">"build"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"group"</span><span class="p">:</span><span class="w"> </span><span class="s2">"build"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"problemMatcher"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="nl">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dotnet: build"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Test the build by pressing <code class="language-plaintext highlighter-rouge">Cmd + B</code>. Visual Studio Code should execute the <code class="language-plaintext highlighter-rouge">build.sh</code> script automatically.</p>
+
+<h2 id="setup-debugging">Setup Debugging</h2>
+
+<p>Add the following Visual Studio Code specific files to the <code class="language-plaintext highlighter-rouge">.vscode</code> subdir:</p>
+
+<h3 id="vscodelaunchjson"><code class="language-plaintext highlighter-rouge">.vscode/launch.json</code></h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.2.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"configurations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">".NET Core Launch (console)"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"coreclr"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"request"</span><span class="p">:</span><span class="w"> </span><span class="s2">"launch"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"preLaunchTask"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dotnet: build"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"program"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}/bin/Debug/net6.0/simple.dll"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="nl">"cwd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"console"</span><span class="p">:</span><span class="w"> </span><span class="s2">"internalConsole"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"stopAtEntry"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="test-the-debugging">Test the debugging</h2>
+
+<p>Set a breakpoint at the <code class="language-plaintext highlighter-rouge">Console.WriteLine("Hello, World!");</code> line in <code class="language-plaintext highlighter-rouge">Programs.cs</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// See https://aka.ms/new-console-template for more information</span>
+<span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Hello, World!"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Press <code class="language-plaintext highlighter-rouge">F5</code> to launch the debugger. It should stop at the breakpoint.</p>]]></content><author><name>Swift Software Group</name></author><category term="csharp" /><category term="vscode" /><category term=".net" /><category term="macos" /><summary type="html"><![CDATA[Before going through these steps make sure you have done Setup .NET development environment on macOS Visual Studio Code Download and install from Visual Studio Code site. Open Visual Studio Code and press Cmd + Shift + p. Select Shell Command: Install 'code' command in PATH. Close Visual Studio Code.]]></summary></entry><entry><title type="html">Setup .NET development environment on macOS</title><link href="/setup-net-development-environment-macos/" rel="alternate" type="text/html" title="Setup .NET development environment on macOS" /><published>2023-11-14T00:00:00-08:00</published><updated>2023-11-14T00:00:00-08:00</updated><id>/setup-net-development-environment-macos</id><content type="html" xml:base="/setup-net-development-environment-macos/"><![CDATA[<h1 id="setup-for-macos">Setup for macOS</h1>
+
+<p>Download the <code class="language-plaintext highlighter-rouge">dotnet-install.sh</code> script</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd
+</span>curl <span class="nt">-sSL</span> https://dot.net/v1/dotnet-install.sh <span class="o">&gt;</span> dotnet-install.sh
+<span class="nb">chmod</span> +x dotnet-install.sh
+</code></pre></div></div>
+
+<h2 id="net-runtime">.NET Runtime</h2>
+
+<h3 id="net-runtime-60-lts">.NET Runtime 6.0 (LTS)</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./dotnet-install.sh --runtime dotnet --channel 6.0 --version latest
+</code></pre></div></div>
+
+<p>or download and install from <a href="https://dotnet.microsoft.com/en-us/download/dotnet/6.0">Microsoft</a></p>
+
+<h3 id="net-runtime-70">.NET Runtime 7.0</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./dotnet-install.sh --runtime dotnet --channel 7.0 --version latest
+</code></pre></div></div>
+
+<p>or download and install from <a href="https://dotnet.microsoft.com/en-us/download/dotnet/7.0">Microsoft</a></p>
+
+<h3 id="net-runtime-80-lts">.NET Runtime 8.0 (LTS)</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./dotnet-install.sh --runtime dotnet --channel 8.0 --version latest
+</code></pre></div></div>
+
+<p>or download and install from <a href="https://dotnet.microsoft.com/en-us/download/dotnet/8.0">Microsoft</a></p>
+
+<h2 id="net-sdk">.NET SDK</h2>
+
+<h3 id="net-sdk-60">.NET SDK 6.0</h3>
+
+<p>This is needed by the Visual Studio Code C# extension. Install with <code class="language-plaintext highlighter-rouge">dotnet-install.sh</code> script:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./dotnet-install.sh <span class="nt">--channel</span> 6.0
+</code></pre></div></div>
+
+<h3 id="net-sdk-70">.NET SDK 7.0</h3>
+
+<p>This is needed by the Visual Studio Code C# extension. Install with <code class="language-plaintext highlighter-rouge">dotnet-install.sh</code> script:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./dotnet-install.sh <span class="nt">--channel</span> 7.0
+</code></pre></div></div>
+
+<h3 id="net-sdk-80">.NET SDK 8.0</h3>
+
+<p>Install with <code class="language-plaintext highlighter-rouge">dotnet-install.sh</code> script:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./dotnet-install.sh <span class="nt">--channel</span> 8.0
+</code></pre></div></div>
+
+<h2 id="test">Test</h2>
+
+<p>Test that you can run the <code class="language-plaintext highlighter-rouge">dotnet</code> CLI (command line interface)</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/.dotnet/dotnet <span class="nt">--version</span>
+~/.dotnet/dotnet new console <span class="nt">--help</span>
+</code></pre></div></div>]]></content><author><name>Swift Software Group</name></author><category term="csharp" /><category term=".net" /><category term="macos" /><summary type="html"><![CDATA[Setup for macOS Download the dotnet-install.sh script cd curl -sSL https://dot.net/v1/dotnet-install.sh &gt; dotnet-install.sh chmod +x dotnet-install.sh]]></summary></entry><entry><title type="html">Configure Ruby Environment on Ubuntu</title><link href="/configure-ruby-environment-ubuntu/" rel="alternate" type="text/html" title="Configure Ruby Environment on Ubuntu" /><published>2023-10-08T00:00:00-07:00</published><updated>2023-10-08T00:00:00-07:00</updated><id>/configure-ruby-environment-ubuntu</id><content type="html" xml:base="/configure-ruby-environment-ubuntu/"><![CDATA[<p>This is a simple guide for configuring a Ruby 2 environment on Ubuntu. This was tested for Ruby 2.7.2 on Ubuntu 22.04.3. All scripts are <code class="language-plaintext highlighter-rouge">bash</code>.</p>
 
 <h2 id="compilers">Compilers</h2>
 
@@ -1026,765 +1192,4 @@ Waiting <span class="k">for </span>stack create/update to <span class="nb">compl
 
 <p>We are done with <code class="language-plaintext highlighter-rouge">Step 2. Storage</code>.</p>
 
-<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Step 3. Roles</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we will create a shared EBS volume which will be used as a home directory for the Linux users. This post is part of a thread that includes these steps: Network Setup Storage (this post) Roles Manager Instance Worker Launch Template Worker Instances Docker Swarm Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 3 - Roles</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 3 - Roles" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles/"><![CDATA[<p>In this step we create the IAM roles and policies needed by the EC2 instances.</p>
-
-<p>This post is part of a thread that includes these steps:</p>
-
-<ol>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
-  <li>Roles (this post)</li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
-</ol>
-
-<h2 id="identity-and-access-management-aws-iam">Identity and Access Management (AWS IAM)</h2>
-
-<p>Start in the project directory:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/swift-aws-ec2-swarm
-</code></pre></div></div>
-
-<h3 id="cloud-formation-template">cloud-formation Template</h3>
-
-<p>We need to create IAM Role and Instance Profile for two types of instances:</p>
-
-<ol>
-  <li>Manager - this will be used by the Manager instance</li>
-  <li>Worker - this will be used by the Worker instances</li>
-</ol>
-
-<h4 id="manager">Manager</h4>
-
-<p>Create a folder <code class="language-plaintext highlighter-rouge">iam</code> and a <code class="language-plaintext highlighter-rouge">iam-manager.yml</code> file in it.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> iam
-<span class="nb">touch </span>iam/iam-manager.yml
-nano iam/iam-manager.yml
-</code></pre></div></div>
-
-<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">iam-manager.yml</code>:</p>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Description</span><span class="pi">:</span>  <span class="s">IAM role and instance profile for the Manager instance</span>
-
-<span class="na">Parameters</span><span class="pi">:</span>
-  <span class="na">Prefix</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">An environment name that is prefixed to resource names</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
-
-<span class="c1"># Permissions for the Manager instance</span>
-<span class="na">Resources</span><span class="pi">:</span>
-  <span class="na">Role</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::IAM::Role</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="c1"># tags:</span>
-        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
-          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-iam-role-manager</span>
-      <span class="na">AssumeRolePolicyDocument</span><span class="pi">:</span>
-        <span class="na">Version</span><span class="pi">:</span> <span class="s">2012-10-17</span>
-        <span class="na">Statement</span><span class="pi">:</span>
-          <span class="pi">-</span> <span class="na">Effect</span><span class="pi">:</span> <span class="s">Allow</span>
-            <span class="na">Principal</span><span class="pi">:</span>
-              <span class="na">Service</span><span class="pi">:</span> <span class="s">ec2.amazonaws.com</span>
-            <span class="na">Action</span><span class="pi">:</span> <span class="s">sts:AssumeRole</span>
-      <span class="na">ManagedPolicyArns</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="s">arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly</span>
-      <span class="na">Policies</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="na">PolicyName</span><span class="pi">:</span> <span class="s">root</span>
-          <span class="na">PolicyDocument</span><span class="pi">:</span>
-            <span class="na">Version</span><span class="pi">:</span> <span class="s">2012-10-17</span>
-            <span class="na">Statement</span><span class="pi">:</span>
-              <span class="pi">-</span> <span class="na">Effect</span><span class="pi">:</span> <span class="s">Allow</span>
-                <span class="na">Action</span><span class="pi">:</span> 
-                  <span class="pi">-</span> <span class="s">ec2:DescribeTags</span>
-                  <span class="pi">-</span> <span class="s">ec2:AttachVolume</span>
-                  <span class="pi">-</span> <span class="s">ec2:DetachVolume</span>
-                  <span class="pi">-</span> <span class="s">ecr:DescribeRegistry</span>
-                  <span class="pi">-</span> <span class="s">route53:*</span>
-                <span class="na">Resource</span><span class="pi">:</span> <span class="s1">'</span><span class="s">*'</span>
-
-  <span class="na">InstanceProfile</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::IAM::InstanceProfile</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">Roles</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="kt">!Ref</span> <span class="s">Role</span>
-
-<span class="na">Outputs</span><span class="pi">:</span>
-  <span class="na">InstanceProfile</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the created InstanceProfile</span>
-    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">InstanceProfile</span>
-</code></pre></div></div>
-
-<h4 id="worker">Worker</h4>
-
-<p>Create a file <code class="language-plaintext highlighter-rouge">iam/iam-worker.yml</code></p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">touch </span>iam/iam-worker.yml
-nano iam/iam-worker.yml
-</code></pre></div></div>
-
-<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">iam-worker.yml</code>:</p>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Description</span><span class="pi">:</span>  <span class="s">IAM role and instance profile for the Worker instances</span>
-
-<span class="na">Parameters</span><span class="pi">:</span>
-  <span class="na">Prefix</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">An environment name that is prefixed to resource names</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
-
-<span class="c1"># Permissions for the Worker instance(s)</span>
-<span class="na">Resources</span><span class="pi">:</span>
-  <span class="na">Role</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::IAM::Role</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="c1"># tags:</span>
-        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
-          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-iam-role-worker</span>
-      <span class="na">AssumeRolePolicyDocument</span><span class="pi">:</span>
-        <span class="na">Version</span><span class="pi">:</span> <span class="s">2012-10-17</span>
-        <span class="na">Statement</span><span class="pi">:</span>
-          <span class="pi">-</span> <span class="na">Effect</span><span class="pi">:</span> <span class="s">Allow</span>
-            <span class="na">Principal</span><span class="pi">:</span>
-              <span class="na">Service</span><span class="pi">:</span> <span class="s">ec2.amazonaws.com</span>
-            <span class="na">Action</span><span class="pi">:</span> <span class="s">sts:AssumeRole</span>
-      <span class="na">ManagedPolicyArns</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="s">arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly</span>
-      <span class="na">Policies</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="na">PolicyName</span><span class="pi">:</span> <span class="s">root</span>
-          <span class="na">PolicyDocument</span><span class="pi">:</span>
-            <span class="na">Version</span><span class="pi">:</span> <span class="s">2012-10-17</span>
-            <span class="na">Statement</span><span class="pi">:</span>
-              <span class="pi">-</span> <span class="na">Effect</span><span class="pi">:</span> <span class="s">Allow</span>
-                <span class="na">Action</span><span class="pi">:</span> 
-                  <span class="pi">-</span> <span class="s">ec2:DescribeTags</span>
-                  <span class="pi">-</span> <span class="s">ec2:AttachVolume</span>
-                  <span class="pi">-</span> <span class="s">ec2:DetachVolume</span>
-                  <span class="pi">-</span> <span class="s">ecr:DescribeRegistry</span>
-                  <span class="pi">-</span> <span class="s">route53:*</span>
-                <span class="na">Resource</span><span class="pi">:</span> <span class="s1">'</span><span class="s">*'</span>
-
-  <span class="na">InstanceProfile</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::IAM::InstanceProfile</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">Roles</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="kt">!Ref</span> <span class="s">Role</span>
-
-<span class="na">Outputs</span><span class="pi">:</span>
-  <span class="na">InstanceProfile</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the created InstanceProfile</span>
-    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">InstanceProfile</span>
-</code></pre></div></div>
-
-<h2 id="scripts">Scripts</h2>
-
-<h3 id="manager-1">Manager</h3>
-
-<p>Add a script <code class="language-plaintext highlighter-rouge">iam/deploy-iam-manager.sh</code> and paste this code in it:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
-
-<span class="c"># switch to parent directory</span>
-<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
-<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
-
-<span class="nb">source </span>config/names.sh
-
-<span class="nb">echo
-echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_iam_manager</span><span class="s2"> stack via cloud-formation:"</span>
-<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
-<span class="nb">echo
-
-set</span> <span class="nt">-x</span>
-
-<span class="c"># NOTE: `--capabilities CAPABILITY_IAM` is needed because the `iam.yml` cloud-formation template creates roles and instance profiles.</span>
-
-aws cloudformation deploy <span class="se">\</span>
-    <span class="nt">--capabilities</span> CAPABILITY_IAM <span class="se">\</span>
-    <span class="nt">--template-file</span> iam/iam-manager.yml <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_manager</span> <span class="se">\</span>
-    <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span><span class="nv">$prefix</span>
-
-<span class="nb">popd</span>
-</code></pre></div></div>
-<h3 id="worker-1">Worker</h3>
-
-<p>Add a script <code class="language-plaintext highlighter-rouge">iam/deploy-iam-worker.sh</code> and paste this code in it:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
-
-<span class="c"># switch to parent directory</span>
-<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
-<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
-
-<span class="nb">source </span>config/names.sh
-
-<span class="nb">echo
-echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_iam_worker</span><span class="s2"> stack via cloud-formation:"</span>
-<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
-<span class="nb">echo
-
-set</span> <span class="nt">-x</span>
-
-<span class="c"># NOTE: `--capabilities CAPABILITY_IAM` is needed because the `iam.yml` cloud-formation template creates roles and instance profiles.</span>
-
-aws cloudformation deploy <span class="se">\</span>
-    <span class="nt">--capabilities</span> CAPABILITY_IAM <span class="se">\</span>
-    <span class="nt">--template-file</span> iam/iam-worker.yml <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_worker</span> <span class="se">\</span>
-    <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span><span class="nv">$prefix</span>
-
-<span class="nb">popd</span>
-</code></pre></div></div>
-
-<p>Let’s also add clean up scripts. First the <code class="language-plaintext highlighter-rouge">rm-iam-manager.sh</code>:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
-
-<span class="c"># switch to parent directory</span>
-<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
-<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
-
-<span class="nb">source </span>config/names.sh
-
-<span class="nb">echo
-echo</span> <span class="s2">"Removing </span><span class="nv">$stack_iam_manager</span><span class="s2"> stack via cloud-formation:"</span>
-<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
-<span class="nb">echo
-
-set</span> <span class="nt">-x</span>
-
-aws cloudformation delete-stack <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_manager</span> 
-
-aws cloudformation <span class="nb">wait </span>stack-delete-complete <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_manager</span>
-
-<span class="nb">popd</span>
-</code></pre></div></div>
-
-<p>and another one for the worker - <code class="language-plaintext highlighter-rouge">rm-iam-worker.sh</code>:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
-
-<span class="c"># switch to parent directory</span>
-<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
-<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
-
-<span class="nb">source </span>config/names.sh
-
-<span class="nb">echo
-echo</span> <span class="s2">"Removing </span><span class="nv">$stack_iam_worker</span><span class="s2"> stack via cloud-formation:"</span>
-<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
-<span class="nb">echo
-
-set</span> <span class="nt">-x</span>
-
-aws cloudformation delete-stack <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_worker</span> 
-
-aws cloudformation <span class="nb">wait </span>stack-delete-complete <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_iam_worker</span>
-
-<span class="nb">popd</span>
-</code></pre></div></div>
-
-<p>Make all scripts executable:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x iam/deploy-iam-manager.sh 
-<span class="nb">chmod</span> +x iam/rm-iam-manager.sh
-
-<span class="nb">chmod</span> +x iam/deploy-iam-worker.sh 
-<span class="nb">chmod</span> +x iam/rm-iam-worker.sh
-</code></pre></div></div>
-
-<h3 id="deploy">Deploy</h3>
-
-<p>Finally let’s run the “deploy” scripts to create the IAM roles. First for the Manager:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./iam/deploy-iam-manager.sh
-</code></pre></div></div>
-
-<p>You should see output similar to this:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-iam-manager stack via cloud-formation:
-https://us-west-2.console.aws.amazon.com/cloudformation/home
-
-+ aws cloudformation deploy <span class="nt">--capabilities</span> CAPABILITY_IAM <span class="nt">--template-file</span> iam/iam-manager.yml <span class="nt">--stack-name</span> swift-swarm-iam-manager <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span>swift-swarm
-
-Waiting <span class="k">for </span>changeset to be created..
-Waiting <span class="k">for </span>stack create/update to <span class="nb">complete
-</span>Successfully created/updated stack - swift-swarm-iam-manager
-</code></pre></div></div>
-
-<p>then for the Worker:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./iam/deploy-iam-worker.sh
-</code></pre></div></div>
-
-<p>You should see output similar to this:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-iam-worker stack via cloud-formation:
-https://us-west-2.console.aws.amazon.com/cloudformation/home
-
-+ aws cloudformation deploy <span class="nt">--capabilities</span> CAPABILITY_IAM <span class="nt">--template-file</span> iam/iam-worker.yml <span class="nt">--stack-name</span> swift-swarm-iam-worker <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span>swift-swarm
-
-Waiting <span class="k">for </span>changeset to be created..
-Waiting <span class="k">for </span>stack create/update to <span class="nb">complete
-</span>Successfully created/updated stack - swift-swarm-iam-worker
-</code></pre></div></div>
-
-<p>At this point your project structure should look like this:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.
-├── config
-│   └── names.sh
-├── ebs
-│   ├── deploy-ebs.sh
-│   ├── ebs.yml
-│   └── rm-ebs.sh
-├── iam
-│   ├── deploy-iam-manager.sh
-│   ├── deploy-iam-worker.sh
-│   ├── iam-manager.yml
-│   ├── iam-worker.yml
-│   ├── rm-iam-manager.sh
-│   └── rm-iam-worker.sh
-└── vpc
-    ├── deploy-vpc.sh
-    ├── rm-vpc.sh
-    └── vpc.yml
-</code></pre></div></div>
-
-<p>Congratulations!</p>
-
-<p>We are done with <code class="language-plaintext highlighter-rouge">Step 3. Roles</code>.</p>
-
-<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Step 4. Manager Instance</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we create the IAM roles and policies needed by the EC2 instances. This post is part of a thread that includes these steps: Network Setup Storage Roles (this post) Manager Instance Worker Launch Template Worker Instances Docker Swarm Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 4 - Manager Instance</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 4 - Manager Instance" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance/"><![CDATA[<p>In this step we will configure and launch the Manager EC2 instance.</p>
-
-<p>This post is part of a thread that includes these steps:</p>
-
-<ol>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
-  <li>Manager Instance (this post)</li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
-</ol>
-
-<h1 id="manager-instance-aws-ec2">Manager Instance (AWS EC2)</h1>
-
-<p>Start in the project directory:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/swift-aws-ec2-swarm
-</code></pre></div></div>
-
-<h3 id="cloud-formation-template">cloud-formation Template</h3>
-
-<p>Create a folder <code class="language-plaintext highlighter-rouge">ec2-manager</code> and a <code class="language-plaintext highlighter-rouge">ec2-manager.yml</code> file in it.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ec2-manager
-<span class="nb">touch </span>ec2-manager/ec2-manager.yml
-nano ec2-manager/ec2-manager.yml
-</code></pre></div></div>
-
-<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">ec2-manager.yml</code>:</p>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Description</span><span class="pi">:</span> <span class="s">Docker Swarm Manager instance</span>
-
-<span class="na">Parameters</span><span class="pi">:</span>
-  <span class="na">KeyPair</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::KeyPair::KeyName</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">Key pair that will be used to launch instances</span>
-
-  <span class="na">SubnetId</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::Subnet::Id</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">Subnet in the VPC where the instance will be launched</span>
-
-  <span class="na">SecurityGroupId</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroup::Id</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">Security group for the instance</span>
-
-  <span class="na">InstanceProfile</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">Instance profile to use for the instance</span>
-
-  <span class="na">InstanceType</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
-    <span class="na">Default</span><span class="pi">:</span> <span class="s">c5.large</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">Instance type to use for the instance</span>
-
-  <span class="na">LatestAmiId</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::SSM::Parameter::Value&lt;AWS::EC2::Image::Id&gt;</span>
-    <span class="na">Default</span><span class="pi">:</span> <span class="s">/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2</span>
-
-  <span class="na">HostedZoneId</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::Route53::HostedZone::Id</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">ID of the Route53 HostedZone</span>
-
-  <span class="na">HomeVolumeId</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::Volume::Id</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">ID of the volume to be mounted as /home</span>
-
-<span class="na">Resources</span><span class="pi">:</span>
-  <span class="na">Instance</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::Instance</span>
-    <span class="na">Properties</span><span class="pi">:</span> 
-      <span class="na">KeyName</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">KeyPair</span>
-
-      <span class="na">SubnetId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">SubnetId</span>
-      <span class="na">SecurityGroupIds</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="kt">!Ref</span> <span class="s">SecurityGroupId</span>      
-
-      <span class="na">IamInstanceProfile</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">InstanceProfile</span>
-
-      <span class="na">InstanceType</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">InstanceType</span>
-
-      <span class="na">ImageId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">LatestAmiId</span>
-
-      <span class="na">BlockDeviceMappings</span><span class="pi">:</span> 
-        <span class="c1"># Docker volume</span>
-        <span class="pi">-</span> <span class="na">DeviceName</span><span class="pi">:</span> <span class="s">/dev/sdi</span>
-          <span class="na">Ebs</span><span class="pi">:</span> 
-            <span class="na">Encrypted</span><span class="pi">:</span> <span class="no">true</span>
-            <span class="na">DeleteOnTermination</span><span class="pi">:</span> <span class="no">true</span>
-            <span class="na">VolumeSize</span><span class="pi">:</span> <span class="m">100</span>
-            <span class="na">VolumeType</span><span class="pi">:</span> <span class="s">gp2</span>          
-
-      <span class="c1"># tags:</span>
-        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
-          <span class="na">Value</span><span class="pi">:</span> <span class="s">manager</span>
-
-      <span class="na">UserData</span><span class="pi">:</span>
-        <span class="s">Fn::Base64:</span>
-          <span class="s">!Sub |</span>
-            <span class="s">#!/bin/bash -xe</span>
-
-            <span class="s"># see</span><span class="err">:</span> <span class="s">https://aws.amazon.com/premiumsupport/knowledge-center/ec2-linux-log-user-data/</span>
-            <span class="s">exec &gt; &gt;(tee /var/log/user-data.log|logger -t user-data -s 2&gt;/dev/console) 2&gt;&amp;1</span>
-
-            <span class="s">EC2_INSTANCE_ID=$(ec2-metadata --instance-id | awk '{print $2}')</span>
-            <span class="s">EC2_REGION=$(ec2-metadata --availability-zone | awk '{print $2}' | sed 's/.$//')</span>
-
-            <span class="s">## Timezone</span>
-            <span class="s"># see</span><span class="err">:</span> <span class="s">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html#change_time_zone</span>
-            <span class="s">timedatectl set-timezone America/Los_Angeles</span>
-
-            <span class="s">## DNS</span>
-            <span class="s">PRIVATE_IP=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)</span>
-            <span class="s">DNS_NAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$EC2_INSTANCE_ID" "Name=key,Values=Name" --region $EC2_REGION --output=text | cut -f5)</span>
-            <span class="s">aws route53 change-resource-record-sets --hosted-zone-id ${HostedZoneId} --change-batch '{</span>
-              <span class="s">"Changes"</span><span class="err">:</span> <span class="pi">[</span>
-                <span class="pi">{</span>
-                  <span class="s2">"</span><span class="s">Action"</span><span class="pi">:</span> <span class="s2">"</span><span class="s">UPSERT"</span><span class="pi">,</span>
-                  <span class="s2">"</span><span class="s">ResourceRecordSet"</span><span class="pi">:</span> <span class="pi">{</span>
-                    <span class="s2">"</span><span class="s">Name"</span><span class="pi">:</span> <span class="s2">"</span><span class="s">'$DNS_NAME'.swift.internal."</span><span class="pi">,</span>
-                    <span class="s2">"</span><span class="s">Type"</span><span class="pi">:</span> <span class="s2">"</span><span class="s">A"</span><span class="pi">,</span>
-                    <span class="s2">"</span><span class="s">TTL"</span><span class="pi">:</span> <span class="nv">60</span><span class="pi">,</span>
-                    <span class="s2">"</span><span class="s">ResourceRecords"</span><span class="pi">:</span> <span class="pi">[</span>
-                      <span class="pi">{</span>
-                        <span class="s2">"</span><span class="s">Value"</span><span class="pi">:</span> <span class="s2">"</span><span class="s">'$PRIVATE_IP'"</span>
-                      <span class="pi">}</span>
-                    <span class="pi">]</span>
-                  <span class="pi">}</span>
-                <span class="pi">}</span>
-              <span class="pi">]</span>
-            <span class="err">}</span><span class="s1">'</span>
-
-            <span class="s">#</span><span class="nv"> </span><span class="s">Add</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">.swift.internal</span><span class="nv"> </span><span class="s">domain</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">list</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">searchable</span><span class="nv"> </span><span class="s">domains</span>
-            <span class="s">echo</span><span class="nv"> </span><span class="s">search</span><span class="nv"> </span><span class="s">swift.internal</span><span class="nv"> </span><span class="s">&gt;&gt;</span><span class="nv"> </span><span class="s">/etc/resolv.conf</span>
-            
-            <span class="s">#</span><span class="nv"> </span><span class="s">Amazon</span><span class="nv"> </span><span class="s">Linux</span><span class="nv"> </span><span class="s">specific</span><span class="nv"> </span><span class="s">hack</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">preserve</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">domain</span><span class="nv"> </span><span class="s">search</span><span class="nv"> </span><span class="s">config</span><span class="nv"> </span><span class="s">between</span><span class="nv"> </span><span class="s">reboots</span>
-            <span class="s">echo</span><span class="nv"> </span><span class="s">'prepend domain-search "swift.internal";' &gt;&gt; /etc/dhcp/dhclient.conf</span>
-
-            <span class="s">## Hostname</span>
-            <span class="s"># Change hostname to the DNS NAME, which in turn is the name tag of the instance</span> 
-            <span class="s">hostnamectl set-hostname $DNS_NAME.swift.internal</span>
-            
-            <span class="s"># Amazon EC2 specific hack to preserve hostname between reboots</span>
-            <span class="s">echo 'preserve_hostname</span><span class="err">:</span> <span class="no">true</span><span class="s">' &gt;&gt; /etc/cloud/cloud.cfg</span>
-
-
-            <span class="s">## Attach the EBS volumes</span>
-            <span class="s"># see</span><span class="err">:</span> <span class="s">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html</span>
-            <span class="s"># home</span>
-            <span class="s">aws ec2 attach-volume --region $EC2_REGION --instance-id $EC2_INSTANCE_ID --volume-id ${HomeVolumeId} --device /dev/sdh</span>
-            <span class="s">while [ ! -e /dev/sdh ]; do</span> 
-              <span class="s">echo Waiting for Home EBS volume to attach</span>
-              <span class="s">sleep </span><span class="m">30</span>
-            <span class="s">done</span>
-
-            <span class="s"># docker</span>
-            <span class="s"># Docker volume is not shared. Each instance has its own Docker volume</span> 
-
-
-            <span class="s">## Format EBS volumes</span>
-            <span class="s"># Check if formatted and if not, format using ext4</span>
-            <span class="s"># home</span>
-            <span class="s">device_fs_type=`file -sL /dev/sdh`</span>
-            <span class="s">if [[ $device_fs_type != *"ext4"* ]]; then</span>
-                <span class="s">mkfs --type ext4 /dev/sdh</span>
-            <span class="s">fi</span>
-
-            <span class="s"># docker</span>
-            <span class="s">device_fs_type=`file -sL /dev/sdi`</span>
-            <span class="s">if [[ $device_fs_type != *"ext4"* ]]; then</span>
-                <span class="s">mkfs --type ext4 /dev/sdi</span>
-            <span class="s">fi</span>
-
-
-            <span class="s">## Mount EBS file systems</span>
-            <span class="s"># home</span>
-            <span class="s">mkdir -p /ebs/home</span>
-            <span class="s">echo '/dev/sdh /ebs/home ext4 defaults,nofail 0 2' | tee -a /etc/fstab</span>
-            
-            <span class="s"># docker</span>
-            <span class="s">mkdir -p /ebs/docker</span>
-            <span class="s">echo '/dev/sdi /ebs/docker ext4 defaults,nofail 0 2' | tee -a /etc/fstab</span>
-            
-            <span class="s">mount --all</span>
-
-
-            <span class="s">## Users</span>
-            <span class="s"># add users</span>
-            <span class="s"># runner</span>
-            <span class="s">groupadd --gid 200000 runner</span> 
-            <span class="s">useradd --gid runner --uid 200000  runner</span>
-
-            <span class="s"># worker</span>
-            <span class="s">useradd --create-home --home-dir /ebs/home/worker worker</span>
-
-
-            <span class="s">## Install Software</span>
-            <span class="s">yum update -y</span>
-            <span class="s">yum install docker git jq htop -y</span>
-
-
-            <span class="s">## Docker config</span>
-            <span class="s">#see</span><span class="err">:</span> <span class="s">https://docs.docker.com/engine/security/userns-remap/</span>
-
-            <span class="s"># - Use `/ebs/docker` as data-root (for containers and volumes)</span>
-            <span class="s"># - Map container `root` user to host `runner` user</span>             
-            <span class="s">cat &gt; /etc/docker/daemon.json &lt;&lt;EOF</span>
-            <span class="s">{</span>
-              <span class="s">"data-root"</span><span class="err">:</span> <span class="s2">"</span><span class="s">/ebs/docker"</span><span class="err">,</span>
-              <span class="s2">"</span><span class="s">userns-remap"</span><span class="err">:</span> <span class="s2">"</span><span class="s">runner"</span>
-            <span class="err">}</span>            
-            <span class="s">EOF</span>
-
-            <span class="s"># additional config needed for the Docker user namespace mapping</span>
-            <span class="s">touch /etc/subuid /etc/subgid</span>
-            <span class="s">echo "runner:$(id -u runner):65536" | sudo tee -a /etc/subuid</span>
-            <span class="s">echo "runner:$(id -g runner):65536" | sudo tee -a /etc/subgid</span>
-
-            <span class="s"># Enable Docker to run at boot and start it</span>
-            <span class="s">systemctl enable docker</span>
-            <span class="s">systemctl start docker</span>
-
-            <span class="s"># add users to the docker group</span>
-            <span class="s">usermod --append --groups docker ec2-user</span>
-            <span class="s">usermod --append --groups docker worker</span>
-
-
-            <span class="s">## SSH</span>
-
-            <span class="s"># enable ssh login for the worker account</span>
-            <span class="s">user_home=/ebs/home/worker</span>
-            <span class="s">if [ ! -f "$user_home/.ssh/id_rsa" ]; then</span>
-              <span class="s">sudo -iu worker sh -c "ssh-keygen -t rsa -f $user_home/.ssh/id_rsa -q -P ''"</span> 
-              <span class="s">sudo -iu worker sh -c "cat $user_home/.ssh/id_rsa.pub &gt; $user_home/.ssh/authorized_keys"</span>
-              <span class="s">sudo -iu worker sh -c "chmod 700 $user_home/.ssh"</span>
-              <span class="s">sudo -iu worker sh -c "chmod 600 $user_home/.ssh/authorized_keys"</span>
-            <span class="s">fi</span>
-
-            <span class="s"># download and install docker compose (optional)</span>
-            <span class="s"># platform=$(uname -s)-$(uname -m)</span>
-            <span class="s"># wget https://github.com/docker/compose/releases/latest/download/docker-compose-$platform</span> 
-            <span class="s"># mv docker-compose-$platform /usr/local/bin/docker-compose</span>
-            <span class="s"># chmod -v +x /usr/local/bin/docker-compose</span>
-
-
-            <span class="s">## Install AWS CLI v2</span>
-            <span class="s">curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"</span>
-            <span class="s">unzip awscliv2.zip</span>
-            <span class="s">./aws/install</span>
-
-
-            <span class="s"># signal that we are done</span>
-            <span class="s">/opt/aws/bin/cfn-signal -e $? --region ${AWS::Region} --stack ${AWS::StackName} --resource Instance</span> 
-    <span class="na">CreationPolicy</span><span class="pi">:</span>
-      <span class="na">ResourceSignal</span><span class="pi">:</span>
-        <span class="na">Timeout</span><span class="pi">:</span> <span class="s">PT15M</span>
-
-<span class="na">Outputs</span><span class="pi">:</span>
-  <span class="na">InstanceId</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">ID of the launched instance</span>
-    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Instance</span>
-</code></pre></div></div>
-
-<h2 id="scripts">Scripts</h2>
-
-<p>Add a script <code class="language-plaintext highlighter-rouge">deploy-ec2-manager.sh</code> and paste this code in it:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
-
-<span class="c"># switch to parent directory</span>
-<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
-<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
-
-<span class="nb">source </span>config/names.sh
-
-<span class="nb">echo
-echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_ec2_manager</span><span class="s2"> stack via cloud-formation:"</span>
-<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
-<span class="nb">echo
-
-</span><span class="nv">subnet_id</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-subnets <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$subnet_pub_1</span> | jq <span class="nt">-r</span> <span class="s1">'.Subnets[0].SubnetId'</span><span class="si">)</span>
-<span class="nv">security_group_id</span><span class="o">=</span><span class="si">$(</span>aws ec2  describe-security-groups <span class="nt">--filters</span> <span class="nv">Name</span><span class="o">=</span>tag:Name,Values<span class="o">=</span><span class="nv">$security_group_pub_1</span> | jq <span class="nt">-r</span> <span class="s1">'.SecurityGroups[0].GroupId'</span><span class="si">)</span>
-
-<span class="nv">instance_profile</span><span class="o">=</span><span class="si">$(</span>aws cloudformation describe-stacks <span class="nt">--stack-name</span> <span class="nv">$stack_iam_manager</span> | jq <span class="nt">-r</span> <span class="s1">'.Stacks[0].Outputs[] | select(.OutputKey == "InstanceProfile") | .OutputValue'</span><span class="si">)</span>
-
-<span class="nv">hosted_zone_id</span><span class="o">=</span><span class="si">$(</span>aws cloudformation describe-stacks <span class="nt">--stack-name</span> <span class="nv">$stack_vpc</span> | jq <span class="nt">-r</span> <span class="s1">'.Stacks[0].Outputs[] | select(.OutputKey == "HostedZoneId") | .OutputValue'</span><span class="si">)</span>
-
-<span class="c"># home volume is shared between manager and worker(s)</span>
-<span class="nv">home_volume_id</span><span class="o">=</span><span class="si">$(</span>aws cloudformation describe-stacks <span class="nt">--stack-name</span> <span class="nv">$stack_ebs</span> | jq <span class="nt">-r</span> <span class="s1">'.Stacks[0].Outputs[] | select(.OutputKey == "HomeVolumeId") | .OutputValue'</span><span class="si">)</span>
-
-<span class="nb">set</span> <span class="nt">-x</span>
-
-aws cloudformation deploy <span class="se">\</span>
-    <span class="nt">--template-file</span> ec2-manager/ec2-manager.yml <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_ec2_manager</span> <span class="se">\</span>
-    <span class="nt">--parameter-overrides</span> <span class="se">\</span>
-        <span class="nv">KeyPair</span><span class="o">=</span><span class="nv">$ec2_key_pair</span> <span class="se">\</span>
-        <span class="nv">SubnetId</span><span class="o">=</span><span class="nv">$subnet_id</span> <span class="se">\</span>
-        <span class="nv">SecurityGroupId</span><span class="o">=</span><span class="nv">$security_group_id</span> <span class="se">\</span>
-        <span class="nv">InstanceProfile</span><span class="o">=</span><span class="nv">$instance_profile</span> <span class="se">\</span>
-        <span class="nv">HostedZoneId</span><span class="o">=</span><span class="nv">$hosted_zone_id</span> <span class="se">\</span>
-        <span class="nv">HomeVolumeId</span><span class="o">=</span><span class="nv">$home_volume_id</span>
-
-<span class="nb">popd</span>
-</code></pre></div></div>
-
-<p>Let’s also add a clean up script <code class="language-plaintext highlighter-rouge">rm-ec2-manager.sh</code>:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
-
-<span class="c"># switch to parent directory</span>
-<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
-<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
-
-<span class="nb">source </span>config/names.sh
-
-<span class="nb">echo
-echo</span> <span class="s2">"Destroying </span><span class="nv">$stack_ec2_manager</span><span class="s2"> stack via cloud-formation:"</span>
-<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
-<span class="nb">echo
-
-set</span> <span class="nt">-x</span>
-
-aws cloudformation delete-stack <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_ec2_manager</span> 
-
-aws cloudformation <span class="nb">wait </span>stack-delete-complete <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_ec2_manager</span>
-
-<span class="nb">popd</span>
-</code></pre></div></div>
-
-<p>Make the scripts executable:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x ec2-manager/deploy-ec2-manager.sh 
-<span class="nb">chmod</span> +x ec2-manager/rm-ec2-manager.sh
-</code></pre></div></div>
-
-<h3 id="deploy">Deploy</h3>
-
-<p>Finally let’s run the “deploy” script to create the Manager instance:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./ec2-manager/deploy-ec2-manager.sh
-</code></pre></div></div>
-
-<p>You should see output similar to this:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-ec2-manager stack via cloud-formation:
-https://us-west-2.console.aws.amazon.com/cloudformation/home
-
-+ aws cloudformation deploy <span class="nt">--template-file</span> ec2-manager/ec2-manager.yml <span class="nt">--stack-name</span> swift-swarm-ec2-manager <span class="nt">--parameter-overrides</span> <span class="nv">KeyPair</span><span class="o">=</span>aws-ec2-key <span class="nv">SubnetId</span><span class="o">=</span>subnet-008f06da59b0f682a <span class="nv">SecurityGroupId</span><span class="o">=</span>sg-0668991ca731a2201 <span class="nv">InstanceProfile</span><span class="o">=</span>swift-swarm-iam-manager-InstanceProfile-qeqXudscgUtM <span class="nv">HostedZoneId</span><span class="o">=</span>Z07362313E0WMP6Y4DBYT <span class="nv">HomeVolumeId</span><span class="o">=</span>vol-08b4fb87713440e48
-
-Waiting <span class="k">for </span>changeset to be created..
-Waiting <span class="k">for </span>stack create/update to <span class="nb">complete
-</span>Successfully created/updated stack - swift-swarm-ec2-manager
-</code></pre></div></div>
-
-<h3 id="login">Login</h3>
-
-<p>Create a directory <code class="language-plaintext highlighter-rouge">ssh</code> and in it a script named <code class="language-plaintext highlighter-rouge">ssh-manager.sh</code></p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ssh
-<span class="nb">touch </span>ssh/ssh-manager.sh
-<span class="nb">chmod</span> +x ssh/ssh-manager.sh
-nano ssh/ssh-manager.sh
-</code></pre></div></div>
-
-<p>Copy and paste this code in the <code class="language-plaintext highlighter-rouge">ssh-manager.sh</code> file:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
-
-<span class="c"># switch to parent directory</span>
-<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
-<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
-
-<span class="nb">source </span>config/names.sh
-
-<span class="nb">popd
-
-</span><span class="nv">ec2_key</span><span class="o">=</span><span class="s2">"~/.ssh/aws-ec2-key"</span>
-<span class="nv">ec2_instance</span><span class="o">=</span><span class="si">$(</span> aws cloudformation describe-stacks <span class="nt">--stack-name</span> <span class="nv">$stack_ec2_manager</span> | jq <span class="nt">-r</span> <span class="s1">'.Stacks[0].Outputs[] | select(.OutputKey == "InstanceId") | .OutputValue'</span> <span class="si">)</span>
-<span class="nv">ec2_ip</span><span class="o">=</span><span class="si">$(</span> aws ec2 describe-instances <span class="nt">--instance-ids</span> <span class="nv">$ec2_instance</span> | jq <span class="nt">-r</span> <span class="s1">'.Reservations[0].Instances[0].PublicIpAddress'</span> <span class="si">)</span>
-
-ssh <span class="nt">-i</span> <span class="nv">$ec2_key</span> ec2-user@<span class="nv">$ec2_ip</span>
-</code></pre></div></div>
-
-<p>You should be able to connect to the Manager machine via ssh now:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./ssh/ssh-manager.sh
-</code></pre></div></div>
-
-<p>At this point your project structure should look like this:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.
-├── config
-│   └── names.sh
-├── ebs
-│   ├── deploy-ebs.sh
-│   ├── ebs.yml
-│   └── rm-ebs.sh
-├── ec2-manager
-│   ├── deploy-ec2-manager.sh
-│   ├── ec2-manager.yml
-│   └── rm-ec2-manager.sh
-├── iam
-│   ├── deploy-iam-manager.sh
-│   ├── deploy-iam-worker.sh
-│   ├── iam-manager.yml
-│   ├── iam-worker.yml
-│   ├── rm-iam-manager.sh
-│   └── rm-iam-worker.sh
-├── ssh
-│   └── ssh-manager.sh
-└── vpc
-    ├── deploy-vpc.sh
-    ├── rm-vpc.sh
-    └── vpc.yml
-</code></pre></div></div>
-
-<p>Congratulations!</p>
-
-<p>We are done with <code class="language-plaintext highlighter-rouge">Step 4. Manager Instance</code>.</p>
-
-<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Step 5. Worker Launch Template</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we will configure and launch the Manager EC2 instance. This post is part of a thread that includes these steps: Network Setup Storage Roles Manager Instance (this post) Worker Launch Template Worker Instances Docker Swarm Cleanup]]></summary></entry></feed>
+<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Step 3. Roles</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we will create a shared EBS volume which will be used as a home directory for the Linux users. This post is part of a thread that includes these steps: Network Setup Storage (this post) Roles Manager Instance Worker Launch Template Worker Instances Docker Swarm Cleanup]]></summary></entry></feed>
