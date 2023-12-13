@@ -1,4 +1,305 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-12-12T10:53:54-08:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Getting Started with .NET and Visual Studio Code on macOS</title><link href="/getting-started-net-visual-studio-code-macos/" rel="alternate" type="text/html" title="Getting Started with .NET and Visual Studio Code on macOS" /><published>2023-11-15T00:00:00-08:00</published><updated>2023-11-15T00:00:00-08:00</updated><id>/getting-started-net-visual-studio-code-macos</id><content type="html" xml:base="/getting-started-net-visual-studio-code-macos/"><![CDATA[<p>Before going through these steps make sure you have done <a href="/setup-net-development-environment-macos">Setup .NET development environment on macOS</a></p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-12-12T18:50:14-08:00</updated><id>/feed.xml</id><title type="html">Swift Software Group</title><subtitle>&amp;copy; Swift Software Group</subtitle><author><name>Swift Software Group</name></author><entry><title type="html">Getting Started with .NET and Visual Studio Code on Ubuntu</title><link href="/getting-started-net-visual-studio-code-ubuntu/" rel="alternate" type="text/html" title="Getting Started with .NET and Visual Studio Code on Ubuntu" /><published>2023-11-20T00:00:00-08:00</published><updated>2023-11-20T00:00:00-08:00</updated><id>/getting-started-net-visual-studio-code-ubuntu</id><content type="html" xml:base="/getting-started-net-visual-studio-code-ubuntu/"><![CDATA[<p>Before going through these steps make sure you have done <a href="/setup-net-development-environment-ubuntu">Setup .NET development environment on Ubuntu</a></p>
+
+<h2 id="visual-studio-code">Visual Studio Code</h2>
+
+<p>Download and install from <a href="https://code.visualstudio.com/download">Visual Studio Code</a> site.</p>
+
+<p>Open Visual Studio Code and press <code class="language-plaintext highlighter-rouge">Ctrl + Shift + P</code>. Select <code class="language-plaintext highlighter-rouge">Shell Command: Install 'code' command in PATH</code>.</p>
+
+<p>Close Visual Studio Code.</p>
+
+<h2 id="project-directory">Project Directory</h2>
+
+<p>Create a directory called <code class="language-plaintext highlighter-rouge">simple</code> in <code class="language-plaintext highlighter-rouge">~/net/simple</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ~/net/simple
+</code></pre></div></div>
+
+<h2 id="net-project-files">.NET Project Files</h2>
+
+<p>Create the project files:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.dotnet:</span><span class="nv">$PATH</span><span class="s2">"</span>
+
+<span class="nb">cd</span> ~/net/simple
+
+<span class="c"># Switch to use .NET SDK 6.0, 7.0 or 8.0. We do 8.0 here but give the commands for other versions </span>
+<span class="c"># dotnet new globaljson --sdk-version 6.0.417 --roll-forward latestPatch</span>
+<span class="c"># dotnet new globaljson --sdk-version 7.0.404 --roll-forward latestPatch</span>
+dotnet new globaljson <span class="nt">--sdk-version</span> 8.0.100 <span class="nt">--roll-forward</span> latestPatch
+
+<span class="c"># create new console application and project</span>
+dotnet new console <span class="nt">--framework</span> net6.0
+
+<span class="c"># create new solution and add the project to it</span>
+dotnet new sln
+dotnet sln add simple.csproj
+
+<span class="c"># add .gitignore</span>
+dotnet new gitignore
+</code></pre></div></div>
+
+<p>Open the directory in Visual Studio Code:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.dotnet:</span><span class="nv">$PATH</span><span class="s2">"</span>
+
+<span class="nb">cd</span> ~/net/simple
+code <span class="nb">.</span>
+</code></pre></div></div>
+
+<p>Install the <a href="https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit">C# Dev Kit extension</a> for Visual Studio Code.</p>
+
+<h2 id="automate-the-build">Automate the build</h2>
+
+<p>Add the following Visual Studio Code specific files to the <code class="language-plaintext highlighter-rouge">.vscode</code> subdir:</p>
+
+<h3 id="vscodetasksjson"><code class="language-plaintext highlighter-rouge">.vscode/tasks.json</code></h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"tasks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dotnet"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"task"</span><span class="p">:</span><span class="w"> </span><span class="s2">"build"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"group"</span><span class="p">:</span><span class="w"> </span><span class="s2">"build"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"problemMatcher"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="nl">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dotnet: build"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Test the build by pressing <code class="language-plaintext highlighter-rouge">Ctrl + Shift + B</code>. Visual Studio Code should execute the <code class="language-plaintext highlighter-rouge">build.sh</code> script automatically.</p>
+
+<h2 id="setup-debugging">Setup Debugging</h2>
+
+<p>Add the following Visual Studio Code specific files to the <code class="language-plaintext highlighter-rouge">.vscode</code> subdir:</p>
+
+<h3 id="vscodelaunchjson"><code class="language-plaintext highlighter-rouge">.vscode/launch.json</code></h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.2.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"configurations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">".NET Core Launch (console)"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"coreclr"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"request"</span><span class="p">:</span><span class="w"> </span><span class="s2">"launch"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"preLaunchTask"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dotnet: build"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"program"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}/bin/Debug/net6.0/simple.dll"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="nl">"cwd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"console"</span><span class="p">:</span><span class="w"> </span><span class="s2">"internalConsole"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"stopAtEntry"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="test-the-debugging">Test the debugging</h2>
+
+<p>Set a breakpoint at the <code class="language-plaintext highlighter-rouge">Console.WriteLine("Hello, World!");</code> line in <code class="language-plaintext highlighter-rouge">Programs.cs</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// See https://aka.ms/new-console-template for more information</span>
+<span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Hello, World!"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Press <code class="language-plaintext highlighter-rouge">F5</code> to launch the debugger. It should stop at the breakpoint.</p>]]></content><author><name>Swift Software Group</name></author><category term="csharp" /><category term="vscode" /><category term="dotnet" /><category term="linux" /><category term="ubuntu" /><summary type="html"><![CDATA[Before going through these steps make sure you have done Setup .NET development environment on Ubuntu Visual Studio Code Download and install from Visual Studio Code site. Open Visual Studio Code and press Ctrl + Shift + P. Select Shell Command: Install 'code' command in PATH. Close Visual Studio Code.]]></summary></entry><entry><title type="html">Setup .NET development environment on Ubuntu</title><link href="/setup-net-development-environment-ubuntu/" rel="alternate" type="text/html" title="Setup .NET development environment on Ubuntu" /><published>2023-11-19T00:00:00-08:00</published><updated>2023-11-19T00:00:00-08:00</updated><id>/setup-net-development-environment-ubuntu</id><content type="html" xml:base="/setup-net-development-environment-ubuntu/"><![CDATA[<h1 id="setup-for-ubuntu">Setup for Ubuntu</h1>
+
+<p>Download the <code class="language-plaintext highlighter-rouge">dotnet-install.sh</code> script</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd
+</span>curl <span class="nt">-sSL</span> https://dot.net/v1/dotnet-install.sh <span class="o">&gt;</span> dotnet-install.sh
+<span class="nb">chmod</span> +x dotnet-install.sh
+</code></pre></div></div>
+
+<h2 id="net-runtime">.NET Runtime</h2>
+
+<h3 id="net-runtime-60-lts">.NET Runtime 6.0 (LTS)</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./dotnet-install.sh --runtime dotnet --channel 6.0 --version latest
+</code></pre></div></div>
+
+<h3 id="net-runtime-70">.NET Runtime 7.0</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./dotnet-install.sh --runtime dotnet --channel 7.0 --version latest
+</code></pre></div></div>
+
+<h3 id="net-runtime-80-lts">.NET Runtime 8.0 (LTS)</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./dotnet-install.sh --runtime dotnet --channel 8.0 --version latest
+</code></pre></div></div>
+
+<h2 id="net-sdk">.NET SDK</h2>
+
+<h3 id="net-sdk-60">.NET SDK 6.0</h3>
+
+<p>This is needed by the Visual Studio Code C# extension. Install with <code class="language-plaintext highlighter-rouge">dotnet-install.sh</code> script:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./dotnet-install.sh <span class="nt">--channel</span> 6.0
+</code></pre></div></div>
+
+<h3 id="net-sdk-70">.NET SDK 7.0</h3>
+
+<p>This is needed by the Visual Studio Code C# extension. Install with <code class="language-plaintext highlighter-rouge">dotnet-install.sh</code> script:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./dotnet-install.sh <span class="nt">--channel</span> 7.0
+</code></pre></div></div>
+
+<h3 id="net-sdk-80">.NET SDK 8.0</h3>
+
+<p>Install with <code class="language-plaintext highlighter-rouge">dotnet-install.sh</code> script:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./dotnet-install.sh <span class="nt">--channel</span> 8.0
+</code></pre></div></div>
+
+<h2 id="test">Test</h2>
+
+<p>Test that you can run the <code class="language-plaintext highlighter-rouge">dotnet</code> CLI (command line interface)</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/.dotnet/dotnet <span class="nt">--version</span>
+~/.dotnet/dotnet new console <span class="nt">--help</span>
+</code></pre></div></div>]]></content><author><name>Swift Software Group</name></author><category term="csharp" /><category term="dotnet" /><category term="linux" /><category term="ubuntu" /><summary type="html"><![CDATA[Setup for Ubuntu Download the dotnet-install.sh script cd curl -sSL https://dot.net/v1/dotnet-install.sh &gt; dotnet-install.sh chmod +x dotnet-install.sh]]></summary></entry><entry><title type="html">Getting Started with C++ and Visual Studio Code on Ubuntu</title><link href="/getting-started-cpp-visual-studio-code-ubuntu/" rel="alternate" type="text/html" title="Getting Started with C++ and Visual Studio Code on Ubuntu" /><published>2023-11-18T00:00:00-08:00</published><updated>2023-11-18T00:00:00-08:00</updated><id>/getting-started-cpp-visual-studio-code-ubuntu</id><content type="html" xml:base="/getting-started-cpp-visual-studio-code-ubuntu/"><![CDATA[<p>Before going through these steps make sure you have done <a href="/setup-cpp-development-environment-ubuntu">Setup C++ development environment on Ubuntu</a></p>
+
+<h2 id="visual-studio-code">Visual Studio Code</h2>
+
+<p>Download and install from <a href="https://code.visualstudio.com/download">Visual Studio Code</a> site.</p>
+
+<p>Open Visual Studio Code and press <code class="language-plaintext highlighter-rouge">Cmd + Shift + P</code>. Select <code class="language-plaintext highlighter-rouge">Shell Command: Install 'code' command in PATH</code>.</p>
+
+<h2 id="c-project">C++ Project</h2>
+
+<p>Create a directory called simple in <code class="language-plaintext highlighter-rouge">~/cpp/simple</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ~/cpp/simple
+</code></pre></div></div>
+
+<p>Open the directory in Visual Studio Code:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/cpp/simple
+code <span class="nb">.</span>
+</code></pre></div></div>
+
+<p>Install the <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools-extension-pack">C/C++ Extension Pack</a>.</p>
+
+<h2 id="project-files">Project Files</h2>
+
+<p>Add the following files:</p>
+
+<h3 id="srcmaincpp"><code class="language-plaintext highlighter-rouge">src/main.cpp</code></h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello CMake!</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="cmakeliststxt"><code class="language-plaintext highlighter-rouge">CMakeLists.txt</code></h3>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cmake_minimum_required</span><span class="p">(</span>VERSION 3.20<span class="p">)</span>
+
+<span class="nb">project</span><span class="p">(</span>simple<span class="p">)</span>
+
+<span class="nb">add_executable</span><span class="p">(</span>simple src/main.cpp<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="buildsh"><code class="language-plaintext highlighter-rouge">build.sh</code></h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+<span class="nb">mkdir</span> <span class="nt">-p</span> ./build/debug
+<span class="nb">pushd</span> ./build/debug
+    cmake <span class="nt">-G</span> <span class="s1">'Ninja'</span> <span class="nt">-DCMAKE_BUILD_TYPE</span><span class="o">=</span>Debug  ../.. <span class="o">&amp;&amp;</span> <span class="se">\</span>
+    ninja
+    <span class="nv">ret</span><span class="o">=</span><span class="nv">$?</span>
+<span class="nb">popd</span>  
+</code></pre></div></div>
+
+<p>Make it executable:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x build.sh
+</code></pre></div></div>
+
+<h3 id="gitignore"><code class="language-plaintext highlighter-rouge">.gitignore</code></h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.cache/
+build/
+</code></pre></div></div>
+
+<h2 id="test-the-build">Test the build</h2>
+
+<p>Open Terminal in Visual Studio Code and test the build from command line:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./build.sh
+</code></pre></div></div>
+
+<h2 id="automate-the-build">Automate the build</h2>
+
+<p>Add the following Visual Studio Code specific files to the <code class="language-plaintext highlighter-rouge">.vscode</code> subdir:</p>
+
+<h3 id="vscodetasksjson"><code class="language-plaintext highlighter-rouge">.vscode/tasks.json</code></h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"tasks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Build"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"shell"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"linux"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}/build.sh"</span><span class="p">,</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"group"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"build"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"isDefault"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Test the build by pressing <code class="language-plaintext highlighter-rouge">Ctrl + B</code>. Visual Studio Code should execute the <code class="language-plaintext highlighter-rouge">build.sh</code> script automatically.</p>
+
+<h2 id="setup-debugging">Setup Debugging</h2>
+
+<p>Add the following Visual Studio Code specific files to the <code class="language-plaintext highlighter-rouge">.vscode</code> subdir:</p>
+
+<h3 id="vscodelaunchjson"><code class="language-plaintext highlighter-rouge">.vscode/launch.json</code></h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.2.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"configurations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Launch (gdb)"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cppdbg"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"request"</span><span class="p">:</span><span class="w"> </span><span class="s2">"launch"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"cwd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"linux"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"program"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}/build/debug/simple"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"MIMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gdb"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">    
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="test-the-debugging">Test the debugging</h2>
+
+<p>Set a breakpoint on the first line of <code class="language-plaintext highlighter-rouge">int main()</code> inside <code class="language-plaintext highlighter-rouge">src/main.cpp</code>. Press <code class="language-plaintext highlighter-rouge">F5</code> to launch the debugger. It should stop at the breakpoint.</p>]]></content><author><name>Swift Software Group</name></author><category term="vscode" /><category term="cpp" /><category term="linux" /><category term="ubuntu" /><summary type="html"><![CDATA[Before going through these steps make sure you have done Setup C++ development environment on Ubuntu Visual Studio Code Download and install from Visual Studio Code site. Open Visual Studio Code and press Cmd + Shift + P. Select Shell Command: Install 'code' command in PATH.]]></summary></entry><entry><title type="html">Setup C++ development environment on Ubuntu</title><link href="/setup-cpp-development-environment-ubuntu/" rel="alternate" type="text/html" title="Setup C++ development environment on Ubuntu" /><published>2023-11-17T00:00:00-08:00</published><updated>2023-11-17T00:00:00-08:00</updated><id>/setup-cpp-development-environment-ubuntu</id><content type="html" xml:base="/setup-cpp-development-environment-ubuntu/"><![CDATA[<p>These steps were tested on Ubuntu 22.04.3 LTS. Scripts are <code class="language-plaintext highlighter-rouge">bash</code>.</p>
+
+<h3 id="compilers">Compilers</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>build-essential
+</code></pre></div></div>
+
+<h3 id="cmake">CMake</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>cmake
+</code></pre></div></div>
+
+<h3 id="ninja">ninja</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>ninja-build
+</code></pre></div></div>]]></content><author><name>Swift Software Group</name></author><category term="cpp" /><category term="linux" /><category term="ubuntu" /><summary type="html"><![CDATA[These steps were tested on Ubuntu 22.04.3 LTS. Scripts are bash. Compilers sudo apt install build-essential]]></summary></entry><entry><title type="html">Getting Started with .NET and Visual Studio Code on macOS</title><link href="/getting-started-net-visual-studio-code-macos/" rel="alternate" type="text/html" title="Getting Started with .NET and Visual Studio Code on macOS" /><published>2023-11-15T00:00:00-08:00</published><updated>2023-11-15T00:00:00-08:00</updated><id>/getting-started-net-visual-studio-code-macos</id><content type="html" xml:base="/getting-started-net-visual-studio-code-macos/"><![CDATA[<p>Before going through these steps make sure you have done <a href="/setup-net-development-environment-macos">Setup .NET development environment on macOS</a></p>
 
 <h2 id="visual-studio-code">Visual Studio Code</h2>
 
@@ -494,702 +795,4 @@ build/
 </span><span class="n">ridk</span><span class="w"> </span><span class="nx">install</span><span class="w">
 </span></code></pre></div></div>
 
-<p>A list of the available MSYS2 versions is available <a href="https://repo.msys2.org/distrib/x86_64/">here</a>.</p>]]></content><author><name>Swift Software Group</name></author><category term="ruby" /><category term="windows" /><summary type="html"><![CDATA[This is a simple guide for configuring a Ruby 2 environment on Windows 11. All scripts are PowerShell. PowerShell This will allow you to execute PowerShell scripts locally on your machine. In PowerShell as Administrator: Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine]]></summary></entry><entry><title type="html">Run MongoDB with Podman</title><link href="/run-mongodb-with-podman/" rel="alternate" type="text/html" title="Run MongoDB with Podman" /><published>2023-05-23T00:00:00-07:00</published><updated>2023-05-23T00:00:00-07:00</updated><id>/run-mongodb-with-podman</id><content type="html" xml:base="/run-mongodb-with-podman/"><![CDATA[<p>Before you start install <a href="/setup-podman-macos">Podman</a>.</p>
-
-<h2 id="set-machine-to-rootful">Set machine to <code class="language-plaintext highlighter-rouge">rootful</code></h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman machine stop
-podman machine <span class="nb">set</span> <span class="nt">--rootful</span>
-podman machine start
-</code></pre></div></div>
-
-<h2 id="create-a-data-directory">Create a data directory</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">rm</span> <span class="nt">-rf</span> ~/podman/mongo/data/db
-<span class="nb">mkdir</span> <span class="nt">-p</span> ~/podman/mongo/data/db
-<span class="nb">chmod</span> <span class="nt">-R</span> a+wxr ~/podman
-</code></pre></div></div>
-
-<h2 id="setup-mongodb-authentication">Setup MongoDB Authentication</h2>
-
-<p>First run the MongoDb container without authentication:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman run <span class="se">\</span>
-    <span class="nt">--detach</span> <span class="se">\</span>
-    <span class="nt">--tty</span> <span class="se">\</span>
-    <span class="nt">--user</span> <span class="si">$(</span><span class="nb">id</span> <span class="nt">--user</span><span class="si">)</span>:<span class="si">$(</span><span class="nb">id</span> <span class="nt">--group</span><span class="si">)</span> <span class="se">\</span>
-    <span class="nt">--name</span> mongo-dev <span class="se">\</span>
-    <span class="nt">--publish</span> 27017:27017 <span class="se">\</span>
-    <span class="nt">--volume</span> ~/podman/mongo/data/db:/data/db <span class="se">\</span>
-    mongo
-</code></pre></div></div>
-
-<p>Start a shell in the container:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman <span class="nb">exec</span> <span class="nt">-it</span> mongo-dev bash
-</code></pre></div></div>
-
-<p>In the container:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mongosh
-
-<span class="c"># in mongo shell now</span>
-use admin
-db.createUser<span class="o">({</span>user:<span class="s2">"test"</span>, <span class="nb">pwd</span>:<span class="s2">"test"</span>, roles:[<span class="o">{</span>role:<span class="s2">"root"</span>, db:<span class="s2">"admin"</span><span class="o">}]})</span>
-<span class="nb">exit
-
-exit</span>
-</code></pre></div></div>
-
-<h2 id="restart-mongodb-with-authentication">Restart MongoDB with Authentication</h2>
-
-<p>Stop and remove the container:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman stop mongo-dev
-podman <span class="nb">rm </span>mongo-dev
-</code></pre></div></div>
-
-<p>Start the container with authentication:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman run <span class="se">\</span>
-    <span class="nt">--detach</span> <span class="se">\</span>
-    <span class="nt">--tty</span> <span class="se">\</span>
-    <span class="nt">--user</span> <span class="si">$(</span><span class="nb">id</span> <span class="nt">--user</span><span class="si">)</span>:<span class="si">$(</span><span class="nb">id</span> <span class="nt">--group</span><span class="si">)</span> <span class="se">\</span>
-    <span class="nt">--name</span> mongo-dev <span class="se">\</span>
-    <span class="nt">--publish</span> 27017:27017 <span class="se">\</span>
-    <span class="nt">--volume</span> ~/podman/mongo/data/db:/data/db <span class="se">\</span>
-    mongo <span class="nt">--auth</span>
-</code></pre></div></div>]]></content><author><name>Swift Software Group</name></author><category term="podman" /><category term="mongodb" /><summary type="html"><![CDATA[Before you start install Podman. Set machine to rootful podman machine stop podman machine set --rootful podman machine start]]></summary></entry><entry><title type="html">Setup Podman on macOS</title><link href="/setup-podman-macos/" rel="alternate" type="text/html" title="Setup Podman on macOS" /><published>2023-05-22T00:00:00-07:00</published><updated>2023-05-22T00:00:00-07:00</updated><id>/setup-podman-macos</id><content type="html" xml:base="/setup-podman-macos/"><![CDATA[<p>Podman is a utility that can be used to create and maintain containers. This post will teach you how to set up Podman on macOS and perform some basic commands.</p>
-
-<h2 id="preparation">Preparation</h2>
-
-<h3 id="homebrew">Homebrew</h3>
-
-<p>Install <a href="https://brew.sh/">Homebrew</a>:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/bin/bash <span class="nt">-c</span> <span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-fsSL</span> https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="si">)</span><span class="s2">"</span>
-</code></pre></div></div>
-
-<h3 id="bash-5">bash 5</h3>
-
-<p>Install via Homebrew:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>bash
-</code></pre></div></div>
-
-<h2 id="podman">Podman</h2>
-
-<p>Install via Homebrew:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>podman
-</code></pre></div></div>
-
-<h2 id="podman-machine">Podman Machine</h2>
-
-<p>Create and start your first Podman machine (2 CPUs, 100GB disk, 4GB memory). Podman machines are backed by <a href="https://www.qemu.org/">QEMU</a>. This will become the default Podman machine:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman machine init <span class="nt">--cpus</span> 2 <span class="nt">--disk-size</span> 100 <span class="nt">--memory</span> 4096
-</code></pre></div></div>
-
-<p>List all machines:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman machine <span class="nb">ls</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>NAME                     VM TYPE     CREATED             LAST UP             CPUS        MEMORY      DISK SIZE
-podman-machine-default*  qemu        About a minute ago  About a minute ago  2           4.295GB     107.4GB
-</code></pre></div></div>
-
-<p>Start the default machine:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman machine start
-</code></pre></div></div>
-
-<p>Verify the installation:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman info
-</code></pre></div></div>
-
-<p>The machine will be configured in rootless mode. If your containers require root permissions (e.g. ports &lt; 1024), or if you run into compatibility issues with non-podman clients, you can switch using the following command:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman machine <span class="nb">set</span> <span class="nt">--rootful</span>
-</code></pre></div></div>
-
-<h2 id="test">Test</h2>
-
-<p>Run the <code class="language-plaintext highlighter-rouge">Hello World</code> container:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman run hello-world
-</code></pre></div></div>
-
-<h2 id="podman-desktop">Podman Desktop</h2>
-
-<p>To start a podman machine automatically at login, also install the Podman Desktop:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install</span> <span class="nt">--cask</span> podman-desktop
-</code></pre></div></div>]]></content><author><name>Swift Software Group</name></author><category term="podman" /><category term="macos" /><summary type="html"><![CDATA[Podman is a utility that can be used to create and maintain containers. This post will teach you how to set up Podman on macOS and perform some basic commands.]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 1 - Network Setup</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 1 - Network Setup" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup/"><![CDATA[<p>Setup network infrastructure including new VPC (Virtual Private Cloud), public and private subnets, internet gateway, security group, and ssh access.</p>
-
-<p>This post is part of a thread that includes these steps:</p>
-
-<ol>
-  <li>Network Setup (this post)</li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
-</ol>
-
-<p>Make sure you do this setup first:</p>
-
-<ol>
-  <li><a href="/setup-macos-for-aws-cloud-devops">Setup macOS for AWS Cloud DevOps</a></li>
-  <li><a href="/aws-authentication">AWS Authentication</a></li>
-</ol>
-
-<h2 id="project-structure">Project Structure</h2>
-
-<p>For this deployment we will create 2 separate code repositories. The first one will be named <code class="language-plaintext highlighter-rouge">swift-aws-ec2-swarm</code> and the second one will be named <code class="language-plaintext highlighter-rouge">swift-aws-ec2-docker</code>.</p>
-
-<p>As a start, create the <code class="language-plaintext highlighter-rouge">swift-aws-ec2-swarm</code> directory in your home dir and switch to it. We will call this the “project dir”.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ~/swift-aws-ec2-swarm
-<span class="nb">cd</span> ~/swift-aws-ec2-swarm
-</code></pre></div></div>
-
-<p>The rest of this post assumes we work from within the “project dir”.</p>
-
-<h2 id="configuration">Configuration</h2>
-
-<p>Create a folder <code class="language-plaintext highlighter-rouge">config</code> and <code class="language-plaintext highlighter-rouge">names.sh</code> file in it.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> config
-<span class="nb">touch </span>config/names.sh
-nano config/names.sh
-</code></pre></div></div>
-
-<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">names.sh</code>:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">AWS_DEFAULT_PROFILE</span><span class="o">=</span>swift
-
-<span class="nv">prefix</span><span class="o">=</span><span class="s2">"swift-swarm"</span>
-
-<span class="nv">ec2_key_pair</span><span class="o">=</span><span class="s2">"aws-ec2-key"</span>
-
-<span class="nv">stack_vpc</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-vpc"</span>
-
-<span class="nv">stack_ebs</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-ebs"</span>
-
-<span class="nv">stack_iam_manager</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-iam-manager"</span>
-<span class="nv">stack_ec2_manager</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-ec2-manager"</span>
-
-<span class="nv">stack_iam_worker</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-iam-worker"</span>
-<span class="nv">stack_ec2_worker</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-ec2-worker"</span>
-<span class="nv">stack_ec2_worker_lt</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-ec2-worker-lt"</span>
-
-<span class="nv">vpc</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-vpc-1"</span>
-
-<span class="nv">subnet_pub_1</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-sn-pub-1"</span>
-<span class="nv">subnet_priv_1</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-sn-priv-1"</span>
-
-<span class="nv">security_group_pub_1</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-sg-pub-1"</span>
-<span class="nv">security_group_priv_1</span><span class="o">=</span><span class="s2">"</span><span class="nv">$prefix</span><span class="s2">-sg-priv-1"</span>
-</code></pre></div></div>
-
-<blockquote>
-  <p>IMPORTANT: Replace <code class="language-plaintext highlighter-rouge">swift</code> in the first line with the name of your AWS CLI profile or set to <code class="language-plaintext highlighter-rouge">default</code> if you don;t use different profiles.</p>
-</blockquote>
-
-<h2 id="virtual-private-cloud-aws-vpc">Virtual Private Cloud (AWS VPC)</h2>
-
-<h3 id="cloud-formation-template">cloud-formation Template</h3>
-
-<p>Create a folder <code class="language-plaintext highlighter-rouge">network</code> and a <code class="language-plaintext highlighter-rouge">vpc.yml</code> file in it.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> vpc
-<span class="nb">touch </span>vpc/vpc.yml
-nano vpc/vpc.yml
-</code></pre></div></div>
-
-<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">vpc.yml</code>:</p>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Description</span><span class="pi">:</span> <span class="s">Create VPC, public subnet, private subnet, Internet gateway, NAT gateway, security groups, and Route53 hosted zone for the VPC.</span> 
-
-<span class="na">Parameters</span><span class="pi">:</span>
-  <span class="na">Prefix</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">An environment name that is prefixed to resource names</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
-
-  <span class="na">VpcCIDR</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">Please enter the IP range (CIDR notation) for this VPC</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
-    <span class="na">Default</span><span class="pi">:</span> <span class="s">10.0.0.0/16</span>
-
-  <span class="na">PublicSubnetCIDR</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">Please enter the IP range (CIDR notation) for the public subnet in the first Availability Zone</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
-    <span class="na">Default</span><span class="pi">:</span> <span class="s">10.0.10.0/24</span>
-
-  <span class="na">PrivateSubnetCIDR</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">Please enter the IP range (CIDR notation) for the private subnet in the first Availability Zone</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
-    <span class="na">Default</span><span class="pi">:</span> <span class="s">10.0.20.0/24</span>
-
-<span class="na">Resources</span><span class="pi">:</span>
-  <span class="c1"># VPC</span>
-  <span class="na">Vpc</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::VPC</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">CidrBlock</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">VpcCIDR</span>
-      <span class="na">EnableDnsSupport</span><span class="pi">:</span> <span class="no">true</span>
-      <span class="na">EnableDnsHostnames</span><span class="pi">:</span> <span class="no">true</span>
-      <span class="c1"># tags:</span>
-        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
-          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-vpc-1</span>
-
-  <span class="c1"># Internet Gateway</span>
-  <span class="na">InternetGateway</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::InternetGateway</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="c1"># tags:</span>
-        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
-          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-igw-1</span>
-
-  <span class="na">InternetGatewayAttachment</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::VPCGatewayAttachment</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
-      <span class="na">InternetGatewayId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">InternetGateway</span>
-
-  <span class="c1"># Public Subnet</span>
-  <span class="na">PublicSubnet</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::Subnet</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
-      <span class="na">CidrBlock</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicSubnetCIDR</span>
-      <span class="na">AvailabilityZone</span><span class="pi">:</span> <span class="kt">!Select</span> <span class="pi">[</span> <span class="nv">0</span><span class="pi">,</span> <span class="kt">!GetAZs</span> <span class="s1">'</span><span class="s">'</span> <span class="pi">]</span>
-      <span class="na">MapPublicIpOnLaunch</span><span class="pi">:</span> <span class="no">true</span>
-      <span class="c1"># tags:</span>
-        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
-          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-sn-pub-1</span>
-
-  <span class="c1"># Private Subnet</span>
-  <span class="na">PrivateSubnet</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::Subnet</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
-      <span class="na">CidrBlock</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PrivateSubnetCIDR</span>
-      <span class="na">AvailabilityZone</span><span class="pi">:</span> <span class="kt">!Select</span> <span class="pi">[</span> <span class="nv">0</span><span class="pi">,</span> <span class="kt">!GetAZs</span>  <span class="s1">'</span><span class="s">'</span> <span class="pi">]</span>
-      <span class="na">MapPublicIpOnLaunch</span><span class="pi">:</span> <span class="no">false</span>
-      <span class="c1"># tags:</span>
-        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
-          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-sn-priv-1</span>
-
-  <span class="c1"># NAT Elastic IP</span>
-  <span class="na">NatGatewayEIP</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::EIP</span>
-    <span class="na">DependsOn</span><span class="pi">:</span> <span class="s">InternetGatewayAttachment</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">Domain</span><span class="pi">:</span> <span class="s">vpc</span>
-      <span class="c1"># tags:</span>
-        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
-          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-eip-1</span>
-
-  <span class="c1"># NAT Gateway</span>
-  <span class="na">NatGateway</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::NatGateway</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">AllocationId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="s">NatGatewayEIP.AllocationId</span>
-      <span class="na">SubnetId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicSubnet</span>
-      <span class="c1"># tags:</span>
-        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
-          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-ng-1</span>
-
-  <span class="c1"># Public route table</span>
-  <span class="na">PublicRouteTable</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::RouteTable</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
-      <span class="c1"># tags:</span>
-        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
-          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-rt-pub-1</span>
-
-  <span class="c1"># Route to internet gateway</span>
-  <span class="na">DefaultPublicRoute</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::Route</span>
-    <span class="na">DependsOn</span><span class="pi">:</span> <span class="s">InternetGatewayAttachment</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">RouteTableId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicRouteTable</span>
-      <span class="na">DestinationCidrBlock</span><span class="pi">:</span> <span class="s">0.0.0.0/0</span>
-      <span class="na">GatewayId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">InternetGateway</span>
-
-  <span class="c1"># Routes for public subnet</span>
-  <span class="na">PublicSubnetRouteTableAssociation</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SubnetRouteTableAssociation</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">RouteTableId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicRouteTable</span>
-      <span class="na">SubnetId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicSubnet</span>
-
-  <span class="c1"># Routes for private subnet</span>
-  <span class="na">PrivateRouteTable</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::RouteTable</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
-      <span class="c1"># tags:</span>
-        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
-          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-rt-priv-1</span>
-
-  <span class="na">DefaultPrivateRoute</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::Route</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">RouteTableId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PrivateRouteTable</span>
-      <span class="na">DestinationCidrBlock</span><span class="pi">:</span> <span class="s">0.0.0.0/0</span>
-      <span class="na">NatGatewayId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">NatGateway</span>          
-
-  <span class="na">PrivateSubnetRouteTableAssociation</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SubnetRouteTableAssociation</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">RouteTableId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PrivateRouteTable</span>
-      <span class="na">SubnetId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PrivateSubnet</span>
-
-  <span class="c1">## Security groups</span>
-  <span class="c1"># Public</span>
-  <span class="na">PublicSecurityGroup</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroup</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">GroupDescription</span><span class="pi">:</span> <span class="s">Security group for manager nodes</span>
-      <span class="c1"># tags:</span>
-        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
-          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-sg-pub-1</span>
-      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
-      <span class="na">SecurityGroupIngress</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="na">IpProtocol</span><span class="pi">:</span> <span class="s">tcp</span>
-          <span class="na">FromPort</span><span class="pi">:</span> <span class="m">22</span>
-          <span class="na">ToPort</span><span class="pi">:</span> <span class="m">22</span>
-          <span class="na">CidrIp</span><span class="pi">:</span> <span class="s">0.0.0.0/0</span>
-
-  <span class="c1"># Private</span>
-  <span class="na">PrivateSecurityGroup</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroup</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">GroupDescription</span><span class="pi">:</span> <span class="s">Security group for worker nodes</span>
-      <span class="c1"># tags:</span>
-        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
-          <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span> <span class="s">${Prefix}-sg-priv-1</span>
-      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
-
-  <span class="c1">## Ingress rules</span>
-  <span class="c1"># Public</span>
-  <span class="na">PublicSecurityGroupIngressFromSelf</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroupIngress</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">GroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PublicSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
-      <span class="na">IpProtocol</span><span class="pi">:</span> <span class="s">-1</span>
-      <span class="na">SourceSecurityGroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PublicSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
-
-  <span class="na">PublicSecurityGroupIngressFromPrivate</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroupIngress</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">GroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PublicSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
-      <span class="na">IpProtocol</span><span class="pi">:</span> <span class="s">-1</span>
-      <span class="na">SourceSecurityGroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PrivateSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
-
-  <span class="c1"># Private</span>
-  <span class="na">PrivateSecurityGroupIngressFromSelf</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroupIngress</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">GroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PrivateSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
-      <span class="na">IpProtocol</span><span class="pi">:</span> <span class="s">-1</span>
-      <span class="na">SourceSecurityGroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PrivateSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
-
-  <span class="na">PrivateSecurityGroupIngressFromPublic</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroupIngress</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">GroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PrivateSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
-      <span class="na">IpProtocol</span><span class="pi">:</span> <span class="s">-1</span>
-      <span class="na">SourceSecurityGroupId</span><span class="pi">:</span> <span class="kt">!GetAtt</span> <span class="pi">[</span> <span class="nv">PublicSecurityGroup</span><span class="pi">,</span> <span class="nv">GroupId</span> <span class="pi">]</span>
-
-  <span class="c1"># Add DNS zone for our VPC</span>
-  <span class="na">HostedZone</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">AWS::Route53::HostedZone'</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">Name</span><span class="pi">:</span> <span class="s">swift.internal.</span>
-      <span class="na">VPCs</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="na">VPCId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
-          <span class="na">VPCRegion</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s2">"</span><span class="s">AWS::Region"</span>
-      <span class="na">HostedZoneConfig</span><span class="pi">:</span>
-        <span class="na">Comment</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Hosted</span><span class="nv"> </span><span class="s">zone</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">swift.internal'</span>      
-
-<span class="na">Outputs</span><span class="pi">:</span>
-  <span class="na">VpcId</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the created VPC</span>
-    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">Vpc</span>
-
-  <span class="na">PublicSubnetId</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the public subnet in the 1st Availability Zone</span>
-    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicSubnet</span>
-
-  <span class="na">PrivateSubnetId</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the private subnet in the 1st Availability Zone</span>
-    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PrivateSubnet</span>
-
-  <span class="na">PublicSecurityGroupId</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the public SecurityGroup</span>
-    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PublicSecurityGroup</span>
-
-  <span class="na">PrivateSecurityGroupId</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the private SecurityGroup</span>
-    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">PrivateSecurityGroup</span>
-
-  <span class="na">HostedZoneId</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">A reference to the Route53 HostedZone</span>
-    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">HostedZone</span>
-</code></pre></div></div>
-
-<h3 id="scripts">Scripts</h3>
-
-<p>Next add a script <code class="language-plaintext highlighter-rouge">deploy-vpc.sh</code> and paste this code in it:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
-
-<span class="c"># switch to parent directory</span>
-<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
-<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
-
-<span class="nb">source </span>config/names.sh
-
-<span class="nb">echo
-echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_vpc</span><span class="s2"> stack via cloud-formation:"</span>
-<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
-<span class="nb">echo
-
-set</span> <span class="nt">-x</span>
-
-aws cloudformation deploy <span class="se">\</span>
-    <span class="nt">--profile</span> swift <span class="se">\</span>
-    <span class="nt">--template-file</span> vpc/vpc.yml <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_vpc</span> <span class="se">\</span>
-    <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span><span class="nv">$prefix</span>
-
-<span class="nb">popd</span>
-</code></pre></div></div>
-
-<p>Let’s also add a clean up script <code class="language-plaintext highlighter-rouge">rm-vpc.sh</code>:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
-
-<span class="c"># switch to parent directory</span>
-<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
-<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
-
-<span class="nb">source </span>config/names.sh
-
-<span class="nb">echo
-echo</span> <span class="s2">"Removing </span><span class="nv">$stack_vpc</span><span class="s2"> stack via cloud-formation:"</span>
-<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
-<span class="nb">echo
-
-set</span> <span class="nt">-x</span>
-
-aws cloudformation delete-stack <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_vpc</span> 
-
-aws cloudformation <span class="nb">wait </span>stack-delete-complete <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_vpc</span>
-
-<span class="nb">popd</span>
-</code></pre></div></div>
-
-<p>Make the scripts executable:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x vpc/deploy-vpc.sh 
-<span class="nb">chmod</span> +x vpc/rm-vpc.sh
-</code></pre></div></div>
-
-<h3 id="deploy">Deploy</h3>
-
-<p>Finally let’s run the “deploy” script to setup our network:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./vpc/deploy-vpc.sh
-</code></pre></div></div>
-
-<p>You should see output similar to this:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-vpc stack via cloud-formation:
-https://us-west-2.console.aws.amazon.com/cloudformation/home
-
-+ aws cloudformation deploy <span class="nt">--template-file</span> network/vpc.yml <span class="nt">--stack-name</span> swift-swarm-vpc <span class="nt">--parameter-overrides</span> <span class="nv">Prefix</span><span class="o">=</span>swift-swarm
-
-Waiting <span class="k">for </span>changeset to be created..
-Waiting <span class="k">for </span>stack create/update to <span class="nb">complete
-</span>Successfully created/updated stack - swift-swarm-vpc
-</code></pre></div></div>
-
-<p>At this point your project structure should look like this:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.
-├── config
-│   └── names.sh
-└── vpc
-    ├── deploy-vpc.sh
-    ├── rm-vpc.sh
-    └── vpc.yml
-</code></pre></div></div>
-
-<p>Congratulations!</p>
-
-<p>We are done with <code class="language-plaintext highlighter-rouge">Step 1. Network Setup</code>.</p>
-
-<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Step 2. Storage</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[Setup network infrastructure including new VPC (Virtual Private Cloud), public and private subnets, internet gateway, security group, and ssh access. This post is part of a thread that includes these steps: Network Setup (this post) Storage Roles Manager Instance Worker Launch Template Worker Instances Docker Swarm Cleanup]]></summary></entry><entry><title type="html">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 2 - Storage</title><link href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage/" rel="alternate" type="text/html" title="Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 2 - Storage" /><published>2021-08-11T00:00:00-07:00</published><updated>2021-08-11T00:00:00-07:00</updated><id>/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage</id><content type="html" xml:base="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage/"><![CDATA[<p>In this step we will create a shared EBS volume which will be used as a home directory for the Linux users.</p>
-
-<p>This post is part of a thread that includes these steps:</p>
-
-<ol>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
-  <li>Storage (this post)</li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
-</ol>
-
-<h1 id="elastic-block-storage-aws-ebs">Elastic Block Storage (AWS EBS)</h1>
-
-<p>Start in the project directory:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/swift-aws-ec2-swarm
-</code></pre></div></div>
-
-<h3 id="cloud-formation-template">cloud-formation Template</h3>
-
-<p>Create a folder <code class="language-plaintext highlighter-rouge">ebs</code> and a <code class="language-plaintext highlighter-rouge">ebs.yml</code> file in it.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ebs
-<span class="nb">touch </span>ebs/ebs.yml
-nano ebs/ebs.yml
-</code></pre></div></div>
-
-<p>Copy and paste this code into <code class="language-plaintext highlighter-rouge">ebs.yml</code>:</p>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Description</span><span class="pi">:</span> <span class="s">Shared EBS volumes for the Docker Swarm instances</span>  
-
-<span class="na">Resources</span><span class="pi">:</span>
-  <span class="na">HomeVolume</span><span class="pi">:</span>
-    <span class="na">Type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">AWS::EC2::Volume'</span>
-    <span class="na">Properties</span><span class="pi">:</span>
-      <span class="na">VolumeType</span><span class="pi">:</span> <span class="s">io2</span>
-      <span class="na">Iops</span><span class="pi">:</span> <span class="s">3000</span>      
-      <span class="na">Size</span><span class="pi">:</span> <span class="m">30</span>
-      <span class="na">Encrypted</span><span class="pi">:</span> <span class="no">true</span>
-      <span class="na">AvailabilityZone</span><span class="pi">:</span> <span class="kt">!Select</span> <span class="pi">[</span> <span class="nv">0</span><span class="pi">,</span> <span class="kt">!GetAZs</span> <span class="s1">'</span><span class="s">'</span> <span class="pi">]</span>
-      <span class="na">MultiAttachEnabled</span><span class="pi">:</span> <span class="no">true</span>
-      <span class="c1"># tags:</span>
-        <span class="pi">-</span> <span class="na">Key</span><span class="pi">:</span> <span class="s">Name</span>
-          <span class="na">Value</span><span class="pi">:</span> <span class="s">shared-volume-home</span>
-
-<span class="na">Outputs</span><span class="pi">:</span>
-  <span class="na">HomeVolumeId</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">The ID of the created home EBS volume</span>
-    <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">HomeVolume</span>
-</code></pre></div></div>
-
-<h2 id="scripts">Scripts</h2>
-
-<p>Next add a script <code class="language-plaintext highlighter-rouge">deploy-ebs.sh</code> and paste this code in it:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
-
-<span class="c"># switch to parent directory</span>
-<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
-<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
-
-<span class="nb">source </span>config/names.sh
-
-<span class="nb">echo
-echo</span> <span class="s2">"Deploying </span><span class="nv">$stack_ebs</span><span class="s2"> stack via cloud-formation:"</span>
-<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
-<span class="nb">echo
-
-set</span> <span class="nt">-x</span>
-
-aws cloudformation deploy <span class="se">\</span>
-    <span class="nt">--template-file</span> ebs/ebs.yml <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_ebs</span>
-
-<span class="nb">popd</span>
-</code></pre></div></div>
-
-<p>Let’s also add a clean up script <code class="language-plaintext highlighter-rouge">rm-ebs.sh</code>:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
-
-
-<span class="c"># switch to parent directory</span>
-<span class="nv">script_path</span><span class="o">=</span><span class="sb">`</span><span class="nb">dirname</span> <span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="sb">`</span>
-<span class="nb">pushd</span> <span class="nv">$script_path</span>/..
-
-<span class="nb">source </span>config/names.sh
-
-<span class="nb">echo
-echo</span> <span class="s2">"Destroying </span><span class="nv">$stack_ebs</span><span class="s2"> stack via cloud-formation:"</span>
-<span class="nb">echo</span> <span class="s1">'https://us-west-2.console.aws.amazon.com/cloudformation/home'</span>
-<span class="nb">echo
-
-set</span> <span class="nt">-x</span>
-
-aws cloudformation delete-stack <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_ebs</span> 
-
-aws cloudformation <span class="nb">wait </span>stack-delete-complete <span class="se">\</span>
-    <span class="nt">--stack-name</span> <span class="nv">$stack_ebs</span>
-</code></pre></div></div>
-
-<p>Make the scripts executable:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x ebs/deploy-ebs.sh 
-<span class="nb">chmod</span> +x ebs/rm-ebs.sh
-</code></pre></div></div>
-
-<h3 id="deploy">Deploy</h3>
-
-<p>Finally let’s run the “deploy” script to create the EBS volumes:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./ebs/deploy-ebs.sh
-</code></pre></div></div>
-
-<p>You should see output similar to this:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deploying swift-swarm-ebs stack via cloud-formation:
-https://us-west-2.console.aws.amazon.com/cloudformation/home
-
-+ aws cloudformation deploy <span class="nt">--template-file</span> ebs/ebs.yml <span class="nt">--stack-name</span> swift-swarm-ebs
-
-Waiting <span class="k">for </span>changeset to be created..
-Waiting <span class="k">for </span>stack create/update to <span class="nb">complete
-</span>Successfully created/updated stack - swift-swarm-ebs
-</code></pre></div></div>
-
-<p>At this point your project structure should look like this:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.
-├── config
-│   └── names.sh
-├── ebs
-│   ├── deploy-ebs.sh
-│   ├── ebs.yml
-│   └── rm-ebs.sh
-└── vpc
-    ├── deploy-vpc.sh
-    ├── rm-vpc.sh
-    └── vpc.yml
-</code></pre></div></div>
-
-<p>Congratulations!</p>
-
-<p>We are done with <code class="language-plaintext highlighter-rouge">Step 2. Storage</code>.</p>
-
-<p>Next step is: <a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Step 3. Roles</a></p>]]></content><author><name>Swift Software Group</name></author><category term="cloud" /><category term="aws" /><category term="ec2" /><category term="cloud-formation" /><category term="docker" /><category term="docker-swarm" /><summary type="html"><![CDATA[In this step we will create a shared EBS volume which will be used as a home directory for the Linux users. This post is part of a thread that includes these steps: Network Setup Storage (this post) Roles Manager Instance Worker Launch Template Worker Instances Docker Swarm Cleanup]]></summary></entry></feed>
+<p>A list of the available MSYS2 versions is available <a href="https://repo.msys2.org/distrib/x86_64/">here</a>.</p>]]></content><author><name>Swift Software Group</name></author><category term="ruby" /><category term="windows" /><summary type="html"><![CDATA[This is a simple guide for configuring a Ruby 2 environment on Windows 11. All scripts are PowerShell. PowerShell This will allow you to execute PowerShell scripts locally on your machine. In PowerShell as Administrator: Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine]]></summary></entry></feed>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<title>Getting Started with C++ and Visual Studio Code on Ubuntu | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Swift Software Group">
+<meta name="generator" content="Jekyll v4.2.2">
+<link rel="canonical" href="/getting-started-cpp-visual-studio-code-ubuntu/">
+
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QP5FYNH46M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QP5FYNH46M');
+</script>
+
+</head>
+
+
+
+
+<header>
+  <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
+  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="Archive" href="/archive/" ><span aria-hidden="true">Archive</span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/getting-started-cpp-visual-studio-code-ubuntu/">Getting Started with C++ and Visual Studio Code on Ubuntu</a></h1><time datetime="2023-11-18T00:00:00-08:00">November 18, 2023</time>
+</header>
+
+  <p>Before going through these steps make sure you have done <a href="/setup-cpp-development-environment-ubuntu">Setup C++ development environment on Ubuntu</a></p>
+
+<h2 id="visual-studio-code">Visual Studio Code</h2>
+
+<p>Download and install from <a href="https://code.visualstudio.com/download">Visual Studio Code</a> site.</p>
+
+<p>Open Visual Studio Code and press <code class="language-plaintext highlighter-rouge">Cmd + Shift + P</code>. Select <code class="language-plaintext highlighter-rouge">Shell Command: Install 'code' command in PATH</code>.</p>
+
+<h2 id="c-project">C++ Project</h2>
+
+<p>Create a directory called simple in <code class="language-plaintext highlighter-rouge">~/cpp/simple</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ~/cpp/simple
+</code></pre></div></div>
+
+<p>Open the directory in Visual Studio Code:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/cpp/simple
+code <span class="nb">.</span>
+</code></pre></div></div>
+
+<p>Install the <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools-extension-pack">C/C++ Extension Pack</a>.</p>
+
+<h2 id="project-files">Project Files</h2>
+
+<p>Add the following files:</p>
+
+<h3 id="srcmaincpp"><code class="language-plaintext highlighter-rouge">src/main.cpp</code></h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello CMake!</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="cmakeliststxt"><code class="language-plaintext highlighter-rouge">CMakeLists.txt</code></h3>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cmake_minimum_required</span><span class="p">(</span>VERSION 3.20<span class="p">)</span>
+
+<span class="nb">project</span><span class="p">(</span>simple<span class="p">)</span>
+
+<span class="nb">add_executable</span><span class="p">(</span>simple src/main.cpp<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="buildsh"><code class="language-plaintext highlighter-rouge">build.sh</code></h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+<span class="nb">mkdir</span> <span class="nt">-p</span> ./build/debug
+<span class="nb">pushd</span> ./build/debug
+    cmake <span class="nt">-G</span> <span class="s1">'Ninja'</span> <span class="nt">-DCMAKE_BUILD_TYPE</span><span class="o">=</span>Debug  ../.. <span class="o">&amp;&amp;</span> <span class="se">\</span>
+    ninja
+    <span class="nv">ret</span><span class="o">=</span><span class="nv">$?</span>
+<span class="nb">popd</span>  
+</code></pre></div></div>
+
+<p>Make it executable:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x build.sh
+</code></pre></div></div>
+
+<h3 id="gitignore"><code class="language-plaintext highlighter-rouge">.gitignore</code></h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.cache/
+build/
+</code></pre></div></div>
+
+<h2 id="test-the-build">Test the build</h2>
+
+<p>Open Terminal in Visual Studio Code and test the build from command line:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./build.sh
+</code></pre></div></div>
+
+<h2 id="automate-the-build">Automate the build</h2>
+
+<p>Add the following Visual Studio Code specific files to the <code class="language-plaintext highlighter-rouge">.vscode</code> subdir:</p>
+
+<h3 id="vscodetasksjson"><code class="language-plaintext highlighter-rouge">.vscode/tasks.json</code></h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"tasks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Build"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"shell"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"linux"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}/build.sh"</span><span class="p">,</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"group"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"build"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"isDefault"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Test the build by pressing <code class="language-plaintext highlighter-rouge">Ctrl + B</code>. Visual Studio Code should execute the <code class="language-plaintext highlighter-rouge">build.sh</code> script automatically.</p>
+
+<h2 id="setup-debugging">Setup Debugging</h2>
+
+<p>Add the following Visual Studio Code specific files to the <code class="language-plaintext highlighter-rouge">.vscode</code> subdir:</p>
+
+<h3 id="vscodelaunchjson"><code class="language-plaintext highlighter-rouge">.vscode/launch.json</code></h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.2.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"configurations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Launch (gdb)"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cppdbg"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"request"</span><span class="p">:</span><span class="w"> </span><span class="s2">"launch"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"cwd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"linux"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"program"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}/build/debug/simple"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"MIMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gdb"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">    
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="test-the-debugging">Test the debugging</h2>
+
+<p>Set a breakpoint on the first line of <code class="language-plaintext highlighter-rouge">int main()</code> inside <code class="language-plaintext highlighter-rouge">src/main.cpp</code>. Press <code class="language-plaintext highlighter-rouge">F5</code> to launch the debugger. It should stop at the breakpoint.</p>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

@@ -45,6 +45,89 @@
 
   
   <article>
+    
+    
+    <a href="/tag/cloud"><code class="highligher-rouge" style="font-size:27px;"><nobr>cloud</nobr></code></a>
+    <a href="/tag/aws"><code class="highligher-rouge" style="font-size:27px;"><nobr>aws</nobr></code></a>
+    <a href="/tag/ec2"><code class="highligher-rouge" style="font-size:19px;"><nobr>ec2</nobr></code></a>
+    <a href="/tag/docker-swarm"><code class="highligher-rouge" style="font-size:18px;"><nobr>docker-swarm</nobr></code></a>
+    <a href="/tag/docker"><code class="highligher-rouge" style="font-size:18px;"><nobr>docker</nobr></code></a>
+    <a href="/tag/cloud-formation"><code class="highligher-rouge" style="font-size:18px;"><nobr>cloud-formation</nobr></code></a>
+    <a href="/tag/macos"><code class="highligher-rouge" style="font-size:16px;"><nobr>macos</nobr></code></a>
+    <a href="/tag/ecs"><code class="highligher-rouge" style="font-size:16px;"><nobr>ecs</nobr></code></a>
+    <a href="/tag/ubuntu"><code class="highligher-rouge" style="font-size:15px;"><nobr>ubuntu</nobr></code></a>
+    <a href="/tag/linux"><code class="highligher-rouge" style="font-size:15px;"><nobr>linux</nobr></code></a>
+    <a href="/tag/vscode"><code class="highligher-rouge" style="font-size:14px;"><nobr>vscode</nobr></code></a>
+    <a href="/tag/dotnet"><code class="highligher-rouge" style="font-size:14px;"><nobr>dotnet</nobr></code></a>
+    <a href="/tag/csharp"><code class="highligher-rouge" style="font-size:14px;"><nobr>csharp</nobr></code></a>
+    <a href="/tag/cpp"><code class="highligher-rouge" style="font-size:14px;"><nobr>cpp</nobr></code></a>
+    <a href="/tag/ruby"><code class="highligher-rouge" style="font-size:12px;"><nobr>ruby</nobr></code></a>
+    <a href="/tag/podman"><code class="highligher-rouge" style="font-size:12px;"><nobr>podman</nobr></code></a>
+    <a href="/tag/windows"><code class="highligher-rouge" style="font-size:11px;"><nobr>windows</nobr></code></a>
+    <a href="/tag/mongodb"><code class="highligher-rouge" style="font-size:11px;"><nobr>mongodb</nobr></code></a>
+    
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/setup-cpp-development-environment-macos/">Setup C++ development environment on macOS</a></h1><time datetime="2023-09-12T00:00:00-07:00">September 12, 2023</time>
+</header>
+
+    <h2 id="homebrew">Homebrew</h2>
+
+<p>Install Homebrew:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/bin/bash <span class="nt">-c</span> <span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-fsSL</span> https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="si">)</span><span class="s2">"</span>
+</code></pre></div></div>
+
+    <div class="more"><a href="/setup-cpp-development-environment-macos/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/configure-ruby-environment-windows/">Configure Ruby Environment on Windows</a></h1><time datetime="2023-05-27T00:00:00-07:00">May 27, 2023</time>
+</header>
+
+    <p>This is a simple guide for configuring a Ruby 2 environment on Windows 11. All scripts are PowerShell.</p>
+
+<h2 id="powershell">PowerShell</h2>
+
+<p>This will allow you to execute PowerShell scripts locally on your machine. In PowerShell as Administrator:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Set-ExecutionPolicy</span><span class="w"> </span><span class="nt">-ExecutionPolicy</span><span class="w"> </span><span class="nx">RemoteSigned</span><span class="w"> </span><span class="nt">-Scope</span><span class="w"> </span><span class="nx">LocalMachine</span><span class="w">
+</span></code></pre></div></div>
+
+    <div class="more"><a href="/configure-ruby-environment-windows/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/run-mongodb-with-podman/">Run MongoDB with Podman</a></h1><time datetime="2023-05-23T00:00:00-07:00">May 23, 2023</time>
+</header>
+
+    <p>Before you start install <a href="/setup-podman-macos">Podman</a>.</p>
+
+<h2 id="set-machine-to-rootful">Set machine to <code class="language-plaintext highlighter-rouge">rootful</code></h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman machine stop
+podman machine <span class="nb">set</span> <span class="nt">--rootful</span>
+podman machine start
+</code></pre></div></div>
+
+    <div class="more"><a href="/run-mongodb-with-podman/">read more</a></div>
+  </article>
+
+  <article>
+    <header>
+  <h1><a href="/setup-podman-macos/">Setup Podman on macOS</a></h1><time datetime="2023-05-22T00:00:00-07:00">May 22, 2023</time>
+</header>
+
+    <p>Podman is a utility that can be used to create and maintain containers. This post will teach you how to set up Podman on macOS and perform some basic commands.</p>
+
+    <div class="more"><a href="/setup-podman-macos/">read more</a></div>
+  </article>
+
+  <article>
     <header>
   <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup/">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 8 - Cleanup</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
 </header>
@@ -136,98 +219,6 @@
     <div class="more"><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template/">read more</a></div>
   </article>
 
-  <article>
-    <header>
-  <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance/">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 4 - Manager Instance</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
-</header>
-
-    <p>In this step we will configure and launch the Manager EC2 instance.</p>
-
-<p>This post is part of a thread that includes these steps:</p>
-
-<ol>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
-  <li>Manager Instance (this post)</li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
-</ol>
-
-    <div class="more"><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance/">read more</a></div>
-  </article>
-
-  <article>
-    <header>
-  <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles/">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 3 - Roles</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
-</header>
-
-    <p>In this step we create the IAM roles and policies needed by the EC2 instances.</p>
-
-<p>This post is part of a thread that includes these steps:</p>
-
-<ol>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
-  <li>Roles (this post)</li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
-</ol>
-
-    <div class="more"><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles/">read more</a></div>
-  </article>
-
-  <article>
-    <header>
-  <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage/">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 2 - Storage</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
-</header>
-
-    <p>In this step we will create a shared EBS volume which will be used as a home directory for the Linux users.</p>
-
-<p>This post is part of a thread that includes these steps:</p>
-
-<ol>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
-  <li>Storage (this post)</li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
-</ol>
-
-    <div class="more"><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage/">read more</a></div>
-  </article>
-
-  <article>
-    <header>
-  <h1><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup/">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 1 - Network Setup</a></h1><time datetime="2021-08-11T00:00:00-07:00">August 11, 2021</time>
-</header>
-
-    <p>Setup network infrastructure including new VPC (Virtual Private Cloud), public and private subnets, internet gateway, security group, and ssh access.</p>
-
-<p>This post is part of a thread that includes these steps:</p>
-
-<ol>
-  <li>Network Setup (this post)</li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
-  <li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
-</ol>
-
-    <div class="more"><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup/">read more</a></div>
-  </article>
-
 
 
   <article>
@@ -241,16 +232,16 @@
     <a href="/tag/cloud-formation"><code class="highligher-rouge" style="font-size:18px;"><nobr>cloud-formation</nobr></code></a>
     <a href="/tag/macos"><code class="highligher-rouge" style="font-size:16px;"><nobr>macos</nobr></code></a>
     <a href="/tag/ecs"><code class="highligher-rouge" style="font-size:16px;"><nobr>ecs</nobr></code></a>
-    <a href="/tag/vscode"><code class="highligher-rouge" style="font-size:12px;"><nobr>vscode</nobr></code></a>
+    <a href="/tag/ubuntu"><code class="highligher-rouge" style="font-size:15px;"><nobr>ubuntu</nobr></code></a>
+    <a href="/tag/linux"><code class="highligher-rouge" style="font-size:15px;"><nobr>linux</nobr></code></a>
+    <a href="/tag/vscode"><code class="highligher-rouge" style="font-size:14px;"><nobr>vscode</nobr></code></a>
+    <a href="/tag/dotnet"><code class="highligher-rouge" style="font-size:14px;"><nobr>dotnet</nobr></code></a>
+    <a href="/tag/csharp"><code class="highligher-rouge" style="font-size:14px;"><nobr>csharp</nobr></code></a>
+    <a href="/tag/cpp"><code class="highligher-rouge" style="font-size:14px;"><nobr>cpp</nobr></code></a>
     <a href="/tag/ruby"><code class="highligher-rouge" style="font-size:12px;"><nobr>ruby</nobr></code></a>
     <a href="/tag/podman"><code class="highligher-rouge" style="font-size:12px;"><nobr>podman</nobr></code></a>
-    <a href="/tag/dotnet"><code class="highligher-rouge" style="font-size:12px;"><nobr>dotnet</nobr></code></a>
-    <a href="/tag/csharp"><code class="highligher-rouge" style="font-size:12px;"><nobr>csharp</nobr></code></a>
-    <a href="/tag/cpp"><code class="highligher-rouge" style="font-size:12px;"><nobr>cpp</nobr></code></a>
     <a href="/tag/windows"><code class="highligher-rouge" style="font-size:11px;"><nobr>windows</nobr></code></a>
-    <a href="/tag/ubuntu"><code class="highligher-rouge" style="font-size:11px;"><nobr>ubuntu</nobr></code></a>
     <a href="/tag/mongodb"><code class="highligher-rouge" style="font-size:11px;"><nobr>mongodb</nobr></code></a>
-    <a href="/tag/linux"><code class="highligher-rouge" style="font-size:11px;"><nobr>linux</nobr></code></a>
     
   </article>
   
@@ -259,7 +250,7 @@
 
   <footer>
     <a href="/">« newer posts</a>
-    <span>page 2 of 11</span>
+    <span>page 2 of 12</span>
     <a href="/page3">older posts »</a>
   </footer>
 
