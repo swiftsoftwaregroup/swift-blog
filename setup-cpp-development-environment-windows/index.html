@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<title>Setup C++ development environment on Windows | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Swift Software Group">
+<meta name="generator" content="Jekyll v4.2.2">
+<link rel="canonical" href="/setup-cpp-development-environment-windows/">
+
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QP5FYNH46M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QP5FYNH46M');
+</script>
+
+</head>
+
+
+
+
+<header>
+  <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
+  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="Archive" href="/archive/" ><span aria-hidden="true">Archive</span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/setup-cpp-development-environment-windows/">Setup C++ development environment on Windows</a></h1><time datetime="2023-11-21T00:00:00-08:00">November 21, 2023</time>
+</header>
+
+  <p>These steps were tested on Windows 11, 23H2. Scripts are <code class="language-plaintext highlighter-rouge">PowerShell</code>.</p>
+
+<h2 id="visual-studio-2022">Visual Studio 2022</h2>
+
+<p>This is needed for the C++ compiler. Install <a href="https://visualstudio.microsoft.com/vs/older-downloads/">Visual Studio 2022 Community Edition</a>.</p>
+
+<p>During installation select C++ desktop development and latest Windows 10 and Windows 11 SDKs.</p>
+
+<p>After installation open Visual Studio and check for updates. Install the latest 2022 version that is available.</p>
+
+<h2 id="cmake">CMake</h2>
+
+<p>Install via Windows Package Manager:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">winget</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">kitware.cmake</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="ninja">ninja</h2>
+
+<p>Install via Windows Package Manager:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">winget</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">Ninja-build.Ninja</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="powershell-configuration">PowerShell Configuration</h2>
+
+<p>This will allow you to execute PowerShell scripts locally on your machine. In PowerShell as Administrator:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Set-ExecutionPolicy</span><span class="w"> </span><span class="nt">-ExecutionPolicy</span><span class="w"> </span><span class="nx">RemoteSigned</span><span class="w"> </span><span class="nt">-Scope</span><span class="w"> </span><span class="nx">LocalMachine</span><span class="w">
+</span></code></pre></div></div>
+<h3 id="environment">Environment</h3>
+
+<p>Update <code class="language-plaintext highlighter-rouge">$env:PSModulePath</code>  so that you can use PowerShell modules. In PowerShell as Administrator:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Environment</span><span class="p">]::</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span><span class="s2">"PSModulePath"</span><span class="p">,</span><span class="w"> </span><span class="s2">"</span><span class="bp">$HOME</span><span class="s2">/Documents/WindowsPowerShell/Modules;"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">$</span><span class="nn">env</span><span class="p">:</span><span class="nv">PSModulePath</span><span class="p">,</span><span class="w"> </span><span class="s2">"Machine"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="vssetup-module">VSSetup Module</h3>
+
+<p>In PowerShell as Administrator:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Install-Module</span><span class="w"> </span><span class="nx">VSSetup</span><span class="w"> </span><span class="nt">-Scope</span><span class="w"> </span><span class="nx">CurrentUser</span><span class="w">
+</span></code></pre></div></div>
+<p>Close and reopen PowerShell. Now you can use the VSSetup commands.</p>
+
+<p>List the Visual Studio installations:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Get-VSSetupInstance</span><span class="w">
+</span></code></pre></div></div>
+
+<p>This finds the installation path for Visual Studio 2022:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Get-VSSetupInstance</span><span class="w"> </span><span class="se">`
+</span><span class="o">|</span><span class="w"> </span><span class="n">Select-VSSetupInstance</span><span class="w"> </span><span class="nt">-Version</span><span class="w"> </span><span class="s1">'[17.0,]'</span><span class="w"> </span><span class="se">`
+</span><span class="o">|</span><span class="w"> </span><span class="n">Select-Object</span><span class="w"> </span><span class="nt">-ExpandProperty</span><span class="w"> </span><span class="nx">InstallationPath</span><span class="w">
+</span></code></pre></div></div>
+
+<p>See <a href="https://github.com/Microsoft/vssetup.powershell/wiki/Selecting-an-Instance">Selecting an Instance</a></p>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>

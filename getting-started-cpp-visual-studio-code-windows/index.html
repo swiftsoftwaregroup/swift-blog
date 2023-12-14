@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<title>Getting Started with C++ and Visual Studio Code on Windows | Swift Software Group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Swift Software Group">
+<meta name="generator" content="Jekyll v4.2.2">
+<link rel="canonical" href="/getting-started-cpp-visual-studio-code-windows/">
+
+
+<link rel="stylesheet" href="/assets/css/frame.css">
+
+
+<link rel="stylesheet" href="/assets/css/classes.css">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+
+
+
+<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QP5FYNH46M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QP5FYNH46M');
+</script>
+
+</head>
+
+
+
+
+<header>
+  <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
+  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="Archive" href="/archive/" ><span aria-hidden="true">Archive</span></a></nav>
+
+</header>
+
+<article>
+  <header>
+  <h1><a href="/getting-started-cpp-visual-studio-code-windows/">Getting Started with C++ and Visual Studio Code on Windows</a></h1><time datetime="2023-11-22T00:00:00-08:00">November 22, 2023</time>
+</header>
+
+  <p>Before going through these steps make sure you have done <a href="/setup-cpp-development-environment-windows">Setup C++ development environment on Windows</a></p>
+
+<h2 id="visual-studio-code">Visual Studio Code</h2>
+
+<p>Download and install from <a href="https://code.visualstudio.com/download">Visual Studio Code</a> site.</p>
+
+<p>Open Visual Studio Code and press <code class="language-plaintext highlighter-rouge">Cmd + Shift + P</code>. Select <code class="language-plaintext highlighter-rouge">Shell Command: Install 'code' command in PATH</code>.</p>
+
+<h2 id="c-project">C++ Project</h2>
+
+<p>Create a directory called simple in <code class="language-plaintext highlighter-rouge">~/cpp/simple</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ~/cpp/simple
+</code></pre></div></div>
+
+<p>Add a configuration script <code class="language-plaintext highlighter-rouge">configure.ps1</code>:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$temp_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">IO.Path</span><span class="p">]::</span><span class="n">GetTempFileName</span><span class="p">()</span><span class="w">
+
+</span><span class="c"># find where Visual Studio 2022 is installed</span><span class="w">
+</span><span class="nv">$vs_install_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">$</span><span class="p">(</span><span class="n">Get-VSSetupInstance</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Select-VSSetupInstance</span><span class="w"> </span><span class="nt">-Version</span><span class="w"> </span><span class="s1">'[17.0,18.0]'</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Select-Object</span><span class="w"> </span><span class="nt">-ExpandProperty</span><span class="w"> </span><span class="nx">InstallationPath</span><span class="p">)</span><span class="w">
+</span><span class="nv">$vs_common_tools</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"</span><span class="nv">${vs_install_dir}</span><span class="s2">/Common7/Tools/"</span><span class="w">
+
+</span><span class="c"># run `VsDevCmd.bat -arch=amd64 -host_arch=amd64` and save environment to $temp_file</span><span class="w">
+</span><span class="n">cmd</span><span class="w"> </span><span class="nx">/c</span><span class="w"> </span><span class="s2">" </span><span class="se">`"</span><span class="nv">$vs_common_tools</span><span class="s2">/VsDevCmd.bat</span><span class="se">`"</span><span class="s2"> -arch=amd64 -host_arch=amd64 &amp;&amp; set &gt; </span><span class="se">`"</span><span class="nv">$temp_file</span><span class="se">`"</span><span class="s2">"</span><span class="w">
+
+</span><span class="c"># copy the environment variables into PowerShell</span><span class="w">
+</span><span class="n">Get-Content</span><span class="w"> </span><span class="nv">$temp_file</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Foreach-Object</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="kr">if</span><span class="p">(</span><span class="bp">$_</span><span class="w"> </span><span class="o">-match</span><span class="w"> </span><span class="s2">"^(.*?)=(.*)$"</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="n">Set-Content</span><span class="w"> </span><span class="s2">"env:\</span><span class="si">$(</span><span class="nv">$matches</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">)</span><span class="s2">"</span><span class="w"> </span><span class="nv">$matches</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="n">Remove-Item</span><span class="w"> </span><span class="nv">$temp_file</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Open the directory in Visual Studio Code. It is important to source the <code class="language-plaintext highlighter-rouge">configure.ps1</code> script before running <code class="language-plaintext highlighter-rouge">code .</code> in order to setup the correct C++ environment:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cd</span><span class="w"> </span><span class="nx">~/cpp/simple</span><span class="w">
+
+</span><span class="o">.</span><span class="w"> </span><span class="o">.</span><span class="n">\configure.ps1</span><span class="w">
+
+</span><span class="n">code</span><span class="w"> </span><span class="o">.</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Install the <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools-extension-pack">C/C++ Extension Pack</a>.</p>
+
+<h2 id="project-files">Project Files</h2>
+
+<p>Add the following files:</p>
+
+<h3 id="srcmaincpp"><code class="language-plaintext highlighter-rouge">src/main.cpp</code></h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello CMake!</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="cmakeliststxt"><code class="language-plaintext highlighter-rouge">CMakeLists.txt</code></h3>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cmake_minimum_required</span><span class="p">(</span>VERSION 3.20<span class="p">)</span>
+
+<span class="nb">project</span><span class="p">(</span>simple<span class="p">)</span>
+
+<span class="nb">add_executable</span><span class="p">(</span>simple src/main.cpp<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="buildps1"><code class="language-plaintext highlighter-rouge">build.ps1</code></h3>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">New-Item</span><span class="w"> </span><span class="nt">-Force</span><span class="w"> </span><span class="nt">-Path</span><span class="w"> </span><span class="o">.</span><span class="nx">/build/debug</span><span class="w"> </span><span class="nt">-ItemType</span><span class="w"> </span><span class="nx">Directory</span><span class="w"> 
+</span><span class="n">Push-Location</span><span class="w"> </span><span class="o">.</span><span class="nx">/build/debug</span><span class="w">
+    </span><span class="n">cmake</span><span class="w"> </span><span class="nt">-G</span><span class="w"> </span><span class="s1">'Ninja'</span><span class="w"> </span><span class="nt">-DCMAKE_BUILD_TYPE</span><span class="o">=</span><span class="n">debug</span><span class="w"> </span><span class="o">..</span><span class="nx">/..</span><span class="w">
+    </span><span class="n">ninja</span><span class="w">
+</span><span class="nx">Pop-Location</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="gitignore"><code class="language-plaintext highlighter-rouge">.gitignore</code></h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>build/
+</code></pre></div></div>
+
+<h2 id="test-the-build">Test the build</h2>
+
+<p>Open Terminal in Visual Studio Code and test the build from command line:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./build.ps1
+</code></pre></div></div>
+
+<h2 id="automate-the-build">Automate the build</h2>
+
+<p>Add the following Visual Studio Code specific files to the <code class="language-plaintext highlighter-rouge">.vscode</code> subdir:</p>
+
+<h3 id="vscodetasksjson"><code class="language-plaintext highlighter-rouge">.vscode/tasks.json</code></h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"tasks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Build"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"shell"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"windows"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}/build.ps1"</span><span class="p">,</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"group"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"build"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"isDefault"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Test the build by pressing <code class="language-plaintext highlighter-rouge">Ctrl + Shift + B</code>. Visual Studio Code should execute the <code class="language-plaintext highlighter-rouge">build.ps1</code> script automatically.</p>
+
+<h2 id="setup-debugging">Setup Debugging</h2>
+
+<p>Add the following Visual Studio Code specific files to the <code class="language-plaintext highlighter-rouge">.vscode</code> subdir:</p>
+
+<h3 id="vscodelaunchjson"><code class="language-plaintext highlighter-rouge">.vscode/launch.json</code></h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.2.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"configurations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Debug (cppvsdbg)"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cppdbg"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"request"</span><span class="p">:</span><span class="w"> </span><span class="s2">"launch"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"cwd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"windows"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cppvsdbg"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"program"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}/build/debug/simple.exe"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"preLaunchTask"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Build"</span><span class="w">
+        </span><span class="p">}</span><span class="w">        
+   </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="test-the-debugging">Test the debugging</h2>
+
+<p>Set a breakpoint on the first line of <code class="language-plaintext highlighter-rouge">int main()</code> inside <code class="language-plaintext highlighter-rouge">src/main.cpp</code>. Press <code class="language-plaintext highlighter-rouge">F5</code> to launch the debugger. It should stop at the breakpoint.</p>
+
+  
+    <hr>
+    <div id="disqus_thread"></div>
+    
+    <noscript>Please enable JavaScript to view comments.</noscript>
+  
+</article>
+
+
+
+<footer>
+  <div>&copy; Swift Software Group</div>
+  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+
+</footer>
+
+
+</html>
