@@ -1,372 +1,1911 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>  
-<title>Launch ECS container using AWS ECS CLI | Swift Software Group</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="author" content="Swift Software Group">
-<meta name="generator" content="Jekyll v4.2.2">
-<link rel="canonical" href="/launch-ecs-container-ecs-cli/">
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Swift Software Group Blog">
+      
+      
+      
+        <link rel="canonical" href="https://blog.swiftsoftwaregroup.com/launch-ecs-container-ecs-cli/">
+      
+      
+        <link rel="prev" href="../launch-ecs-container-aws-cli-step-5-cleanup/">
+      
+      
+        <link rel="next" href="../deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup/">
+      
+      
+        <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../feed_rss_created.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="../feed_rss_updated.xml">
+      
+      <link rel="icon" href="../images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
+    
+    
+      
+        <title>Launch ECS container using AWS ECS CLI - Swift Software Group</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
 
 
-<link rel="stylesheet" href="/assets/css/frame.css">
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
 
 
-<link rel="stylesheet" href="/assets/css/classes.css">
+  
+  
 
-<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-QP5FYNH46M"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-QP5FYNH46M",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-QP5FYNH46M",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>var consent;"undefined"==typeof __md_analytics||(consent=__md_get("__consent"))&&consent.analytics&&__md_analytics()</script>
+  
 
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#launch-ecs-container-using-aws-ecs-cli" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
 
+  
 
-<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Swift Software Group" class="md-header__button md-logo" aria-label="Swift Software Group" data-md-component="logo">
+      
+  <img src="../images/logo_white.svg" alt="logo">
 
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Swift Software Group
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Launch ECS container using AWS ECS CLI
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://swiftsoftwaregroup.com" class="md-tabs__link">
+        
+  
+    
+  
+  Home
 
+      </a>
+    </li>
+  
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QP5FYNH46M"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://swiftsoftwaregroup.com/services" class="md-tabs__link">
+        
+  
+    
+  
+  Services
 
-  gtag('config', 'G-QP5FYNH46M');
-</script>
+      </a>
+    </li>
+  
 
-</head>
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://swiftsoftwaregroup.com/contact-us" class="md-tabs__link">
+        
+  
+    
+  
+  Contact Us
 
+      </a>
+    </li>
+  
 
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href=".." class="md-tabs__link">
+        
+  
+    
+  
+  Blog
 
+      </a>
+    </li>
+  
 
-<header>
-  <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
-  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="Archive" href="/archive/" ><span aria-hidden="true">Archive</span></a></nav>
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../archive/2023/" class="md-tabs__link">
+          
+  
+  Archive
 
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../aws/" class="md-tabs__link">
+          
+  
+  Categories
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
 </header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
 
-<article>
-  <header>
-  <h1><a href="/launch-ecs-container-ecs-cli/">Launch ECS container using AWS ECS CLI</a></h1><time datetime="2021-06-20T00:00:00-07:00">June 20, 2021</time>
-</header>
 
-  <p>The Amazon ECS Command Line Interface (CLI) is a command line tool for Amazon Elastic Container Service (Amazon ECS) that provides high-level commands to simplify creating, updating, and monitoring clusters and tasks from a local development environment.</p>
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Swift Software Group" class="md-nav__button md-logo" aria-label="Swift Software Group" data-md-component="logo">
+      
+  <img src="../images/logo_white.svg" alt="logo">
+
+    </a>
+    Swift Software Group
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://swiftsoftwaregroup.com" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://swiftsoftwaregroup.com/services" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://swiftsoftwaregroup.com/contact-us" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact Us
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Archive
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Archive
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2023/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2021/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2021
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2020/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2020
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2018/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2018
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2017/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2017
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2016/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2016
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2015/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2015
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2014/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2014
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2013/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2013
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2012/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2012
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2011/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2011
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Categories
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Categories
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    aws
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../cloud/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cloud
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../cloud-formation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cloud-formation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../cpp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cpp
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../csharp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    csharp
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    docker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-swarm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    docker-swarm
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../dotnet/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dotnet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../ec2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ec2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../ecs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ecs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../macos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    macos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../mongodb/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    mongodb
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../podman/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    podman
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../ruby/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ruby
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../ubuntu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ubuntu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vscode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../windows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    windows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install-aws-ecs-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install AWS ECS CLI
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#define-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Define Variables
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ecs-cli-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      ECS CLI Setup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ecs-cluster-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      ECS Cluster Configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#launch-ecs-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Launch ECS Cluster
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-ecs-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create ECS Repository
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-docker-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create Docker image
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Create Docker image">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dockerfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dockerfile
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build Image
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tag Image
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publish-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Publish Image
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#launch-ecs-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      Launch ECS Task
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Launch ECS Task">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      Service Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task Definition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#launch-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      Launch Service
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cleanup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cleanup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stop-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stop services
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete cluster
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-log-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete log group
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete image
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-image-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete image repository
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href=".." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5v-5Z"/></svg>
+                        <time datetime="2021-06-20 00:00:00" class="md-ellipsis">June 20, 2021</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3H9m3 2 4 13 3-1-4-13-3 1M5 5v13h3V5H5M3 19v2h18v-2H3Z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../cloud/">cloud</a>, 
+                              <a href="../aws/">aws</a>, 
+                              <a href="../ecs/">ecs</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7h1.5Z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              4 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+
+
+<h1 id="launch-ecs-container-using-aws-ecs-cli">Launch ECS container using AWS ECS CLI</h1>
+<p>The Amazon ECS Command Line Interface (CLI) is a command line tool for Amazon Elastic Container Service (Amazon ECS) that provides high-level commands to simplify creating, updating, and monitoring clusters and tasks from a local development environment.</p>
+<!-- more -->
 
 <p>Make sure you do this setup first:</p>
-
 <ol>
-  <li><a href="/setup-macos-for-aws-cloud-devops">Setup macOS for AWS Cloud DevOps</a></li>
-  <li><a href="/aws-authentication">AWS Authentication</a></li>
+<li><a href="/setup-macos-for-aws-cloud-devops">Setup macOS for AWS Cloud DevOps</a></li>
+<li><a href="/aws-authentication">AWS Authentication</a></li>
 </ol>
-
 <h2 id="install-aws-ecs-cli">Install AWS ECS CLI</h2>
-
 <p>Install:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ~/ecs-cli
-<span class="nb">pushd</span> ~/ecs-cli
-
-<span class="c"># Download</span>
-curl <span class="nt">-Lo</span> ecs-cli https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-darwin-amd64-latest
-curl <span class="nt">-Lo</span> ecs-cli.asc https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-darwin-amd64-latest.asc
-
-<span class="c"># Verify signature</span>
-gpg <span class="nt">--keyserver</span> hkp://keys.gnupg.net <span class="nt">--recv</span> BCE9D9A42D51784F
-gpg <span class="nt">--verify</span> ecs-cli.asc ecs-cli
-
-<span class="c"># Copy to path</span>
-<span class="nb">sudo cp </span>ecs-cli /usr/local/bin
-<span class="nb">sudo chmod </span>a+x /usr/local/bin/ecs-cli
-
-<span class="nb">popd</span>
-</code></pre></div></div>
-
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/ecs-cli
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">pushd</span><span class="w"> </span>~/ecs-cli
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Download</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>curl<span class="w"> </span>-Lo<span class="w"> </span>ecs-cli<span class="w"> </span>https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-darwin-amd64-latest
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>curl<span class="w"> </span>-Lo<span class="w"> </span>ecs-cli.asc<span class="w"> </span>https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-darwin-amd64-latest.asc
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1"># Verify signature</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>gpg<span class="w"> </span>--keyserver<span class="w"> </span>hkp://keys.gnupg.net<span class="w"> </span>--recv<span class="w"> </span>BCE9D9A42D51784F
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>gpg<span class="w"> </span>--verify<span class="w"> </span>ecs-cli.asc<span class="w"> </span>ecs-cli
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="c1"># Copy to path</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>sudo<span class="w"> </span>cp<span class="w"> </span>ecs-cli<span class="w"> </span>/usr/local/bin
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>sudo<span class="w"> </span>chmod<span class="w"> </span>a+x<span class="w"> </span>/usr/local/bin/ecs-cli
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="nb">popd</span>
+</span></code></pre></div>
 <p>Test:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ecs-cli <span class="nt">--version</span>
-</code></pre></div></div>
-
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ecs-cli<span class="w"> </span>--version
+</span></code></pre></div>
 <h2 id="define-variables">Define Variables</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">image</span><span class="o">=</span><span class="s2">"ecs-test"</span>
-<span class="nv">tag</span><span class="o">=</span><span class="s2">"latest"</span>
-<span class="nv">service_name</span><span class="o">=</span><span class="s2">"test"</span>
-</code></pre></div></div>
-
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nv">image</span><span class="o">=</span><span class="s2">&quot;ecs-test&quot;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nv">tag</span><span class="o">=</span><span class="s2">&quot;latest&quot;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nv">service_name</span><span class="o">=</span><span class="s2">&quot;test&quot;</span>
+</span></code></pre></div>
 <h2 id="ecs-cli-setup">ECS CLI Setup</h2>
-
 <blockquote>
-  <p>Configuration information is stored in the <code class="language-plaintext highlighter-rouge">~/.ecs</code> directory on macOS and Linux systems and in <code class="language-plaintext highlighter-rouge">C:\Users\&lt;username&gt;\AppData\local\ecs</code> on Windows systems.</p>
+<p>Configuration information is stored in the <code>~/.ecs</code> directory on macOS and Linux systems and in <code>C:\Users\&lt;username&gt;\AppData\local\ecs</code> on Windows systems.</p>
 </blockquote>
-
 <p>Create a profile using your access key and secret key:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span><span class="si">$(</span>aws configure get aws_access_key_id<span class="si">)</span>
-<span class="nb">export </span><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span><span class="si">$(</span>aws configure get aws_secret_access_key<span class="si">)</span>
-<span class="nb">export </span><span class="nv">AWS_REGION</span><span class="o">=</span><span class="si">$(</span>aws configure get region<span class="si">)</span>
-
-ecs-cli configure profile <span class="nt">--profile-name</span> swift
-</code></pre></div></div>
-
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>configure<span class="w"> </span>get<span class="w"> </span>aws_access_key_id<span class="k">)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>configure<span class="w"> </span>get<span class="w"> </span>aws_secret_access_key<span class="k">)</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AWS_REGION</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>configure<span class="w"> </span>get<span class="w"> </span>region<span class="k">)</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>ecs-cli<span class="w"> </span>configure<span class="w"> </span>profile<span class="w"> </span>--profile-name<span class="w"> </span>swift
+</span></code></pre></div>
 <h2 id="ecs-cluster-configuration">ECS Cluster Configuration</h2>
-
 <p>Create a cluster configuration:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">AWS_REGION</span><span class="o">=</span><span class="si">$(</span>aws configure get region<span class="si">)</span>
-
-ecs-cli configure <span class="se">\</span>
-  <span class="nt">--config-name</span> test-ecs <span class="se">\</span>
-  <span class="nt">--region</span> <span class="nv">$AWS_REGION</span> <span class="se">\</span>
-  <span class="nt">--cluster</span> test-ecs <span class="se">\</span>
-  <span class="nt">--default-launch-type</span> EC2
-  
-ecs-cli configure default <span class="nt">--config-name</span> test-ecs  
-</code></pre></div></div>
-
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AWS_REGION</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>configure<span class="w"> </span>get<span class="w"> </span>region<span class="k">)</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>ecs-cli<span class="w"> </span>configure<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span>--config-name<span class="w"> </span>test-ecs<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span>--region<span class="w"> </span><span class="nv">$AWS_REGION</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">  </span>--cluster<span class="w"> </span>test-ecs<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">  </span>--default-launch-type<span class="w"> </span>EC2
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>ecs-cli<span class="w"> </span>configure<span class="w"> </span>default<span class="w"> </span>--config-name<span class="w"> </span>test-ecs<span class="w">  </span>
+</span></code></pre></div>
 <h2 id="launch-ecs-cluster">Launch ECS Cluster</h2>
-
 <p>This will take a few minutes to complete:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ecs-cli up <span class="se">\</span>
-  <span class="nt">--ecs-profile</span> swift <span class="se">\</span>
-  <span class="nt">--cluster-config</span> test-ecs <span class="se">\</span>
-  <span class="nt">--keypair</span> aws-ec2-key <span class="se">\</span>
-  <span class="nt">--capability-iam</span> <span class="se">\</span>
-  <span class="nt">--instance-type</span> t2.micro <span class="se">\</span>
-  <span class="nt">--size</span> 1 <span class="se">\</span>
-  <span class="nt">--port</span> 22
-</code></pre></div></div>
-
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ecs-cli<span class="w"> </span>up<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>--ecs-profile<span class="w"> </span>swift<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>--cluster-config<span class="w"> </span>test-ecs<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span>--keypair<span class="w"> </span>aws-ec2-key<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span>--capability-iam<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">  </span>--instance-type<span class="w"> </span>t2.micro<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">  </span>--size<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">  </span>--port<span class="w"> </span><span class="m">22</span>
+</span></code></pre></div>
 <p>In addition to EC2 Instances, other resources created by default include:</p>
-
 <ul>
-  <li>Autoscaling Group</li>
-  <li>Autoscaling Launch Configuration</li>
-  <li>EC2 VPC</li>
-  <li>EC2 Internet Gateway</li>
-  <li>EC2 VPC Gateway Attachment</li>
-  <li>EC2 Route Table</li>
-  <li>EC2 Route</li>
-  <li>2 Public EC2 Subnets</li>
-  <li>2 EC2 SubnetRouteTableAssociations</li>
-  <li>EC2 Security Group</li>
+<li>Autoscaling Group</li>
+<li>Autoscaling Launch Configuration</li>
+<li>EC2 VPC</li>
+<li>EC2 Internet Gateway</li>
+<li>EC2 VPC Gateway Attachment</li>
+<li>EC2 Route Table</li>
+<li>EC2 Route</li>
+<li>2 Public EC2 Subnets</li>
+<li>2 EC2 SubnetRouteTableAssociations</li>
+<li>EC2 Security Group</li>
 </ul>
-
 <h2 id="create-ecs-repository">Create ECS Repository</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># registry (in the form $registryId.dkr.ecr.$region.amazonaws.com)</span>
-<span class="nv">region</span><span class="o">=</span><span class="si">$(</span>aws configure get region<span class="si">)</span>
-<span class="nv">registryId</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-registry | jq <span class="nt">-r</span> <span class="s1">'.registryId'</span><span class="si">)</span>
-<span class="nv">registry</span><span class="o">=</span><span class="s2">"</span><span class="nv">$registryId</span><span class="s2">.dkr.ecr.</span><span class="nv">$region</span><span class="s2">.amazonaws.com"</span>
-
-<span class="c"># repository</span>
-<span class="nv">repository</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-repositories | jq <span class="nt">-r</span> <span class="s2">".repositories[] | select(.repositoryName==</span><span class="se">\"</span><span class="nv">$image</span><span class="se">\"</span><span class="s2">) | .repositoryUri"</span><span class="si">)</span>
-
-<span class="c"># create if it does not exist</span>
-<span class="o">[</span> <span class="nt">-z</span> <span class="s2">"</span><span class="nv">$repository</span><span class="s2">"</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> aws ecr create-repository <span class="nt">--repository-name</span> <span class="nv">$image</span>
-<span class="nv">repository</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-repositories | jq <span class="nt">-r</span> <span class="s2">".repositories[] | select(.repositoryName==</span><span class="se">\"</span><span class="nv">$image</span><span class="se">\"</span><span class="s2">) | .repositoryUri"</span><span class="si">)</span>
-</code></pre></div></div>
-
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># registry (in the form $registryId.dkr.ecr.$region.amazonaws.com)</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nv">region</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>configure<span class="w"> </span>get<span class="w"> </span>region<span class="k">)</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nv">registryId</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>ecr<span class="w"> </span>describe-registry<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.registryId&#39;</span><span class="k">)</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nv">registry</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$registryId</span><span class="s2">.dkr.ecr.</span><span class="nv">$region</span><span class="s2">.amazonaws.com&quot;</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="c1"># repository</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="nv">repository</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>ecr<span class="w"> </span>describe-repositories<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;.repositories[] | select(.repositoryName==\&quot;</span><span class="nv">$image</span><span class="s2">\&quot;) | .repositoryUri&quot;</span><span class="k">)</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="c1"># create if it does not exist</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$repository</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>aws<span class="w"> </span>ecr<span class="w"> </span>create-repository<span class="w"> </span>--repository-name<span class="w"> </span><span class="nv">$image</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="nv">repository</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>ecr<span class="w"> </span>describe-repositories<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;.repositories[] | select(.repositoryName==\&quot;</span><span class="nv">$image</span><span class="s2">\&quot;) | .repositoryUri&quot;</span><span class="k">)</span>
+</span></code></pre></div>
 <h2 id="create-docker-image">Create Docker image</h2>
-
 <h3 id="dockerfile">Dockerfile</h3>
-
-<p>Create a <code class="language-plaintext highlighter-rouge">Dockerfile</code> with the following contents:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="sh">"</span><span class="no">EOT</span><span class="sh">" &gt; ./Dockerfile
-# See https://hub.docker.com/_/oraclelinux for all supported 
-# Oracle Linux tags from Docker Hub.
-
-# this image will be the actual running container
-FROM  oraclelinux:8
-
-LABEL Name=ecs-test
-
-## System Config
-ENV TZ=America/Los_Angeles
-
-# Packages
-RUN yum -y install bind-utils 
-
-CMD ["/bin/ping", "localhost"]
-</span><span class="no">EOT
-</span></code></pre></div></div>
-
+<p>Create a <code>Dockerfile</code> with the following contents:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>cat<span class="w"> </span>&lt;&lt;<span class="w"> </span><span class="s2">&quot;EOT&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>./Dockerfile
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># See https://hub.docker.com/_/oraclelinux for all supported </span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># Oracle Linux categories from Docker Hub.</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># this image will be the actual running container</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>FROM<span class="w">  </span>oraclelinux:8
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>LABEL<span class="w"> </span><span class="nv">Name</span><span class="o">=</span>ecs-test
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="c1">## System Config</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>ENV<span class="w"> </span><span class="nv">TZ</span><span class="o">=</span>America/Los_Angeles
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="c1"># Packages</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>RUN<span class="w"> </span>yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>bind-utils<span class="w"> </span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>CMD<span class="w"> </span><span class="o">[</span><span class="s2">&quot;/bin/ping&quot;</span>,<span class="w"> </span><span class="s2">&quot;localhost&quot;</span><span class="o">]</span>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>EOT
+</span></code></pre></div>
 <h3 id="build-image">Build Image</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Build image ..."</span>
-docker build <span class="nt">--tag</span> <span class="k">${</span><span class="nv">image</span><span class="k">}</span>:<span class="k">${</span><span class="nv">tag</span><span class="k">}</span> <span class="nb">.</span>
-</code></pre></div></div>
-
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Build image ...&quot;</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>docker<span class="w"> </span>build<span class="w"> </span>--tag<span class="w"> </span><span class="si">${</span><span class="nv">image</span><span class="si">}</span>:<span class="si">${</span><span class="nv">tag</span><span class="si">}</span><span class="w"> </span>.
+</span></code></pre></div>
 <h3 id="tag-image">Tag Image</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">repository</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-repositories | jq <span class="nt">-r</span> <span class="s2">".repositories[] | select(.repositoryName==</span><span class="se">\"</span><span class="nv">$image</span><span class="se">\"</span><span class="s2">) | .repositoryUri"</span><span class="si">)</span>
-
-<span class="nb">echo</span> <span class="s2">"Tag image ..."</span>
-docker tag <span class="k">${</span><span class="nv">image</span><span class="k">}</span>:<span class="k">${</span><span class="nv">tag</span><span class="k">}</span> <span class="k">${</span><span class="nv">repository</span><span class="k">}</span>:<span class="k">${</span><span class="nv">tag</span><span class="k">}</span>
-</code></pre></div></div>
-
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nv">repository</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>ecr<span class="w"> </span>describe-repositories<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;.repositories[] | select(.repositoryName==\&quot;</span><span class="nv">$image</span><span class="s2">\&quot;) | .repositoryUri&quot;</span><span class="k">)</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Tag image ...&quot;</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>docker<span class="w"> </span>tag<span class="w"> </span><span class="si">${</span><span class="nv">image</span><span class="si">}</span>:<span class="si">${</span><span class="nv">tag</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">repository</span><span class="si">}</span>:<span class="si">${</span><span class="nv">tag</span><span class="si">}</span>
+</span></code></pre></div>
 <h3 id="publish-image">Publish Image</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># refresh AWS token for docker</span>
-aws ecr get-login-password <span class="nt">--region</span> <span class="nv">$region</span> <span class="se">\</span>
-  | docker login <span class="nt">--username</span> AWS <span class="nt">--password-stdin</span> <span class="nv">$registry</span>
-
-<span class="c"># push image</span>
-<span class="nb">echo</span> <span class="s2">"Push image ..."</span>
-docker push <span class="k">${</span><span class="nv">repository</span><span class="k">}</span>:<span class="k">${</span><span class="nv">tag</span><span class="k">}</span>
-</code></pre></div></div>
-
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># refresh AWS token for docker</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>aws<span class="w"> </span>ecr<span class="w"> </span>get-login-password<span class="w"> </span>--region<span class="w"> </span><span class="nv">$region</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="p">|</span><span class="w"> </span>docker<span class="w"> </span>login<span class="w"> </span>--username<span class="w"> </span>AWS<span class="w"> </span>--password-stdin<span class="w"> </span><span class="nv">$registry</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1"># push image</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Push image ...&quot;</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>docker<span class="w"> </span>push<span class="w"> </span><span class="si">${</span><span class="nv">repository</span><span class="si">}</span>:<span class="si">${</span><span class="nv">tag</span><span class="si">}</span>
+</span></code></pre></div>
 <h3 id="verify">Verify</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># verify</span>
-<span class="nv">red</span><span class="o">=</span><span class="s1">'\e[0;31m'</span>    
-<span class="nv">green</span><span class="o">=</span><span class="s1">'\e[0;32m'</span>    
-<span class="nv">clear</span><span class="o">=</span><span class="s1">'\e[0m'</span>
-
-<span class="nv">pushed_tag</span><span class="o">=</span><span class="si">$(</span>reg tags <span class="k">${</span><span class="nv">repository</span><span class="k">}</span> | <span class="nb">grep</span> <span class="s2">"</span><span class="k">${</span><span class="nv">tag</span><span class="k">}</span><span class="s2">"</span><span class="si">)</span>
-<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">pushed_tag</span><span class="k">}</span><span class="s2">"</span> <span class="o">!=</span> <span class="s2">"</span><span class="k">${</span><span class="nv">tag</span><span class="k">}</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
-    </span><span class="nb">printf</span> <span class="s2">"</span><span class="k">${</span><span class="nv">red</span><span class="k">}</span><span class="s2">Failed</span><span class="k">${</span><span class="nv">clear</span><span class="k">}</span><span class="s2">"</span><span class="p">;</span> <span class="nb">echo
-</span><span class="k">else    
-    </span><span class="nb">printf</span> <span class="s2">"</span><span class="k">${</span><span class="nv">green</span><span class="k">}</span><span class="s2">Success</span><span class="k">${</span><span class="nv">clear</span><span class="k">}</span><span class="s2">"</span><span class="p">;</span> <span class="nb">echo
-</span><span class="k">fi</span>
-</code></pre></div></div>
-
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># verify</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nv">red</span><span class="o">=</span><span class="s1">&#39;\e[0;31m&#39;</span><span class="w">    </span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="nv">green</span><span class="o">=</span><span class="s1">&#39;\e[0;32m&#39;</span><span class="w">    </span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="nv">clear</span><span class="o">=</span><span class="s1">&#39;\e[0m&#39;</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="nv">pushed_tag</span><span class="o">=</span><span class="k">$(</span>reg<span class="w"> </span>categories<span class="w"> </span><span class="si">${</span><span class="nv">repository</span><span class="si">}</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">tag</span><span class="si">}</span><span class="s2">&quot;</span><span class="k">)</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">pushed_tag</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">tag</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">    </span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">red</span><span class="si">}</span><span class="s2">Failed</span><span class="si">${</span><span class="nv">clear</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="nb">echo</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="k">else</span><span class="w">    </span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">    </span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">green</span><span class="si">}</span><span class="s2">Success</span><span class="si">${</span><span class="nv">clear</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="nb">echo</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="k">fi</span>
+</span></code></pre></div>
 <h2 id="launch-ecs-task">Launch ECS Task</h2>
-
 <h3 id="service-description">Service Description</h3>
-
-<p>Create <code class="language-plaintext highlighter-rouge">docker-compose.yml</code> file:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="no">EOT</span><span class="sh"> &gt; ./docker-compose.yml
-version: '3'
-
-services:
-  ecs-test:
-    image: </span><span class="nv">$repository</span><span class="sh">:</span><span class="nv">$tag</span><span class="sh">
-
-    logging:
-      driver: awslogs
-      options: 
-        awslogs-group: test-ecs
-        awslogs-region: us-west-2
-        awslogs-stream-prefix: test
-</span><span class="no">EOT
-</span></code></pre></div></div>
-
+<p>Create <code>docker-compose.yml</code> file:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>cat<span class="w"> </span><span class="s">&lt;&lt; EOT &gt; ./docker-compose.yml</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="s">version: &#39;3&#39;</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="s">services:</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="s">  ecs-test:</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="s">    image: $repository:$tag</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="s">    logging:</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="s">      driver: awslogs</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="s">      options: </span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="s">        awslogs-group: test-ecs</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="s">        awslogs-region: us-west-2</span>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="s">        awslogs-stream-prefix: test</span>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="s">EOT</span>
+</span></code></pre></div>
 <h3 id="task-definition">Task Definition</h3>
-
-<p>Create <code class="language-plaintext highlighter-rouge">ecs-params.yml</code> file:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="no">EOT</span><span class="sh"> &gt; ./ecs-params.yml
-version: 1
-task_definition:
-  services:
-    ecs-test:
-      cpu_shares: 100
-      mem_limit: 524288000
-</span><span class="no">EOT
-</span></code></pre></div></div>
-
+<p>Create <code>ecs-params.yml</code> file:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>cat<span class="w"> </span><span class="s">&lt;&lt; EOT &gt; ./ecs-params.yml</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="s">version: 1</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="s">task_definition:</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="s">  services:</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="s">    ecs-test:</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="s">      cpu_shares: 100</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="s">      mem_limit: 524288000</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="s">EOT</span>
+</span></code></pre></div>
 <h3 id="launch-service">Launch Service</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># create service</span>
-ecs-cli compose <span class="se">\</span>
-    <span class="nt">--project-name</span> <span class="nv">$service_name</span> <span class="se">\</span>
-    <span class="nt">--file</span> ./docker-compose.yml <span class="se">\</span>
-    <span class="nt">--ecs-params</span> ./ecs-params.yml <span class="se">\</span>
-    service up <span class="se">\</span>
-    <span class="nt">--create-log-groups</span> <span class="se">\</span>
-    <span class="nt">--cluster-config</span> test-ecs <span class="se">\</span>
-    <span class="nt">--ecs-profile</span> swift
-</code></pre></div></div>
-
-<p>Login to the first task of the <code class="language-plaintext highlighter-rouge">test</code> service:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">CLUSTER</span><span class="o">=</span>test-ecs
-<span class="nv">SERVICE</span><span class="o">=</span><span class="nb">test
-
-</span><span class="nv">TASK_ARN</span><span class="o">=</span><span class="si">$(</span> aws ecs list-tasks <span class="nt">--cluster</span><span class="o">=</span><span class="nv">$CLUSTER</span> <span class="nt">--service-name</span><span class="o">=</span><span class="nv">$SERVICE</span> | jq <span class="nt">-r</span> <span class="s1">'.taskArns[0]'</span> <span class="si">)</span>
-<span class="nv">CONTAINER_INSTANCE_ARN</span><span class="o">=</span><span class="si">$(</span> aws ecs describe-tasks <span class="nt">--cluster</span><span class="o">=</span><span class="nv">$CLUSTER</span> <span class="nt">--tasks</span> <span class="nv">$TASK_ARN</span> | jq <span class="nt">-r</span> <span class="s1">'.tasks[0].containerInstanceArn'</span> <span class="si">)</span>
-
-<span class="nv">EC2_INSTANCE</span><span class="o">=</span><span class="si">$(</span> aws ecs describe-container-instances <span class="nt">--cluster</span><span class="o">=</span><span class="nv">$CLUSTER</span> <span class="nt">--container-instances</span> <span class="nv">$CONTAINER_INSTANCE_ARN</span> | jq <span class="nt">-r</span> <span class="s1">'.containerInstances[0].ec2InstanceId'</span> <span class="si">)</span>
-<span class="nv">EC2_IP</span><span class="o">=</span><span class="si">$(</span> aws ec2 describe-instances <span class="nt">--instance-ids</span> <span class="nv">$EC2_INSTANCE</span> | jq <span class="nt">-r</span> <span class="s1">'.Reservations[0].Instances[0].PublicIpAddress'</span> <span class="si">)</span>
-
-<span class="nv">EC2_KEY</span><span class="o">=</span><span class="s2">"~/.ssh/aws-ec2-key"</span>
-
-ssh <span class="nt">-i</span> <span class="nv">$EC2_KEY</span> ec2-user@<span class="nv">$EC2_IP</span> <span class="nt">-t</span> <span class="s1">'bash -c "docker exec -it $( docker ps -a -q -f name=ecs-'</span><span class="nv">$SERVICE</span><span class="s1">' | head -n 1 ) bash"'</span>
-</code></pre></div></div>
-
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># create service</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>ecs-cli<span class="w"> </span>compose<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">    </span>--project-name<span class="w"> </span><span class="nv">$service_name</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">    </span>--file<span class="w"> </span>./docker-compose.yml<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">    </span>--ecs-params<span class="w"> </span>./ecs-params.yml<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">    </span>service<span class="w"> </span>up<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">    </span>--create-log-groups<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">    </span>--cluster-config<span class="w"> </span>test-ecs<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">    </span>--ecs-profile<span class="w"> </span>swift
+</span></code></pre></div>
+<p>Login to the first task of the <code>test</code> service:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nv">CLUSTER</span><span class="o">=</span>test-ecs
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="nv">SERVICE</span><span class="o">=</span><span class="nb">test</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="nv">TASK_ARN</span><span class="o">=</span><span class="k">$(</span><span class="w"> </span>aws<span class="w"> </span>ecs<span class="w"> </span>list-tasks<span class="w"> </span>--cluster<span class="o">=</span><span class="nv">$CLUSTER</span><span class="w"> </span>--service-name<span class="o">=</span><span class="nv">$SERVICE</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.taskArns[0]&#39;</span><span class="w"> </span><span class="k">)</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="nv">CONTAINER_INSTANCE_ARN</span><span class="o">=</span><span class="k">$(</span><span class="w"> </span>aws<span class="w"> </span>ecs<span class="w"> </span>describe-tasks<span class="w"> </span>--cluster<span class="o">=</span><span class="nv">$CLUSTER</span><span class="w"> </span>--tasks<span class="w"> </span><span class="nv">$TASK_ARN</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.tasks[0].containerInstanceArn&#39;</span><span class="w"> </span><span class="k">)</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="nv">EC2_INSTANCE</span><span class="o">=</span><span class="k">$(</span><span class="w"> </span>aws<span class="w"> </span>ecs<span class="w"> </span>describe-container-instances<span class="w"> </span>--cluster<span class="o">=</span><span class="nv">$CLUSTER</span><span class="w"> </span>--container-instances<span class="w"> </span><span class="nv">$CONTAINER_INSTANCE_ARN</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.containerInstances[0].ec2InstanceId&#39;</span><span class="w"> </span><span class="k">)</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="nv">EC2_IP</span><span class="o">=</span><span class="k">$(</span><span class="w"> </span>aws<span class="w"> </span>ec2<span class="w"> </span>describe-instances<span class="w"> </span>--instance-ids<span class="w"> </span><span class="nv">$EC2_INSTANCE</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.Reservations[0].Instances[0].PublicIpAddress&#39;</span><span class="w"> </span><span class="k">)</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="nv">EC2_KEY</span><span class="o">=</span><span class="s2">&quot;~/.ssh/aws-ec2-key&quot;</span>
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>ssh<span class="w"> </span>-i<span class="w"> </span><span class="nv">$EC2_KEY</span><span class="w"> </span>ec2-user@<span class="nv">$EC2_IP</span><span class="w"> </span>-t<span class="w"> </span><span class="s1">&#39;bash -c &quot;docker exec -it $( docker ps -a -q -f name=ecs-&#39;</span><span class="nv">$SERVICE</span><span class="s1">&#39; | head -n 1 ) bash&quot;&#39;</span>
+</span></code></pre></div>
 <p>Check task logs:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">task_id</span><span class="o">=</span><span class="si">$(</span> aws ecs list-tasks <span class="nt">--cluster</span><span class="o">=</span>test-ecs <span class="nt">--service-name</span><span class="o">=</span><span class="nb">test</span> | jq <span class="nt">-r</span> <span class="s1">'.taskArns[0]'</span> | <span class="nb">cut</span> <span class="nt">-d</span> <span class="s2">"/"</span> <span class="nt">-f</span> 3 <span class="si">)</span>
-ecs-cli logs <span class="nt">--task-id</span> <span class="nv">$task_id</span>
-</code></pre></div></div>
-
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nv">task_id</span><span class="o">=</span><span class="k">$(</span><span class="w"> </span>aws<span class="w"> </span>ecs<span class="w"> </span>list-tasks<span class="w"> </span>--cluster<span class="o">=</span>test-ecs<span class="w"> </span>--service-name<span class="o">=</span><span class="nb">test</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.taskArns[0]&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="k">)</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>ecs-cli<span class="w"> </span>logs<span class="w"> </span>--task-id<span class="w"> </span><span class="nv">$task_id</span>
+</span></code></pre></div>
 <h2 id="cleanup">Cleanup</h2>
-
 <blockquote>
-  <p><strong>WARNING</strong>: These scripts destroy the created AWS resources. Proceed with caution!!!</p>
+<p><strong>WARNING</strong>: These scripts destroy the created AWS resources. Proceed with caution!!!</p>
 </blockquote>
-
 <h3 id="stop-services">Stop services</h3>
-
 <p>Stop running tasks and remove service:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ecs-cli compose <span class="nt">--project-name</span> <span class="nb">test </span>service down
-</code></pre></div></div>
-
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>ecs-cli<span class="w"> </span>compose<span class="w"> </span>--project-name<span class="w"> </span><span class="nb">test</span><span class="w"> </span>service<span class="w"> </span>down
+</span></code></pre></div>
 <h3 id="delete-cluster">Delete cluster</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ecs-cli down <span class="se">\</span>
-  <span class="nt">--force</span>  <span class="se">\</span>
-  <span class="nt">--ecs-profile</span> swift <span class="se">\</span>
-  <span class="nt">--cluster-config</span> test-ecs
-</code></pre></div></div>
-
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>ecs-cli<span class="w"> </span>down<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span>--force<span class="w">  </span><span class="se">\</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span>--ecs-profile<span class="w"> </span>swift<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">  </span>--cluster-config<span class="w"> </span>test-ecs
+</span></code></pre></div>
 <h3 id="delete-log-group">Delete log group</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws logs delete-log-group <span class="nt">--log-group-name</span> test-ecs
-</code></pre></div></div>
-
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>aws<span class="w"> </span>logs<span class="w"> </span>delete-log-group<span class="w"> </span>--log-group-name<span class="w"> </span>test-ecs
+</span></code></pre></div>
 <h3 id="delete-image">Delete image</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">repo</span><span class="o">=</span>ecs-test
-<span class="nv">registryId</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-registry | jq <span class="nt">-r</span> <span class="s1">'.registryId'</span><span class="si">)</span>
-
-aws ecr batch-delete-image <span class="se">\</span>
-  <span class="nt">--registry-id</span> <span class="nv">$registryId</span> <span class="se">\</span>
-  <span class="nt">--repository-name</span> <span class="nv">$repo</span> <span class="se">\</span>
-  <span class="nt">--image-ids</span> <span class="nv">imageTag</span><span class="o">=</span>latest
-</code></pre></div></div>
-
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nv">repo</span><span class="o">=</span>ecs-test
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="nv">registryId</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>ecr<span class="w"> </span>describe-registry<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.registryId&#39;</span><span class="k">)</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>aws<span class="w"> </span>ecr<span class="w"> </span>batch-delete-image<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="w">  </span>--registry-id<span class="w"> </span><span class="nv">$registryId</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="w">  </span>--repository-name<span class="w"> </span><span class="nv">$repo</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="w">  </span>--image-ids<span class="w"> </span><span class="nv">imageTag</span><span class="o">=</span>latest
+</span></code></pre></div>
 <h3 id="delete-image-repository">Delete image repository</h3>
-
 <blockquote>
-  <p>This will delete all images in the repo and the repo itself</p>
+<p>This will delete all images in the repo and the repo itself</p>
 </blockquote>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nv">repo</span><span class="o">=</span><span class="s2">&quot;ecs-test&quot;</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="nv">registryId</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>ecr<span class="w"> </span>describe-registry<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.registryId&#39;</span><span class="k">)</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>aws<span class="w"> </span>ecr<span class="w"> </span>delete-repository<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="w">  </span>--force<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="w">  </span>--registry-id<span class="w"> </span><span class="nv">$registryId</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="w">  </span>--repository-name<span class="w"> </span><span class="nv">$repo</span>
+</span></code></pre></div>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">repo</span><span class="o">=</span><span class="s2">"ecs-test"</span>
-<span class="nv">registryId</span><span class="o">=</span><span class="si">$(</span>aws ecr describe-registry | jq <span class="nt">-r</span> <span class="s1">'.registryId'</span><span class="si">)</span>
 
-aws ecr delete-repository <span class="se">\</span>
-  <span class="nt">--force</span> <span class="se">\</span>
-  <span class="nt">--registry-id</span> <span class="nv">$registryId</span> <span class="se">\</span>
-  <span class="nt">--repository-name</span> <span class="nv">$repo</span>
-</code></pre></div></div>
+
+
+
+
 
   
-    <hr>
-    <div id="disqus_thread"></div>
-    
-    <noscript>Please enable JavaScript to view comments.</noscript>
   
-</article>
 
 
 
-<footer>
-  <div>&copy; Swift Software Group</div>
-  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
+  
 
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2001 - 2024 Swift Software Group, Inc.
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
 </footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+  
+    
+  
 
 
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+      
+      
+        
+        
+      
+      <li class="task-list-item">
+        <label class="task-list-control">
+          <input type="checkbox" name="analytics" checked>
+          <span class="task-list-indicator"></span>
+          Google Analytics
+        </label>
+      </li>
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout(function(){document.querySelector("[data-md-component=consent]").hidden=!1},250);var action,form=document.forms.consent;for(action of["submit","reset"])form.addEventListener(action,function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map(function(e){return[e,!0]}))),location.hash="",location.reload()})</script>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.top", "search.suggest", "search.share", "search.highlight"], "search": "../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.7389ff0e.min.js"></script>
+      
+    
+  </body>
 </html>

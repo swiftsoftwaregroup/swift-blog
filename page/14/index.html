@@ -1,0 +1,1910 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Swift Software Group Blog">
+      
+      
+      
+        <link rel="canonical" href="https://blog.swiftsoftwaregroup.com/page/14/">
+      
+      
+      
+        <link rel="next" href="../../aws/">
+      
+      
+        <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../../feed_rss_created.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="../../feed_rss_updated.xml">
+      
+      <link rel="icon" href="../../images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
+    
+    
+      
+        <title>Blog - Swift Software Group</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-QP5FYNH46M"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-QP5FYNH46M",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-QP5FYNH46M",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>var consent;"undefined"==typeof __md_analytics||(consent=__md_get("__consent"))&&consent.analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#blog" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Swift Software Group" class="md-header__button md-logo" aria-label="Swift Software Group" data-md-component="logo">
+      
+  <img src="../../images/logo_white.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Swift Software Group
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Blog
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://swiftsoftwaregroup.com" class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://swiftsoftwaregroup.com/services" class="md-tabs__link">
+        
+  
+    
+  
+  Services
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://swiftsoftwaregroup.com/contact-us" class="md-tabs__link">
+        
+  
+    
+  
+  Contact Us
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Blog
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../archive/2023/" class="md-tabs__link">
+          
+  
+  Archive
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../aws/" class="md-tabs__link">
+          
+  
+  Categories
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Swift Software Group" class="md-nav__button md-logo" aria-label="Swift Software Group" data-md-component="logo">
+      
+  <img src="../../images/logo_white.svg" alt="logo">
+
+    </a>
+    Swift Software Group
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://swiftsoftwaregroup.com" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://swiftsoftwaregroup.com/services" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://swiftsoftwaregroup.com/contact-us" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact Us
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+      
+    
+  
+  
+    <li class="md-nav__item">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Blog
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="../.." class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Blog
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started-with-git-and-bitbucket-on-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting started with Git and BitBucket on Windows
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 3)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 2)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 1)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (TOC)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Archive
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Archive
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2023/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2021/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2021
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2020/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2020
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2018/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2018
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2017/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2017
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2016/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2016
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2015/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2015
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2014/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2014
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2013/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2013
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2012/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2012
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2011/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2011
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Categories
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Categories
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aws/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    aws
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cloud
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-formation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cloud-formation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cpp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cpp
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csharp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    csharp
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    docker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-swarm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    docker-swarm
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dotnet/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dotnet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ec2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ecs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ecs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../macos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    macos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mongodb/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    mongodb
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../podman/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    podman
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ruby/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ruby
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ubuntu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ubuntu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vscode/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vscode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../windows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    windows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started-with-git-and-bitbucket-on-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting started with Git and BitBucket on Windows
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 3)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 2)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 1)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (TOC)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content" data-md-component="content">
+    <div class="md-content__inner">
+      <header class="md-typeset">
+        <h1 id="blog">Blog</h1>
+      </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-02-19 00:00:00">February 19, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              7 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="getting-started-with-git-and-bitbucket-on-windows"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/">Getting started with Git and BitBucket on Windows</a></h2>
+<p>This post describes setting up Git on Windows and using a private remote Git repository hosted on BitBucket.org. Here it goes:</p>
+<p>1) Start by downloading Git fromthe <a href="http://msysgit.github.com/" title="msysgit">msysgit</a> site. At the time of writing the latest installer was Git-1.8.1.2-preview20130201.exe. For some unknown reason the installers are labeled “preview” which normally suggests unfinished product, but the versions are actually fully functional.</p>
+<p>After downloading, run the installer and follow the steps. You may use the default options on each screen, but since we are going to try TortoiseGit later, on the first screen select “Simple context menu (Registry based)” and check only “Git Bash Here”. That will keep to your Windows Explorer context menu less cluttered.</p>
+<p>2) Install <a href="http://code.google.com/p/tortoisegit/" title="TortoiseGit Home">TortoiseGit</a>. At the time of this writing the latest version was 1.8.1. There is nothing special about installing TortoiseGit.</p>
+<p>To verify the TortoiseGit installer integrated with your msysgit installation: right click anywhere in Windows Explorer and select TorstoiseGit &gt; Settings from the context menu, then make sure you have the correct paths for Git.exe under the General section and the ssh client under the Network section.</p>
+<p><img alt="git-tortoisegit-settings-general" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/git-tortoisegit-settings-general.png" /> 
+<img alt="git-tortoisegit-settings-network" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/git-tortoisegit-settings-network.png" /> </p>
+<p>3) Install the <a href="https://github.com/blog/1104-credential-caching-for-wrist-friendly-git-usage" title="Credential Caching">Credential Caching</a> Git extension. We will be using Git via <code>https://</code> instead of <code>ssh</code> and that extension caches the username and password, so we do not have to type them all the time. Download <em><a href="http://github-media-downloads.s3.amazonaws.com/windows/GitWindowsExtras-Fx4.zip">git-credential-winstore and GitPad</a> for Windows 8 (.NET 4.0 required)</em>, unzip,copy <em>git-credential-winstore.exe</em> to the Git bin directory and run it. By default Git is installed in <code>C:\Program Files (x86)\Git\bin</code> on 64 Bit systems. Open your global <em>.gitconfig</em> file. The global <em>.gitconfig</em> file is in your home directory which on Windows Vista and above should be under <code>C:\Users\&lt;yourname&gt;</code>. <em>Verify the you have this line in </em>.gitconfig*:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[credential]</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="na">helper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">!~/AppData/Roaming/GitCredStore/git-credential-winstore</span>
+</span></code></pre></div>
+<p>4) Optionally you may want to change the default text editor that Git uses, e.g. you might need that for commit messages. The default editor in msysgit is Unix VIM. You can change that to Notepad with GitPad – a small utility found in the credential caching extension zip. Simply copy GitPad.exe in<em>C:\Program Files (x86)\Git\bin</em> and run it.</p>
+<p>5) Create an empty Git repository onBitbucket.org – that will be your shared repository. If you are new to BitBucket you can check this short<a href="https://confluence.atlassian.com/display/BITBUCKET/Create+an+Account+and+a+Git+Repo" title="Create an Account and a Git Repo">tutorial</a>on how to create a BitBucket account and a Git repo- the process is rather straightforward. For this demo create a repo and name it <em>SandboxGit</em>. Please note that BitBucket will create a bare repository. A bare repository is one without branches.</p>
+<p><img alt="create-a-repository-bitbucket-sandbox" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/create-a-repository-bitbucket.png" /> </p>
+<p>6) We are now ready to start playing with the <em>SandboxGit</em> repo. If you are new to Git, it is better to start in Git Bash at the beginning just to get a feeling of Git. Knowing Git command line will help you understand what TortoiseGit or any other GUI tool does later, because in almost all cases, all the GUI tools generate and execute Git commands for you.</p>
+<ul>
+<li><a href="../../getting-started-with-git-and-bitbucket-on-windows/#git-bash-tab">Git Bash</a></li>
+<li><a href="../../getting-started-with-git-and-bitbucket-on-windows/#tortoise-git-tab">TortoiseGit</a></li>
+</ul>
+<h5 id="configure-default-name-and-email-for-commits"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#configure-default-name-and-email-for-commits">Configure default name and email for commits</a></h5>
+<p>In Windows Explorer, go to a place where you want to put your working directory, right click and select<em>Git Bash Here</em>from the menu.</p>
+<p>In Git Bash prompt enter:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">&quot;user&quot;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">&quot;user@domain.com&quot;</span>
+</span></code></pre></div>
+<p>After the changes, <code>C:\Users\&lt;yourname&gt;\.gitconfig</code> should have the user configuration in it:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">[credential]</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="na">helper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">!~/AppData/Roaming/GitCredStore/git-credential-winstore</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">[user]</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">user</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="na">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">user@domain.com</span>
+</span></code></pre></div>
+<p>Also we can get the same result with the <code>git config</code> command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>-l<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>credential.helper<span class="o">=</span>!~/AppData/Roaming/GitCredStore/git-credential-winstore<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>user.name<span class="o">=</span>user<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>user.email<span class="o">=</span>user@domain.com
+</span></code></pre></div>
+<h5 id="configure-disable-line-ending-conversion"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#configure-disable-line-ending-conversion">Configure / disable line ending conversion</a></h5>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>core.autocrlf<span class="w"> </span><span class="nb">false</span>
+</span></code></pre></div>
+<p>Without that we will get CR/LF conversion warning on each commit, e.g. something like this will be shown for each new line in your source:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>warning: LF will be replaced by CRLF in HelloWorld.cpp.
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>The file will have its original line endings in your working directory.
+</span></code></pre></div>
+<p>Modern development tools support both CR/LF and LF line endings, so we do not need Git to do line ending conversion.</p>
+<h5 id="clone-the-remote-repository"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#clone-the-remote-repository">Clone the remote repository</a></h5>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://user@bitbucket.org/primosoftware/sandboxgit.git<span class="w"> </span>./SandboxGit
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Cloning<span class="w"> </span>into<span class="w"> </span><span class="s1">&#39;./SandboxGit&#39;</span>...
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>warning:<span class="w"> </span>You<span class="w"> </span>appear<span class="w"> </span>to<span class="w"> </span>have<span class="w"> </span>cloned<span class="w"> </span>an<span class="w"> </span>empty<span class="w"> </span>repository.
+</span></code></pre></div>
+<p>The first time you do this Git will ask for a BitBucket.org password. After that it will remember the password, because of the credentials caching extension thatwe installed in step 3.</p>
+<h5 id="check-the-remote-configuration"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#check-the-remote-configuration">Check the remote configuration</a></h5>
+<p>``` bash
+cd ./SandboxGit
+git remote show
+origin
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>``` bash
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>git remote show origin
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>* remote origin
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>Fetch URL: https://user@bitbucket.org/primosoftware/sandboxgit.git
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>Push URL: https://user@bitbucket.org/primosoftware/sandboxgit.git
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>HEAD branch: (unknown)
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>Local branch configured for &#39;git pull&#39;:
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>master merges with remote master
+</span></code></pre></div></p>
+<p>Basically we have:</p>
+<ul>
+<li>An <code>origin</code> alias that points to a remote repo at <em>https://user@nullbitbucket.org/primosoftware/sandboxgit.git</em></li>
+<li>A local branch <code>master</code> that will merge with the remote branch <code>master</code>. However, the remote <code>master</code> branch does not exist yet. It will be created when we do our first commit and push.</li>
+<li>A remote HEAD branch that is unknown.</li>
+</ul>
+<p>Think of HEAD as a symlink/shortcut to a branch. The HEADis unknown because there are no branches in the remote repository yet. Normally HEAD points to the<em>master</em>branch.</p>
+<h5 id="add-a-file-and-commit"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#add-a-file-and-commit">Add a file and commit</a></h5>
+<p>In the <em>SandboxGit</em> folder create a file<em>HelloWorld.cpp</em>with some code in it. For example:</p>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="p">{</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Hello World!&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w">   </span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Welcome to Git&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"> </span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>In Git Bash do <code>git add HelloWorld.cpp</code>:</p>
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>git<span class="w"> </span>add<span class="w"> </span>HelloWorld.cpp
+</span></code></pre></div>
+... and <code>git commit</code> – enter “Initial commit.” when Git asks for a commit message.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>git<span class="w"> </span>commit<span class="w"> </span>.
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="o">[</span>master<span class="w"> </span><span class="o">(</span>root-commit<span class="o">)</span><span class="w"> </span>8ed71ed<span class="o">]</span><span class="w"> </span>Initial<span class="w"> </span>commit.
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="m">1</span><span class="w"> </span>file<span class="w"> </span>changed,<span class="w"> </span><span class="m">7</span><span class="w"> </span>insertions<span class="o">(</span>+<span class="o">)</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>create<span class="w"> </span>mode<span class="w"> </span><span class="m">100644</span><span class="w"> </span>HelloWorld.cpp
+</span></code></pre></div>
+<p>The commit is local. Up to this point we have done local changes only. The remote repository on BitBucket.org is still untouched.</p>
+<p><img alt="tortoisegit-git-sandboxgit-empty-bitbucket" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-sandboxgit-empty-bitbucket.png" /> </p>
+<p>In order for others to see the changes we have to push the changes to the remote location. That is done with the<em>git push</em> command.</p>
+<h5 id="configure-default-push-style"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#configure-default-push-style">Configure default “push” style</a></h5>
+<p><em>Git push</em>can work in one of two ways:</p>
+<ul>
+<li><strong>matching</strong>: pushes all local branches to remote branches with the same name. This may lead to unwanted remote branches created by accident.</li>
+<li><strong>simple</strong>: pushes only the current local branch to its remote brother which is usually a remote branch with the same name. This is a more intuitive behavior.</li>
+</ul>
+<p>We will use the <em>simple</em> push:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>push.default<span class="w"> </span>simple
+</span></code></pre></div>
+<h5 id="push-to-the-remote-repository"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#push-to-the-remote-repository">Push to the remote repository</a></h5>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>git<span class="w"> </span>push
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>Counting<span class="w"> </span>objects:<span class="w"> </span><span class="m">3</span>,<span class="w"> </span><span class="k">done</span>.
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>Delta<span class="w"> </span>compression<span class="w"> </span>using<span class="w"> </span>up<span class="w"> </span>to<span class="w"> </span><span class="m">8</span><span class="w"> </span>threads.
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>Compressing<span class="w"> </span>objects:<span class="w"> </span><span class="m">100</span>%<span class="w"> </span><span class="o">(</span><span class="m">2</span>/2<span class="o">)</span>,<span class="w"> </span><span class="k">done</span>.
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>Writing<span class="w"> </span>objects:<span class="w"> </span><span class="m">100</span>%<span class="w"> </span><span class="o">(</span><span class="m">3</span>/3<span class="o">)</span>,<span class="w"> </span><span class="m">322</span><span class="w"> </span>bytes,<span class="w"> </span><span class="k">done</span>.
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>Total<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="o">(</span>delta<span class="w"> </span><span class="m">0</span><span class="o">)</span>,<span class="w"> </span>reused<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">(</span>delta<span class="w"> </span><span class="m">0</span><span class="o">)</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>remote:<span class="w"> </span>bb/acl:<span class="w"> </span>user<span class="w"> </span>is<span class="w"> </span>allowed.<span class="w"> </span>accepted<span class="w"> </span>payload.
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>To<span class="w"> </span>https://user@bitbucket.org/primosoftware/sandboxgit.git
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">    </span>*<span class="w"> </span><span class="o">[</span>new<span class="w"> </span>branch<span class="o">]</span><span class="w">      </span>master<span class="w"> </span>-&gt;<span class="w"> </span>master
+</span></code></pre></div>
+<p>Verify that now we have a remote branch called master:</p>
+<p>``` bash
+git remote show origin
+* remote origin
+    Fetch URL: https://user@bitbucket.org/primosoftware/sandboxgit.git
+    Push  URL: https://user@bitbucket.org/primosoftware/sandboxgit.git
+    HEAD branch: master
+    Remote branch:
+    master tracked
+    Local branch configured for 'git pull':
+    master merges with remote master
+    Local ref configured for 'git push':
+    master pushes to master (up to date)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>We are done.
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>#### Configure default name and email for commits
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>Right click anywhere in Windows Explorer and select **TorstoiseGit &gt; Settings** from the context menu, then enter your name and email on under the **Git** section.
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>![tortoisegit-git-settings-config-name-email](../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-settings-config-name-email.png) 
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>Click *Edit global .gitconfig*. Verify that the *.gitconfig* file now contains the user configuration:
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a> ``` ini
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>[credential]
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>helper = !~/AppData/Roaming/GitCredStore/git-credential-winstore
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>[user]
+</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>name = user
+</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>email = user@domain.com
+</span></code></pre></div></p>
+<h5 id="configure-disable-line-ending-conversion_1"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#configure-disable-line-ending-conversion_1">Configure / disable line ending conversion</a></h5>
+<p>Again in the <strong>TorstoiseGit &gt; Settings &gt; Git</strong> section, in the <strong>"Auto CrLf convert"</strong> group, uncheck the <strong>AutoCrlf</strong> box.</p>
+<p>Without that we will get CR/LF conversion warning on each commit, e.g. something like this will be shown for each new line in your source code:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>warning:<span class="w"> </span>LF<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>replaced<span class="w"> </span>by<span class="w"> </span>CRLF<span class="w"> </span><span class="k">in</span><span class="w"> </span>HelloWorld.cpp.
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>The<span class="w"> </span>file<span class="w"> </span>will<span class="w"> </span>have<span class="w"> </span>its<span class="w"> </span>original<span class="w"> </span>line<span class="w"> </span>endings<span class="w"> </span><span class="k">in</span><span class="w"> </span>your<span class="w"> </span>working<span class="w"> </span>directory.
+</span></code></pre></div>
+<p>Modern development tools support both CR/LF and LF line endings, so we do not need Git to do line ending conversion.</p>
+<h5 id="clone-the-remote-repository_1"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#clone-the-remote-repository_1">Clone the remote repository</a></h5>
+<p>In Windows Explorer, go to a place where you want to put your working directory, right click and select <strong>Git Clone</strong> from the menu.</p>
+<p><img alt="tortoisegit-git-clone" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-clone.png" /> </p>
+<p><img alt="tortoisegit-git-clone-finished" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-clone-finished.png" /> </p>
+<h5 id="check-the-remote-configuration_1"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#check-the-remote-configuration_1">Check the remote configuration</a></h5>
+<p>Right click on the <code>SandboxGit</code> folder in Windows Explorer and select <strong>TorstoiseGit &gt; Settings</strong> from the context menu, then go to the <em>Git &gt; Remote</em> section. Verify the remote url to which the <em>origin</em> alias points.</p>
+<p><img alt="tortoisegit-git-settings-config-remote" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-settings-config-remote.png" /> </p>
+<h5 id="add-a-file-and-commit_1"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#add-a-file-and-commit_1">Add a file and commit</a></h5>
+<p>In the <em>SandboxGit</em> folder create a file<em>HelloWorld.cpp</em>with some code in it. For example:</p>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="p">{</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Hello World!&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w">   </span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Welcome to Git&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"> </span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Right click on the <code>HelloWorld.cpp</code> file and select <strong>TortoiseGit &gt; Add</strong>. Check the <code>HelloWorld.cpp</code> file and click OK.</p>
+<p><img alt="tortoisegit-git-add-file" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-add-file.png" /> </p>
+<p>Right click on the <code>HelloWorld.cpp</code> file again and select <strong>Git Commit -&gt; Master</strong>. Enter “Initial commit.” for a message. Check the <code>HelloWorld.cpp</code> file and click OK.</p>
+<p><img alt="tortoisegit-git-commit-file" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-commit-file.png" /> </p>
+<p><img alt="tortoisegit-git-commit-file-done" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-commit-file-done.png" /> </p>
+<p>The commit is local. Up to this point we have done local changes only. The remote repository on BitBucket.org is still untouched.</p>
+<p><img alt="tortoisegit-git-sandboxgit-empty-bitbucket" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-sandboxgit-empty-bitbucket.png" /> </p>
+<h5 id="push-to-the-remote-repository_1"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#push-to-the-remote-repository_1">Push to the remote repository</a></h5>
+<p>Right click on the<em>SandboxGit</em>folder in Windows Explorer and select <strong>TorstoiseGit &gt; Push</strong> from the context menu. Click OK.</p>
+<p><img alt="tortoisegit-git-sandboxgit-push" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-sandboxgit-push.png" /> </p>
+<p><img alt="tortoisegit-git-sandboxgit-push-done" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-sandboxgit-push-done.png" /> </p>
+<p>We are done.</p>
+    <nav class="md-post__action">
+      <a href="../../getting-started-with-git-and-bitbucket-on-windows/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-01-26 00:00:00">January 26, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              1 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3"><a class="toclink" href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3/">Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 3)</a></h2>
+<p>This post summarizes the Mercurial subrepository vs the Subversion externals experience. This is the third and last post of a <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (TOC)">multi-part article</a> about Mercurial subrepositories. Please make sure you read <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/" title="Hg subrepositories: a how-to guide for the svn:externals junkie (Part 1)">Part 1</a> and <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 2)">Part 2</a> before reading this post.</p>
+<p>In a few words, Mercurial subrepositories are very similar to Subversion “svn:externals” and can be used pretty much the same way. However, there are some differences in the workflow, because of the distributed nature of Mercurial. Here are the main differences from Subversion:</p>
+<ul>
+<li>You always work in a copy / clone of a remote shared repository.</li>
+<li>You may <em>commit</em> changes multiple times, but those changes are not visible to others unless you <em>push</em> to the remote shared repository.</li>
+<li>A <em>commit + push</em> in a subrepository is treated as a local change in the top-level <em>root</em> repository. To make the <em>root</em> change permanent, you have to do a <em>commit + push</em> of the <em>root</em> repository as well.</li>
+<li>A <em>pull</em> from a remote repository just downloads the latest available changes. In order to apply/merge the changes, you have to manually <em>update</em> your working copy.</li>
+</ul>
+<p>On good thing about the <em>pull+update</em> workflow is that, it guards against accidentally losing local changes and allows you to do code merges at your convenience.You can also revert an <em>update</em> and continue in your local copy when an update breaks a lot of code and requires hard manual merge labor. You can <em>update</em> your working copy again later, when you are ready for the code merge.</p>
+    <nav class="md-post__action">
+      <a href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-01-23 00:00:00">January 23, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              4 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2"><a class="toclink" href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/">Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 2)</a></h2>
+<p>This is the second post of a <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (TOC)">multi-part article</a> about Mercurial subrepositories. Please make sure you read <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/" title="Hg subrepositories: a how-to guide for the svn:externals junkie (Part 1)">Part 1</a> before reading this post.</p>
+<p>In <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/" title="Hg subrepositories: a how-to guide for the svn:externals junkie (Part 1)">Part 1</a> of this series we created a Mercurial container <em>SandboxRootHg</em>repository and Mercurial repositories for the main project -<em>SandboxHg,</em>and its two depencies – <em>SandboxDep1Hg</em> and<em>SandboxDep2Hg. </em>Then we added the main project and dependency projects as subrepositories to <em>SandboxRootHg</em>.</p>
+<p>In this post we will go through a <strong>Change / Push</strong> and <strong>Pull / Update</strong> cycle for the subrepositories. If you followed the steps in <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/" title="Hg subrepositories: a how-to guide for the svn:externals junkie (Part 1)">Part 1</a> you will end up with a <em>SandboxRootHg</em>structure similar to the one shown on this screenshot:</p>
+<p><img alt="sandboxroothg-tortoisehg-workbench-15" src="../../assets/images/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/sandboxroothg-tortoisehg-workbench-15.png" /> </p>
+<p>Notice the <em>.hgsubstate</em> file. Mercurial added this file to track the subrepository revisions. We will get back to examine this file when we make changes to the projects and we synchronize those changes with the remote shared repository.</p>
+<p>To simulate a two machine setup I simply cloned the <em>SandboxRootHg</em>shared remote repository to two separate folders named <em>Work</em> and <em>Home</em> respectively. After that I created two groups in TortoiseHg Workbench registry and rearranged the groups and the repositories to reflect my new directory structure. Here is another screenshot:</p>
+<p><img alt="sandboxroothg-tortoisehg-workbench-16" src="../../assets/images/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/sandboxroothg-tortoisehg-workbench-16.png" /></p>
+<p>We are now ready do do some testing.</p>
+<p>Go to the <em>Home</em> folder and add a new file <em>TestFile-1.txt</em> to the <em>SandboxRootHg/SandboxHg</em> folder, right click on the new file and select <strong>TortoiseHg/Add Files</strong> from the menu, then do <strong>Hg Commit</strong>. So far the changes have been committed to your local repository clone. You still have to <strong>Push</strong> the changes to remote shared repository. You can do that in the Synchronize view ofthe TortoiseHg Workbench.</p>
+<p><img alt="sandboxhg-tortoisehg-workbench-17" src="../../assets/images/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/sandboxhg-tortoisehg-workbench-17.png" /></p>
+<p>Now go to the <em>Work</em> folder,right click onthe <em>SandboxRootHg</em> folder and select <strong>Hg Workbench</strong> from the menu. Switch to Synchronize view and pull the changes from the remote repository. Hmm.. Nothing came in the <em>Work/SandboxRootHg/SandboxHg</em> folder. We should have received a change set with the <em>TestFile-1.txt</em>. What happened? We added <em>TestFile-1.txt</em>  in <em>Home/SandboxRootHg/SandboxHg</em>, committed and pushed the change to the remote server. However we forgot to commit and push the change in the container repository: <em>Home/SandboxRootHg</em>. Right click on <em>Home/SandboxRootHg</em> and select <strong>Hg Commit</strong> from the menu.</p>
+<p><img alt="sandboxhg-tortoisehg-commit-18" src="../../assets/images/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/sandboxhg-tortoisehg-commit-18.png" /></p>
+<p>If you open the <em>.hgsubstate</em> file under the <em><em>Home/</em>SandboxRootHg</em> folder you will see that after the commit the Mercurial updated the revision id of the <em>SandBoxHg</em> project. The <em>.hgsubstate</em> contents changed from this:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>0000000000000000000000000000000000000000 SandboxDep1Hg
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>0000000000000000000000000000000000000000 SandboxDep2Hg
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>0000000000000000000000000000000000000000 SandboxHg
+</span></code></pre></div>
+<p>to this:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>0000000000000000000000000000000000000000 SandboxDep1Hg
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>0000000000000000000000000000000000000000 SandboxDep2Hg
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>4090583f58e67f599b5141ed2551be3eb4fe5c8c SandboxHg
+</span></code></pre></div>
+<p>Now all we have to do is Push the <em>Home/SandboxRootHg</em> changes to the remote shared repository.</p>
+<p>Go again to the <em>Work</em> folder,right click on <em>SandboxRootHg</em> and select <strong>Hg Workbench</strong> from the menu. Switch to the Synchronize view and pull the changes from the remote repository. This is how my Hg Workbench looks like after the update:</p>
+<p><img alt="sandboxroothg-tortoisehg-workbench-19" src="../../assets/images/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/sandboxroothg-tortoisehg-workbench-19.png" /></p>
+<p>Notice on the screenshot above that our working copy still does not have the latest code in it. TortoiseHg makes alerts us by displaying the “Not a head revision!” message in red. One of the differences between Mercurial and Subversion is that in Mercurial you have a two-step code update. Basically the <strong>Hg/Pull</strong> command only downloads the latest change sets from a remote shared repository. After you pull the changes you still have to apply them by issuing an <strong>Hg/Update</strong> command.</p>
+<p>Go to the <em>Work</em> folder, right click on the <em>SandboxRootHg</em> folder, and select <strong>TortoiseHg &gt; Update</strong> from the menu. This updates our working copy with the changes we downloaded when did <strong>Hg/Pull</strong>.</p>
+<p><img alt="sandboxroothg-tortoisehg-workbench-21" src="../../assets/images/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/sandboxroothg-tortoisehg-workbench-21.png" /></p>
+<p>If you check the <em>Work/SandboxRootHg/SandboxHg</em> folder you will see that the <em>TestFile-1.txt</em> file is now there as it should be.</p>
+<p>Continue to <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 3)">Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 3)</a></p>
+    <nav class="md-post__action">
+      <a href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-01-18 00:00:00">January 18, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              2 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1"><a class="toclink" href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/">Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 1)</a></h2>
+<p>This is the first post from a <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (TOC)">multi-part article</a> about using Mercurial subrepositories when you are switching from Subversion to Mercurial and you heavily used Subversion subrepositories configured via the svn:externals property.</p>
+<p>Often a common scenario in software development is to have a main project that depends on other projects. Here is an example of how the Subversion “trunk” for such projects might look like:</p>
+<p>``` text
+svn://svnserver/SandboxSvn
+    trunk
+        SandboxSvn (main source code)
+        SanboxDep1Svn (svn:externals link from svn://svnserver/SandboxDep1Svn/trunk)
+        SanboxDep2Svn (svn:externals link from svn://svnserver/SandboxDep2Svn/trunk)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Basically we have a repository at *svn://svnserver/SandboxSvn* that includes the main project called *SandboxSvn* and two projects* SandboxDep1Svn* and *SandboxDep2Svn* on which *SandboxSvn* depends. The dependency projects are linked from two separate Subversion repositories, hosted at *svn://svnserver/SandboxDep1Svn/trunk* and *svn://svnserver/SandboxDep2Svn/trunk* respectively.
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>You can create a similar structure in Mercurial by using the Mercurial subrepositories. In the example below, I use BitBucket, so I can test my setup later, but the same steps should be valid for any other shared Mercurial setup. For more information on how to use BitBucket, see the [BitBucket 101](https://confluence.atlassian.com/display/BITBUCKET/Bitbucket+101 &quot;BitBucket 101&quot;) wiki.
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>Steps to setup a main project with two dependencies in Mercurial:
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>1) Create a repository called SandboxRootHg. This will be a containerrepository for both the main project and the dependencies. I set that up at https://bitbucket.org/your-team-name/SandboxRootHg.
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>2) Create a repository for your main project, e.g. SandboxHg at *https://bitbucket.org/your-team-name/SandboxHg*.
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>3) Create a repository for each of the dependencies:
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>- SandboxDep1Hg at *https://bitbucket.org/your-team-name/SandboxDep1Hg*
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>- SandboxDep2Hg at *https://bitbucket.org/your-team-name/sandboxDep1Hg*
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>4) Setup the three dependencies in the container project.
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>You first have to clone the container repository locally to your machine. In our case the containeris *SandboxRootHg*, so I cloned that in a new*SandboxRootHg* folder. In the *SandboxRootHg* folder create a *.hgsub* file(note the dot in the*.hgsub*name), and add the *SandboxHg*, *SandboxDep1Hg* and *SandboxDep2Hg* projects to in the *.hgsub* file. Your final *.hgsub* will have three lines in it and will look similar to this:
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>``` text 
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>SandboxHg = https://bitbucket.org/your-team-name/SandboxHg
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>SandboxDep1Hg = https://bitbucket.org/your-team-name/SandboxDep1Hg
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>SandboxDep2Hg = https://bitbucket.org/your-team-name/SandboxDep2Hg
+</span></code></pre></div></p>
+<p>5) In the <em>SandboxRootHg</em> folder, do a <strong>Hg/Add</strong> to add the <em>.hgsub</em> file to Mercurial, then <strong>Hg/Commit</strong>. And last, do not forget to do a <strong>Hg/Push</strong> to update the remote shared repository with your changes.</p>
+<p>Continue to <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 2)">Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 2)</a>.</p>
+    <nav class="md-post__action">
+      <a href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-01-17 00:00:00">January 17, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              1 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc"><a class="toclink" href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc/">Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (TOC)</a></h2>
+<h3 id="table-of-content"><a class="toclink" href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc/#table-of-content">Table of Content</a></h3>
+<ol>
+<li><a href="http://www.swiftsoftwaregroup.com/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 1)">Repository Setup</a></li>
+<li><a href="http://www.swiftsoftwaregroup.com/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 2)">The Commit/Push, and Pull/Update cycles</a></li>
+<li><a href="http://www.swiftsoftwaregroup.com/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 3)">Summary</a></li>
+</ol>
+    <nav class="md-post__action">
+      <a href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
+      
+      
+        
+          
+
+
+
+<nav class="md-pagination">
+  <a class="md-pagination__link" href="../..">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../12/">12</a> <a class="md-pagination__link" href="../13/">13</a> <span class="md-pagination__current">14</span> <a class="md-pagination__link" href="../15/">15</a> <a class="md-pagination__link" href="../16/">16</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../19/">19</a>
+</nav>
+        
+      
+    </div>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2001 - 2024 Swift Software Group, Inc.
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+  
+    
+  
+
+
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+      
+      
+        
+        
+      
+      <li class="task-list-item">
+        <label class="task-list-control">
+          <input type="checkbox" name="analytics" checked>
+          <span class="task-list-indicator"></span>
+          Google Analytics
+        </label>
+      </li>
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout(function(){document.querySelector("[data-md-component=consent]").hidden=!1},250);var action,form=document.forms.consent;for(action of["submit","reset"])form.addEventListener(action,function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map(function(e){return[e,!0]}))),location.hash="",location.reload()})</script>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.top", "search.suggest", "search.share", "search.highlight"], "search": "../../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.7389ff0e.min.js"></script>
+      
+    
+  </body>
+</html>

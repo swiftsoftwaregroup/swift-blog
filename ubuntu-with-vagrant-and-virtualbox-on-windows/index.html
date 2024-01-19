@@ -1,197 +1,1676 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>  
-<title>Ubuntu with Vagrant and VirtualBox on Windows | Swift Software Group</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="author" content="Swift Software Group">
-<meta name="generator" content="Jekyll v4.2.2">
-<link rel="canonical" href="/ubuntu-with-vagrant-and-virtualbox-on-windows/">
 
-
-<link rel="stylesheet" href="/assets/css/frame.css">
-
-
-<link rel="stylesheet" href="/assets/css/classes.css">
-
-<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
-
-
-
-<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
-
-
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QP5FYNH46M"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-QP5FYNH46M');
-</script>
-
-</head>
-
-
-
-
-<header>
-  <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
-  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="Archive" href="/archive/" ><span aria-hidden="true">Archive</span></a></nav>
-
-</header>
-
-<article>
-  <header>
-  <h1><a href="/ubuntu-with-vagrant-and-virtualbox-on-windows/">Ubuntu with Vagrant and VirtualBox on Windows</a></h1><time datetime="2015-08-20T00:00:00-07:00">August 20, 2015</time>
-</header>
-
-  <p>In this post I show how you can use <a href="https://www.virtualbox.org/">VirtualBox</a> and <a href="https://www.vagrantup.com/">Vagrant</a> to create and launch an Ubuntu 14.04 virtual machine on Windows 8.1 host.</p>
-
-<h2 id="preparation">Preparation</h2>
-
-<h3 id="chocolatey">Chocolatey</h3>
-
-<p>We will use <a href="chocolatey.org">Chocolatey</a> to install all the required software. If you do not have it, you can install it by following the instructions on <a href="https://chocolatey.org/">chocolatey.org</a>. You may also see <a href="http://www.swiftsoftwaregroup.com/configure-download-folder-chocolatey-packages/">this post</a> for instructions on how to set the Chocolatey cache location.</p>
-
-<h3 id="virtualbox">VirtualBox</h3>
-
-<p>In order to use VirtualBox on Windows 10 you first need to <a href="http://www.swiftsoftwaregroup.com/dual-boot-windows-8-1-virtualbox-hyper-v/">disable</a> Hyper-V.</p>
-
-<h4 id="install-virtualbox">Install VirtualBox</h4>
-
-<p>In PowerShell as <em>Administrator</em>:</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">choco</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">virtualbox</span><span class="w">
-</span></code></pre></div></div>
-
-<p>IMPORTANT: After the installation, run Oracle VM VirtualBox once and when prompted, follow the instructions to install the Oracle VM VirtualBox Extension Pack. The version of the installed extension pack should match the version of Oracle VM VirtualBox.</p>
-
-<h4 id="add-virtualbox-to-system-path">Add VirtualBox To System Path</h4>
-
-<p>Vagrant will need access to <code class="language-plaintext highlighter-rouge">VBoxManage.exe</code>. For that you need to add <code class="language-plaintext highlighter-rouge">C:\Program Files\Oracle\VirtualBox</code> to your path. You can do that easily in PowerShell, by using the <a href="https://msdn.microsoft.com/en-us/library/system.environment.setenvironmentvariable.aspx">Environment.SetEnvironmentVariable</a> .NET method.</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Environment</span><span class="p">]::</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span><span class="s2">"Path"</span><span class="p">,</span><span class="w"> </span><span class="s2">"C:/Program Files/Oracle/VirtualBox;"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">$</span><span class="nn">env</span><span class="p">:</span><span class="nv">Path</span><span class="p">,</span><span class="w"> </span><span class="s2">"Machine"</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
-
-<p>Close the PowerShell terminal and open it again, so it can pick up the PATH to VirtualBox.</p>
-
-<h3 id="git">Git</h3>
-
-<p>We want Git for <code class="language-plaintext highlighter-rouge">ssh.exe</code> and other Linux tools, which are needed later by Vagrant. If you have installed <code class="language-plaintext highlighter-rouge">ssh.exe</code> using some other way, you may skip this step.</p>
-
-<h4 id="install-git">Install Git</h4>
-
-<p>In PowerShell as <em>Administrator</em>:</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">choco</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">git</span><span class="w"> </span><span class="nt">--params</span><span class="w"> </span><span class="s2">"/GitAndUnixToolsOnPath /NoAutoCrlf"</span><span class="w">
-</span></code></pre></div></div>
-
-<p>Now, besides <code class="language-plaintext highlighter-rouge">git</code>, you should have <code class="language-plaintext highlighter-rouge">ssh</code>, <code class="language-plaintext highlighter-rouge">rsync</code>, <code class="language-plaintext highlighter-rouge">touch</code>, <code class="language-plaintext highlighter-rouge">clear</code> and a number of other useful Linux tools.</p>
-
-<h4 id="verify-git-and-ssh">Verify Git and SSH</h4>
-
-<p>Close and open PowerShell, so it can pick the updated PATH environment.</p>
-
-<p>Verify you have <code class="language-plaintext highlighter-rouge">git</code>:</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">git</span><span class="w"> </span><span class="nt">--version</span><span class="w">
-</span><span class="n">git</span><span class="w"> </span><span class="nx">version</span><span class="w"> </span><span class="nx">2.6.4.windows.1</span><span class="w">
-</span></code></pre></div></div>
-
-<p>Verify you have <code class="language-plaintext highlighter-rouge">ssh</code>:</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ssh</span><span class="w">
-</span><span class="nx">usage:</span><span class="w"> </span><span class="nx">ssh</span><span class="w"> </span><span class="p">[</span><span class="nt">-1246AaCfGgKkMNnqsTtVvXxYy</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-b</span><span class="w"> </span><span class="n">bind_address</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-c</span><span class="w"> </span><span class="n">cipher_spec</span><span class="p">]</span><span class="w">
-           </span><span class="p">[</span><span class="nt">-D</span><span class="w"> </span><span class="p">[</span><span class="n">bind_address</span><span class="p">:]</span><span class="n">port</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-E</span><span class="w"> </span><span class="n">log_file</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-e</span><span class="w"> </span><span class="n">escape_char</span><span class="p">]</span><span class="w">
-           </span><span class="p">[</span><span class="nt">-F</span><span class="w"> </span><span class="n">configfile</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-I</span><span class="w"> </span><span class="n">pkcs11</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-i</span><span class="w"> </span><span class="n">identity_file</span><span class="p">]</span><span class="w">
-           </span><span class="p">[</span><span class="nt">-L</span><span class="w"> </span><span class="n">address</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-l</span><span class="w"> </span><span class="n">login_name</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-m</span><span class="w"> </span><span class="n">mac_spec</span><span class="p">]</span><span class="w">
-           </span><span class="p">[</span><span class="nt">-O</span><span class="w"> </span><span class="n">ctl_cmd</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-o</span><span class="w"> </span><span class="n">option</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-p</span><span class="w"> </span><span class="n">port</span><span class="p">]</span><span class="w">
-           </span><span class="p">[</span><span class="nt">-Q</span><span class="w"> </span><span class="n">cipher</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">cipher</span><span class="nt">-auth</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">mac</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">kex</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">key</span><span class="p">]</span><span class="w">
-           </span><span class="p">[</span><span class="nt">-R</span><span class="w"> </span><span class="n">address</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-S</span><span class="w"> </span><span class="n">ctl_path</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-W</span><span class="w"> </span><span class="n">host</span><span class="p">:</span><span class="n">port</span><span class="p">]</span><span class="w">
-           </span><span class="p">[</span><span class="nt">-w</span><span class="w"> </span><span class="n">local_tun</span><span class="p">[:</span><span class="n">remote_tun</span><span class="p">]]</span><span class="w"> </span><span class="p">[</span><span class="n">user</span><span class="err">@</span><span class="p">]</span><span class="n">hostname</span><span class="w"> </span><span class="p">[</span><span class="n">command</span><span class="p">]</span><span class="w">
-</span></code></pre></div></div>
-
-<h3 id="vagrant">Vagrant</h3>
-
-<h4 id="install-vagrant">Install Vagrant</h4>
-
-<p>In PowerShell as <em>Administrator</em>:</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">choco</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">vagrant</span><span class="w">
-</span></code></pre></div></div>
-
-<h4 id="set-vagrant_home-optional">Set VAGRANT_HOME (Optional)</h4>
-
-<p>The Vagrant home directory is where things such as boxes are stored, so it can actually become quite large on disk. By default, this is set to <code class="language-plaintext highlighter-rouge">C:\Users\yourusername\.vagrant.d</code>.</p>
-
-<p>In PowerShell as <em>Administrator</em>:</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mkdir</span><span class="w"> </span><span class="nx">C:/VagrantHome</span><span class="w">
-</span><span class="p">[</span><span class="n">Environment</span><span class="p">]::</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span><span class="s2">"VAGRANT_HOME"</span><span class="p">,</span><span class="w"> </span><span class="s2">"C:/VagrantHome"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Machine"</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
-
-<p>You are now ready to launch virtual machines.</p>
-
-<h2 id="initialize-an-ubuntu-1404-box-and-launch-it">Initialize an Ubuntu 14.04 Box and Launch it</h2>
-
-<p>Create a directory for your project, e.g. <code class="language-plaintext highlighter-rouge">C:\Ubuntu</code>. Open PowerShell in the new directory and run the following commands:</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vagrant</span><span class="w"> </span><span class="nx">init</span><span class="w"> </span><span class="nx">ubuntu/trusty64</span><span class="w">
-</span><span class="n">vagrant</span><span class="w"> </span><span class="nx">up</span><span class="w">
-</span></code></pre></div></div>
-
-<p>That creates a <code class="language-plaintext highlighter-rouge">Vagrantfile</code> file from the <code class="language-plaintext highlighter-rouge">ubuntu/trusty64</code> box. Every Vagrant development environment requires a box. You can search for
-boxes at https://atlas.hashicorp.com/search.</p>
-
-<h3 id="virtualbox-guest-additions">VirtualBox Guest Additions</h3>
-
-<p>During virtual machine boot you may get a warning about the VirtualBox Guest Additions version, something similar to this:</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">==</span><span class="err">&gt;</span><span class="w"> </span><span class="n">default:</span><span class="w"> </span><span class="nx">Checking</span><span class="w"> </span><span class="nx">for</span><span class="w"> </span><span class="nx">guest</span><span class="w"> </span><span class="nx">additions</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="nx">VM...</span><span class="w">
-    </span><span class="n">default:</span><span class="w"> </span><span class="nx">The</span><span class="w"> </span><span class="nx">guest</span><span class="w"> </span><span class="nx">additions</span><span class="w"> </span><span class="nx">on</span><span class="w"> </span><span class="nx">this</span><span class="w"> </span><span class="nx">VM</span><span class="w"> </span><span class="nx">do</span><span class="w"> </span><span class="nx">not</span><span class="w"> </span><span class="nx">match</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">installed</span><span class="w"> </span><span class="nx">version</span><span class="w"> </span><span class="nx">of</span><span class="w">
-    </span><span class="n">default:</span><span class="w"> </span><span class="nx">VirtualBox</span><span class="o">!</span><span class="w"> </span><span class="nx">In</span><span class="w"> </span><span class="nx">most</span><span class="w"> </span><span class="nx">cases</span><span class="w"> </span><span class="nx">this</span><span class="w"> </span><span class="nx">is</span><span class="w"> </span><span class="nx">fine</span><span class="p">,</span><span class="w"> </span><span class="nx">but</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="nx">rare</span><span class="w"> </span><span class="nx">cases</span><span class="w"> </span><span class="nx">it</span><span class="w"> </span><span class="nx">can</span><span class="w">
-    </span><span class="n">default:</span><span class="w"> </span><span class="nx">prevent</span><span class="w"> </span><span class="nx">things</span><span class="w"> </span><span class="nx">such</span><span class="w"> </span><span class="nx">as</span><span class="w"> </span><span class="nx">shared</span><span class="w"> </span><span class="nx">folders</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">working</span><span class="w"> </span><span class="nx">properly.</span><span class="w"> </span><span class="nx">If</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">see</span><span class="w">
-    </span><span class="n">default:</span><span class="w"> </span><span class="nx">shared</span><span class="w"> </span><span class="nx">folder</span><span class="w"> </span><span class="nx">errors</span><span class="p">,</span><span class="w"> </span><span class="nx">please</span><span class="w"> </span><span class="nx">make</span><span class="w"> </span><span class="nx">sure</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">guest</span><span class="w"> </span><span class="nx">additions</span><span class="w"> </span><span class="nx">within</span><span class="w"> </span><span class="nx">the</span><span class="w">
-    </span><span class="n">default:</span><span class="w"> </span><span class="nx">virtual</span><span class="w"> </span><span class="nx">machine</span><span class="w"> </span><span class="nx">match</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">version</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">VirtualBox</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">have</span><span class="w"> </span><span class="nx">installed</span><span class="w"> </span><span class="nx">on</span><span class="w">
-    </span><span class="n">default:</span><span class="w"> </span><span class="nx">your</span><span class="w"> </span><span class="nx">host</span><span class="w"> </span><span class="nx">and</span><span class="w"> </span><span class="nx">reload</span><span class="w"> </span><span class="nx">your</span><span class="w"> </span><span class="nx">VM.</span><span class="w">
-    </span><span class="n">default:</span><span class="w">
-    </span><span class="nx">default:</span><span class="w"> </span><span class="nx">Guest</span><span class="w"> </span><span class="nx">Additions</span><span class="w"> </span><span class="nx">Version:</span><span class="w"> </span><span class="nx">4.3.10</span><span class="w">
-    </span><span class="n">default:</span><span class="w"> </span><span class="nx">VirtualBox</span><span class="w"> </span><span class="nx">Version:</span><span class="w"> </span><span class="nx">5.0</span><span class="w">
-</span></code></pre></div></div>
-
-<p>There is a Vagrant plugin for that. The <code class="language-plaintext highlighter-rouge">vagrant-vbguest</code> plugin will check for and install the correct guest additions automatically on startup. To get the <code class="language-plaintext highlighter-rouge">vagrant-vbguest</code> plugin:</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vagrant</span><span class="w"> </span><span class="nx">plugin</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">vagrant-vbguest</span><span class="w">
-</span></code></pre></div></div>
-
-<p>Now restart the VM:</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vagrant</span><span class="w"> </span><span class="nx">reload</span><span class="w">
-</span></code></pre></div></div>
-
-<h3 id="login-with-ssh">Login with SSH</h3>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vagrant</span><span class="w"> </span><span class="nx">ssh</span><span class="w">
-</span></code></pre></div></div>
-
-
-  
-    <hr>
-    <div id="disqus_thread"></div>
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
     
-    <noscript>Please enable JavaScript to view comments.</noscript>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Swift Software Group Blog">
+      
+      
+      
+        <link rel="canonical" href="https://blog.swiftsoftwaregroup.com/ubuntu-with-vagrant-and-virtualbox-on-windows/">
+      
+      
+        <link rel="prev" href="../install-git-windows-via-chocolatey/">
+      
+      
+        <link rel="next" href="../how-to-install-jekyll-on-windows/">
+      
+      
+        <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../feed_rss_created.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="../feed_rss_updated.xml">
+      
+      <link rel="icon" href="../images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
+    
+    
+      
+        <title>Ubuntu with Vagrant and VirtualBox on Windows - Swift Software Group</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
   
-</article>
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-QP5FYNH46M"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-QP5FYNH46M",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-QP5FYNH46M",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>var consent;"undefined"==typeof __md_analytics||(consent=__md_get("__consent"))&&consent.analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ubuntu-with-vagrant-and-virtualbox-on-windows" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Swift Software Group" class="md-header__button md-logo" aria-label="Swift Software Group" data-md-component="logo">
+      
+  <img src="../images/logo_white.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Swift Software Group
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Ubuntu with Vagrant and VirtualBox on Windows
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://swiftsoftwaregroup.com" class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://swiftsoftwaregroup.com/services" class="md-tabs__link">
+        
+  
+    
+  
+  Services
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://swiftsoftwaregroup.com/contact-us" class="md-tabs__link">
+        
+  
+    
+  
+  Contact Us
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href=".." class="md-tabs__link">
+        
+  
+    
+  
+  Blog
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../archive/2023/" class="md-tabs__link">
+          
+  
+  Archive
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../aws/" class="md-tabs__link">
+          
+  
+  Categories
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Swift Software Group" class="md-nav__button md-logo" aria-label="Swift Software Group" data-md-component="logo">
+      
+  <img src="../images/logo_white.svg" alt="logo">
+
+    </a>
+    Swift Software Group
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://swiftsoftwaregroup.com" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://swiftsoftwaregroup.com/services" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://swiftsoftwaregroup.com/contact-us" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact Us
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Archive
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Archive
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2023/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2021/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2021
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2020/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2020
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2018/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2018
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2017/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2017
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2016/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2016
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2015/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2015
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2014/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2014
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2013/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2013
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2012/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2012
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2011/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2011
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Categories
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Categories
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    aws
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../cloud/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cloud
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../cloud-formation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cloud-formation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../cpp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cpp
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../csharp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    csharp
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    docker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-swarm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    docker-swarm
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../dotnet/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dotnet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../ec2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ec2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../ecs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ecs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../macos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    macos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../mongodb/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    mongodb
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../podman/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    podman
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../ruby/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ruby
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../ubuntu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ubuntu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vscode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../windows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    windows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preparation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Preparation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chocolatey" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chocolatey
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#virtualbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      VirtualBox
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="VirtualBox">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-virtualbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install VirtualBox
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-virtualbox-to-system-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add VirtualBox To System Path
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git" class="md-nav__link">
+    <span class="md-ellipsis">
+      Git
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Git">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install Git
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-git-and-ssh" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify Git and SSH
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vagrant" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vagrant
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Vagrant">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-vagrant" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install Vagrant
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-vagrant_home-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      Set VAGRANT_HOME (Optional)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initialize-an-ubuntu-1404-box-and-launch-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initialize an Ubuntu 14.04 Box and Launch it
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Initialize an Ubuntu 14.04 Box and Launch it">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#virtualbox-guest-additions" class="md-nav__link">
+    <span class="md-ellipsis">
+      VirtualBox Guest Additions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#login-with-ssh" class="md-nav__link">
+    <span class="md-ellipsis">
+      Login with SSH
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href=".." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5v-5Z"/></svg>
+                        <time datetime="2015-08-20 00:00:00" class="md-ellipsis">August 20, 2015</time>
+                      </div>
+                    </li>
+                    
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7h1.5Z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              3 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+
+
+<h1 id="ubuntu-with-vagrant-and-virtualbox-on-windows">Ubuntu with Vagrant and VirtualBox on Windows</h1>
+<p>In this post I show how you can use <a href="https://www.virtualbox.org/">VirtualBox</a> and <a href="https://www.vagrantup.com/">Vagrant</a> to create and launch an Ubuntu 14.04 virtual machine on Windows 8.1 host.</p>
+<h2 id="preparation">Preparation</h2>
+<h3 id="chocolatey">Chocolatey</h3>
+<p>We will use <a href="https://chocolatey.org">Chocolatey</a> to install all the required software. If you do not have it, you can install it by following the instructions on <a href="https://chocolatey.org/">chocolatey.org</a>. You may also see <a href="http://www.swiftsoftwaregroup.com/configure-download-folder-chocolatey-packages/">this post</a> for instructions on how to set the Chocolatey cache location. </p>
+<h3 id="virtualbox">VirtualBox</h3>
+<p>In order to use VirtualBox on Windows 10 you first need to <a href="http://www.swiftsoftwaregroup.com/dual-boot-windows-8-1-virtualbox-hyper-v/">disable</a> Hyper-V. </p>
+<h4 id="install-virtualbox">Install VirtualBox</h4>
+<p>In PowerShell as <em>Administrator</em>:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">choco</span> <span class="n">install</span> <span class="n">virtualbox</span>
+</span></code></pre></div>
+<p>IMPORTANT: After the installation, run Oracle VM VirtualBox once and when prompted, follow the instructions to install the Oracle VM VirtualBox Extension Pack. The version of the installed extension pack should match the version of Oracle VM VirtualBox. </p>
+<h4 id="add-virtualbox-to-system-path">Add VirtualBox To System Path</h4>
+<p>Vagrant will need access to <code>VBoxManage.exe</code>. For that you need to add <code>C:\Program Files\Oracle\VirtualBox</code> to your path. You can do that easily in PowerShell, by using the <a href="https://msdn.microsoft.com/en-us/library/system.environment.setenvironmentvariable.aspx">Environment.SetEnvironmentVariable</a> .NET method.  </p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="no">[Environment]</span><span class="p">::</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;Path&quot;</span><span class="p">,</span> <span class="s2">&quot;C:/Program Files/Oracle/VirtualBox;&quot;</span> <span class="p">+</span> <span class="nv">$env:Path</span><span class="p">,</span> <span class="s2">&quot;Machine&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Close the PowerShell terminal and open it again, so it can pick up the PATH to VirtualBox.</p>
+<h3 id="git">Git</h3>
+<p>We want Git for <code>ssh.exe</code> and other Linux tools, which are needed later by Vagrant. If you have installed <code>ssh.exe</code> using some other way, you may skip this step.</p>
+<h4 id="install-git">Install Git</h4>
+<p>In PowerShell as <em>Administrator</em>:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">choco</span> <span class="n">install</span> <span class="n">git</span> <span class="p">-</span><span class="n">-params</span> <span class="s2">&quot;/GitAndUnixToolsOnPath /NoAutoCrlf&quot;</span>
+</span></code></pre></div>
+<p>Now, besides <code>git</code>, you should have <code>ssh</code>, <code>rsync</code>, <code>touch</code>, <code>clear</code> and a number of other useful Linux tools. </p>
+<h4 id="verify-git-and-ssh">Verify Git and SSH</h4>
+<p>Close and open PowerShell, so it can pick the updated PATH environment.</p>
+<p>Verify you have <code>git</code>:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">git</span> <span class="p">-</span><span class="n">-version</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">git</span> <span class="n">version</span> <span class="n">2</span><span class="p">.</span><span class="n">6</span><span class="p">.</span><span class="n">4</span><span class="p">.</span><span class="n">windows</span><span class="p">.</span><span class="n">1</span>
+</span></code></pre></div>
+<p>Verify you have <code>ssh</code>:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">ssh</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">usage</span><span class="p">:</span> <span class="n">ssh</span> <span class="p">[-</span><span class="n">1246AaCfGgKkMNnqsTtVvXxYy</span><span class="p">]</span> <span class="p">[</span><span class="n">-b</span> <span class="n">bind_address</span><span class="p">]</span> <span class="p">[</span><span class="n">-c</span> <span class="n">cipher_spec</span><span class="p">]</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>           <span class="p">[</span><span class="n">-D</span> <span class="p">[</span><span class="n">bind_address</span><span class="p">:]</span><span class="n">port</span><span class="p">]</span> <span class="p">[</span><span class="n">-E</span> <span class="n">log_file</span><span class="p">]</span> <span class="p">[</span><span class="n">-e</span> <span class="n">escape_char</span><span class="p">]</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>           <span class="p">[</span><span class="o">-F</span> <span class="n">configfile</span><span class="p">]</span> <span class="p">[</span><span class="n">-I</span> <span class="n">pkcs11</span><span class="p">]</span> <span class="p">[</span><span class="n">-i</span> <span class="n">identity_file</span><span class="p">]</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>           <span class="p">[</span><span class="n">-L</span> <span class="n">address</span><span class="p">]</span> <span class="p">[</span><span class="n">-l</span> <span class="n">login_name</span><span class="p">]</span> <span class="p">[</span><span class="n">-m</span> <span class="n">mac_spec</span><span class="p">]</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>           <span class="p">[</span><span class="n">-O</span> <span class="n">ctl_cmd</span><span class="p">]</span> <span class="p">[</span><span class="n">-o</span> <span class="n">option</span><span class="p">]</span> <span class="p">[</span><span class="n">-p</span> <span class="n">port</span><span class="p">]</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>           <span class="p">[</span><span class="n">-Q</span> <span class="n">cipher</span> <span class="p">|</span> <span class="n">cipher-auth</span> <span class="p">|</span> <span class="n">mac</span> <span class="p">|</span> <span class="n">kex</span> <span class="p">|</span> <span class="n">key</span><span class="p">]</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>           <span class="p">[</span><span class="n">-R</span> <span class="n">address</span><span class="p">]</span> <span class="p">[</span><span class="n">-S</span> <span class="n">ctl_path</span><span class="p">]</span> <span class="p">[</span><span class="n">-W</span> <span class="n">host</span><span class="p">:</span><span class="n">port</span><span class="p">]</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>           <span class="p">[</span><span class="n">-w</span> <span class="n">local_tun</span><span class="p">[:</span><span class="n">remote_tun</span><span class="p">]]</span> <span class="p">[</span><span class="n">user</span><span class="p">@]</span><span class="n">hostname</span> <span class="no">[command]</span>
+</span></code></pre></div>
+<h3 id="vagrant">Vagrant</h3>
+<h4 id="install-vagrant">Install Vagrant</h4>
+<p>In PowerShell as <em>Administrator</em>:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">choco</span> <span class="n">install</span> <span class="n">vagrant</span>
+</span></code></pre></div>
+<h4 id="set-vagrant_home-optional">Set VAGRANT_HOME (Optional)</h4>
+<p>The Vagrant home directory is where things such as boxes are stored, so it can actually become quite large on disk. By default, this is set to <code>C:\Users\yourusername\.vagrant.d</code>.  </p>
+<p>In PowerShell as <em>Administrator</em>:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">mkdir</span> <span class="n">C</span><span class="p">:/</span><span class="n">VagrantHome</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="no">[Environment]</span><span class="p">::</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;VAGRANT_HOME&quot;</span><span class="p">,</span> <span class="s2">&quot;C:/VagrantHome&quot;</span><span class="p">,</span> <span class="s2">&quot;Machine&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>You are now ready to launch virtual machines.</p>
+<h2 id="initialize-an-ubuntu-1404-box-and-launch-it">Initialize an Ubuntu 14.04 Box and Launch it</h2>
+<p>Create a directory for your project, e.g. <code>C:\Ubuntu</code>. Open PowerShell in the new directory and run the following commands:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">vagrant</span> <span class="n">init</span> <span class="n">ubuntu</span><span class="p">/</span><span class="n">trusty64</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">vagrant</span> <span class="n">up</span>
+</span></code></pre></div>
+<p>That creates a <code>Vagrantfile</code> file from the <code>ubuntu/trusty64</code> box. Every Vagrant development environment requires a box. You can search for
+boxes at https://atlas.hashicorp.com/search.   </p>
+<h3 id="virtualbox-guest-additions">VirtualBox Guest Additions</h3>
+<p>During virtual machine boot you may get a warning about the VirtualBox Guest Additions version, something similar to this:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">==&gt;</span> <span class="k">default</span><span class="p">:</span> <span class="n">Checking</span> <span class="k">for</span> <span class="n">guest</span> <span class="n">additions</span> <span class="k">in</span> <span class="n">VM</span><span class="p">...</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    <span class="k">default</span><span class="p">:</span> <span class="n">The</span> <span class="n">guest</span> <span class="n">additions</span> <span class="n">on</span> <span class="n">this</span> <span class="n">VM</span> <span class="k">do</span> <span class="n">not</span> <span class="n">match</span> <span class="n">the</span> <span class="n">installed</span> <span class="n">version</span> <span class="n">of</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="k">default</span><span class="p">:</span> <span class="n">VirtualBox</span><span class="p">!</span> <span class="k">In</span> <span class="n">most</span> <span class="n">cases</span> <span class="n">this</span> <span class="n">is</span> <span class="n">fine</span><span class="p">,</span> <span class="n">but</span> <span class="k">in</span> <span class="n">rare</span> <span class="n">cases</span> <span class="n">it</span> <span class="n">can</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="k">default</span><span class="p">:</span> <span class="n">prevent</span> <span class="n">things</span> <span class="n">such</span> <span class="n">as</span> <span class="n">shared</span> <span class="n">folders</span> <span class="n">from</span> <span class="n">working</span> <span class="n">properly</span><span class="p">.</span> <span class="k">If</span> <span class="n">you</span> <span class="n">see</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="k">default</span><span class="p">:</span> <span class="n">shared</span> <span class="n">folder</span> <span class="n">errors</span><span class="p">,</span> <span class="n">please</span> <span class="n">make</span> <span class="n">sure</span> <span class="n">the</span> <span class="n">guest</span> <span class="n">additions</span> <span class="n">within</span> <span class="n">the</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    <span class="k">default</span><span class="p">:</span> <span class="n">virtual</span> <span class="n">machine</span> <span class="n">match</span> <span class="n">the</span> <span class="n">version</span> <span class="n">of</span> <span class="n">VirtualBox</span> <span class="n">you</span> <span class="n">have</span> <span class="n">installed</span> <span class="n">on</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>    <span class="k">default</span><span class="p">:</span> <span class="n">your</span> <span class="n">host</span> <span class="n">and</span> <span class="n">reload</span> <span class="n">your</span> <span class="n">VM</span><span class="p">.</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>    <span class="k">default</span><span class="p">:</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>    <span class="k">default</span><span class="p">:</span> <span class="n">Guest</span> <span class="n">Additions</span> <span class="n">Version</span><span class="p">:</span> <span class="n">4</span><span class="p">.</span><span class="n">3</span><span class="p">.</span><span class="n">10</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>    <span class="k">default</span><span class="p">:</span> <span class="n">VirtualBox</span> <span class="n">Version</span><span class="p">:</span> <span class="n">5</span><span class="p">.</span><span class="n">0</span>
+</span></code></pre></div>
+<p>There is a Vagrant plugin for that. The <code>vagrant-vbguest</code> plugin will check for and install the correct guest additions automatically on startup. To get the <code>vagrant-vbguest</code> plugin:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">vagrant</span> <span class="n">plugin</span> <span class="n">install</span> <span class="n">vagrant-vbguest</span>
+</span></code></pre></div>
+<p>Now restart the VM:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">vagrant</span> <span class="n">reload</span>
+</span></code></pre></div>
+<h3 id="login-with-ssh">Login with SSH</h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">vagrant</span> <span class="n">ssh</span>
+</span></code></pre></div>
 
 
 
-<footer>
-  <div>&copy; Swift Software Group</div>
-  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
 
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2001 - 2024 Swift Software Group, Inc.
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
 </footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+  
+    
+  
 
 
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+      
+      
+        
+        
+      
+      <li class="task-list-item">
+        <label class="task-list-control">
+          <input type="checkbox" name="analytics" checked>
+          <span class="task-list-indicator"></span>
+          Google Analytics
+        </label>
+      </li>
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout(function(){document.querySelector("[data-md-component=consent]").hidden=!1},250);var action,form=document.forms.consent;for(action of["submit","reset"])form.addEventListener(action,function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map(function(e){return[e,!0]}))),location.hash="",location.reload()})</script>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.top", "search.suggest", "search.share", "search.highlight"], "search": "../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.7389ff0e.min.js"></script>
+      
+    
+  </body>
 </html>

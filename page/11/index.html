@@ -1,0 +1,1917 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Swift Software Group Blog">
+      
+      
+      
+        <link rel="canonical" href="https://blog.swiftsoftwaregroup.com/page/11/">
+      
+      
+      
+        <link rel="next" href="../../aws/">
+      
+      
+        <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../../feed_rss_created.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="../../feed_rss_updated.xml">
+      
+      <link rel="icon" href="../../images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
+    
+    
+      
+        <title>Blog - Swift Software Group</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-QP5FYNH46M"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-QP5FYNH46M",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-QP5FYNH46M",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>var consent;"undefined"==typeof __md_analytics||(consent=__md_get("__consent"))&&consent.analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#blog" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Swift Software Group" class="md-header__button md-logo" aria-label="Swift Software Group" data-md-component="logo">
+      
+  <img src="../../images/logo_white.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Swift Software Group
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Blog
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://swiftsoftwaregroup.com" class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://swiftsoftwaregroup.com/services" class="md-tabs__link">
+        
+  
+    
+  
+  Services
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://swiftsoftwaregroup.com/contact-us" class="md-tabs__link">
+        
+  
+    
+  
+  Contact Us
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Blog
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../archive/2023/" class="md-tabs__link">
+          
+  
+  Archive
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../aws/" class="md-tabs__link">
+          
+  
+  Categories
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Swift Software Group" class="md-nav__button md-logo" aria-label="Swift Software Group" data-md-component="logo">
+      
+  <img src="../../images/logo_white.svg" alt="logo">
+
+    </a>
+    Swift Software Group
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://swiftsoftwaregroup.com" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://swiftsoftwaregroup.com/services" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://swiftsoftwaregroup.com/contact-us" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact Us
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+      
+    
+  
+  
+    <li class="md-nav__item">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Blog
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="../.." class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Blog
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#super-agile-not-possible-without-unit-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Super Agile: Not possible without unit tests
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nvidia-driver-mismatch-after-upgrading-to-ubuntu-12043-lts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nvidia driver mismatch after upgrading to Ubuntu 12.04.3 LTS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debian-wheezy-guest-on-windows-81-host-using-virtualbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debian "Wheezy" guest on Windows 8.1 host using VirtualBox
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-save-xdocument-to-xml-and-use-single-quotes-for-attribute-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to save XDocument to xml and use single quotes for attribute values
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-install-and-configure-tortoisehg-on-mac" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to install and configure TortoiseHg on Mac
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Archive
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Archive
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2023/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2021/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2021
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2020/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2020
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2018/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2018
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2017/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2017
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2016/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2016
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2015/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2015
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2014/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2014
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2013/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2013
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2012/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2012
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2011/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2011
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Categories
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Categories
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aws/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    aws
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cloud
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-formation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cloud-formation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cpp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cpp
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csharp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    csharp
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    docker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-swarm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    docker-swarm
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dotnet/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dotnet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ec2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ecs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ecs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../macos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    macos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mongodb/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    mongodb
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../podman/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    podman
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ruby/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ruby
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ubuntu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ubuntu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vscode/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vscode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../windows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    windows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#super-agile-not-possible-without-unit-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Super Agile: Not possible without unit tests
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nvidia-driver-mismatch-after-upgrading-to-ubuntu-12043-lts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nvidia driver mismatch after upgrading to Ubuntu 12.04.3 LTS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debian-wheezy-guest-on-windows-81-host-using-virtualbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debian "Wheezy" guest on Windows 8.1 host using VirtualBox
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-save-xdocument-to-xml-and-use-single-quotes-for-attribute-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to save XDocument to xml and use single quotes for attribute values
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-install-and-configure-tortoisehg-on-mac" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to install and configure TortoiseHg on Mac
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content" data-md-component="content">
+    <div class="md-content__inner">
+      <header class="md-typeset">
+        <h1 id="blog">Blog</h1>
+      </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-12-29 00:00:00">December 29, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              1 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="super-agile-not-possible-without-unit-tests"><a class="toclink" href="../../super-agile-possible-without-unit-tests/">Super Agile: Not possible without unit tests</a></h2>
+<p>It is never too late to start writing unit tests. Add unit tests to your “Definition of Done” document. Automate your build process, so it runs unit tests with every code change.</p>
+    <nav class="md-post__action">
+      <a href="../../super-agile-possible-without-unit-tests/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-12-28 00:00:00">December 28, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              1 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="nvidia-driver-mismatch-after-upgrading-to-ubuntu-12043-lts"><a class="toclink" href="../../nvidia-driver-mismatch-upgrading-ubuntu-12-04-3-lts/">Nvidia driver mismatch after upgrading to Ubuntu 12.04.3 LTS</a></h2>
+<p>After upgrading to Ubuntu 12.04.3 LTS, I could not boot in GUI / X anymore. I got this when trying to start X:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>startx
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>NVIDIA:<span class="w"> </span>API<span class="w"> </span>mismatch:<span class="w"> </span>the<span class="w"> </span>NVIDIA<span class="w"> </span>kernel<span class="w"> </span>module<span class="w"> </span>has<span class="w"> </span>version<span class="w"> </span><span class="m">304</span>.88,<span class="w"> </span>but<span class="w"> </span>this<span class="w"> </span>NVIDIA<span class="w"> </span>driver<span class="w"> </span>component<span class="w"> </span>has<span class="w"> </span>version<span class="w"> </span><span class="m">304</span>.108.
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Please<span class="w"> </span>make<span class="w"> </span>sure<span class="w"> </span>that<span class="w"> </span>the<span class="w"> </span>kernel<span class="w"> </span>module<span class="w"> </span>and<span class="w"> </span>all<span class="w"> </span>NVIDIA<span class="w"> </span>driver<span class="w"> </span>components<span class="w"> </span>have<span class="w"> </span>the<span class="w"> </span>same<span class="w"> </span>version.
+</span></code></pre></div>
+<p>To fix that it seems you have to disable the <code>xorg:nvidia_304_updates</code> (304.108) driver and enable the <code>xorg:nvidia_304</code> (304.88) driver:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>jockey-text<span class="w"> </span>-e<span class="w"> </span>xorg:nvidia_304<span class="w"> </span>
+</span></code></pre></div>
+<p>After that you should have <code>xorg:nvidia_304</code> listed as Proprietary, Enabled, In use:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>jockey-text<span class="w"> </span>--list
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>xorg:nvidia_173<span class="w"> </span>-<span class="w"> </span>NVIDIA<span class="w"> </span>accelerated<span class="w"> </span>graphics<span class="w"> </span>driver<span class="w"> </span><span class="o">(</span>Proprietary,<span class="w"> </span>Disabled,<span class="w"> </span>Not<span class="w"> </span><span class="k">in</span><span class="w"> </span>use<span class="o">)</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>xorg:nvidia_173_updates<span class="w"> </span>-<span class="w"> </span>NVIDIA<span class="w"> </span>accelerated<span class="w"> </span>graphics<span class="w"> </span>driver<span class="w"> </span><span class="o">(</span>post-release<span class="w"> </span>updates<span class="o">)</span><span class="w"> </span><span class="o">(</span>Proprietary,<span class="w"> </span>Disabled,<span class="w"> </span>Not<span class="w"> </span><span class="k">in</span><span class="w"> </span>use<span class="o">)</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>xorg:nvidia_304<span class="w"> </span>-<span class="w"> </span>NVIDIA<span class="w"> </span>accelerated<span class="w"> </span>graphics<span class="w"> </span>driver<span class="w"> </span><span class="o">(</span>Proprietary,<span class="w"> </span>Enabled,<span class="w"> </span>In<span class="w"> </span>use<span class="o">)</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>xorg:nvidia_304_updates<span class="w"> </span>-<span class="w"> </span>NVIDIA<span class="w"> </span>accelerated<span class="w"> </span>graphics<span class="w"> </span>driver<span class="w"> </span><span class="o">(</span>post-release<span class="w"> </span>updates<span class="o">)</span><span class="w"> </span><span class="o">(</span>Proprietary,<span class="w"> </span>Disabled,<span class="w"> </span>Not<span class="w"> </span><span class="k">in</span><span class="w"> </span>use<span class="o">)</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>xorg:nvidia_96<span class="w"> </span>-<span class="w"> </span>NVIDIA<span class="w"> </span>accelerated<span class="w"> </span>graphics<span class="w"> </span>driver<span class="w"> </span><span class="o">(</span>Proprietary,<span class="w"> </span>Disabled,<span class="w"> </span>Not<span class="w"> </span><span class="k">in</span><span class="w"> </span>use<span class="o">)</span><span class="w">    </span>
+</span></code></pre></div>
+<p>And finally you have to reboot:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>reboot
+</span></code></pre></div>
+    <nav class="md-post__action">
+      <a href="../../nvidia-driver-mismatch-upgrading-ubuntu-12-04-3-lts/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-11-15 00:00:00">November 15, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              4 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="debian-wheezy-guest-on-windows-81-host-using-virtualbox"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/">Debian "Wheezy" guest on Windows 8.1 host using VirtualBox</a></h2>
+<p>This post is about using Oracle VirtualBox to install a Debian 7.2 x86_64 guest virtual machine on Windows 8.1 host.</p>
+<h3 id="install-virtualbox"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#install-virtualbox">Install VirtualBox</a></h3>
+<ol>
+<li>Download the latest VirtualBox installer from <a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a>. Make sure you get the 64-bit version. That was <em>VirtualBox-4.3.2-90405-Win.exe</em> at the time of writing.</li>
+<li>Run the installer and follow the instructions on the screen. Leave the default options as they are. The installation should complete without any issues.</li>
+<li>Download the Oracle VM VirtualBox Extension Pack from <a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a>.</li>
+<li>Double click the downloaded <em>.vbox-extpack</em> file to install the extensions.</li>
+<li>Go to File &gt; Preferences &gt; Extensions. You should see the Oracle VM VirtualBox Extension Pack listed under Extension Packages.</li>
+</ol>
+<p><img alt="virtualbox-settings" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/virtualbox-settings.png?lightbox&amp;resize=200,200" /></p>
+<h3 id="create-virtual-machine"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#create-virtual-machine">Create virtual machine</a></h3>
+<ol>
+<li>Start VirtualBox</li>
+<li>Select Machine &gt; New from the menu - Name: Debian-7.2-x64</li>
+<li>Type: Linux</li>
+<li>Version: Debian (64 bit)</li>
+<li>Click <em>Next</em>  </li>
+</ol>
+<p>NOTE: If the <em>Debian (64 bit)</em> choice is not available, make sure Intel Virtualization Technology is enabled in the host UEFI / BIOS.
+3. Memory size - Memory size: 4096 MB
+- Click <em>Next</em>
+4. Hard drive - Choose <em>Create a virtual hard drive now</em>
+- Click <em>Create</em>
+- Choose VDI (VirtualBox Disk Image)
+- Click <em>Create</em>
+- File allocation and size - Select a path for the virtual disk image
+- Select 100 GB for size
+- Click <em>Create</em></p>
+<p>It takes a few minutes to create the virtual disk image, but eventually you will see the image in the VirtualBox Manager. We are ready to install Debian now.</p>
+<p><img alt="create-virtual-machine" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/create-virtual-machine.png?lightbox&amp;resize=200,200" />
+<img alt="create-virtual-machine-memory-size" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/create-virtual-machine-memory-size.png?lightbox&amp;resize=200,200" />
+<img alt="create-virtual-machine-hard-drive" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/create-virtual-machine-hard-drive.png?lightbox&amp;resize=200,200" />
+<img alt="create-virtual-hard-drive-creating-fixed-medium-storage-unit" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/create-virtual-hard-drive-creating-fixed-medium-storage-unit.png?lightbox&amp;resize=200,200" /> 
+<img alt="oracle-vm-virtualbox-manager" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/oracle-vm-virtualbox-manager.png?lightbox&amp;resize=200,200" /> </p>
+<h3 id="configure-display"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#configure-display">Configure Display</a></h3>
+<p>In VirtualBox Manager:</p>
+<ol>
+<li>Select Debian-7.2-x64 &gt; Settings</li>
+<li>Select Display &gt; Video</li>
+<li>Bump up the video memory to 128 MB.</li>
+<li>Do not check <em>Enable 3D Acceleration</em>. We will enable 3D Acceleration later.  </li>
+</ol>
+<p>no images were found</p>
+<h3 id="mount-debian-boot-cd"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#mount-debian-boot-cd">Mount Debian Boot CD</a></h3>
+<ol>
+<li>Download the Debian 7.2 x64 ISO image from the <a href="http://www.debian.org/CD/netinst/">network install page</a> on the Debian web site. Make sure you get the <em>amd64</em> image.</li>
+<li>Open VirtualBox Manager</li>
+<li>Select Debian-7.2-x64 &gt; Settings</li>
+<li>Select Storage &gt; Controller IDE &gt; Empty</li>
+<li>Click on the little CD icon</li>
+<li>Find and select the Debian ISO (<em>debian-7.2.0-amd64-netinst.iso</em>) that you downloaded in step 1.</li>
+<li>Click OK  </li>
+</ol>
+<p><img alt="oracle-vm-virtualbox-manager-machine-settings" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/oracle-vm-virtualbox-manager-machine-settings.png?lightbox&amp;resize=200,200" />
+<img alt="debian-7-2-x64-storage-settings" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/debian-7-2-x64-storage-settings.png?lightbox&amp;resize=200,200" /></p>
+<h3 id="start-the-virtual-machine"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#start-the-virtual-machine">Start the virtual machine</a></h3>
+<ol>
+<li>Open VirtualBox Manager</li>
+<li>Start the Debian-7.2-x64 machine</li>
+<li>Press right CTRL+R to reset the machine. You should see the Debian Installer boot menu.  </li>
+</ol>
+<p><img alt="oracle-vm-virtualbox-manager-start" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/oracle-vm-virtualbox-manager-start.png?lightbox&amp;resize=200,200" />
+<img alt="debian-7-2-x64-debian-installer-boot-menu" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/debian-7-2-x64-debian-installer-boot-menu.png?lightbox&amp;resize=200,200" /></p>
+<h3 id="install-debian"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#install-debian">Install Debian</a></h3>
+<p>In the Debian Install boot menu:</p>
+<ol>
+<li>Select Graphical Install</li>
+<li>Follow the installer instructions and configure Debian just as you would do on a physical machine. You should be able to install without any problems.</li>
+</ol>
+<h3 id="enable-3d-acceleration"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#enable-3d-acceleration">Enable 3D Acceleration</a></h3>
+<h4 id="install-guest-additions-for-virtualbox"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#install-guest-additions-for-virtualbox">Install Guest Additions for VirtualBox</a></h4>
+<ol>
+<li>Start the Debian-7.2-x64 virtual machine</li>
+<li>Login into Debian</li>
+<li>Select <em>Insert Guest Additions CD image…</em> from the VirtualBox <em>Devices</em> menu. Do not run it!</li>
+<li>Open <em>Root Terminal</em></li>
+</ol>
+<p>Install Module Assistant, so you can build kernel modules.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>apt-get<span class="w"> </span>install<span class="w"> </span>module-assistant
+</span></code></pre></div>
+<p>Let Module Assistant prepare the system.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>m-a<span class="w"> </span>prepare
+</span></code></pre></div>
+<p>Install Guest Additions</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sh<span class="w"> </span>/media/cdrom/VBoxLinuxAdditions.run
+</span></code></pre></div>
+<h4 id="enable-3d-acceleration_1"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#enable-3d-acceleration_1">Enable 3D Acceleration</a></h4>
+<ol>
+<li>Shutdown the Debian-7.2-x64 virtual machine</li>
+<li>Open VirtualBox Manager - Select Debian-7.2-x64 &gt; Settings</li>
+<li>Select Display &gt; Video</li>
+<li>Check <em>Enable 3D Acceleration</em></li>
+<li>Start the Debian-7.2-x64 virtual machine</li>
+</ol>
+<h3 id="troubleshooting"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#troubleshooting">Troubleshooting</a></h3>
+<p>If the installation does not start or hangs, try booting using <em>Advanced Options &gt; Expert Install</em>. That will give you more information about what is wrong with the installation.</p>
+<h4 id="errors"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#errors">Errors</a></h4>
+<h5 id="this-kernel-requires-an-x86_64-cpu-but-only-detected-an-i686-cpu"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#this-kernel-requires-an-x86_64-cpu-but-only-detected-an-i686-cpu">This kernel requires an x86_64 CPU, but only detected an i686 CPU …</a></h5>
+<p><img alt="debian-7-2-x64-running-oracle-vm-virtualbox" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/debian-7-2-x64-running-oracle-vm-virtualbox.png?lightbox&amp;resize=200,200" /></p>
+<h6 id="how-to-fix"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#how-to-fix">How to fix</a></h6>
+<ul>
+<li>Make sure Intel Virtualization Technology is ON in the host UEFI / BIOS.</li>
+<li>Make sure the VirtualBox machine version is <em>Debian (64 bit)</em>.</li>
+<li>Make sure Windows Hyper-V services are not running.</li>
+</ul>
+    <nav class="md-post__action">
+      <a href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-10-17 00:00:00">October 17, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              1 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="how-to-save-xdocument-to-xml-and-use-single-quotes-for-attribute-values"><a class="toclink" href="../../save-xdocument-xml-use-single-quotes-attribute-values/">How to save XDocument to xml and use single quotes for attribute values</a></h2>
+<p>I had to do this for <a href="https://avblocks.com">AVBlocks</a> xml licenses recently. It is not straightforward, but here is the C# code.</p>
+<div class="language-csharp highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Collections.Generic</span><span class="p">;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.IO</span><span class="p">;</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Linq</span><span class="p">;</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Text</span><span class="p">;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Xml</span><span class="p">;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Xml.Linq</span><span class="p">;</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Xml.XPath</span><span class="p">;</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Primo.LicenseBuilder.Xml</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="p">{</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">XmlExtensions</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">ToSingleQuoteString</span><span class="p">(</span><span class="k">this</span><span class="w"> </span><span class="n">XDocument</span><span class="w"> </span><span class="n">xDocument</span><span class="p">,</span><span class="w"> </span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">                                                    </span><span class="n">System</span><span class="p">.</span><span class="n">Xml</span><span class="p">.</span><span class="n">Formatting</span><span class="w"> </span><span class="n">formatting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Formatting</span><span class="p">.</span><span class="n">Indented</span><span class="p">)</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">        </span><span class="p">{</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">            </span><span class="k">using</span><span class="w"> </span><span class="p">(</span><span class="n">StringWriter</span><span class="w"> </span><span class="n">sw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StringWriter</span><span class="p">())</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">            </span><span class="p">{</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">                </span><span class="k">using</span><span class="w"> </span><span class="p">(</span><span class="n">XmlTextWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XmlTextWriter</span><span class="p">(</span><span class="n">sw</span><span class="p">))</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">                </span><span class="p">{</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">                    </span><span class="n">writer</span><span class="p">.</span><span class="n">Formatting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">formatting</span><span class="p">;</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">                    </span><span class="n">writer</span><span class="p">.</span><span class="n">QuoteChar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;\&#39;&#39;</span><span class="p">;</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">                    </span><span class="n">writer</span><span class="p">.</span><span class="n">WriteNode</span><span class="p">(</span><span class="n">xDocument</span><span class="p">.</span><span class="n">CreateNavigator</span><span class="p">(),</span><span class="w"> </span><span class="k">false</span><span class="p">);</span>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w">                    </span><span class="n">writer</span><span class="p">.</span><span class="n">Flush</span><span class="p">();</span>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w">                </span><span class="p">}</span>
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">sw</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span>
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="p">}</span>
+</span></code></pre></div>
+    <nav class="md-post__action">
+      <a href="../../save-xdocument-xml-use-single-quotes-attribute-values/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-10-11 00:00:00">October 11, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              3 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="how-to-install-and-configure-tortoisehg-on-mac"><a class="toclink" href="../../install-configure-tortoisehg-mac/">How to install and configure TortoiseHg on Mac</a></h2>
+<p>I finally got fed up with SourceTree and installed TortoiseHg on my Mac development machine. Read on:</p>
+<h3 id="xcode-configuration"><a class="toclink" href="../../install-configure-tortoisehg-mac/#xcode-configuration">Xcode Configuration</a></h3>
+<p>For best results make sure you have the latest XCode and Command Line Tools installed (XCode 5 and Command Line Tools September 2013 at the time of this writing). You can get them from the <a href="https://developer.apple.com/downloads/">Apple Developer Downloads</a> site.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>sudo<span class="w"> </span>xcode-select<span class="w"> </span>-switch<span class="w"> </span>/Applications/Xcode.app/Contents/Developer
+</span></code></pre></div>
+<h3 id="1-install-update-ruby"><a class="toclink" href="../../install-configure-tortoisehg-mac/#1-install-update-ruby">1. Install / Update Ruby</a></h3>
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>ruby<span class="w"> </span>-v
+</span></code></pre></div>
+should return something like:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>ruby 2.0.0p247 (2013-06-27 revision 41674) [x86_64-darwin12.3.0]
+</span></code></pre></div>
+<p>You can skip the rest of this section if you have Ruby already installed.</p>
+<h4 id="install-the-ruby-version-manager-and-ruby"><a class="toclink" href="../../install-configure-tortoisehg-mac/#install-the-ruby-version-manager-and-ruby">Install the Ruby Version Manager and Ruby</a></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>curl<span class="w"> </span>-L<span class="w"> </span>https://get.rvm.io<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash<span class="w"> </span>-s<span class="w"> </span>stable<span class="w"> </span>--ruby
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="nb">source</span><span class="w"> </span>/Users/yourname/.rvm/scripts/rvm
+</span></code></pre></div>
+<h3 id="2-install-homebrew"><a class="toclink" href="../../install-configure-tortoisehg-mac/#2-install-homebrew">2. Install Homebrew</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>ruby<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.github.com/Homebrew/homebrew/go/install<span class="k">)</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<p>Follow the instructions in the script. The installation will take a few minutes.</p>
+<h4 id="verify-your-brew-installation"><a class="toclink" href="../../install-configure-tortoisehg-mac/#verify-your-brew-installation">Verify your brew installation</a></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>brew<span class="w"> </span>doctor
+</span></code></pre></div>
+<p>This returned a few problems for me, but the output will vary depending on the existing system configuration.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>Warning: An outdated version of Git was detected in your PATH.
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>Git 1.7.10 or newer is required to perform checkouts over HTTPS from GitHub.
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>Please upgrade: brew upgrade git
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>Warning: /Library/Frameworks/Mono.framework detected
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>This can be picked up by CMake&#39;s build system and likely cause the build to
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>fail. You may need to move this file out of the way to compile CMake.
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>
+</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>Warning: You have MacPorts or Fink installed:
+</span><span id="__span-26-10"><a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a>    /Users/yourname/.rvm/bin/port, /opt/local/bin/port
+</span><span id="__span-26-11"><a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a>
+</span><span id="__span-26-12"><a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a>This can cause trouble. You don&#39;t have to uninstall them, but you may want to
+</span><span id="__span-26-13"><a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a>temporarily move them out of the way, e.g.
+</span><span id="__span-26-14"><a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a>
+</span><span id="__span-26-15"><a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a>    sudo mv /opt/local ~/macports
+</span><span id="__span-26-16"><a id="__codelineno-26-16" name="__codelineno-26-16" href="#__codelineno-26-16"></a>
+</span><span id="__span-26-17"><a id="__codelineno-26-17" name="__codelineno-26-17" href="#__codelineno-26-17"></a>Warning: /usr/bin occurs before /usr/local/bin
+</span><span id="__span-26-18"><a id="__codelineno-26-18" name="__codelineno-26-18" href="#__codelineno-26-18"></a>This means that system-provided programs will be used instead of those
+</span><span id="__span-26-19"><a id="__codelineno-26-19" name="__codelineno-26-19" href="#__codelineno-26-19"></a>provided by Homebrew. 
+</span><span id="__span-26-20"><a id="__codelineno-26-20" name="__codelineno-26-20" href="#__codelineno-26-20"></a>
+</span><span id="__span-26-21"><a id="__codelineno-26-21" name="__codelineno-26-21" href="#__codelineno-26-21"></a>Consider setting your PATH so that /usr/local/bin
+</span><span id="__span-26-22"><a id="__codelineno-26-22" name="__codelineno-26-22" href="#__codelineno-26-22"></a>occurs before /usr/bin. Here is a one-liner:
+</span><span id="__span-26-23"><a id="__codelineno-26-23" name="__codelineno-26-23" href="#__codelineno-26-23"></a>    echo export PATH=&quot;/usr/local/bin:$PATH&quot; &gt;&gt; ~/.bash_profile
+</span><span id="__span-26-24"><a id="__codelineno-26-24" name="__codelineno-26-24" href="#__codelineno-26-24"></a>
+</span><span id="__span-26-25"><a id="__codelineno-26-25" name="__codelineno-26-25" href="#__codelineno-26-25"></a>Warning: Your Xcode (x.y.z) is outdated
+</span><span id="__span-26-26"><a id="__codelineno-26-26" name="__codelineno-26-26" href="#__codelineno-26-26"></a>Please install Xcode a.b.c
+</span></code></pre></div>
+<p>The issues will depend on your specific installation. Use your best judgement about what to fix and what to ignore. Fixing one by one:</p>
+<h5 id="warning-you-have-macports-or-fink-installed"><a class="toclink" href="../../install-configure-tortoisehg-mac/#warning-you-have-macports-or-fink-installed">Warning: You have MacPorts or Fink installed</a></h5>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>sudo<span class="w"> </span>mv<span class="w"> </span>/opt/local<span class="w"> </span>~/macports
+</span></code></pre></div>
+<h5 id="warning-usrbin-occurs-before-usrlocalbin"><a class="toclink" href="../../install-configure-tortoisehg-mac/#warning-usrbin-occurs-before-usrlocalbin">Warning: /usr/bin occurs before /usr/local/bin</a></h5>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span>/usr/local/bin:<span class="nv">$PATH</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="nb">echo</span><span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;/usr/local/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bash_profile
+</span></code></pre></div>
+<h5 id="warning-an-outdated-version-of-git-was-detected-in-your-path"><a class="toclink" href="../../install-configure-tortoisehg-mac/#warning-an-outdated-version-of-git-was-detected-in-your-path">Warning: An outdated version of Git was detected in your PATH.</a></h5>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>brew<span class="w"> </span>upgrade<span class="w"> </span>git
+</span></code></pre></div>
+<p>or if you do not have Git at all:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>brew<span class="w"> </span>install<span class="w"> </span>git
+</span></code></pre></div>
+<h5 id="warning-your-xcode-xyz-is-outdated"><a class="toclink" href="../../install-configure-tortoisehg-mac/#warning-your-xcode-xyz-is-outdated">Warning: Your Xcode (x.y.z) is outdated</a></h5>
+<p>You can ignore this one.</p>
+<h5 id="warning-libraryframeworksmonoframework-detected"><a class="toclink" href="../../install-configure-tortoisehg-mac/#warning-libraryframeworksmonoframework-detected">Warning: /Library/Frameworks/Mono.framework detected</a></h5>
+<p>You can ignore this one.</p>
+<h3 id="3-install-python-packages"><a class="toclink" href="../../install-configure-tortoisehg-mac/#3-install-python-packages">3. Install Python packages</a></h3>
+<p>I had Python already installed before Homebrew, so I had to amend PYTHONPATH like so:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONPATH</span><span class="o">=</span>/usr/local/lib/python2.7/site-packages:<span class="nv">$PYTHONPATH</span><span class="w">  </span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="nb">echo</span><span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="s2">&quot;/usr/local/lib/python2.7/site-packages:</span><span class="nv">$PYTHONPATH</span><span class="s2">&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bash_profile
+</span></code></pre></div>
+<p>Then install PyQt (this also installs qt and sip):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>brew<span class="w"> </span>install<span class="w"> </span>pyqt
+</span></code></pre></div>
+<p>Install QScintilla</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>brew<span class="w"> </span>install<span class="w"> </span>qscintilla2
+</span></code></pre></div>
+<p>Install Python Package Mananger (pip)</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>sudo<span class="w"> </span>easy_install<span class="w"> </span>pip
+</span></code></pre></div>
+<p>Install Pygments, iniparse and Mercurial Python packages. If you have Mercurial already, this will update it to the latest version.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>sudo<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>Pygments<span class="w"> </span>iniparse<span class="w"> </span>Mercurial
+</span></code></pre></div>
+<h3 id="4-install-tortoisehg"><a class="toclink" href="../../install-configure-tortoisehg-mac/#4-install-tortoisehg">4. Install TortoiseHg</a></h3>
+<p>Clone TortoiseHg repository using Mercurial:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>hg<span class="w"> </span>clone<span class="w"> </span>http://bitbucket.org/tortoisehg/thg/<span class="w"> </span>~/Tools/TortoiseHg
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="nb">cd</span><span class="w"> </span>~/Tools/TortoiseHg/
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>hg<span class="w"> </span>update<span class="w"> </span>stable
+</span></code></pre></div>
+<p>Quick test. You should see TortoiseHg Workbench running:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>./thg<span class="w"> </span>log
+</span></code></pre></div>
+<h3 id="5-install-tortoisehg-mac-app"><a class="toclink" href="../../install-configure-tortoisehg-mac/#5-install-tortoisehg-mac-app">5. Install TortoiseHg Mac App</a></h3>
+<h5 id="clone-thg-mac-app-repository"><a class="toclink" href="../../install-configure-tortoisehg-mac/#clone-thg-mac-app-repository">Clone thg-mac-app repository</a></h5>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>hg<span class="w"> </span>clone<span class="w"> </span>https://bitbucket.org/skrysmanski/thg-mac-app<span class="w"> </span>~/Tools/thg-mac-app
+</span></code></pre></div>
+<h5 id="set-the-tortoisehg_path-variable"><a class="toclink" href="../../install-configure-tortoisehg-mac/#set-the-tortoisehg_path-variable">Set the TORTOISEHG_PATH variable</a></h5>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>cp<span class="w"> </span>-p<span class="w"> </span>~/Tools/thg-mac-app/tortoisehg-path.sh<span class="w"> </span>~/
+</span></code></pre></div>
+<p>Edit <code>~/tortoisehg-path.sh</code> so it points to <code>~/Tools/TortoiseHg</code>. This is what <code>~/tortoisehg-path.sh</code> looks like after the change:</p>
+<p>``` bash</p>
+<h2 id="binsh"><a class="toclink" href="../../install-configure-tortoisehg-mac/#binsh">!/bin/sh</a></h2>
+<p>export TORTOISEHG_PATH=~/Tools/TortoiseHg
+```</p>
+<h5 id="install-tortoisehgapp"><a class="toclink" href="../../install-configure-tortoisehg-mac/#install-tortoisehgapp">Install TortoiseHg.app</a></h5>
+<p><strong>Option + Drag</strong> the TortoiseHg.app from <code>~/Tools/thg-mac-app</code> to your Applications folder.</p>
+    <nav class="md-post__action">
+      <a href="../../install-configure-tortoisehg-mac/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
+      
+      
+        
+          
+
+
+
+<nav class="md-pagination">
+  <a class="md-pagination__link" href="../..">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../9/">9</a> <a class="md-pagination__link" href="../10/">10</a> <span class="md-pagination__current">11</span> <a class="md-pagination__link" href="../12/">12</a> <a class="md-pagination__link" href="../13/">13</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../19/">19</a>
+</nav>
+        
+      
+    </div>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2001 - 2024 Swift Software Group, Inc.
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+  
+    
+  
+
+
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+      
+      
+        
+        
+      
+      <li class="task-list-item">
+        <label class="task-list-control">
+          <input type="checkbox" name="analytics" checked>
+          <span class="task-list-indicator"></span>
+          Google Analytics
+        </label>
+      </li>
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout(function(){document.querySelector("[data-md-component=consent]").hidden=!1},250);var action,form=document.forms.consent;for(action of["submit","reset"])form.addEventListener(action,function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map(function(e){return[e,!0]}))),location.hash="",location.reload()})</script>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.top", "search.suggest", "search.share", "search.highlight"], "search": "../../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.7389ff0e.min.js"></script>
+      
+    
+  </body>
+</html>

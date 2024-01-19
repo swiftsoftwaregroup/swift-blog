@@ -1,314 +1,1819 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>  
-<title>How To Install Nginx On Ubuntu Using Chef | Swift Software Group</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="author" content="Swift Software Group">
-<meta name="generator" content="Jekyll v4.2.2">
-<link rel="canonical" href="/install-nginx-ubuntu-using-chef/">
 
-
-<link rel="stylesheet" href="/assets/css/frame.css">
-
-
-<link rel="stylesheet" href="/assets/css/classes.css">
-
-<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Swift Software Group">
-
-
-
-<script src="//swiftsoftwaregroup.disqus.com/embed.js" async></script>
-
-
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QP5FYNH46M"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-QP5FYNH46M');
-</script>
-
-</head>
-
-
-
-
-<header>
-  <a href="https://swiftsoftwaregroup.com" class="title">Swift Software Group</a>
-  <nav><a aria-label="Home" href="https://swiftsoftwaregroup.com/" ><span aria-hidden="true">Home</span></a><a aria-label="Services" href="https://swiftsoftwaregroup.com/services/" ><span aria-hidden="true">Services</span></a><a aria-label="Blog" href="/" ><span aria-hidden="true">Blog</span></a><a aria-label="Archive" href="/archive/" ><span aria-hidden="true">Archive</span></a></nav>
-
-</header>
-
-<article>
-  <header>
-  <h1><a href="/install-nginx-ubuntu-using-chef/">How To Install Nginx On Ubuntu Using Chef</a></h1><time datetime="2016-01-13T00:00:00-08:00">January 13, 2016</time>
-</header>
-
-  <p>In this post we show how to install NGINX on Ubuntu using <a href="https://www.chef.io/chef/">Chef</a> on Windows 10 workstation.</p>
-
-<p>All commands are executed in PowerShell on a Windows workstation.</p>
-
-<h2 id="before-you-begin">Before You Begin</h2>
-
-<h3 id="install-chocolatey">Install Chocolatey</h3>
-
-<p>If you do not have Chocolatey, you can install it by following the instructions on <a href="https://chocolatey.org/">chocolatey.org</a>. You may also see <a href="http://www.swiftsoftwaregroup.com/configure-download-folder-chocolatey-packages/">this post</a> for instructions on how to set the Chocolatey cache location.</p>
-
-<h3 id="install-chef-development-kit-chefdk">Install Chef Development Kit (ChefDK)</h3>
-
-<p>In PowerShell as <em>Administrator</em>:</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">choco</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">chefdk</span><span class="w">
-</span></code></pre></div></div>
-
-<h3 id="install-virtualbox-and-vagrant">Install VirtualBox and Vagrant</h3>
-
-<p>To install VirtualBox and Vagrant, follow the steps described in <a href="http://www.swiftsoftwaregroup.com/ubuntu-with-vagrant-and-virtualbox-on-windows/">Ubuntu with Vagrant and VirtualBox on Windows</a>.</p>
-
-<h3 id="install-vagrant-plugins">Install Vagrant Plugins</h3>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vagrant</span><span class="w"> </span><span class="nx">plugin</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">vagrant-omnibus</span><span class="w">
-</span><span class="n">vagrant</span><span class="w"> </span><span class="nx">plugin</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">vagrant-berkshelf</span><span class="w">
-</span><span class="n">vagrant</span><span class="w"> </span><span class="nx">plugin</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">vagrant-hostmanager</span><span class="w">
-</span></code></pre></div></div>
-
-<h2 id="create-chef-cookbook">Create Chef Cookbook</h2>
-
-<p>This directory will become the root of your source repository:</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chef</span><span class="w"> </span><span class="nx">generate</span><span class="w"> </span><span class="nx">cookbook</span><span class="w"> </span><span class="nx">my_ubuntu_nginx</span><span class="w">
-</span><span class="n">cd</span><span class="w"> </span><span class="nx">my_ubuntu_nginx</span><span class="w">
-</span></code></pre></div></div>
-
-<h2 id="ensure-the-apt-cache-is-up-to-date">Ensure the apt cache is up to date</h2>
-
-<h3 id="reference-the-apt-cookbook">Reference the <code class="language-plaintext highlighter-rouge">apt</code> Cookbook</h3>
-
-<p>Add this line to <code class="language-plaintext highlighter-rouge">metadata.rb</code>:</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">depends</span> <span class="s1">'apt'</span><span class="p">,</span> <span class="s1">'~&gt; 2.9.2'</span>
-</code></pre></div></div>
-
-<p>To get the latest version string, run <code class="language-plaintext highlighter-rouge">knife cookbook site show apt</code>:</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chef</span><span class="w"> </span><span class="nx">exec</span><span class="w"> </span><span class="nx">knife</span><span class="w"> </span><span class="nx">cookbook</span><span class="w"> </span><span class="nx">site</span><span class="w"> </span><span class="nx">show</span><span class="w"> </span><span class="nx">apt</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">grep</span><span class="w"> </span><span class="nx">latest_version</span><span class="w">
-</span><span class="n">latest_version:</span><span class="w">     </span><span class="nx">https://supermarket.chef.io/api/v1/cookbooks/apt/versions/2.9.2</span><span class="w">
-</span></code></pre></div></div>
-
-<p>Here is the complete file:</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">name</span> <span class="s1">'my_ubuntu_nginx'</span>
-<span class="n">maintainer</span> <span class="s1">'The Authors'</span>
-<span class="n">maintainer_email</span> <span class="s1">'you@example.com'</span>
-<span class="n">license</span> <span class="s1">'all_rights'</span>
-<span class="n">description</span> <span class="s1">'Installs/Configures my_ubuntu_nginx'</span>
-<span class="n">long_description</span> <span class="s1">'Installs/Configures my_ubuntu_nginx'</span>
-<span class="n">version</span> <span class="s1">'0.1.0'</span>
-
-<span class="n">depends</span> <span class="s1">'apt'</span><span class="p">,</span> <span class="s1">'~&gt; 2.9.2'</span>
-</code></pre></div></div>
-
-<h3 id="set-the-apt-cookbooks-default-recipe-to-run">Set the apt cookbook’s default recipe to run</h3>
-
-<p>Add this line to <code class="language-plaintext highlighter-rouge">recipes/default.rb</code>:</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">include_recipe</span> <span class="s1">'apt::default'</span>
-</code></pre></div></div>
-
-<p>Here is the complete file:</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#</span>
-<span class="c1"># Cookbook Name:: my_ubuntu_nginx</span>
-<span class="c1"># Recipe:: default</span>
-<span class="c1">#</span>
-<span class="c1"># Copyright (c) 2016 The Authors, All Rights Reserved.</span>
-
-<span class="n">include_recipe</span> <span class="s1">'apt::default'</span>
-</code></pre></div></div>
-
-<h3 id="test">Test</h3>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chef</span><span class="w"> </span><span class="nx">exec</span><span class="w"> </span><span class="nx">berks</span><span class="w"> </span><span class="nx">install</span><span class="w">
-</span></code></pre></div></div>
-
-<p>This generates <code class="language-plaintext highlighter-rouge">Berksfile.lock</code> file.</p>
-
-<h2 id="configure-nginx">Configure NGINX</h2>
-
-<h3 id="reference-the-nginx-cookbook">Reference the nginx cookbook</h3>
-
-<p>We need the <code class="language-plaintext highlighter-rouge">nginx</code> cookbook for it’s <code class="language-plaintext highlighter-rouge">nginx::repo</code> recipe. Add this line to <code class="language-plaintext highlighter-rouge">metadata.rb</code>:</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">depends</span> <span class="s1">'nginx'</span><span class="p">,</span> <span class="s1">'~&gt; 2.7.6'</span>
-</code></pre></div></div>
-
-<p>To get the latest version string, run <code class="language-plaintext highlighter-rouge">knife cookbook site show nginx</code>:</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chef</span><span class="w"> </span><span class="nx">exec</span><span class="w"> </span><span class="nx">knife</span><span class="w"> </span><span class="nx">cookbook</span><span class="w"> </span><span class="nx">site</span><span class="w"> </span><span class="nx">show</span><span class="w"> </span><span class="nx">nginx</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">grep</span><span class="w"> </span><span class="nx">latest_version</span><span class="w">
-</span><span class="n">latest_version:</span><span class="w">     </span><span class="nx">https://supermarket.chef.io/api/v1/cookbooks/nginx/versions/2.7.6</span><span class="w">
-</span></code></pre></div></div>
-
-<p>Here is the complete file:</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">name</span> <span class="s1">'my_ubuntu_nginx'</span>
-<span class="n">maintainer</span> <span class="s1">'The Authors'</span>
-<span class="n">maintainer_email</span> <span class="s1">'you@example.com'</span>
-<span class="n">license</span> <span class="s1">'all_rights'</span>
-<span class="n">description</span> <span class="s1">'Installs/Configures my_ubuntu_nginx'</span>
-<span class="n">long_description</span> <span class="s1">'Installs/Configures my_ubuntu_nginx'</span>
-<span class="n">version</span> <span class="s1">'0.1.0'</span>
-
-<span class="n">depends</span> <span class="s1">'apt'</span><span class="p">,</span> <span class="s1">'~&gt; 2.9.2'</span>
-<span class="n">depends</span> <span class="s1">'nginx'</span><span class="p">,</span> <span class="s1">'~&gt; 2.7.6'</span>
-</code></pre></div></div>
-
-<h3 id="write-the-install_nginx-recipe">Write the install_nginx recipe</h3>
-
-<p>The first step is to create the recipe file, <code class="language-plaintext highlighter-rouge">install_nginx.rb</code>. Run the following command to generate it:</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chef</span><span class="w"> </span><span class="nx">generate</span><span class="w"> </span><span class="nx">recipe</span><span class="w"> </span><span class="nx">install_nginx</span><span class="w">
-</span></code></pre></div></div>
-
-<p>Write out <code class="language-plaintext highlighter-rouge">recipes/install_nginx.rb</code> like this:</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#</span>
-<span class="c1"># Cookbook Name:: my_ubuntu_nginx</span>
-<span class="c1"># Recipe:: install_nginx</span>
-<span class="c1">#</span>
-<span class="c1"># Copyright (c) 2016 The Authors, All Rights Reserved.</span>
-
-<span class="c1"># Only needed if you want to install latest stable package from nginx.org</span>
-<span class="n">include_recipe</span> <span class="s1">'nginx::repo'</span>
-
-<span class="n">package</span> <span class="s1">'nginx'</span> <span class="k">do</span>
-  <span class="n">action</span> <span class="ss">:install</span>
-<span class="k">end</span>
-
-<span class="n">service</span> <span class="s1">'nginx'</span> <span class="k">do</span>
-  <span class="n">supports</span> <span class="ss">status: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">restart: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">reload: </span><span class="kp">true</span>
-  <span class="n">action</span> <span class="ss">:enable</span>
-<span class="k">end</span>
-</code></pre></div></div>
-
-<h3 id="set-the-install_nginx-recipe-to-run">Set the install_nginx recipe to run</h3>
-
-<p>Add this line to <code class="language-plaintext highlighter-rouge">cookbooks/my_web_server/recipes/default.rb</code>:</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">include_recipe</span> <span class="s1">'my_ubuntu_nginx::install_nginx'</span>
-</code></pre></div></div>
-
-<p>Here is the complete file:</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#</span>
-<span class="c1"># Cookbook Name:: my_ubuntu_nginx</span>
-<span class="c1"># Recipe:: default</span>
-<span class="c1">#</span>
-<span class="c1"># Copyright (c) 2016 The Authors, All Rights Reserved.</span>
-
-<span class="n">include_recipe</span> <span class="s1">'apt::default'</span>
-<span class="n">include_recipe</span> <span class="s1">'my_ubuntu_nginx::install_nginx'</span>
-</code></pre></div></div>
-
-<h3 id="update-the-integration-test">Update the integration test</h3>
-
-<p>Replace the contents of <code class="language-plaintext highlighter-rouge">test/integration/default/serverspec/default_spec.rb</code> with this code:</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">require</span> <span class="s1">'spec_helper'</span>
-
-<span class="n">describe</span> <span class="s1">'my_ubuntu_nginx::default'</span> <span class="k">do</span>
-  <span class="c1"># Serverspec examples can be found at</span>
-  <span class="c1"># http://serverspec.org/resource_types.html</span>
-  <span class="n">describe</span> <span class="n">package</span><span class="p">(</span><span class="s1">'nginx'</span><span class="p">)</span> <span class="k">do</span>
-    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">be_installed</span> <span class="p">}</span>
-  <span class="k">end</span>
-
-  <span class="n">describe</span> <span class="n">service</span><span class="p">(</span><span class="s1">'nginx'</span><span class="p">)</span> <span class="k">do</span>
-    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">be_enabled</span> <span class="p">}</span>
-    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">be_running</span> <span class="p">}</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div></div>
-
-<h2 id="test-1">Test</h2>
-
-<h3 id="ruby-lint">Ruby Lint</h3>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chef</span><span class="w"> </span><span class="nx">exec</span><span class="w"> </span><span class="nx">rubocop</span><span class="w">
-</span></code></pre></div></div>
-
-<h3 id="chef-lint">Chef Lint</h3>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chef</span><span class="w"> </span><span class="nx">exec</span><span class="w"> </span><span class="nx">foodcritic</span><span class="w"> </span><span class="o">.</span><span class="w">
-</span></code></pre></div></div>
-
-<h3 id="unit-tests">Unit Tests</h3>
-
-<p>Install / Update cookbooks:</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chef</span><span class="w"> </span><span class="nx">exec</span><span class="w"> </span><span class="nx">berks</span><span class="w"> </span><span class="nx">install</span><span class="w">
-</span></code></pre></div></div>
-
-<p>Create a <code class="language-plaintext highlighter-rouge">.rspec</code> file:</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">touch</span><span class="w"> </span><span class="o">.</span><span class="nf">rspec</span><span class="w">
-</span></code></pre></div></div>
-
-<p>Paste these lines in <code class="language-plaintext highlighter-rouge">.rspec</code></p>
-
-<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>--color
---format documentation
-</code></pre></div></div>
-
-<p>Run:</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chef</span><span class="w"> </span><span class="nx">exec</span><span class="w"> </span><span class="nx">rspec</span><span class="w">
-</span></code></pre></div></div>
-
-<h3 id="integration-tests">Integration Tests</h3>
-
-<p>Update <code class="language-plaintext highlighter-rouge">.kitchen.yml</code> to include the Ubuntu platform only. This is how it should look:</p>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
-<span class="na">driver</span><span class="pi">:</span>
-  <span class="na">name</span><span class="pi">:</span> <span class="s">vagrant</span>
-  <span class="na">network</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="pi">[</span><span class="s2">"</span><span class="s">private_network"</span><span class="pi">,</span> <span class="pi">{</span><span class="nv">type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">dhcp"</span><span class="pi">}]</span>
-
-<span class="na">provisioner</span><span class="pi">:</span>
-  <span class="na">name</span><span class="pi">:</span> <span class="s">chef_zero</span>
-
-<span class="na">platforms</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">ubuntu-14.04</span>
-
-<span class="na">suites</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">default</span>
-    <span class="na">run_list</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">recipe[my_ubuntu_nginx::default]</span>
-</code></pre></div></div>
-
-<p>Run the integration tests:</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chef</span><span class="w"> </span><span class="nx">exec</span><span class="w"> </span><span class="nx">kitchen</span><span class="w"> </span><span class="nx">test</span><span class="w"> </span><span class="nt">--destroy</span><span class="o">=</span><span class="n">never</span><span class="w">
-</span></code></pre></div></div>
-
-  
-    <hr>
-    <div id="disqus_thread"></div>
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
     
-    <noscript>Please enable JavaScript to view comments.</noscript>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Swift Software Group Blog">
+      
+      
+      
+        <link rel="canonical" href="https://blog.swiftsoftwaregroup.com/install-nginx-ubuntu-using-chef/">
+      
+      
+        <link rel="prev" href="../how-to-use-berkshelf-chef-zero-vagrant-and-virtualbox/">
+      
+      
+        <link rel="next" href="../getting-started-flashdevelop-windows-10/">
+      
+      
+        <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../feed_rss_created.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="../feed_rss_updated.xml">
+      
+      <link rel="icon" href="../images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
+    
+    
+      
+        <title>How To Install Nginx On Ubuntu Using Chef - Swift Software Group</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
   
-</article>
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-QP5FYNH46M"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-QP5FYNH46M",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-QP5FYNH46M",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>var consent;"undefined"==typeof __md_analytics||(consent=__md_get("__consent"))&&consent.analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#how-to-install-nginx-on-ubuntu-using-chef" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Swift Software Group" class="md-header__button md-logo" aria-label="Swift Software Group" data-md-component="logo">
+      
+  <img src="../images/logo_white.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Swift Software Group
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              How To Install Nginx On Ubuntu Using Chef
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://swiftsoftwaregroup.com" class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://swiftsoftwaregroup.com/services" class="md-tabs__link">
+        
+  
+    
+  
+  Services
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://swiftsoftwaregroup.com/contact-us" class="md-tabs__link">
+        
+  
+    
+  
+  Contact Us
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href=".." class="md-tabs__link">
+        
+  
+    
+  
+  Blog
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../archive/2023/" class="md-tabs__link">
+          
+  
+  Archive
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../aws/" class="md-tabs__link">
+          
+  
+  Categories
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Swift Software Group" class="md-nav__button md-logo" aria-label="Swift Software Group" data-md-component="logo">
+      
+  <img src="../images/logo_white.svg" alt="logo">
+
+    </a>
+    Swift Software Group
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://swiftsoftwaregroup.com" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://swiftsoftwaregroup.com/services" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://swiftsoftwaregroup.com/contact-us" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact Us
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Archive
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Archive
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2023/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2021/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2021
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2020/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2020
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2018/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2018
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2017/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2017
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2016/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2016
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2015/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2015
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2014/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2014
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2013/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2013
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2012/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2012
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2011/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2011
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Categories
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Categories
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    aws
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../cloud/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cloud
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../cloud-formation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cloud-formation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../cpp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cpp
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../csharp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    csharp
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    docker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-swarm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    docker-swarm
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../dotnet/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dotnet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../ec2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ec2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../ecs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ecs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../macos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    macos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../mongodb/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    mongodb
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../podman/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    podman
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../ruby/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ruby
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../ubuntu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ubuntu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vscode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../windows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    windows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#before-you-begin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Before You Begin
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Before You Begin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-chocolatey" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install Chocolatey
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-chef-development-kit-chefdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install Chef Development Kit (ChefDK)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-virtualbox-and-vagrant" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install VirtualBox and Vagrant
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-vagrant-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install Vagrant Plugins
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-chef-cookbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create Chef Cookbook
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ensure-the-apt-cache-is-up-to-date" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ensure the apt cache is up to date
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ensure the apt cache is up to date">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reference-the-apt-cookbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference the apt Cookbook
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-the-apt-cookbooks-default-recipe-to-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      Set the apt cookbook's default recipe to run
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-nginx" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure NGINX
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configure NGINX">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reference-the-nginx-cookbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference the nginx cookbook
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write-the-install_nginx-recipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      Write the install_nginx recipe
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-the-install_nginx-recipe-to-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      Set the install_nginx recipe to run
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-the-integration-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Update the integration test
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ruby-lint" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ruby Lint
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chef-lint" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chef Lint
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unit-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unit Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integration-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integration Tests
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href=".." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5v-5Z"/></svg>
+                        <time datetime="2016-01-13 00:00:00" class="md-ellipsis">January 13, 2016</time>
+                      </div>
+                    </li>
+                    
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7h1.5Z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              3 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+
+
+<h1 id="how-to-install-nginx-on-ubuntu-using-chef">How To Install Nginx On Ubuntu Using Chef</h1>
+<p>In this post we show how to install NGINX on Ubuntu using <a href="https://www.chef.io/chef/">Chef</a> on Windows 10 workstation.</p>
+<p>All commands are executed in PowerShell on a Windows workstation.  </p>
+<h2 id="before-you-begin">Before You Begin</h2>
+<h3 id="install-chocolatey">Install Chocolatey</h3>
+<p>If you do not have Chocolatey, you can install it by following the instructions on <a href="https://chocolatey.org/">chocolatey.org</a>. You may also see <a href="http://www.swiftsoftwaregroup.com/configure-download-folder-chocolatey-packages/">this post</a> for instructions on how to set the Chocolatey cache location. </p>
+<h3 id="install-chef-development-kit-chefdk">Install Chef Development Kit (ChefDK)</h3>
+<p>In PowerShell as <em>Administrator</em>:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">choco</span> <span class="n">install</span> <span class="n">chefdk</span>
+</span></code></pre></div>
+<h3 id="install-virtualbox-and-vagrant">Install VirtualBox and Vagrant</h3>
+<p>To install VirtualBox and Vagrant, follow the steps described in <a href="http://www.swiftsoftwaregroup.com/ubuntu-with-vagrant-and-virtualbox-on-windows/">Ubuntu with Vagrant and VirtualBox on Windows</a>.</p>
+<h3 id="install-vagrant-plugins">Install Vagrant Plugins</h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">vagrant</span> <span class="n">plugin</span> <span class="n">install</span> <span class="n">vagrant-omnibus</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">vagrant</span> <span class="n">plugin</span> <span class="n">install</span> <span class="n">vagrant-berkshelf</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">vagrant</span> <span class="n">plugin</span> <span class="n">install</span> <span class="n">vagrant-hostmanager</span>
+</span></code></pre></div>
+<h2 id="create-chef-cookbook">Create Chef Cookbook</h2>
+<p>This directory will become the root of your source repository:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">chef</span> <span class="n">generate</span> <span class="n">cookbook</span> <span class="n">my_ubuntu_nginx</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">cd </span><span class="n">my_ubuntu_nginx</span>
+</span></code></pre></div>
+<h2 id="ensure-the-apt-cache-is-up-to-date">Ensure the apt cache is up to date</h2>
+<h3 id="reference-the-apt-cookbook">Reference the <code>apt</code> Cookbook</h3>
+<p>Add this line to <code>metadata.rb</code>:</p>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">depends</span><span class="w"> </span><span class="s1">&#39;apt&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;~&gt; 2.9.2&#39;</span>
+</span></code></pre></div>
+<p>To get the latest version string, run <code>knife cookbook site show apt</code>: </p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">chef</span> <span class="n">exec</span> <span class="n">knife</span> <span class="n">cookbook</span> <span class="n">site</span> <span class="n">show</span> <span class="n">apt</span> <span class="p">|</span> <span class="n">grep</span> <span class="n">latest_version</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">latest_version</span><span class="p">:</span>     <span class="n">https</span><span class="p">://</span><span class="n">supermarket</span><span class="p">.</span><span class="n">chef</span><span class="p">.</span><span class="n">io</span><span class="p">/</span><span class="n">api</span><span class="p">/</span><span class="n">v1</span><span class="p">/</span><span class="n">cookbooks</span><span class="p">/</span><span class="n">apt</span><span class="p">/</span><span class="n">versions</span><span class="p">/</span><span class="n">2</span><span class="p">.</span><span class="n">9</span><span class="p">.</span><span class="n">2</span>
+</span></code></pre></div>
+<p>Here is the complete file:</p>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">name</span><span class="w"> </span><span class="s1">&#39;my_ubuntu_nginx&#39;</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">maintainer</span><span class="w"> </span><span class="s1">&#39;The Authors&#39;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">maintainer_email</span><span class="w"> </span><span class="s1">&#39;you@example.com&#39;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">license</span><span class="w"> </span><span class="s1">&#39;all_rights&#39;</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">description</span><span class="w"> </span><span class="s1">&#39;Installs/Configures my_ubuntu_nginx&#39;</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">long_description</span><span class="w"> </span><span class="s1">&#39;Installs/Configures my_ubuntu_nginx&#39;</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">version</span><span class="w"> </span><span class="s1">&#39;0.1.0&#39;</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">depends</span><span class="w"> </span><span class="s1">&#39;apt&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;~&gt; 2.9.2&#39;</span>
+</span></code></pre></div>
+<h3 id="set-the-apt-cookbooks-default-recipe-to-run">Set the apt cookbook's default recipe to run</h3>
+<p>Add this line to <code>recipes/default.rb</code>:</p>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">include_recipe</span><span class="w"> </span><span class="s1">&#39;apt::default&#39;</span>
+</span></code></pre></div>
+<p>Here is the complete file:</p>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">#</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># Cookbook Name:: my_ubuntu_nginx</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># Recipe:: default</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1">#</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># Copyright (c) 2016 The Authors, All Rights Reserved.</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">include_recipe</span><span class="w"> </span><span class="s1">&#39;apt::default&#39;</span>
+</span></code></pre></div>
+<h3 id="test">Test</h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">chef</span> <span class="n">exec</span> <span class="n">berks</span> <span class="n">install</span>
+</span></code></pre></div>
+<p>This generates <code>Berksfile.lock</code> file.</p>
+<h2 id="configure-nginx">Configure NGINX</h2>
+<h3 id="reference-the-nginx-cookbook">Reference the nginx cookbook</h3>
+<p>We need the <code>nginx</code> cookbook for it's <code>nginx::repo</code> recipe. Add this line to <code>metadata.rb</code>:</p>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">depends</span><span class="w"> </span><span class="s1">&#39;nginx&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;~&gt; 2.7.6&#39;</span>
+</span></code></pre></div>
+<p>To get the latest version string, run <code>knife cookbook site show nginx</code>: </p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">chef</span> <span class="n">exec</span> <span class="n">knife</span> <span class="n">cookbook</span> <span class="n">site</span> <span class="n">show</span> <span class="n">nginx</span> <span class="p">|</span> <span class="n">grep</span> <span class="n">latest_version</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">latest_version</span><span class="p">:</span>     <span class="n">https</span><span class="p">://</span><span class="n">supermarket</span><span class="p">.</span><span class="n">chef</span><span class="p">.</span><span class="n">io</span><span class="p">/</span><span class="n">api</span><span class="p">/</span><span class="n">v1</span><span class="p">/</span><span class="n">cookbooks</span><span class="p">/</span><span class="n">nginx</span><span class="p">/</span><span class="n">versions</span><span class="p">/</span><span class="n">2</span><span class="p">.</span><span class="n">7</span><span class="p">.</span><span class="n">6</span>
+</span></code></pre></div>
+<p>Here is the complete file:</p>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nb">name</span><span class="w"> </span><span class="s1">&#39;my_ubuntu_nginx&#39;</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">maintainer</span><span class="w"> </span><span class="s1">&#39;The Authors&#39;</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">maintainer_email</span><span class="w"> </span><span class="s1">&#39;you@example.com&#39;</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="n">license</span><span class="w"> </span><span class="s1">&#39;all_rights&#39;</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="n">description</span><span class="w"> </span><span class="s1">&#39;Installs/Configures my_ubuntu_nginx&#39;</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="n">long_description</span><span class="w"> </span><span class="s1">&#39;Installs/Configures my_ubuntu_nginx&#39;</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="n">version</span><span class="w"> </span><span class="s1">&#39;0.1.0&#39;</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="n">depends</span><span class="w"> </span><span class="s1">&#39;apt&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;~&gt; 2.9.2&#39;</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="n">depends</span><span class="w"> </span><span class="s1">&#39;nginx&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;~&gt; 2.7.6&#39;</span>
+</span></code></pre></div>
+<h3 id="write-the-install_nginx-recipe">Write the install_nginx recipe</h3>
+<p>The first step is to create the recipe file, <code>install_nginx.rb</code>. Run the following command to generate it:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">chef</span> <span class="n">generate</span> <span class="n">recipe</span> <span class="n">install_nginx</span>
+</span></code></pre></div>
+<p>Write out <code>recipes/install_nginx.rb</code> like this:</p>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1">#</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="c1"># Cookbook Name:: my_ubuntu_nginx</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="c1"># Recipe:: install_nginx</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="c1">#</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="c1"># Copyright (c) 2016 The Authors, All Rights Reserved.</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="c1"># Only needed if you want to install latest stable package from nginx.org</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="n">include_recipe</span><span class="w"> </span><span class="s1">&#39;nginx::repo&#39;</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="n">package</span><span class="w"> </span><span class="s1">&#39;nginx&#39;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="w">  </span><span class="n">action</span><span class="w"> </span><span class="ss">:install</span>
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="k">end</span>
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="n">service</span><span class="w"> </span><span class="s1">&#39;nginx&#39;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="w">  </span><span class="n">supports</span><span class="w"> </span><span class="ss">status</span><span class="p">:</span><span class="w"> </span><span class="kp">true</span><span class="p">,</span><span class="w"> </span><span class="ss">restart</span><span class="p">:</span><span class="w"> </span><span class="kp">true</span><span class="p">,</span><span class="w"> </span><span class="ss">reload</span><span class="p">:</span><span class="w"> </span><span class="kp">true</span>
+</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="w">  </span><span class="n">action</span><span class="w"> </span><span class="ss">:enable</span>
+</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="k">end</span>
+</span></code></pre></div>
+<h3 id="set-the-install_nginx-recipe-to-run">Set the install_nginx recipe to run</h3>
+<p>Add this line to <code>cookbooks/my_web_server/recipes/default.rb</code>:</p>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">include_recipe</span><span class="w"> </span><span class="s1">&#39;my_ubuntu_nginx::install_nginx&#39;</span>
+</span></code></pre></div>
+<p>Here is the complete file:</p>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1">#</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="c1"># Cookbook Name:: my_ubuntu_nginx</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="c1"># Recipe:: default</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="c1">#</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="c1"># Copyright (c) 2016 The Authors, All Rights Reserved.</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="n">include_recipe</span><span class="w"> </span><span class="s1">&#39;apt::default&#39;</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="n">include_recipe</span><span class="w"> </span><span class="s1">&#39;my_ubuntu_nginx::install_nginx&#39;</span>
+</span></code></pre></div>
+<h3 id="update-the-integration-test">Update the integration test</h3>
+<p>Replace the contents of <code>test/integration/default/serverspec/default_spec.rb</code> with this code:</p>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nb">require</span><span class="w"> </span><span class="s1">&#39;spec_helper&#39;</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="n">describe</span><span class="w"> </span><span class="s1">&#39;my_ubuntu_nginx::default&#39;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">  </span><span class="c1"># Serverspec examples can be found at</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">  </span><span class="c1"># http://serverspec.org/resource_types.html</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">  </span><span class="n">describe</span><span class="w"> </span><span class="n">package</span><span class="p">(</span><span class="s1">&#39;nginx&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">    </span><span class="n">it</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">be_installed</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">  </span><span class="k">end</span>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="w">  </span><span class="n">describe</span><span class="w"> </span><span class="n">service</span><span class="p">(</span><span class="s1">&#39;nginx&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="w">    </span><span class="n">it</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">be_enabled</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="w">    </span><span class="n">it</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">be_running</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="w">  </span><span class="k">end</span>
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="k">end</span>
+</span></code></pre></div>
+<h2 id="test_1">Test</h2>
+<h3 id="ruby-lint">Ruby Lint</h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">chef</span> <span class="n">exec</span> <span class="n">rubocop</span>
+</span></code></pre></div>
+<h3 id="chef-lint">Chef Lint</h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">chef</span> <span class="n">exec</span> <span class="n">foodcritic</span> <span class="p">.</span>
+</span></code></pre></div>
+<h3 id="unit-tests">Unit Tests</h3>
+<p>Install / Update cookbooks:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">chef</span> <span class="n">exec</span> <span class="n">berks</span> <span class="n">install</span>
+</span></code></pre></div>
+<p>Create a <code>.rspec</code> file:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">touch</span> <span class="p">.</span><span class="n">rspec</span>
+</span></code></pre></div>
+<p>Paste these lines in <code>.rspec</code></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>--color
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>--format documentation
+</span></code></pre></div>
+<p>Run: </p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="n">chef</span> <span class="n">exec</span> <span class="n">rspec</span>
+</span></code></pre></div>
+<h3 id="integration-tests">Integration Tests</h3>
+<p>Update <code>.kitchen.yml</code> to include the Ubuntu platform only. This is how it should look:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="nn">---</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="nt">driver</span><span class="p">:</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vagrant</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">  </span><span class="nt">network</span><span class="p">:</span>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;private_network&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;dhcp&quot;</span><span class="p p-Indicator">}]</span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="nt">provisioner</span><span class="p">:</span>
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">chef_zero</span>
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="nt">platforms</span><span class="p">:</span>
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-14.04</span>
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a><span class="nt">suites</span><span class="p">:</span>
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a><span class="w">    </span><span class="nt">run_list</span><span class="p">:</span>
+</span><span id="__span-23-16"><a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">recipe[my_ubuntu_nginx::default]</span>
+</span></code></pre></div>
+<p>Run the integration tests:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="n">chef</span> <span class="n">exec</span> <span class="n">kitchen</span> <span class="n">test</span> <span class="p">-</span><span class="n">-destroy</span><span class="p">=</span><span class="n">never</span>
+</span></code></pre></div>
 
 
 
-<footer>
-  <div>&copy; Swift Software Group</div>
-  <nav><a aria-label="Mail" href="mailto:hello@swiftsoftwaregroup.com" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#envelope"></use></svg></a><a aria-label="Github" href="https://github.com/swiftsoftwaregroup" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#github"></use></svg></a><a aria-label="Subscribe" href="/feed.xml" ><svg aria-hidden="true" class="icon"><use xlink:href="/assets/fontawesome/icons.svg#rss"></use></svg></a></nav>
 
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2001 - 2024 Swift Software Group, Inc.
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
 </footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+  
+    
+  
 
 
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+      
+      
+        
+        
+      
+      <li class="task-list-item">
+        <label class="task-list-control">
+          <input type="checkbox" name="analytics" checked>
+          <span class="task-list-indicator"></span>
+          Google Analytics
+        </label>
+      </li>
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout(function(){document.querySelector("[data-md-component=consent]").hidden=!1},250);var action,form=document.forms.consent;for(action of["submit","reset"])form.addEventListener(action,function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map(function(e){return[e,!0]}))),location.hash="",location.reload()})</script>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.top", "search.suggest", "search.share", "search.highlight"], "search": "../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.7389ff0e.min.js"></script>
+      
+    
+  </body>
 </html>
