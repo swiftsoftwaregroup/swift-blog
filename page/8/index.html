@@ -14,7 +14,7 @@
       
       
       
-        <link rel="next" href="../../aws/">
+        <link rel="next" href="../../arm64/">
       
       
         <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../../feed_rss_created.xml">
@@ -310,7 +310,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../archive/2023/" class="md-tabs__link">
+        <a href="../../archive/2024/" class="md-tabs__link">
           
   
   Archive
@@ -328,7 +328,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../aws/" class="md-tabs__link">
+        <a href="../../arm64/" class="md-tabs__link">
           
   
   Categories
@@ -506,6 +506,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#installing-an-older-version-of-xcode-alongside-xcode-9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installing an Older Version of Xcode Alongside Xcode 9
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-to-build-an-nginx-server-and-deploy-a-python-flask-app-using-chef" class="md-nav__link">
     <span class="md-ellipsis">
       How to Build an NGINX Server and Deploy a Python Flask App Using Chef
@@ -536,15 +545,6 @@
   <a href="#how-to-use-berkshelf-chef-zero-vagrant-and-virtualbox" class="md-nav__link">
     <span class="md-ellipsis">
       How to use Berkshelf, Chef Zero, Vagrant and VirtualBox
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#provision-chef-with-vagrant-omnibus-plugin" class="md-nav__link">
-    <span class="md-ellipsis">
-      Provision Chef with Vagrant-Omnibus Plugin
     </span>
   </a>
   
@@ -597,6 +597,29 @@
             Archive
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2024/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2024
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -897,6 +920,29 @@
             Categories
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arm64/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    arm64
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1275,6 +1321,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../virtual-box/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    virtual-box
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../../vscode/" class="md-nav__link">
         
   
@@ -1348,6 +1417,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#installing-an-older-version-of-xcode-alongside-xcode-9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installing an Older Version of Xcode Alongside Xcode 9
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-to-build-an-nginx-server-and-deploy-a-python-flask-app-using-chef" class="md-nav__link">
     <span class="md-ellipsis">
       How to Build an NGINX Server and Deploy a Python Flask App Using Chef
@@ -1383,15 +1461,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#provision-chef-with-vagrant-omnibus-plugin" class="md-nav__link">
-    <span class="md-ellipsis">
-      Provision Chef with Vagrant-Omnibus Plugin
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1406,6 +1475,65 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2017-09-23 00:00:00">September 23, 2017</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              1 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="installing-an-older-version-of-xcode-alongside-xcode-9"><a class="toclink" href="../../installing-an-older-version-of-xcode-alongside-xcode-9/">Installing an Older Version of Xcode Alongside Xcode 9</a></h2>
+<p>Today I started working on updating <a href="https://itunes.apple.com/us/app/apport/id1140306404?mt=8">Apport</a> code from Swift 2 to Swift 4. So I got everything ready, made a fresh cup of coffee and opened the project workspace in Xcode 9. And then I got this message:</p>
+<p><img alt="unsupported-swift-version.jpg" src="../../assets/images/installing-an-older-version-of-xcode-alongside-xcode-9/unsupported-swift-version.jpg" /></p>
+<p>I have to convert the project to Swift 3 first in Xcode 8 and then convert once again to Swift 4 in Xcode 9. </p>
+<p>So I need both Xcode 8 and Xcode 9 installed, and here is how that can be done:</p>
+<h3 id="install"><a class="toclink" href="../../installing-an-older-version-of-xcode-alongside-xcode-9/#install">Install</a></h3>
+<ol>
+<li>
+<p>Download Xcode 8.3.3 from <a href="https://developer.apple.com/download/more/">Apple Developer Downloads</a>. You will receive a file named Xcode8.3.3.xip which is a digitally signed zip file.</p>
+</li>
+<li>
+<p>Expand the xip file. It will be expanded to <code>Xcode.app</code></p>
+</li>
+<li>
+<p>Rename <code>Xcode.app</code> to <code>Xcode8.app</code> </p>
+</li>
+<li>
+<p>Drag <code>Xcode8.app</code> to your <code>Applications</code> folder</p>
+</li>
+</ol>
+<h3 id="selecting-xcode-version"><a class="toclink" href="../../installing-an-older-version-of-xcode-alongside-xcode-9/#selecting-xcode-version">Selecting Xcode version</a></h3>
+<h4 id="switch-to-xcode-8"><a class="toclink" href="../../installing-an-older-version-of-xcode-alongside-xcode-9/#switch-to-xcode-8">Switch to Xcode 8</a></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>xcode-select<span class="w"> </span>--switch<span class="w"> </span>/Applications/Xcode8.app
+</span></code></pre></div>
+<h4 id="switch-to-xcode-9"><a class="toclink" href="../../installing-an-older-version-of-xcode-alongside-xcode-9/#switch-to-xcode-9">Switch to Xcode 9</a></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>xcode-select<span class="w"> </span>--switch<span class="w"> </span>/Applications/Xcode.app
+</span></code></pre></div>
+<h4 id="print-version-that-is-selected"><a class="toclink" href="../../installing-an-older-version-of-xcode-alongside-xcode-9/#print-version-that-is-selected">Print version that is selected</a></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>xcode-select<span class="w"> </span>--print-path
+</span></code></pre></div>
+    <nav class="md-post__action">
+      <a href="../../installing-an-older-version-of-xcode-alongside-xcode-9/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -2962,98 +3090,6 @@ Write out <code>recipes/my_app_python.rb</code> like this:</p>
 </span></code></pre></div>
     <nav class="md-post__action">
       <a href="../../how-to-use-berkshelf-chef-zero-vagrant-and-virtualbox/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2015-11-22 00:00:00">November 22, 2015</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              2 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="provision-chef-with-vagrant-omnibus-plugin"><a class="toclink" href="../../provision-chef-vagrant-omnibus-plugin/">Provision Chef with Vagrant-Omnibus Plugin</a></h2>
-<p>In this post we show how you can provision <a href="https://www.chef.io/chef/">Chef</a> from Vagrant using the <code>vagrant-omnibus</code> plugin. This post is for Ubuntu 14.04 guest running in VirtualBox on Windows 10 host.</p>
-<h3 id="prerequisites"><a class="toclink" href="../../provision-chef-vagrant-omnibus-plugin/#prerequisites">Prerequisites</a></h3>
-<p>You need VirtualBox and Vagrant installed. To do that, you can follow the steps described in <a href="http://www.swiftsoftwaregroup.com/ubuntu-with-vagrant-and-virtualbox-on-windows/">Ubuntu with Vagrant and VirtualBox on Windows</a>.</p>
-<h3 id="install-chef-development-kit-chefdk"><a class="toclink" href="../../provision-chef-vagrant-omnibus-plugin/#install-chef-development-kit-chefdk">Install Chef Development Kit (ChefDK)</a></h3>
-<p>In PowerShell as <em>Administrator</em>:</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">choco</span> <span class="n">install</span> <span class="n">chefdk</span>
-</span></code></pre></div>
-<h3 id="provision-chef"><a class="toclink" href="../../provision-chef-vagrant-omnibus-plugin/#provision-chef">Provision Chef</a></h3>
-<p>Before you can use Chef Solo, Chef Zero, or Chef Client for provisioning, you need to install the latest Chef client on the guest. This can be done with a shell script or with a Vagrant plugin called <code>vagrant-omnibus</code>.  </p>
-<p>In PowerShell:</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">vagrant</span> <span class="n">plugin</span> <span class="n">install</span> <span class="n">vagrant-omnibus</span>
-</span></code></pre></div>
-<p>Open <code>Vagrantfile</code> and add the following code at the end of the configuration:</p>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Install the latest version of Chef.</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># For more information see https://github.com/chef/vagrant-omnibus</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1">#</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">config</span><span class="o">.</span><span class="n">omnibus</span><span class="o">.</span><span class="n">chef_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:latest</span>
-</span></code></pre></div>
-<p>The complete <code>Vagrantfile</code> file should look like this:</p>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># -*- mode: ruby -*-</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1"># vi: set ft=ruby :</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># All Vagrant configuration is done below. The &quot;2&quot; in Vagrant.configure</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1"># configures the configuration version (we support older styles for</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="c1"># backwards compatibility). Please don&#39;t change it unless you know what</span>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1"># you&#39;re doing.</span>
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="c1">#</span>
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">config</span><span class="o">|</span>
-</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>
-</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">  </span><span class="c1"># Every Vagrant development environment requires a box. You can search for</span>
-</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">  </span><span class="c1"># boxes at https://atlas.hashicorp.com/search.</span>
-</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">  </span><span class="c1">#</span>
-</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">  </span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ubuntu/trusty64&quot;</span>
-</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>
-</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">  </span><span class="c1"># Provider-specific configuration so you can fine-tune various</span>
-</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">  </span><span class="c1"># backing providers for Vagrant. These expose provider-specific options.</span>
-</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">  </span><span class="c1">#</span>
-</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">  </span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span><span class="w"> </span><span class="s2">&quot;virtualbox&quot;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">vb</span><span class="o">|</span>
-</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="w">    </span><span class="c1"># For a complete reference, please see the online documentation at</span>
-</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="w">    </span><span class="c1"># https://docs.vagrantup.com/v2/virtualbox/configuration.html</span>
-</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>
-</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="w">    </span><span class="c1"># Name used in Oracle VM VirtualBox Manager GUI</span>
-</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="w">    </span><span class="n">vb</span><span class="o">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Ubuntu-x64-Vagrant&quot;</span>
-</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>
-</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="w">    </span><span class="c1"># Customize the amount of memory on the VM (in MB):</span>
-</span><span id="__span-8-27"><a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="w">    </span><span class="n">vb</span><span class="o">.</span><span class="n">memory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;2048&quot;</span>
-</span><span id="__span-8-28"><a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a>
-</span><span id="__span-8-29"><a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a><span class="w">    </span><span class="c1"># Customize the amount of video memory on the VM (in MB):</span>
-</span><span id="__span-8-30"><a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a><span class="w">    </span><span class="n">vb</span><span class="o">.</span><span class="n">customize</span><span class="w"> </span><span class="o">[</span><span class="s2">&quot;modifyvm&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:id</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--vram&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;128&quot;</span><span class="o">]</span>
-</span><span id="__span-8-31"><a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a><span class="w">  </span><span class="k">end</span>
-</span><span id="__span-8-32"><a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a>
-</span><span id="__span-8-33"><a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a><span class="w">  </span><span class="c1"># Install the latest version of Chef.</span>
-</span><span id="__span-8-34"><a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a><span class="w">  </span><span class="c1"># For more information see https://github.com/chef/vagrant-omnibus</span>
-</span><span id="__span-8-35"><a id="__codelineno-8-35" name="__codelineno-8-35" href="#__codelineno-8-35"></a><span class="w">  </span><span class="c1">#</span>
-</span><span id="__span-8-36"><a id="__codelineno-8-36" name="__codelineno-8-36" href="#__codelineno-8-36"></a><span class="w">  </span><span class="n">config</span><span class="o">.</span><span class="n">omnibus</span><span class="o">.</span><span class="n">chef_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:latest</span>
-</span><span id="__span-8-37"><a id="__codelineno-8-37" name="__codelineno-8-37" href="#__codelineno-8-37"></a><span class="k">end</span>
-</span></code></pre></div>
-<h3 id="test"><a class="toclink" href="../../provision-chef-vagrant-omnibus-plugin/#test">Test</a></h3>
-<p>Finally launch and provision the Vagrant box. It should install the latest Chef Client:</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">vagrant</span> <span class="n">reload</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">vagrant</span> <span class="n">provision</span>
-</span></code></pre></div>
-    <nav class="md-post__action">
-      <a href="../../provision-chef-vagrant-omnibus-plugin/">
         Continue reading
       </a>
     </nav>

@@ -14,7 +14,7 @@
       
       
       
-        <link rel="next" href="../../aws/">
+        <link rel="next" href="../../arm64/">
       
       
         <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../../feed_rss_created.xml">
@@ -310,7 +310,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../archive/2023/" class="md-tabs__link">
+        <a href="../../archive/2024/" class="md-tabs__link">
           
   
   Archive
@@ -328,7 +328,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../aws/" class="md-tabs__link">
+        <a href="../../arm64/" class="md-tabs__link">
           
   
   Categories
@@ -506,6 +506,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-to-install-and-configure-tortoisehg-on-mac" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to install and configure TortoiseHg on Mac
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-to-upgrade-gcc-to-47-on-ubuntu-1204" class="md-nav__link">
     <span class="md-ellipsis">
       How to upgrade GCC to 4.7+ on Ubuntu 12.04
@@ -536,15 +545,6 @@
   <a href="#super-agile-accept-that-your-product-will-never-be-100-complete" class="md-nav__link">
     <span class="md-ellipsis">
       Super Agile: Accept that your product will never be 100% complete
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#aspnet-mvc-4-could-not-load-file-or-assembly-dotnetopenauthcore-version4000" class="md-nav__link">
-    <span class="md-ellipsis">
-      ASP.NET MVC 4: Could not load file or assembly DotNetOpenAuth.Core, Version=4.0.0.0
     </span>
   </a>
   
@@ -597,6 +597,29 @@
             Archive
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2024/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2024
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -897,6 +920,29 @@
             Categories
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arm64/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    arm64
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1275,6 +1321,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../virtual-box/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    virtual-box
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../../vscode/" class="md-nav__link">
         
   
@@ -1348,6 +1417,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-to-install-and-configure-tortoisehg-on-mac" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to install and configure TortoiseHg on Mac
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-to-upgrade-gcc-to-47-on-ubuntu-1204" class="md-nav__link">
     <span class="md-ellipsis">
       How to upgrade GCC to 4.7+ on Ubuntu 12.04
@@ -1383,15 +1461,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#aspnet-mvc-4-could-not-load-file-or-assembly-dotnetopenauthcore-version4000" class="md-nav__link">
-    <span class="md-ellipsis">
-      ASP.NET MVC 4: Could not load file or assembly DotNetOpenAuth.Core, Version=4.0.0.0
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1406,6 +1475,145 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-10-11 00:00:00">October 11, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              3 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="how-to-install-and-configure-tortoisehg-on-mac"><a class="toclink" href="../../install-configure-tortoisehg-mac/">How to install and configure TortoiseHg on Mac</a></h2>
+<p>I finally got fed up with SourceTree and installed TortoiseHg on my Mac development machine. Read on:</p>
+<h3 id="xcode-configuration"><a class="toclink" href="../../install-configure-tortoisehg-mac/#xcode-configuration">Xcode Configuration</a></h3>
+<p>For best results make sure you have the latest XCode and Command Line Tools installed (XCode 5 and Command Line Tools September 2013 at the time of this writing). You can get them from the <a href="https://developer.apple.com/downloads/">Apple Developer Downloads</a> site.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>sudo<span class="w"> </span>xcode-select<span class="w"> </span>-switch<span class="w"> </span>/Applications/Xcode.app/Contents/Developer
+</span></code></pre></div>
+<h3 id="1-install-update-ruby"><a class="toclink" href="../../install-configure-tortoisehg-mac/#1-install-update-ruby">1. Install / Update Ruby</a></h3>
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>ruby<span class="w"> </span>-v
+</span></code></pre></div>
+should return something like:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>ruby 2.0.0p247 (2013-06-27 revision 41674) [x86_64-darwin12.3.0]
+</span></code></pre></div>
+<p>You can skip the rest of this section if you have Ruby already installed.</p>
+<h4 id="install-the-ruby-version-manager-and-ruby"><a class="toclink" href="../../install-configure-tortoisehg-mac/#install-the-ruby-version-manager-and-ruby">Install the Ruby Version Manager and Ruby</a></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>curl<span class="w"> </span>-L<span class="w"> </span>https://get.rvm.io<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash<span class="w"> </span>-s<span class="w"> </span>stable<span class="w"> </span>--ruby
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="nb">source</span><span class="w"> </span>/Users/yourname/.rvm/scripts/rvm
+</span></code></pre></div>
+<h3 id="2-install-homebrew"><a class="toclink" href="../../install-configure-tortoisehg-mac/#2-install-homebrew">2. Install Homebrew</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>ruby<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.github.com/Homebrew/homebrew/go/install<span class="k">)</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<p>Follow the instructions in the script. The installation will take a few minutes.</p>
+<h4 id="verify-your-brew-installation"><a class="toclink" href="../../install-configure-tortoisehg-mac/#verify-your-brew-installation">Verify your brew installation</a></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>brew<span class="w"> </span>doctor
+</span></code></pre></div>
+<p>This returned a few problems for me, but the output will vary depending on the existing system configuration.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>Warning: An outdated version of Git was detected in your PATH.
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>Git 1.7.10 or newer is required to perform checkouts over HTTPS from GitHub.
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>Please upgrade: brew upgrade git
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>Warning: /Library/Frameworks/Mono.framework detected
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>This can be picked up by CMake&#39;s build system and likely cause the build to
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>fail. You may need to move this file out of the way to compile CMake.
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>
+</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>Warning: You have MacPorts or Fink installed:
+</span><span id="__span-26-10"><a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a>    /Users/yourname/.rvm/bin/port, /opt/local/bin/port
+</span><span id="__span-26-11"><a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a>
+</span><span id="__span-26-12"><a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a>This can cause trouble. You don&#39;t have to uninstall them, but you may want to
+</span><span id="__span-26-13"><a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a>temporarily move them out of the way, e.g.
+</span><span id="__span-26-14"><a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a>
+</span><span id="__span-26-15"><a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a>    sudo mv /opt/local ~/macports
+</span><span id="__span-26-16"><a id="__codelineno-26-16" name="__codelineno-26-16" href="#__codelineno-26-16"></a>
+</span><span id="__span-26-17"><a id="__codelineno-26-17" name="__codelineno-26-17" href="#__codelineno-26-17"></a>Warning: /usr/bin occurs before /usr/local/bin
+</span><span id="__span-26-18"><a id="__codelineno-26-18" name="__codelineno-26-18" href="#__codelineno-26-18"></a>This means that system-provided programs will be used instead of those
+</span><span id="__span-26-19"><a id="__codelineno-26-19" name="__codelineno-26-19" href="#__codelineno-26-19"></a>provided by Homebrew. 
+</span><span id="__span-26-20"><a id="__codelineno-26-20" name="__codelineno-26-20" href="#__codelineno-26-20"></a>
+</span><span id="__span-26-21"><a id="__codelineno-26-21" name="__codelineno-26-21" href="#__codelineno-26-21"></a>Consider setting your PATH so that /usr/local/bin
+</span><span id="__span-26-22"><a id="__codelineno-26-22" name="__codelineno-26-22" href="#__codelineno-26-22"></a>occurs before /usr/bin. Here is a one-liner:
+</span><span id="__span-26-23"><a id="__codelineno-26-23" name="__codelineno-26-23" href="#__codelineno-26-23"></a>    echo export PATH=&quot;/usr/local/bin:$PATH&quot; &gt;&gt; ~/.bash_profile
+</span><span id="__span-26-24"><a id="__codelineno-26-24" name="__codelineno-26-24" href="#__codelineno-26-24"></a>
+</span><span id="__span-26-25"><a id="__codelineno-26-25" name="__codelineno-26-25" href="#__codelineno-26-25"></a>Warning: Your Xcode (x.y.z) is outdated
+</span><span id="__span-26-26"><a id="__codelineno-26-26" name="__codelineno-26-26" href="#__codelineno-26-26"></a>Please install Xcode a.b.c
+</span></code></pre></div>
+<p>The issues will depend on your specific installation. Use your best judgement about what to fix and what to ignore. Fixing one by one:</p>
+<h5 id="warning-you-have-macports-or-fink-installed"><a class="toclink" href="../../install-configure-tortoisehg-mac/#warning-you-have-macports-or-fink-installed">Warning: You have MacPorts or Fink installed</a></h5>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>sudo<span class="w"> </span>mv<span class="w"> </span>/opt/local<span class="w"> </span>~/macports
+</span></code></pre></div>
+<h5 id="warning-usrbin-occurs-before-usrlocalbin"><a class="toclink" href="../../install-configure-tortoisehg-mac/#warning-usrbin-occurs-before-usrlocalbin">Warning: /usr/bin occurs before /usr/local/bin</a></h5>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span>/usr/local/bin:<span class="nv">$PATH</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="nb">echo</span><span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;/usr/local/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bash_profile
+</span></code></pre></div>
+<h5 id="warning-an-outdated-version-of-git-was-detected-in-your-path"><a class="toclink" href="../../install-configure-tortoisehg-mac/#warning-an-outdated-version-of-git-was-detected-in-your-path">Warning: An outdated version of Git was detected in your PATH.</a></h5>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>brew<span class="w"> </span>upgrade<span class="w"> </span>git
+</span></code></pre></div>
+<p>or if you do not have Git at all:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>brew<span class="w"> </span>install<span class="w"> </span>git
+</span></code></pre></div>
+<h5 id="warning-your-xcode-xyz-is-outdated"><a class="toclink" href="../../install-configure-tortoisehg-mac/#warning-your-xcode-xyz-is-outdated">Warning: Your Xcode (x.y.z) is outdated</a></h5>
+<p>You can ignore this one.</p>
+<h5 id="warning-libraryframeworksmonoframework-detected"><a class="toclink" href="../../install-configure-tortoisehg-mac/#warning-libraryframeworksmonoframework-detected">Warning: /Library/Frameworks/Mono.framework detected</a></h5>
+<p>You can ignore this one.</p>
+<h3 id="3-install-python-packages"><a class="toclink" href="../../install-configure-tortoisehg-mac/#3-install-python-packages">3. Install Python packages</a></h3>
+<p>I had Python already installed before Homebrew, so I had to amend PYTHONPATH like so:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONPATH</span><span class="o">=</span>/usr/local/lib/python2.7/site-packages:<span class="nv">$PYTHONPATH</span><span class="w">  </span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="nb">echo</span><span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="s2">&quot;/usr/local/lib/python2.7/site-packages:</span><span class="nv">$PYTHONPATH</span><span class="s2">&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bash_profile
+</span></code></pre></div>
+<p>Then install PyQt (this also installs qt and sip):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>brew<span class="w"> </span>install<span class="w"> </span>pyqt
+</span></code></pre></div>
+<p>Install QScintilla</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>brew<span class="w"> </span>install<span class="w"> </span>qscintilla2
+</span></code></pre></div>
+<p>Install Python Package Mananger (pip)</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>sudo<span class="w"> </span>easy_install<span class="w"> </span>pip
+</span></code></pre></div>
+<p>Install Pygments, iniparse and Mercurial Python packages. If you have Mercurial already, this will update it to the latest version.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>sudo<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>Pygments<span class="w"> </span>iniparse<span class="w"> </span>Mercurial
+</span></code></pre></div>
+<h3 id="4-install-tortoisehg"><a class="toclink" href="../../install-configure-tortoisehg-mac/#4-install-tortoisehg">4. Install TortoiseHg</a></h3>
+<p>Clone TortoiseHg repository using Mercurial:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>hg<span class="w"> </span>clone<span class="w"> </span>http://bitbucket.org/tortoisehg/thg/<span class="w"> </span>~/Tools/TortoiseHg
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="nb">cd</span><span class="w"> </span>~/Tools/TortoiseHg/
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>hg<span class="w"> </span>update<span class="w"> </span>stable
+</span></code></pre></div>
+<p>Quick test. You should see TortoiseHg Workbench running:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>./thg<span class="w"> </span>log
+</span></code></pre></div>
+<h3 id="5-install-tortoisehg-mac-app"><a class="toclink" href="../../install-configure-tortoisehg-mac/#5-install-tortoisehg-mac-app">5. Install TortoiseHg Mac App</a></h3>
+<h5 id="clone-thg-mac-app-repository"><a class="toclink" href="../../install-configure-tortoisehg-mac/#clone-thg-mac-app-repository">Clone thg-mac-app repository</a></h5>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>hg<span class="w"> </span>clone<span class="w"> </span>https://bitbucket.org/skrysmanski/thg-mac-app<span class="w"> </span>~/Tools/thg-mac-app
+</span></code></pre></div>
+<h5 id="set-the-tortoisehg_path-variable"><a class="toclink" href="../../install-configure-tortoisehg-mac/#set-the-tortoisehg_path-variable">Set the TORTOISEHG_PATH variable</a></h5>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>cp<span class="w"> </span>-p<span class="w"> </span>~/Tools/thg-mac-app/tortoisehg-path.sh<span class="w"> </span>~/
+</span></code></pre></div>
+<p>Edit <code>~/tortoisehg-path.sh</code> so it points to <code>~/Tools/TortoiseHg</code>. This is what <code>~/tortoisehg-path.sh</code> looks like after the change:</p>
+<p>``` bash</p>
+<h2 id="binsh"><a class="toclink" href="../../install-configure-tortoisehg-mac/#binsh">!/bin/sh</a></h2>
+<p>export TORTOISEHG_PATH=~/Tools/TortoiseHg
+```</p>
+<h5 id="install-tortoisehgapp"><a class="toclink" href="../../install-configure-tortoisehg-mac/#install-tortoisehgapp">Install TortoiseHg.app</a></h5>
+<p><strong>Option + Drag</strong> the TortoiseHg.app from <code>~/Tools/thg-mac-app</code> to your Applications folder.</p>
+    <nav class="md-post__action">
+      <a href="../../install-configure-tortoisehg-mac/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1640,76 +1848,6 @@ Details: error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate ver
 </ul>
     <nav class="md-post__action">
       <a href="../../super-agile-accept-that-your-product-will-never-be-100-complete/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2013-05-12 00:00:00">May 12, 2013</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              2 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="aspnet-mvc-4-could-not-load-file-or-assembly-dotnetopenauthcore-version4000"><a class="toclink" href="../../aps-net-mvc-4-could-not-load-file-or-assembly-dotnetopenauth-core-version-4-0-0-0/">ASP.NET MVC 4: Could not load file or assembly DotNetOpenAuth.Core, Version=4.0.0.0</a></h2>
-<p>I got this error in an ASP.NET MVC 4 application after installing DotnetOpenAuth via the Package Manager Console:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Could not load file or assembly &#39;DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246&#39; or one of its dependencies. The located assembly&#39;s manifest definition does not match the assembly reference. (Exception from HRESULT: 0x80131040)
-</span></code></pre></div>
-<p>The application was actually upgraded earlier from ASP.NET MVC 3, i.e. it was not autogenerated by Visual Studio 2012. The pre-binding info in the exception was:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>=== Pre-bind state information ===
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>LOG: User = NT AUTHORITY\NETWORK SERVICE
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>LOG: DisplayName = DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    (Fully-specified)
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>LOG: Appbase = file:///
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>LOG: Initial PrivatePath = \bin
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Calling assembly : Microsoft.Web.WebPages.OAuth, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35.
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>===
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>LOG: This bind starts in default load context.
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>LOG: Using application configuration file: \web.config
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>LOG: Using host configuration file: C:\Windows\Microsoft.NET\Framework64\v4.0.30319\aspnet.config
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>LOG: Using machine configuration file from C:\Windows\Microsoft.NET\Framework64\v4.0.30319\config\machine.config.
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>LOG: Post-policy reference: DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246
-</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>LOG: Attempting download of new URL file:////DotNetOpenAuth.Core.DLL.
-</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>LOG: Attempting download of new URL file:////DotNetOpenAuth.Core/DotNetOpenAuth.Core.DLL.
-</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>LOG: Attempting download of new URL file:////DotNetOpenAuth.Core.DLL.
-</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>WRN: Comparing the assembly name resulted in the mismatch: Minor Version
-</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>ERR: Failed to complete setup of assembly (hr = 0x80131040). Probing terminated.
-</span></code></pre></div>
-<p>The key pieces of information here are at lines 3 and 7. Basically, Microsoft.Web.WebPages.OAuth needs DotNetOpenAuth.Core 4.0.0.0, but the DotNetOpenAuth.Core I have is version4.3.0.0.</p>
-<p>The solution is to add these lines under the <runtime>/<assemblyBinding> section of the root Web.config:</p>
-<div class="language-xml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">&lt;dependentAssembly&gt;</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="nt">&lt;assemblyIdentity</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;DotNetOpenAuth.AspNet&quot;</span><span class="w"> </span><span class="na">publicKeyToken=</span><span class="s">&quot;2780ccd10d57b246&quot;</span><span class="w"> </span><span class="na">culture=</span><span class="s">&quot;neutral&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">&lt;bindingRedirect</span><span class="w"> </span><span class="na">oldVersion=</span><span class="s">&quot;0.0.0.0-4.3.0.0&quot;</span><span class="w"> </span><span class="na">newVersion=</span><span class="s">&quot;4.3.0.0&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nt">&lt;/dependentAssembly&gt;</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nt">&lt;dependentAssembly&gt;</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="nt">&lt;assemblyIdentity</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;DotNetOpenAuth.Core&quot;</span><span class="w"> </span><span class="na">publicKeyToken=</span><span class="s">&quot;2780ccd10d57b246&quot;</span><span class="w"> </span><span class="na">culture=</span><span class="s">&quot;neutral&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="nt">&lt;bindingRedirect</span><span class="w"> </span><span class="na">oldVersion=</span><span class="s">&quot;0.0.0.0-4.3.0.0&quot;</span><span class="w"> </span><span class="na">newVersion=</span><span class="s">&quot;4.3.0.0&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="nt">&lt;/dependentAssembly&gt;</span>
-</span></code></pre></div>
-<p>The above solution works for other packages that ASP.NET MVC 4 depends on. For example, if you upgrade WebGrease from 1.0.0.0 to 1.3.0.0, you have to add this to the <runtime>/<assemblyBinding> section:</p>
-<div class="language-xml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">&lt;dependentAssembly&gt;</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="nt">&lt;assemblyIdentity</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;WebGrease&quot;</span><span class="w"> </span><span class="na">publicKeyToken=</span><span class="s">&quot;31bf3856ad364e35&quot;</span><span class="w"> </span><span class="na">culture=</span><span class="s">&quot;neutral&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">&lt;bindingRedirect</span><span class="w"> </span><span class="na">oldVersion=</span><span class="s">&quot;0.0.0.0-1.3.0.0&quot;</span><span class="w"> </span><span class="na">newVersion=</span><span class="s">&quot;1.3.0.0&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nt">&lt;/dependentAssembly&gt;</span>
-</span></code></pre></div>
-    <nav class="md-post__action">
-      <a href="../../aps-net-mvc-4-could-not-load-file-or-assembly-dotnetopenauth-core-version-4-0-0-0/">
         Continue reading
       </a>
     </nav>

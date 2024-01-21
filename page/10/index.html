@@ -14,7 +14,7 @@
       
       
       
-        <link rel="next" href="../../aws/">
+        <link rel="next" href="../../arm64/">
       
       
         <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../../feed_rss_created.xml">
@@ -310,7 +310,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../archive/2023/" class="md-tabs__link">
+        <a href="../../archive/2024/" class="md-tabs__link">
           
   
   Archive
@@ -328,7 +328,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../aws/" class="md-tabs__link">
+        <a href="../../arm64/" class="md-tabs__link">
           
   
   Categories
@@ -506,6 +506,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-to-use-a-different-cache-directory-for-chocolatey-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to use a different cache directory for Chocolatey packages
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#unable-to-generate-an-explicit-migration-because-the-following-explicit-migrations-are-pending" class="md-nav__link">
     <span class="md-ellipsis">
       Unable to generate an explicit migration because the following explicit migrations are pending
@@ -536,15 +545,6 @@
   <a href="#how-to-fix-tortoisehg-nautilus-extension-on-ubuntu-1304" class="md-nav__link">
     <span class="md-ellipsis">
       How to fix Tortoisehg Nautilus extension on Ubuntu 13.04
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dual-boot-windows-81-for-virtualbox-and-hyper-v" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dual boot Windows 8.1 for VirtualBox and Hyper-V
     </span>
   </a>
   
@@ -597,6 +597,29 @@
             Archive
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2024/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2024
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -897,6 +920,29 @@
             Categories
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arm64/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    arm64
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1275,6 +1321,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../virtual-box/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    virtual-box
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../../vscode/" class="md-nav__link">
         
   
@@ -1348,6 +1417,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-to-use-a-different-cache-directory-for-chocolatey-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to use a different cache directory for Chocolatey packages
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#unable-to-generate-an-explicit-migration-because-the-following-explicit-migrations-are-pending" class="md-nav__link">
     <span class="md-ellipsis">
       Unable to generate an explicit migration because the following explicit migrations are pending
@@ -1383,15 +1461,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#dual-boot-windows-81-for-virtualbox-and-hyper-v" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dual boot Windows 8.1 for VirtualBox and Hyper-V
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1406,6 +1475,66 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2015-08-15 00:00:00">August 15, 2015</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              2 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="how-to-use-a-different-cache-directory-for-chocolatey-packages"><a class="toclink" href="../../use-different-cache-directory-chocolatey-packages/">How to use a different cache directory for Chocolatey packages</a></h2>
+<h3 id="about-chocolatey"><a class="toclink" href="../../use-different-cache-directory-chocolatey-packages/#about-chocolatey">About Chocolatey</a></h3>
+<p>In short, Chocolatey is a package manager for Windows which saves time by automating otherwise manual installation tasks. You can install Chocolatey by following the instructions on <a href="https://chocolatey.org/">chocolatey.org</a>.</p>
+<h3 id="configure-chocolateys-cache-folder"><a class="toclink" href="../../use-different-cache-directory-chocolatey-packages/#configure-chocolateys-cache-folder">Configure Chocolatey's Cache Folder</a></h3>
+<p>For security reasons, Chocolatey installs in <code>C:\ProgramData\chocolatey</code> by default. See <a href="https://github.com/chocolatey/choco/wiki/DefaultChocolateyInstallReasoning">Why does Chocolatey install where it does?</a> for more information.</p>
+<p>Also by default, Chocolatey will download packages in <code>C:\Users\USERNAME\AppData\Local\Temp\chocolatey</code> which might work or not for you. If you need to use a different folder, you can set the <code>cacheLocation</code> key in <code>C:\ProgramData\chocolatey\config\chocolatey.config</code> to a folder of your choice. </p>
+<p>For example, to use <code>C:\ChocolateyCache</code> as a cache folder, add <code>&lt;add key="cacheLocation" value="C:\ChocolateyCache" description="Cache location if not TEMP folder." /&gt;</code> to the <code>chocolatey.config</code> file like this:</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">&lt;chocolatey</span><span class="w"> </span><span class="na">xmlns:xsd=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema&quot;</span><span class="w"> </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">&lt;containsLegacyPackageInstalls&gt;</span>false<span class="nt">&lt;/containsLegacyPackageInstalls&gt;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">&lt;commandExecutionTimeoutSeconds&gt;</span>0<span class="nt">&lt;/commandExecutionTimeoutSeconds&gt;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nt">&lt;config&gt;</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">key=</span><span class="s">&quot;cacheLocation&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;C:/ChocolateyCache&quot;</span><span class="w"> </span><span class="na">description=</span><span class="s">&quot;Cache location if not TEMP folder.&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">key=</span><span class="s">&quot;containsLegacyPackageInstalls&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;true&quot;</span><span class="w"> </span><span class="na">description=</span><span class="s">&quot;Install has packages installed prior to 0.9.9 series.&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">key=</span><span class="s">&quot;commandExecutionTimeoutSeconds&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;2700&quot;</span><span class="w"> </span><span class="na">description=</span><span class="s">&quot;Default timeout for command execution.&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">key=</span><span class="s">&quot;proxy&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="na">description=</span><span class="s">&quot;Explicit proxy location.&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">key=</span><span class="s">&quot;proxyUser&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="na">description=</span><span class="s">&quot;Optional proxy user.&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">key=</span><span class="s">&quot;proxyPassword&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="na">description=</span><span class="s">&quot;Optional proxy password. Encrypted.&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">  </span><span class="nt">&lt;/config&gt;</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">  </span><span class="nt">&lt;sources&gt;</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span><span class="nt">&lt;source</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;chocolatey&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;https://chocolatey.org/api/v2/&quot;</span><span class="w"> </span><span class="na">disabled=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">priority=</span><span class="s">&quot;0&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">  </span><span class="nt">&lt;/sources&gt;</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span><span class="nt">&lt;features&gt;</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="nt">&lt;feature</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;checksumFiles&quot;</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;true&quot;</span><span class="w"> </span><span class="na">setExplicitly=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">description=</span><span class="s">&quot;Checksum files when pulled in from internet (based on package).&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="nt">&lt;feature</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;autoUninstaller&quot;</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">setExplicitly=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">description=</span><span class="s">&quot;Uninstall from programs and features without requiring an explicit uninstall script.&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">    </span><span class="nt">&lt;feature</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;allowGlobalConfirmation&quot;</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">setExplicitly=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">description=</span><span class="s">&quot;Prompt for confirmation in scripts or bypass.&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">    </span><span class="nt">&lt;feature</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;failOnAutoUninstaller&quot;</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">setExplicitly=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">description=</span><span class="s">&quot;Fail if automatic uninstaller fails.&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">  </span><span class="nt">&lt;/features&gt;</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">  </span><span class="nt">&lt;apiKeys</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="nt">&lt;/chocolatey&gt;</span>
+</span></code></pre></div>
+    <nav class="md-post__action">
+      <a href="../../use-different-cache-directory-chocolatey-packages/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1599,47 +1728,6 @@
 </span></code></pre></div>
     <nav class="md-post__action">
       <a href="../../fix-tortoisehg-nautilus-ubuntu-13-04/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2014-01-20 00:00:00">January 20, 2014</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              1 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="dual-boot-windows-81-for-virtualbox-and-hyper-v"><a class="toclink" href="../../dual-boot-windows-8-1-virtualbox-hyper-v/">Dual boot Windows 8.1 for VirtualBox and Hyper-V</a></h2>
-<p>Most of the time I use VirtualBox to run Linux distros like Ubuntu and Debian. At the same time, I have to work with Windows Phone SDK which needs Hyper-V to run the Windows Phone emulator. Understandably VirtualBox and Hyper-V will not run at the same time. The easiest way I found to solve that problem is creating a dual boot configuration where one of the boot options has Hyper-V disabled. Here is how to do it:</p>
-<p>Run Command Prompt (not PowerShell) as Administrator and execute the following commands (note that the GUID will be different on your system):</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>bcdedit /set {current} hypervisorlaunchtype off 
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>bcdedit /copy {current} /d &quot;Windows 8.1 with Hyper-V&quot;
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>The entry was successfully copied to {5e0b6781-81ec-11e3-be83-74d02bc4e906}.
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>bcdedit /set {5e0b6781-81ec-11e3-be83-74d02bc4e906} hypervisorlaunchtype auto 
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>The operation completed successfully.
-</span></code></pre></div>
-<p>You should now have two boot options in the Windows start menu: "Windows 8.1" and "Windows 8.1 with Hyper-V". To switch between the different configurations, make sure you hold the <code>Shift</code> key while clicking on the Restart option.</p>
-    <nav class="md-post__action">
-      <a href="../../dual-boot-windows-8-1-virtualbox-hyper-v/">
         Continue reading
       </a>
     </nav>

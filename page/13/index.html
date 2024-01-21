@@ -14,7 +14,7 @@
       
       
       
-        <link rel="next" href="../../aws/">
+        <link rel="next" href="../../arm64/">
       
       
         <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../../feed_rss_created.xml">
@@ -310,7 +310,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../archive/2023/" class="md-tabs__link">
+        <a href="../../archive/2024/" class="md-tabs__link">
           
   
   Archive
@@ -328,7 +328,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../aws/" class="md-tabs__link">
+        <a href="../../arm64/" class="md-tabs__link">
           
   
   Categories
@@ -506,6 +506,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#aspnet-mvc-4-could-not-load-file-or-assembly-dotnetopenauthcore-version4000" class="md-nav__link">
+    <span class="md-ellipsis">
+      ASP.NET MVC 4: Could not load file or assembly DotNetOpenAuth.Core, Version=4.0.0.0
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#upgrading-a-web-app-from-aspnet-mvc-3-to-aspnet-mvc-4" class="md-nav__link">
     <span class="md-ellipsis">
       Upgrading a web app from ASP.NET MVC 3 to ASP.NET MVC 4
@@ -536,15 +545,6 @@
   <a href="#ubuntu-how-to-add-open-in-terminal-to-the-nautilus-context-menu" class="md-nav__link">
     <span class="md-ellipsis">
       Ubuntu: how to add &#8220;Open in Terminal&#8221; to the Nautilus context menu
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#installing-mercurial-and-tortoisehg-on-ubuntu" class="md-nav__link">
-    <span class="md-ellipsis">
-      Installing Mercurial and TortoiseHg on Ubuntu
     </span>
   </a>
   
@@ -597,6 +597,29 @@
             Archive
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2024/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2024
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -897,6 +920,29 @@
             Categories
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arm64/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    arm64
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1275,6 +1321,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../virtual-box/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    virtual-box
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../../vscode/" class="md-nav__link">
         
   
@@ -1348,6 +1417,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#aspnet-mvc-4-could-not-load-file-or-assembly-dotnetopenauthcore-version4000" class="md-nav__link">
+    <span class="md-ellipsis">
+      ASP.NET MVC 4: Could not load file or assembly DotNetOpenAuth.Core, Version=4.0.0.0
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#upgrading-a-web-app-from-aspnet-mvc-3-to-aspnet-mvc-4" class="md-nav__link">
     <span class="md-ellipsis">
       Upgrading a web app from ASP.NET MVC 3 to ASP.NET MVC 4
@@ -1383,15 +1461,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#installing-mercurial-and-tortoisehg-on-ubuntu" class="md-nav__link">
-    <span class="md-ellipsis">
-      Installing Mercurial and TortoiseHg on Ubuntu
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1406,6 +1475,76 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-05-12 00:00:00">May 12, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              2 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="aspnet-mvc-4-could-not-load-file-or-assembly-dotnetopenauthcore-version4000"><a class="toclink" href="../../aps-net-mvc-4-could-not-load-file-or-assembly-dotnetopenauth-core-version-4-0-0-0/">ASP.NET MVC 4: Could not load file or assembly DotNetOpenAuth.Core, Version=4.0.0.0</a></h2>
+<p>I got this error in an ASP.NET MVC 4 application after installing DotnetOpenAuth via the Package Manager Console:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Could not load file or assembly &#39;DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246&#39; or one of its dependencies. The located assembly&#39;s manifest definition does not match the assembly reference. (Exception from HRESULT: 0x80131040)
+</span></code></pre></div>
+<p>The application was actually upgraded earlier from ASP.NET MVC 3, i.e. it was not autogenerated by Visual Studio 2012. The pre-binding info in the exception was:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>=== Pre-bind state information ===
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>LOG: User = NT AUTHORITY\NETWORK SERVICE
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>LOG: DisplayName = DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    (Fully-specified)
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>LOG: Appbase = file:///
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>LOG: Initial PrivatePath = \bin
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Calling assembly : Microsoft.Web.WebPages.OAuth, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35.
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>===
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>LOG: This bind starts in default load context.
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>LOG: Using application configuration file: \web.config
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>LOG: Using host configuration file: C:\Windows\Microsoft.NET\Framework64\v4.0.30319\aspnet.config
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>LOG: Using machine configuration file from C:\Windows\Microsoft.NET\Framework64\v4.0.30319\config\machine.config.
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>LOG: Post-policy reference: DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>LOG: Attempting download of new URL file:////DotNetOpenAuth.Core.DLL.
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>LOG: Attempting download of new URL file:////DotNetOpenAuth.Core/DotNetOpenAuth.Core.DLL.
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>LOG: Attempting download of new URL file:////DotNetOpenAuth.Core.DLL.
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>WRN: Comparing the assembly name resulted in the mismatch: Minor Version
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>ERR: Failed to complete setup of assembly (hr = 0x80131040). Probing terminated.
+</span></code></pre></div>
+<p>The key pieces of information here are at lines 3 and 7. Basically, Microsoft.Web.WebPages.OAuth needs DotNetOpenAuth.Core 4.0.0.0, but the DotNetOpenAuth.Core I have is version4.3.0.0.</p>
+<p>The solution is to add these lines under the <runtime>/<assemblyBinding> section of the root Web.config:</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">&lt;dependentAssembly&gt;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="nt">&lt;assemblyIdentity</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;DotNetOpenAuth.AspNet&quot;</span><span class="w"> </span><span class="na">publicKeyToken=</span><span class="s">&quot;2780ccd10d57b246&quot;</span><span class="w"> </span><span class="na">culture=</span><span class="s">&quot;neutral&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">&lt;bindingRedirect</span><span class="w"> </span><span class="na">oldVersion=</span><span class="s">&quot;0.0.0.0-4.3.0.0&quot;</span><span class="w"> </span><span class="na">newVersion=</span><span class="s">&quot;4.3.0.0&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nt">&lt;/dependentAssembly&gt;</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nt">&lt;dependentAssembly&gt;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="nt">&lt;assemblyIdentity</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;DotNetOpenAuth.Core&quot;</span><span class="w"> </span><span class="na">publicKeyToken=</span><span class="s">&quot;2780ccd10d57b246&quot;</span><span class="w"> </span><span class="na">culture=</span><span class="s">&quot;neutral&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="nt">&lt;bindingRedirect</span><span class="w"> </span><span class="na">oldVersion=</span><span class="s">&quot;0.0.0.0-4.3.0.0&quot;</span><span class="w"> </span><span class="na">newVersion=</span><span class="s">&quot;4.3.0.0&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="nt">&lt;/dependentAssembly&gt;</span>
+</span></code></pre></div>
+<p>The above solution works for other packages that ASP.NET MVC 4 depends on. For example, if you upgrade WebGrease from 1.0.0.0 to 1.3.0.0, you have to add this to the <runtime>/<assemblyBinding> section:</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">&lt;dependentAssembly&gt;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="nt">&lt;assemblyIdentity</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;WebGrease&quot;</span><span class="w"> </span><span class="na">publicKeyToken=</span><span class="s">&quot;31bf3856ad364e35&quot;</span><span class="w"> </span><span class="na">culture=</span><span class="s">&quot;neutral&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">&lt;bindingRedirect</span><span class="w"> </span><span class="na">oldVersion=</span><span class="s">&quot;0.0.0.0-1.3.0.0&quot;</span><span class="w"> </span><span class="na">newVersion=</span><span class="s">&quot;1.3.0.0&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nt">&lt;/dependentAssembly&gt;</span>
+</span></code></pre></div>
+    <nav class="md-post__action">
+      <a href="../../aps-net-mvc-4-could-not-load-file-or-assembly-dotnetopenauth-core-version-4-0-0-0/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1605,86 +1744,6 @@
 </span></code></pre></div>
     <nav class="md-post__action">
       <a href="../../ubuntu-how-to-add-open-in-terminal-to-the-nautilus-context-menu/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2013-02-28 00:00:00">February 28, 2013</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              1 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="installing-mercurial-and-tortoisehg-on-ubuntu"><a class="toclink" href="../../installing-mercurial-and-tortoisehg-on-ubuntu/">Installing Mercurial and TortoiseHg on Ubuntu</a></h2>
-<p>This is a step-by-step guide on installing Mercurial and TortoiseHg on Ubuntu, and setting up a BitBucket account. This was tested on Ubuntu 12.04 LTS and Ubuntu 12.10.</p>
-<h3 id="install-tortoisehg"><a class="toclink" href="../../installing-mercurial-and-tortoisehg-on-ubuntu/#install-tortoisehg">Install TortoiseHg</a></h3>
-<p>Add TortoiseHg PPA (<code>https://launchpad.net/~tortoisehg-ppa/+archive/releases</code>)</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>add-apt-repository<span class="w"> </span>ppa:tortoisehg-ppa/releases
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>tortoisehg<span class="w"> </span>tortoisehg-nautilus
-</span></code></pre></div>
-<p>That installs Mercurial 2.5.1 and TortoiseHg 2.7.</p>
-<h3 id="restart-nautilus"><a class="toclink" href="../../installing-mercurial-and-tortoisehg-on-ubuntu/#restart-nautilus">Restart Nautilus</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>nautilus<span class="w"> </span>-q
-</span></code></pre></div>
-<h3 id="check-installation"><a class="toclink" href="../../installing-mercurial-and-tortoisehg-on-ubuntu/#check-installation">Check installation</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>thg<span class="w"> </span><span class="p">&amp;</span>
-</span></code></pre></div>
-<p>TorstoiseHg Workbench should open.</p>
-<h3 id="configure-user-name-for-commits"><a class="toclink" href="../../installing-mercurial-and-tortoisehg-on-ubuntu/#configure-user-name-for-commits">Configure user name for commits</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>thg<span class="w"> </span><span class="p">&amp;</span>
-</span></code></pre></div>
-<p>Then select File | Settings from the top menu.</p>
-<p>In the Commit section enter the username that will be used with commits.<br />
- The common format is: Full Name (e.g. Valentin Kantchev )</p>
-<h3 id="install-mercurial-keyring-extension"><a class="toclink" href="../../installing-mercurial-and-tortoisehg-on-ubuntu/#install-mercurial-keyring-extension">Install Mercurial keyring extension</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>python-setuptools
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>sudo<span class="w"> </span>easy_install<span class="w"> </span>keyring
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>sudo<span class="w"> </span>easy_install<span class="w"> </span>mercurial_keyring
-</span></code></pre></div>
-<p>Add these lines to the .hgrc (in your home directory):</p>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">[extensions]</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="na">mercurial_keyring</span><span class="w"> </span><span class="o">=</span>
-</span></code></pre></div>
-<p>That allows Mercurial to store and use user credentials in the Ubuntu keychain.</p>
-<h3 id="setup-bitbucket-user-optional"><a class="toclink" href="../../installing-mercurial-and-tortoisehg-on-ubuntu/#setup-bitbucket-user-optional">Setup BitBucket user (optional)</a></h3>
-<p>Add these lines to your global .hgrc (i.e. /home/valentin/.hgrc), change the username to your own:</p>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">[auth]</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="na">bitbucket.org.prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">bitbucket.org/&lt;myteamname&gt;</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="na">bitbucket.org.username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&lt;mybitbucketuser&gt;</span>
-</span></code></pre></div>
-<p>My final <code>.hgrc</code> looks like this:</p>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Generated by TortoiseHg settings dialog</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">[ui]</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="na">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">Valentin Kantchev</span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="k">[auth]</span>
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="na">bitbucket.org.prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">bitbucket.org/&lt;myteamname&gt;</span>
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="na">bitbucket.org.username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&lt;mybitbucketuser&gt;</span>
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
-</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="k">[extensions]</span>
-</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="na">mercurial_keyring</span><span class="w"> </span><span class="o">=</span>
-</span></code></pre></div>
-    <nav class="md-post__action">
-      <a href="../../installing-mercurial-and-tortoisehg-on-ubuntu/">
         Continue reading
       </a>
     </nav>

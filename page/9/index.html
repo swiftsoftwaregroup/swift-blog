@@ -14,7 +14,7 @@
       
       
       
-        <link rel="next" href="../../aws/">
+        <link rel="next" href="../../arm64/">
       
       
         <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../../feed_rss_created.xml">
@@ -310,7 +310,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../archive/2023/" class="md-tabs__link">
+        <a href="../../archive/2024/" class="md-tabs__link">
           
   
   Archive
@@ -328,7 +328,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../aws/" class="md-tabs__link">
+        <a href="../../arm64/" class="md-tabs__link">
           
   
   Categories
@@ -506,6 +506,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#provision-chef-with-vagrant-omnibus-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Provision Chef with Vagrant-Omnibus Plugin
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ubuntu-and-chef-with-vagrant-and-virtualbox-on-windows" class="md-nav__link">
     <span class="md-ellipsis">
       Ubuntu and Chef with Vagrant and VirtualBox on Windows
@@ -536,15 +545,6 @@
   <a href="#install-git-on-windows-via-chocolatey" class="md-nav__link">
     <span class="md-ellipsis">
       Install Git on Windows via Chocolatey
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how-to-use-a-different-cache-directory-for-chocolatey-packages" class="md-nav__link">
-    <span class="md-ellipsis">
-      How to use a different cache directory for Chocolatey packages
     </span>
   </a>
   
@@ -597,6 +597,29 @@
             Archive
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2024/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2024
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -897,6 +920,29 @@
             Categories
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arm64/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    arm64
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1275,6 +1321,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../virtual-box/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    virtual-box
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../../vscode/" class="md-nav__link">
         
   
@@ -1348,6 +1417,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#provision-chef-with-vagrant-omnibus-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Provision Chef with Vagrant-Omnibus Plugin
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ubuntu-and-chef-with-vagrant-and-virtualbox-on-windows" class="md-nav__link">
     <span class="md-ellipsis">
       Ubuntu and Chef with Vagrant and VirtualBox on Windows
@@ -1383,15 +1461,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#how-to-use-a-different-cache-directory-for-chocolatey-packages" class="md-nav__link">
-    <span class="md-ellipsis">
-      How to use a different cache directory for Chocolatey packages
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1406,6 +1475,98 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2015-11-22 00:00:00">November 22, 2015</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              2 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="provision-chef-with-vagrant-omnibus-plugin"><a class="toclink" href="../../provision-chef-vagrant-omnibus-plugin/">Provision Chef with Vagrant-Omnibus Plugin</a></h2>
+<p>In this post we show how you can provision <a href="https://www.chef.io/chef/">Chef</a> from Vagrant using the <code>vagrant-omnibus</code> plugin. This post is for Ubuntu 14.04 guest running in VirtualBox on Windows 10 host.</p>
+<h3 id="prerequisites"><a class="toclink" href="../../provision-chef-vagrant-omnibus-plugin/#prerequisites">Prerequisites</a></h3>
+<p>You need VirtualBox and Vagrant installed. To do that, you can follow the steps described in <a href="http://www.swiftsoftwaregroup.com/ubuntu-with-vagrant-and-virtualbox-on-windows/">Ubuntu with Vagrant and VirtualBox on Windows</a>.</p>
+<h3 id="install-chef-development-kit-chefdk"><a class="toclink" href="../../provision-chef-vagrant-omnibus-plugin/#install-chef-development-kit-chefdk">Install Chef Development Kit (ChefDK)</a></h3>
+<p>In PowerShell as <em>Administrator</em>:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">choco</span> <span class="n">install</span> <span class="n">chefdk</span>
+</span></code></pre></div>
+<h3 id="provision-chef"><a class="toclink" href="../../provision-chef-vagrant-omnibus-plugin/#provision-chef">Provision Chef</a></h3>
+<p>Before you can use Chef Solo, Chef Zero, or Chef Client for provisioning, you need to install the latest Chef client on the guest. This can be done with a shell script or with a Vagrant plugin called <code>vagrant-omnibus</code>.  </p>
+<p>In PowerShell:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">vagrant</span> <span class="n">plugin</span> <span class="n">install</span> <span class="n">vagrant-omnibus</span>
+</span></code></pre></div>
+<p>Open <code>Vagrantfile</code> and add the following code at the end of the configuration:</p>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Install the latest version of Chef.</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># For more information see https://github.com/chef/vagrant-omnibus</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1">#</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">config</span><span class="o">.</span><span class="n">omnibus</span><span class="o">.</span><span class="n">chef_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:latest</span>
+</span></code></pre></div>
+<p>The complete <code>Vagrantfile</code> file should look like this:</p>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># -*- mode: ruby -*-</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1"># vi: set ft=ruby :</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># All Vagrant configuration is done below. The &quot;2&quot; in Vagrant.configure</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1"># configures the configuration version (we support older styles for</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="c1"># backwards compatibility). Please don&#39;t change it unless you know what</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1"># you&#39;re doing.</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="c1">#</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">  </span><span class="c1"># Every Vagrant development environment requires a box. You can search for</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">  </span><span class="c1"># boxes at https://atlas.hashicorp.com/search.</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">  </span><span class="c1">#</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">  </span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ubuntu/trusty64&quot;</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">  </span><span class="c1"># Provider-specific configuration so you can fine-tune various</span>
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">  </span><span class="c1"># backing providers for Vagrant. These expose provider-specific options.</span>
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">  </span><span class="c1">#</span>
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">  </span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span><span class="w"> </span><span class="s2">&quot;virtualbox&quot;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">vb</span><span class="o">|</span>
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="w">    </span><span class="c1"># For a complete reference, please see the online documentation at</span>
+</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="w">    </span><span class="c1"># https://docs.vagrantup.com/v2/virtualbox/configuration.html</span>
+</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>
+</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="w">    </span><span class="c1"># Name used in Oracle VM VirtualBox Manager GUI</span>
+</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="w">    </span><span class="n">vb</span><span class="o">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Ubuntu-x64-Vagrant&quot;</span>
+</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>
+</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="w">    </span><span class="c1"># Customize the amount of memory on the VM (in MB):</span>
+</span><span id="__span-8-27"><a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="w">    </span><span class="n">vb</span><span class="o">.</span><span class="n">memory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;2048&quot;</span>
+</span><span id="__span-8-28"><a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a>
+</span><span id="__span-8-29"><a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a><span class="w">    </span><span class="c1"># Customize the amount of video memory on the VM (in MB):</span>
+</span><span id="__span-8-30"><a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a><span class="w">    </span><span class="n">vb</span><span class="o">.</span><span class="n">customize</span><span class="w"> </span><span class="o">[</span><span class="s2">&quot;modifyvm&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:id</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--vram&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;128&quot;</span><span class="o">]</span>
+</span><span id="__span-8-31"><a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a><span class="w">  </span><span class="k">end</span>
+</span><span id="__span-8-32"><a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a>
+</span><span id="__span-8-33"><a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a><span class="w">  </span><span class="c1"># Install the latest version of Chef.</span>
+</span><span id="__span-8-34"><a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a><span class="w">  </span><span class="c1"># For more information see https://github.com/chef/vagrant-omnibus</span>
+</span><span id="__span-8-35"><a id="__codelineno-8-35" name="__codelineno-8-35" href="#__codelineno-8-35"></a><span class="w">  </span><span class="c1">#</span>
+</span><span id="__span-8-36"><a id="__codelineno-8-36" name="__codelineno-8-36" href="#__codelineno-8-36"></a><span class="w">  </span><span class="n">config</span><span class="o">.</span><span class="n">omnibus</span><span class="o">.</span><span class="n">chef_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:latest</span>
+</span><span id="__span-8-37"><a id="__codelineno-8-37" name="__codelineno-8-37" href="#__codelineno-8-37"></a><span class="k">end</span>
+</span></code></pre></div>
+<h3 id="test"><a class="toclink" href="../../provision-chef-vagrant-omnibus-plugin/#test">Test</a></h3>
+<p>Finally launch and provision the Vagrant box. It should install the latest Chef Client:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">vagrant</span> <span class="n">reload</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">vagrant</span> <span class="n">provision</span>
+</span></code></pre></div>
+    <nav class="md-post__action">
+      <a href="../../provision-chef-vagrant-omnibus-plugin/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1794,66 +1955,6 @@ boxes at https://atlas.hashicorp.com/search.   </p>
 </span></code></pre></div>
     <nav class="md-post__action">
       <a href="../../install-git-windows-via-chocolatey/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2015-08-15 00:00:00">August 15, 2015</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              2 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="how-to-use-a-different-cache-directory-for-chocolatey-packages"><a class="toclink" href="../../use-different-cache-directory-chocolatey-packages/">How to use a different cache directory for Chocolatey packages</a></h2>
-<h3 id="about-chocolatey"><a class="toclink" href="../../use-different-cache-directory-chocolatey-packages/#about-chocolatey">About Chocolatey</a></h3>
-<p>In short, Chocolatey is a package manager for Windows which saves time by automating otherwise manual installation tasks. You can install Chocolatey by following the instructions on <a href="https://chocolatey.org/">chocolatey.org</a>.</p>
-<h3 id="configure-chocolateys-cache-folder"><a class="toclink" href="../../use-different-cache-directory-chocolatey-packages/#configure-chocolateys-cache-folder">Configure Chocolatey's Cache Folder</a></h3>
-<p>For security reasons, Chocolatey installs in <code>C:\ProgramData\chocolatey</code> by default. See <a href="https://github.com/chocolatey/choco/wiki/DefaultChocolateyInstallReasoning">Why does Chocolatey install where it does?</a> for more information.</p>
-<p>Also by default, Chocolatey will download packages in <code>C:\Users\USERNAME\AppData\Local\Temp\chocolatey</code> which might work or not for you. If you need to use a different folder, you can set the <code>cacheLocation</code> key in <code>C:\ProgramData\chocolatey\config\chocolatey.config</code> to a folder of your choice. </p>
-<p>For example, to use <code>C:\ChocolateyCache</code> as a cache folder, add <code>&lt;add key="cacheLocation" value="C:\ChocolateyCache" description="Cache location if not TEMP folder." /&gt;</code> to the <code>chocolatey.config</code> file like this:</p>
-<div class="language-xml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">&lt;chocolatey</span><span class="w"> </span><span class="na">xmlns:xsd=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema&quot;</span><span class="w"> </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><span class="nt">&gt;</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">&lt;containsLegacyPackageInstalls&gt;</span>false<span class="nt">&lt;/containsLegacyPackageInstalls&gt;</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">&lt;commandExecutionTimeoutSeconds&gt;</span>0<span class="nt">&lt;/commandExecutionTimeoutSeconds&gt;</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nt">&lt;config&gt;</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">key=</span><span class="s">&quot;cacheLocation&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;C:/ChocolateyCache&quot;</span><span class="w"> </span><span class="na">description=</span><span class="s">&quot;Cache location if not TEMP folder.&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">key=</span><span class="s">&quot;containsLegacyPackageInstalls&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;true&quot;</span><span class="w"> </span><span class="na">description=</span><span class="s">&quot;Install has packages installed prior to 0.9.9 series.&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">key=</span><span class="s">&quot;commandExecutionTimeoutSeconds&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;2700&quot;</span><span class="w"> </span><span class="na">description=</span><span class="s">&quot;Default timeout for command execution.&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">key=</span><span class="s">&quot;proxy&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="na">description=</span><span class="s">&quot;Explicit proxy location.&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">key=</span><span class="s">&quot;proxyUser&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="na">description=</span><span class="s">&quot;Optional proxy user.&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">key=</span><span class="s">&quot;proxyPassword&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="na">description=</span><span class="s">&quot;Optional proxy password. Encrypted.&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">  </span><span class="nt">&lt;/config&gt;</span>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">  </span><span class="nt">&lt;sources&gt;</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span><span class="nt">&lt;source</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;chocolatey&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;https://chocolatey.org/api/v2/&quot;</span><span class="w"> </span><span class="na">disabled=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">priority=</span><span class="s">&quot;0&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">  </span><span class="nt">&lt;/sources&gt;</span>
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span><span class="nt">&lt;features&gt;</span>
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="nt">&lt;feature</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;checksumFiles&quot;</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;true&quot;</span><span class="w"> </span><span class="na">setExplicitly=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">description=</span><span class="s">&quot;Checksum files when pulled in from internet (based on package).&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="nt">&lt;feature</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;autoUninstaller&quot;</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">setExplicitly=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">description=</span><span class="s">&quot;Uninstall from programs and features without requiring an explicit uninstall script.&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">    </span><span class="nt">&lt;feature</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;allowGlobalConfirmation&quot;</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">setExplicitly=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">description=</span><span class="s">&quot;Prompt for confirmation in scripts or bypass.&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">    </span><span class="nt">&lt;feature</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;failOnAutoUninstaller&quot;</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">setExplicitly=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">description=</span><span class="s">&quot;Fail if automatic uninstaller fails.&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">  </span><span class="nt">&lt;/features&gt;</span>
-</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">  </span><span class="nt">&lt;apiKeys</span><span class="w"> </span><span class="nt">/&gt;</span>
-</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="nt">&lt;/chocolatey&gt;</span>
-</span></code></pre></div>
-    <nav class="md-post__action">
-      <a href="../../use-different-cache-directory-chocolatey-packages/">
         Continue reading
       </a>
     </nav>

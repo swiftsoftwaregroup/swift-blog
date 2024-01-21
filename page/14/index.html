@@ -14,7 +14,7 @@
       
       
       
-        <link rel="next" href="../../aws/">
+        <link rel="next" href="../../arm64/">
       
       
         <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../../feed_rss_created.xml">
@@ -310,7 +310,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../archive/2023/" class="md-tabs__link">
+        <a href="../../archive/2024/" class="md-tabs__link">
           
   
   Archive
@@ -328,7 +328,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../aws/" class="md-tabs__link">
+        <a href="../../arm64/" class="md-tabs__link">
           
   
   Categories
@@ -506,6 +506,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#installing-mercurial-and-tortoisehg-on-ubuntu" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installing Mercurial and TortoiseHg on Ubuntu
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#getting-started-with-git-and-bitbucket-on-windows" class="md-nav__link">
     <span class="md-ellipsis">
       Getting started with Git and BitBucket on Windows
@@ -536,15 +545,6 @@
   <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1" class="md-nav__link">
     <span class="md-ellipsis">
       Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 1)
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc" class="md-nav__link">
-    <span class="md-ellipsis">
-      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (TOC)
     </span>
   </a>
   
@@ -597,6 +597,29 @@
             Archive
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2024/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2024
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -897,6 +920,29 @@
             Categories
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arm64/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    arm64
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1275,6 +1321,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../virtual-box/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    virtual-box
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../../vscode/" class="md-nav__link">
         
   
@@ -1348,6 +1417,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#installing-mercurial-and-tortoisehg-on-ubuntu" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installing Mercurial and TortoiseHg on Ubuntu
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#getting-started-with-git-and-bitbucket-on-windows" class="md-nav__link">
     <span class="md-ellipsis">
       Getting started with Git and BitBucket on Windows
@@ -1383,15 +1461,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc" class="md-nav__link">
-    <span class="md-ellipsis">
-      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (TOC)
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1406,6 +1475,86 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-02-28 00:00:00">February 28, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              1 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="installing-mercurial-and-tortoisehg-on-ubuntu"><a class="toclink" href="../../installing-mercurial-and-tortoisehg-on-ubuntu/">Installing Mercurial and TortoiseHg on Ubuntu</a></h2>
+<p>This is a step-by-step guide on installing Mercurial and TortoiseHg on Ubuntu, and setting up a BitBucket account. This was tested on Ubuntu 12.04 LTS and Ubuntu 12.10.</p>
+<h3 id="install-tortoisehg"><a class="toclink" href="../../installing-mercurial-and-tortoisehg-on-ubuntu/#install-tortoisehg">Install TortoiseHg</a></h3>
+<p>Add TortoiseHg PPA (<code>https://launchpad.net/~tortoisehg-ppa/+archive/releases</code>)</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>add-apt-repository<span class="w"> </span>ppa:tortoisehg-ppa/releases
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>tortoisehg<span class="w"> </span>tortoisehg-nautilus
+</span></code></pre></div>
+<p>That installs Mercurial 2.5.1 and TortoiseHg 2.7.</p>
+<h3 id="restart-nautilus"><a class="toclink" href="../../installing-mercurial-and-tortoisehg-on-ubuntu/#restart-nautilus">Restart Nautilus</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>nautilus<span class="w"> </span>-q
+</span></code></pre></div>
+<h3 id="check-installation"><a class="toclink" href="../../installing-mercurial-and-tortoisehg-on-ubuntu/#check-installation">Check installation</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>thg<span class="w"> </span><span class="p">&amp;</span>
+</span></code></pre></div>
+<p>TorstoiseHg Workbench should open.</p>
+<h3 id="configure-user-name-for-commits"><a class="toclink" href="../../installing-mercurial-and-tortoisehg-on-ubuntu/#configure-user-name-for-commits">Configure user name for commits</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>thg<span class="w"> </span><span class="p">&amp;</span>
+</span></code></pre></div>
+<p>Then select File | Settings from the top menu.</p>
+<p>In the Commit section enter the username that will be used with commits.<br />
+ The common format is: Full Name (e.g. Valentin Kantchev )</p>
+<h3 id="install-mercurial-keyring-extension"><a class="toclink" href="../../installing-mercurial-and-tortoisehg-on-ubuntu/#install-mercurial-keyring-extension">Install Mercurial keyring extension</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>python-setuptools
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>sudo<span class="w"> </span>easy_install<span class="w"> </span>keyring
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>sudo<span class="w"> </span>easy_install<span class="w"> </span>mercurial_keyring
+</span></code></pre></div>
+<p>Add these lines to the .hgrc (in your home directory):</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">[extensions]</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="na">mercurial_keyring</span><span class="w"> </span><span class="o">=</span>
+</span></code></pre></div>
+<p>That allows Mercurial to store and use user credentials in the Ubuntu keychain.</p>
+<h3 id="setup-bitbucket-user-optional"><a class="toclink" href="../../installing-mercurial-and-tortoisehg-on-ubuntu/#setup-bitbucket-user-optional">Setup BitBucket user (optional)</a></h3>
+<p>Add these lines to your global .hgrc (i.e. /home/valentin/.hgrc), change the username to your own:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">[auth]</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="na">bitbucket.org.prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">bitbucket.org/&lt;myteamname&gt;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="na">bitbucket.org.username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&lt;mybitbucketuser&gt;</span>
+</span></code></pre></div>
+<p>My final <code>.hgrc</code> looks like this:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Generated by TortoiseHg settings dialog</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">[ui]</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="na">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">Valentin Kantchev</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="k">[auth]</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="na">bitbucket.org.prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">bitbucket.org/&lt;myteamname&gt;</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="na">bitbucket.org.username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&lt;mybitbucketuser&gt;</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="k">[extensions]</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="na">mercurial_keyring</span><span class="w"> </span><span class="o">=</span>
+</span></code></pre></div>
+    <nav class="md-post__action">
+      <a href="../../installing-mercurial-and-tortoisehg-on-ubuntu/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1776,42 +1925,6 @@ svn://svnserver/SandboxSvn
 <p>Continue to <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 2)">Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 2)</a>.</p>
     <nav class="md-post__action">
       <a href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2013-01-17 00:00:00">January 17, 2013</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              1 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc"><a class="toclink" href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc/">Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (TOC)</a></h2>
-<h3 id="table-of-content"><a class="toclink" href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc/#table-of-content">Table of Content</a></h3>
-<ol>
-<li><a href="http://www.swiftsoftwaregroup.com/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 1)">Repository Setup</a></li>
-<li><a href="http://www.swiftsoftwaregroup.com/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 2)">The Commit/Push, and Pull/Update cycles</a></li>
-<li><a href="http://www.swiftsoftwaregroup.com/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 3)">Summary</a></li>
-</ol>
-    <nav class="md-post__action">
-      <a href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc/">
         Continue reading
       </a>
     </nav>
