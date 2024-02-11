@@ -506,6 +506,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-to-fix-tortoisehg-nautilus-extension-on-ubuntu-1304" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to fix Tortoisehg Nautilus extension on Ubuntu 13.04
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#dual-boot-windows-81-for-virtualbox-and-hyper-v" class="md-nav__link">
     <span class="md-ellipsis">
       Dual boot Windows 8.1 for VirtualBox and Hyper-V
@@ -536,15 +545,6 @@
   <a href="#debian-wheezy-guest-on-windows-81-host-using-virtualbox" class="md-nav__link">
     <span class="md-ellipsis">
       Debian "Wheezy" guest on Windows 8.1 host using VirtualBox
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how-to-save-xdocument-to-xml-and-use-single-quotes-for-attribute-values" class="md-nav__link">
-    <span class="md-ellipsis">
-      How to save XDocument to xml and use single quotes for attribute values
     </span>
   </a>
   
@@ -1068,6 +1068,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../deep-neural-networks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    deep-neural-networks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../../docker/" class="md-nav__link">
         
   
@@ -1183,11 +1206,57 @@
   
   
     <li class="md-nav__item">
+      <a href="../../keras/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    keras
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../../linux/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../machine-learning/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    machine-learning
   </span>
   
 
@@ -1280,6 +1349,29 @@
   
   <span class="md-ellipsis">
     ruby
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tesnsorflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    tesnsorflow
   </span>
   
 
@@ -1417,6 +1509,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-to-fix-tortoisehg-nautilus-extension-on-ubuntu-1304" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to fix Tortoisehg Nautilus extension on Ubuntu 13.04
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#dual-boot-windows-81-for-virtualbox-and-hyper-v" class="md-nav__link">
     <span class="md-ellipsis">
       Dual boot Windows 8.1 for VirtualBox and Hyper-V
@@ -1452,15 +1553,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#how-to-save-xdocument-to-xml-and-use-single-quotes-for-attribute-values" class="md-nav__link">
-    <span class="md-ellipsis">
-      How to save XDocument to xml and use single quotes for attribute values
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1475,6 +1567,45 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2014-05-01 00:00:00">May 1, 2014</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              1 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="how-to-fix-tortoisehg-nautilus-extension-on-ubuntu-1304"><a class="toclink" href="../../fix-tortoisehg-nautilus-ubuntu-13-04/">How to fix Tortoisehg Nautilus extension on Ubuntu 13.04</a></h2>
+<p>The TortoiseHg Nautilus extension stopped working after upgrading one of my Ubuntu machines from 12.10 to 13.04. It turned out the problem was it could not find <code>libpython2.7.so.1.0</code>.</p>
+<p>Here is the fix on a 32-bit distro:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span>/usr/lib/i386-linux-gnu/libpython2.7.so.1.0<span class="w"> </span>/usr/lib/libpython2.7.so.1.0
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>nautilus<span class="w"> </span>-q
+</span></code></pre></div>
+<p>and on a 64-bit distro:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span>/usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0<span class="w"> </span>/usr/lib/libpython2.7.so.1.0
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>nautilus<span class="w"> </span>-q
+</span></code></pre></div>
+    <nav class="md-post__action">
+      <a href="../../fix-tortoisehg-nautilus-ubuntu-13-04/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1733,69 +1864,6 @@
   </div>
 </article>
       
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2013-10-17 00:00:00">October 17, 2013</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              1 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="how-to-save-xdocument-to-xml-and-use-single-quotes-for-attribute-values"><a class="toclink" href="../../save-xdocument-xml-use-single-quotes-attribute-values/">How to save XDocument to xml and use single quotes for attribute values</a></h2>
-<p>I had to do this for <a href="https://avblocks.com">AVBlocks</a> xml licenses recently. It is not straightforward, but here is the C# code.</p>
-<div class="language-csharp highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Collections.Generic</span><span class="p">;</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.IO</span><span class="p">;</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Linq</span><span class="p">;</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Text</span><span class="p">;</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Xml</span><span class="p">;</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Xml.Linq</span><span class="p">;</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Xml.XPath</span><span class="p">;</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Primo.LicenseBuilder.Xml</span>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="p">{</span>
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">XmlExtensions</span>
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="p">{</span>
-</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">ToSingleQuoteString</span><span class="p">(</span><span class="k">this</span><span class="w"> </span><span class="n">XDocument</span><span class="w"> </span><span class="n">xDocument</span><span class="p">,</span><span class="w"> </span>
-</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">                                                    </span><span class="n">System</span><span class="p">.</span><span class="n">Xml</span><span class="p">.</span><span class="n">Formatting</span><span class="w"> </span><span class="n">formatting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Formatting</span><span class="p">.</span><span class="n">Indented</span><span class="p">)</span>
-</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">        </span><span class="p">{</span>
-</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">            </span><span class="k">using</span><span class="w"> </span><span class="p">(</span><span class="n">StringWriter</span><span class="w"> </span><span class="n">sw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StringWriter</span><span class="p">())</span>
-</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">            </span><span class="p">{</span>
-</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">                </span><span class="k">using</span><span class="w"> </span><span class="p">(</span><span class="n">XmlTextWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XmlTextWriter</span><span class="p">(</span><span class="n">sw</span><span class="p">))</span>
-</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">                </span><span class="p">{</span>
-</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">                    </span><span class="n">writer</span><span class="p">.</span><span class="n">Formatting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">formatting</span><span class="p">;</span>
-</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">                    </span><span class="n">writer</span><span class="p">.</span><span class="n">QuoteChar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;\&#39;&#39;</span><span class="p">;</span>
-</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">                    </span><span class="n">writer</span><span class="p">.</span><span class="n">WriteNode</span><span class="p">(</span><span class="n">xDocument</span><span class="p">.</span><span class="n">CreateNavigator</span><span class="p">(),</span><span class="w"> </span><span class="k">false</span><span class="p">);</span>
-</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w">                    </span><span class="n">writer</span><span class="p">.</span><span class="n">Flush</span><span class="p">();</span>
-</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w">                </span><span class="p">}</span>
-</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>
-</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">sw</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span>
-</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="w">            </span><span class="p">}</span>
-</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="w">        </span><span class="p">}</span>
-</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="p">}</span>
-</span></code></pre></div>
-    <nav class="md-post__action">
-      <a href="../../save-xdocument-xml-use-single-quotes-attribute-values/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
       
         
           
@@ -1923,6 +1991,12 @@
     
     
       <script src="../../assets/javascripts/bundle.7389ff0e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>
