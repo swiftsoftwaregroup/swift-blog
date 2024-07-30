@@ -506,6 +506,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#executable-shell-scripts-open-in-gedit-on-ubuntu" class="md-nav__link">
+    <span class="md-ellipsis">
+      Executable shell scripts open in Gedit on Ubuntu
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-to-fix-tortoisehg-nautilus-extension-on-ubuntu-1304" class="md-nav__link">
     <span class="md-ellipsis">
       How to fix Tortoisehg Nautilus extension on Ubuntu 13.04
@@ -536,15 +545,6 @@
   <a href="#nvidia-driver-mismatch-after-upgrading-to-ubuntu-12043-lts" class="md-nav__link">
     <span class="md-ellipsis">
       Nvidia driver mismatch after upgrading to Ubuntu 12.04.3 LTS
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#debian-wheezy-guest-on-windows-81-host-using-virtualbox" class="md-nav__link">
-    <span class="md-ellipsis">
-      Debian "Wheezy" guest on Windows 8.1 host using VirtualBox
     </span>
   </a>
   
@@ -1206,11 +1206,57 @@
   
   
     <li class="md-nav__item">
+      <a href="../../k3s/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    k3s
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../../keras/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     keras
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kubernetes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    kubernetes
   </span>
   
 
@@ -1367,11 +1413,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tesnsorflow/" class="md-nav__link">
+      <a href="../../tensorflow/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    tesnsorflow
+    tensorflow
   </span>
   
 
@@ -1509,6 +1555,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#executable-shell-scripts-open-in-gedit-on-ubuntu" class="md-nav__link">
+    <span class="md-ellipsis">
+      Executable shell scripts open in Gedit on Ubuntu
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-to-fix-tortoisehg-nautilus-extension-on-ubuntu-1304" class="md-nav__link">
     <span class="md-ellipsis">
       How to fix Tortoisehg Nautilus extension on Ubuntu 13.04
@@ -1544,15 +1599,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#debian-wheezy-guest-on-windows-81-host-using-virtualbox" class="md-nav__link">
-    <span class="md-ellipsis">
-      Debian "Wheezy" guest on Windows 8.1 host using VirtualBox
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1567,6 +1613,48 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2014-05-01 00:00:00">May 1, 2014</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              1 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="executable-shell-scripts-open-in-gedit-on-ubuntu"><a class="toclink" href="../../executable-shell-scripts-open-gedit-ubuntu/">Executable shell scripts open in Gedit on Ubuntu</a></h2>
+<p>This started happening after an upgrade to Ubuntu 13.04. We have shell scripts here and there saved as .run files, e.g. <code>Build.linux.auto.run</code>, to automate <a href="https://avblocks.com">AVBlocks</a> builds on Linux. Normally Nautilus will ask you whether you want to run the script when you double click a <code>.run</code> file, but on Ubuntu 13.04, Nautilus suddenly started opening <code>.run</code> files in Gedit. It turns out there is a setting in Gnome for that. Here is how to fix it:</p>
+<ol>
+<li>Run <code>dconf-editor</code> and navigate to <code>org.gnome.nautilus.preferences</code></li>
+<li>Change the value of the <code>executable-text-activation</code> setting from <code>display</code> to <code>ask</code>.</li>
+</ol>
+<p>If you do not have <code>dconf-editor</code> you can install these packages:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>dconf-tools
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>gconf-editor
+</span></code></pre></div>
+<p>And just in case, this is how you run it:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>dconf-editor
+</span></code></pre></div>
+    <nav class="md-post__action">
+      <a href="../../executable-shell-scripts-open-gedit-ubuntu/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1723,141 +1811,6 @@
 </span></code></pre></div>
     <nav class="md-post__action">
       <a href="../../nvidia-driver-mismatch-upgrading-ubuntu-12-04-3-lts/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2013-11-15 00:00:00">November 15, 2013</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              4 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="debian-wheezy-guest-on-windows-81-host-using-virtualbox"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/">Debian "Wheezy" guest on Windows 8.1 host using VirtualBox</a></h2>
-<p>This post is about using Oracle VirtualBox to install a Debian 7.2 x86_64 guest virtual machine on Windows 8.1 host.</p>
-<h3 id="install-virtualbox"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#install-virtualbox">Install VirtualBox</a></h3>
-<ol>
-<li>Download the latest VirtualBox installer from <a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a>. Make sure you get the 64-bit version. That was <em>VirtualBox-4.3.2-90405-Win.exe</em> at the time of writing.</li>
-<li>Run the installer and follow the instructions on the screen. Leave the default options as they are. The installation should complete without any issues.</li>
-<li>Download the Oracle VM VirtualBox Extension Pack from <a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a>.</li>
-<li>Double click the downloaded <em>.vbox-extpack</em> file to install the extensions.</li>
-<li>Go to File &gt; Preferences &gt; Extensions. You should see the Oracle VM VirtualBox Extension Pack listed under Extension Packages.</li>
-</ol>
-<p><img alt="virtualbox-settings" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/virtualbox-settings.png?lightbox&amp;resize=200,200" /></p>
-<h3 id="create-virtual-machine"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#create-virtual-machine">Create virtual machine</a></h3>
-<ol>
-<li>Start VirtualBox</li>
-<li>Select Machine &gt; New from the menu - Name: Debian-7.2-x64</li>
-<li>Type: Linux</li>
-<li>Version: Debian (64 bit)</li>
-<li>Click <em>Next</em>  </li>
-</ol>
-<p>NOTE: If the <em>Debian (64 bit)</em> choice is not available, make sure Intel Virtualization Technology is enabled in the host UEFI / BIOS.
-3. Memory size - Memory size: 4096 MB
-- Click <em>Next</em>
-4. Hard drive - Choose <em>Create a virtual hard drive now</em>
-- Click <em>Create</em>
-- Choose VDI (VirtualBox Disk Image)
-- Click <em>Create</em>
-- File allocation and size - Select a path for the virtual disk image
-- Select 100 GB for size
-- Click <em>Create</em></p>
-<p>It takes a few minutes to create the virtual disk image, but eventually you will see the image in the VirtualBox Manager. We are ready to install Debian now.</p>
-<p><img alt="create-virtual-machine" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/create-virtual-machine.png?lightbox&amp;resize=200,200" />
-<img alt="create-virtual-machine-memory-size" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/create-virtual-machine-memory-size.png?lightbox&amp;resize=200,200" />
-<img alt="create-virtual-machine-hard-drive" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/create-virtual-machine-hard-drive.png?lightbox&amp;resize=200,200" />
-<img alt="create-virtual-hard-drive-creating-fixed-medium-storage-unit" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/create-virtual-hard-drive-creating-fixed-medium-storage-unit.png?lightbox&amp;resize=200,200" /> 
-<img alt="oracle-vm-virtualbox-manager" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/oracle-vm-virtualbox-manager.png?lightbox&amp;resize=200,200" /> </p>
-<h3 id="configure-display"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#configure-display">Configure Display</a></h3>
-<p>In VirtualBox Manager:</p>
-<ol>
-<li>Select Debian-7.2-x64 &gt; Settings</li>
-<li>Select Display &gt; Video</li>
-<li>Bump up the video memory to 128 MB.</li>
-<li>Do not check <em>Enable 3D Acceleration</em>. We will enable 3D Acceleration later.  </li>
-</ol>
-<p>no images were found</p>
-<h3 id="mount-debian-boot-cd"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#mount-debian-boot-cd">Mount Debian Boot CD</a></h3>
-<ol>
-<li>Download the Debian 7.2 x64 ISO image from the <a href="http://www.debian.org/CD/netinst/">network install page</a> on the Debian web site. Make sure you get the <em>amd64</em> image.</li>
-<li>Open VirtualBox Manager</li>
-<li>Select Debian-7.2-x64 &gt; Settings</li>
-<li>Select Storage &gt; Controller IDE &gt; Empty</li>
-<li>Click on the little CD icon</li>
-<li>Find and select the Debian ISO (<em>debian-7.2.0-amd64-netinst.iso</em>) that you downloaded in step 1.</li>
-<li>Click OK  </li>
-</ol>
-<p><img alt="oracle-vm-virtualbox-manager-machine-settings" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/oracle-vm-virtualbox-manager-machine-settings.png?lightbox&amp;resize=200,200" />
-<img alt="debian-7-2-x64-storage-settings" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/debian-7-2-x64-storage-settings.png?lightbox&amp;resize=200,200" /></p>
-<h3 id="start-the-virtual-machine"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#start-the-virtual-machine">Start the virtual machine</a></h3>
-<ol>
-<li>Open VirtualBox Manager</li>
-<li>Start the Debian-7.2-x64 machine</li>
-<li>Press right CTRL+R to reset the machine. You should see the Debian Installer boot menu.  </li>
-</ol>
-<p><img alt="oracle-vm-virtualbox-manager-start" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/oracle-vm-virtualbox-manager-start.png?lightbox&amp;resize=200,200" />
-<img alt="debian-7-2-x64-debian-installer-boot-menu" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/debian-7-2-x64-debian-installer-boot-menu.png?lightbox&amp;resize=200,200" /></p>
-<h3 id="install-debian"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#install-debian">Install Debian</a></h3>
-<p>In the Debian Install boot menu:</p>
-<ol>
-<li>Select Graphical Install</li>
-<li>Follow the installer instructions and configure Debian just as you would do on a physical machine. You should be able to install without any problems.</li>
-</ol>
-<h3 id="enable-3d-acceleration"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#enable-3d-acceleration">Enable 3D Acceleration</a></h3>
-<h4 id="install-guest-additions-for-virtualbox"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#install-guest-additions-for-virtualbox">Install Guest Additions for VirtualBox</a></h4>
-<ol>
-<li>Start the Debian-7.2-x64 virtual machine</li>
-<li>Login into Debian</li>
-<li>Select <em>Insert Guest Additions CD image…</em> from the VirtualBox <em>Devices</em> menu. Do not run it!</li>
-<li>Open <em>Root Terminal</em></li>
-</ol>
-<p>Install Module Assistant, so you can build kernel modules.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>apt-get<span class="w"> </span>install<span class="w"> </span>module-assistant
-</span></code></pre></div>
-<p>Let Module Assistant prepare the system.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>m-a<span class="w"> </span>prepare
-</span></code></pre></div>
-<p>Install Guest Additions</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sh<span class="w"> </span>/media/cdrom/VBoxLinuxAdditions.run
-</span></code></pre></div>
-<h4 id="enable-3d-acceleration_1"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#enable-3d-acceleration_1">Enable 3D Acceleration</a></h4>
-<ol>
-<li>Shutdown the Debian-7.2-x64 virtual machine</li>
-<li>Open VirtualBox Manager - Select Debian-7.2-x64 &gt; Settings</li>
-<li>Select Display &gt; Video</li>
-<li>Check <em>Enable 3D Acceleration</em></li>
-<li>Start the Debian-7.2-x64 virtual machine</li>
-</ol>
-<h3 id="troubleshooting"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#troubleshooting">Troubleshooting</a></h3>
-<p>If the installation does not start or hangs, try booting using <em>Advanced Options &gt; Expert Install</em>. That will give you more information about what is wrong with the installation.</p>
-<h4 id="errors"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#errors">Errors</a></h4>
-<h5 id="this-kernel-requires-an-x86_64-cpu-but-only-detected-an-i686-cpu"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#this-kernel-requires-an-x86_64-cpu-but-only-detected-an-i686-cpu">This kernel requires an x86_64 CPU, but only detected an i686 CPU …</a></h5>
-<p><img alt="debian-7-2-x64-running-oracle-vm-virtualbox" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/debian-7-2-x64-running-oracle-vm-virtualbox.png?lightbox&amp;resize=200,200" /></p>
-<h6 id="how-to-fix"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#how-to-fix">How to fix</a></h6>
-<ul>
-<li>Make sure Intel Virtualization Technology is ON in the host UEFI / BIOS.</li>
-<li>Make sure the VirtualBox machine version is <em>Debian (64 bit)</em>.</li>
-<li>Make sure Windows Hyper-V services are not running.</li>
-</ul>
-    <nav class="md-post__action">
-      <a href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/">
         Continue reading
       </a>
     </nav>

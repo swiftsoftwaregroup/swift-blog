@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://blog.swiftsoftwaregroup.com/tesnsorflow/">
+        <link rel="canonical" href="https://blog.swiftsoftwaregroup.com/kubernetes/">
       
       
-        <link rel="prev" href="../ruby/">
+        <link rel="prev" href="../keras/">
       
       
-        <link rel="next" href="../ubuntu/">
+        <link rel="next" href="../linux/">
       
       
         <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../feed_rss_created.xml">
@@ -27,7 +27,7 @@
     
     
       
-        <title>tesnsorflow - Swift Software Group Blog</title>
+        <title>kubernetes - Swift Software Group Blog</title>
       
     
     
@@ -89,7 +89,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#tesnsorflow" class="md-skip">
+        <a href="#kubernetes" class="md-skip">
           Skip to content
         </a>
       
@@ -124,7 +124,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              tesnsorflow
+              kubernetes
             
           </span>
         </div>
@@ -1125,6 +1125,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../k3s/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    k3s
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../keras/" class="md-nav__link">
         
   
@@ -1134,6 +1157,80 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    
+      
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    kubernetes
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    kubernetes
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#local-kubernetes-cluster-on-macos-with-ubuntu-multipass-and-k3s" class="md-nav__link">
+    <span class="md-ellipsis">
+      Local Kubernetes cluster on macOS with Ubuntu Multipass and K3s
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1281,71 +1378,20 @@
                 
   
   
-    
-  
   
     
-      
-    
   
   
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    tesnsorflow
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../tensorflow/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    tesnsorflow
+    tensorflow
   </span>
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#creating-a-simple-regression-model-using-tensorflow-and-keras" class="md-nav__link">
-    <span class="md-ellipsis">
-      Creating a simple regression model using Tensorflow and Keras
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1477,9 +1523,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#creating-a-simple-regression-model-using-tensorflow-and-keras" class="md-nav__link">
+  <a href="#local-kubernetes-cluster-on-macos-with-ubuntu-multipass-and-k3s" class="md-nav__link">
     <span class="md-ellipsis">
-      Creating a simple regression model using Tensorflow and Keras
+      Local Kubernetes cluster on macOS with Ubuntu Multipass and K3s
     </span>
   </a>
   
@@ -1497,7 +1543,7 @@
   <div class="md-content" data-md-component="content">
     <div class="md-content__inner">
       <header class="md-typeset">
-        <h1 id="tesnsorflow">tesnsorflow</h1>
+        <h1 id="kubernetes">kubernetes</h1>
       </header>
       
         <article class="md-post md-post--excerpt">
@@ -1506,21 +1552,21 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
-          <time datetime="2024-02-11 00:00:00">February 11, 2024</time></li>
+          <time datetime="2024-07-29 00:00:00">July 29, 2024</time></li>
         
           <li class="md-meta__item">
             in
             
-              <a href="../machine-learning/" class="md-meta__link">machine-learning</a>, 
-              <a href="../deep-neural-networks/" class="md-meta__link">deep-neural-networks</a>, 
-              <a href="../keras/" class="md-meta__link">keras</a>, 
-              <a href="./" class="md-meta__link">tesnsorflow</a></li>
+              <a href="./" class="md-meta__link">kubernetes</a>, 
+              <a href="../k3s/" class="md-meta__link">k3s</a>, 
+              <a href="../ubuntu/" class="md-meta__link">ubuntu</a>, 
+              <a href="../macos/" class="md-meta__link">macos</a></li>
         
         
           
           <li class="md-meta__item">
             
-              7 min read
+              3 min read
             
           </li>
         
@@ -1529,12 +1575,20 @@
     </div>
   </header>
   <div class="md-post__content md-typeset">
-    <h2 id="creating-a-simple-regression-model-using-tensorflow-and-keras"><a class="toclink" href="../simple-regression-tensorflow-keras/">Creating a simple regression model using Tensorflow and Keras</a></h2>
-<h3 id="introduction"><a class="toclink" href="../simple-regression-tensorflow-keras/#introduction">Introduction</a></h3>
-<p>A typical setting where <code>y</code> is a measurement and <code>X</code> is an input can be found in many fields such as science, engineering, economics, and machine learning. </p>
+    <h2 id="local-kubernetes-cluster-on-macos-with-ubuntu-multipass-and-k3s"><a class="toclink" href="../local-kubernetes-cluster-ubuntu-multipass-k3s-macos/">Local Kubernetes cluster on macOS with Ubuntu Multipass and K3s</a></h2>
+<h3 id="install-multipass"><a class="toclink" href="../local-kubernetes-cluster-ubuntu-multipass-k3s-macos/#install-multipass">Install Multipass</a></h3>
+<p>Install via Homebrew:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>brew<span class="w"> </span>install<span class="w"> </span>multipass
+</span></code></pre></div>
+<h3 id="launch-ubuntu-nodes"><a class="toclink" href="../local-kubernetes-cluster-ubuntu-multipass-k3s-macos/#launch-ubuntu-nodes">Launch Ubuntu Nodes</a></h3>
+<p>Launch 3 virtual nodes running Ubuntu 22.04 LTS:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>multipass<span class="w"> </span>launch<span class="w"> </span><span class="m">22</span>.04<span class="w"> </span>--name<span class="w"> </span>ubuntu-k3s-01<span class="w"> </span>--cpus<span class="w"> </span><span class="m">1</span><span class="w"> </span>--memory<span class="w"> </span>2G<span class="w"> </span>--disk<span class="w"> </span>8G
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>multipass<span class="w"> </span>launch<span class="w"> </span><span class="m">22</span>.04<span class="w"> </span>--name<span class="w"> </span>ubuntu-k3s-02<span class="w"> </span>--cpus<span class="w"> </span><span class="m">1</span><span class="w"> </span>--memory<span class="w"> </span>2G<span class="w"> </span>--disk<span class="w"> </span>8G
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>multipass<span class="w"> </span>launch<span class="w"> </span><span class="m">22</span>.04<span class="w"> </span>--name<span class="w"> </span>ubuntu-k3s-03<span class="w"> </span>--cpus<span class="w"> </span><span class="m">1</span><span class="w"> </span>--memory<span class="w"> </span>2G<span class="w"> </span>--disk<span class="w"> </span>8G
+</span></code></pre></div>
 
     <nav class="md-post__action">
-      <a href="../simple-regression-tensorflow-keras/">
+      <a href="../local-kubernetes-cluster-ubuntu-multipass-k3s-macos/">
         Continue reading
       </a>
     </nav>

@@ -506,6 +506,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#debian-wheezy-guest-on-windows-81-host-using-virtualbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debian "Wheezy" guest on Windows 8.1 host using VirtualBox
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-to-save-xdocument-to-xml-and-use-single-quotes-for-attribute-values" class="md-nav__link">
     <span class="md-ellipsis">
       How to save XDocument to xml and use single quotes for attribute values
@@ -536,15 +545,6 @@
   <a href="#configuring-php-curl-root-certificates-on-windows-server" class="md-nav__link">
     <span class="md-ellipsis">
       Configuring PHP / CURL root certificates on Windows Server
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#setup-google-analytics-for-a-bitbucket-repository" class="md-nav__link">
-    <span class="md-ellipsis">
-      Setup Google Analytics for a Bitbucket repository
     </span>
   </a>
   
@@ -1206,11 +1206,57 @@
   
   
     <li class="md-nav__item">
+      <a href="../../k3s/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    k3s
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../../keras/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     keras
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kubernetes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    kubernetes
   </span>
   
 
@@ -1367,11 +1413,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tesnsorflow/" class="md-nav__link">
+      <a href="../../tensorflow/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    tesnsorflow
+    tensorflow
   </span>
   
 
@@ -1509,6 +1555,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#debian-wheezy-guest-on-windows-81-host-using-virtualbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debian "Wheezy" guest on Windows 8.1 host using VirtualBox
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-to-save-xdocument-to-xml-and-use-single-quotes-for-attribute-values" class="md-nav__link">
     <span class="md-ellipsis">
       How to save XDocument to xml and use single quotes for attribute values
@@ -1544,15 +1599,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#setup-google-analytics-for-a-bitbucket-repository" class="md-nav__link">
-    <span class="md-ellipsis">
-      Setup Google Analytics for a Bitbucket repository
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1567,6 +1613,141 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-11-15 00:00:00">November 15, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              4 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="debian-wheezy-guest-on-windows-81-host-using-virtualbox"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/">Debian "Wheezy" guest on Windows 8.1 host using VirtualBox</a></h2>
+<p>This post is about using Oracle VirtualBox to install a Debian 7.2 x86_64 guest virtual machine on Windows 8.1 host.</p>
+<h3 id="install-virtualbox"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#install-virtualbox">Install VirtualBox</a></h3>
+<ol>
+<li>Download the latest VirtualBox installer from <a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a>. Make sure you get the 64-bit version. That was <em>VirtualBox-4.3.2-90405-Win.exe</em> at the time of writing.</li>
+<li>Run the installer and follow the instructions on the screen. Leave the default options as they are. The installation should complete without any issues.</li>
+<li>Download the Oracle VM VirtualBox Extension Pack from <a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a>.</li>
+<li>Double click the downloaded <em>.vbox-extpack</em> file to install the extensions.</li>
+<li>Go to File &gt; Preferences &gt; Extensions. You should see the Oracle VM VirtualBox Extension Pack listed under Extension Packages.</li>
+</ol>
+<p><img alt="virtualbox-settings" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/virtualbox-settings.png?lightbox&amp;resize=200,200" /></p>
+<h3 id="create-virtual-machine"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#create-virtual-machine">Create virtual machine</a></h3>
+<ol>
+<li>Start VirtualBox</li>
+<li>Select Machine &gt; New from the menu - Name: Debian-7.2-x64</li>
+<li>Type: Linux</li>
+<li>Version: Debian (64 bit)</li>
+<li>Click <em>Next</em>  </li>
+</ol>
+<p>NOTE: If the <em>Debian (64 bit)</em> choice is not available, make sure Intel Virtualization Technology is enabled in the host UEFI / BIOS.
+3. Memory size - Memory size: 4096 MB
+- Click <em>Next</em>
+4. Hard drive - Choose <em>Create a virtual hard drive now</em>
+- Click <em>Create</em>
+- Choose VDI (VirtualBox Disk Image)
+- Click <em>Create</em>
+- File allocation and size - Select a path for the virtual disk image
+- Select 100 GB for size
+- Click <em>Create</em></p>
+<p>It takes a few minutes to create the virtual disk image, but eventually you will see the image in the VirtualBox Manager. We are ready to install Debian now.</p>
+<p><img alt="create-virtual-machine" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/create-virtual-machine.png?lightbox&amp;resize=200,200" />
+<img alt="create-virtual-machine-memory-size" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/create-virtual-machine-memory-size.png?lightbox&amp;resize=200,200" />
+<img alt="create-virtual-machine-hard-drive" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/create-virtual-machine-hard-drive.png?lightbox&amp;resize=200,200" />
+<img alt="create-virtual-hard-drive-creating-fixed-medium-storage-unit" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/create-virtual-hard-drive-creating-fixed-medium-storage-unit.png?lightbox&amp;resize=200,200" /> 
+<img alt="oracle-vm-virtualbox-manager" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/oracle-vm-virtualbox-manager.png?lightbox&amp;resize=200,200" /> </p>
+<h3 id="configure-display"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#configure-display">Configure Display</a></h3>
+<p>In VirtualBox Manager:</p>
+<ol>
+<li>Select Debian-7.2-x64 &gt; Settings</li>
+<li>Select Display &gt; Video</li>
+<li>Bump up the video memory to 128 MB.</li>
+<li>Do not check <em>Enable 3D Acceleration</em>. We will enable 3D Acceleration later.  </li>
+</ol>
+<p>no images were found</p>
+<h3 id="mount-debian-boot-cd"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#mount-debian-boot-cd">Mount Debian Boot CD</a></h3>
+<ol>
+<li>Download the Debian 7.2 x64 ISO image from the <a href="http://www.debian.org/CD/netinst/">network install page</a> on the Debian web site. Make sure you get the <em>amd64</em> image.</li>
+<li>Open VirtualBox Manager</li>
+<li>Select Debian-7.2-x64 &gt; Settings</li>
+<li>Select Storage &gt; Controller IDE &gt; Empty</li>
+<li>Click on the little CD icon</li>
+<li>Find and select the Debian ISO (<em>debian-7.2.0-amd64-netinst.iso</em>) that you downloaded in step 1.</li>
+<li>Click OK  </li>
+</ol>
+<p><img alt="oracle-vm-virtualbox-manager-machine-settings" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/oracle-vm-virtualbox-manager-machine-settings.png?lightbox&amp;resize=200,200" />
+<img alt="debian-7-2-x64-storage-settings" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/debian-7-2-x64-storage-settings.png?lightbox&amp;resize=200,200" /></p>
+<h3 id="start-the-virtual-machine"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#start-the-virtual-machine">Start the virtual machine</a></h3>
+<ol>
+<li>Open VirtualBox Manager</li>
+<li>Start the Debian-7.2-x64 machine</li>
+<li>Press right CTRL+R to reset the machine. You should see the Debian Installer boot menu.  </li>
+</ol>
+<p><img alt="oracle-vm-virtualbox-manager-start" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/oracle-vm-virtualbox-manager-start.png?lightbox&amp;resize=200,200" />
+<img alt="debian-7-2-x64-debian-installer-boot-menu" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/debian-7-2-x64-debian-installer-boot-menu.png?lightbox&amp;resize=200,200" /></p>
+<h3 id="install-debian"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#install-debian">Install Debian</a></h3>
+<p>In the Debian Install boot menu:</p>
+<ol>
+<li>Select Graphical Install</li>
+<li>Follow the installer instructions and configure Debian just as you would do on a physical machine. You should be able to install without any problems.</li>
+</ol>
+<h3 id="enable-3d-acceleration"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#enable-3d-acceleration">Enable 3D Acceleration</a></h3>
+<h4 id="install-guest-additions-for-virtualbox"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#install-guest-additions-for-virtualbox">Install Guest Additions for VirtualBox</a></h4>
+<ol>
+<li>Start the Debian-7.2-x64 virtual machine</li>
+<li>Login into Debian</li>
+<li>Select <em>Insert Guest Additions CD image…</em> from the VirtualBox <em>Devices</em> menu. Do not run it!</li>
+<li>Open <em>Root Terminal</em></li>
+</ol>
+<p>Install Module Assistant, so you can build kernel modules.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>apt-get<span class="w"> </span>install<span class="w"> </span>module-assistant
+</span></code></pre></div>
+<p>Let Module Assistant prepare the system.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>m-a<span class="w"> </span>prepare
+</span></code></pre></div>
+<p>Install Guest Additions</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sh<span class="w"> </span>/media/cdrom/VBoxLinuxAdditions.run
+</span></code></pre></div>
+<h4 id="enable-3d-acceleration_1"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#enable-3d-acceleration_1">Enable 3D Acceleration</a></h4>
+<ol>
+<li>Shutdown the Debian-7.2-x64 virtual machine</li>
+<li>Open VirtualBox Manager - Select Debian-7.2-x64 &gt; Settings</li>
+<li>Select Display &gt; Video</li>
+<li>Check <em>Enable 3D Acceleration</em></li>
+<li>Start the Debian-7.2-x64 virtual machine</li>
+</ol>
+<h3 id="troubleshooting"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#troubleshooting">Troubleshooting</a></h3>
+<p>If the installation does not start or hangs, try booting using <em>Advanced Options &gt; Expert Install</em>. That will give you more information about what is wrong with the installation.</p>
+<h4 id="errors"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#errors">Errors</a></h4>
+<h5 id="this-kernel-requires-an-x86_64-cpu-but-only-detected-an-i686-cpu"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#this-kernel-requires-an-x86_64-cpu-but-only-detected-an-i686-cpu">This kernel requires an x86_64 CPU, but only detected an i686 CPU …</a></h5>
+<p><img alt="debian-7-2-x64-running-oracle-vm-virtualbox" src="../../assets/images/debian-wheezy-guest-windows-8-1-host-using-virtualbox/debian-7-2-x64-running-oracle-vm-virtualbox.png?lightbox&amp;resize=200,200" /></p>
+<h6 id="how-to-fix"><a class="toclink" href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/#how-to-fix">How to fix</a></h6>
+<ul>
+<li>Make sure Intel Virtualization Technology is ON in the host UEFI / BIOS.</li>
+<li>Make sure the VirtualBox machine version is <em>Debian (64 bit)</em>.</li>
+<li>Make sure Windows Hyper-V services are not running.</li>
+</ul>
+    <nav class="md-post__action">
+      <a href="../../debian-wheezy-guest-windows-8-1-host-using-virtualbox/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1882,89 +2063,6 @@ Details: error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate ver
 8. Restart the IIS web site</p>
     <nav class="md-post__action">
       <a href="../../configuring-phpcurl-root-certificates-windows-server/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2013-08-19 00:00:00">August 19, 2013</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              3 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="setup-google-analytics-for-a-bitbucket-repository"><a class="toclink" href="../../setup-google-analytics-for-a-bitbucket-repository/">Setup Google Analytics for a Bitbucket repository</a></h2>
-<p>The idea is to create a new Google Analytics property for Bitbucket and then have a separate Google Analytics profiles for each repository. That way I end up with one profile per repository neatly grouped under the Bitbucket property. In the profiles, I also use filters to include only the traffic for the corresponding repository.</p>
-<p>This post is about myself setting up Google Analytics for our <a href="https://bitbucket.org/primosoftware/avblocks-samples/" title="AVBlocks-Samples Repository">AVBlocks-Samples</a> repository, so in the steps below I use the “AVBlocks-Samples” name and the corresponding URL. Needless to say, when going through the steps, you will use the name and URL of your own Bitbucket repo. OK, here it goes:</p>
-<h3 id="create-a-new-google-analytics-property-called-bitbucket"><a class="toclink" href="../../setup-google-analytics-for-a-bitbucket-repository/#create-a-new-google-analytics-property-called-bitbucket">Create a new Google Analytics property called Bitbucket</a></h3>
-<ol>
-<li>Go to Google Analytics and login into your account.</li>
-<li>Click on the Admin link at the top right corner.</li>
-<li>Click on the property drop-down list and then select the New Property at the bottom.</li>
-<li>Select “Classic Analytics” for tracking method.</li>
-<li>Under Website Name, type “Bitbucket”.</li>
-<li>Under Web Site URL, select “https://” and type “bitbucket.org”.</li>
-<li>Click [Get Tracking ID]</li>
-</ol>
-<p><img alt="2013-08-19-19_30_38-google-analytics" src="../../assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-19-19_30_38-google-analytics.png?lightbox&amp;resize=200,200" /> 
-<img alt="2013-08-19-19_52_18-google-analytics" src="../../assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-19-19_52_18-google-analytics.png?lightbox&amp;resize=200,200" /> </p>
-<h3 id="add-the-tracking-id-to-the-bitbucket-repository"><a class="toclink" href="../../setup-google-analytics-for-a-bitbucket-repository/#add-the-tracking-id-to-the-bitbucket-repository">Add the Tracking ID to the Bitbucket repository</a></h3>
-<p>Google Analytics will generate a new tracking ID for you, something that looks like “UA-123456-78″.</p>
-<ol>
-<li>Copy the Tracking ID that Google generated</li>
-<li>Go to the repository admin page on Bitbucket</li>
-<li>Paste the Tracking ID into the “Google Analytics key” field.</li>
-</ol>
-<p><img alt="2013-08-19-19_55_54-avblocks-samples-bitbucket" src="../../assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-19-19_55_54-avblocks-samples-bitbucket.png?lightbox&amp;resize=200,200" /> </p>
-<p>## Update the Google Analytics profile</p>
-<ol>
-<li>Go back to Google Analytics admin page</li>
-<li>Select “Bitbucket” for property</li>
-<li>Select “All Web Site Data” for profile</li>
-<li>Click “View Settings”</li>
-<li>Update the Website’s URL with the full URL of your bitbucket repository.</li>
-<li>In my case I put “https://” and “bitbucket.org/primosoftware/avblocks-samples”.</li>
-<li>If you plan to have multiple repo profiles under the Bitbucket property, I recommend changing the View name to something other than “All Web Site Data”. I my case, I named my property “AVBlocks-Samples”.</li>
-<li>Click Apply.</li>
-</ol>
-<p><img alt="2013-08-19-20_06_28-google-analytics" src="../../assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-19-20_06_28-google-analytics.png?lightbox&amp;resize=200,200" /> 
-<img alt="2013-08-19-20_12_10-google-analytics" src="../../assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-19-20_12_10-google-analytics.png?lightbox&amp;resize=200,200" /> 
-<img alt="2013-08-22-06_27_20-google-analytics" src="../../assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-22-06_27_20-google-analytics.png?lightbox&amp;resize=200,200" /> </p>
-<h3 id="setup-a-profile-filter"><a class="toclink" href="../../setup-google-analytics-for-a-bitbucket-repository/#setup-a-profile-filter">Setup a profile filter</a></h3>
-<ol>
-<li>Go back to Google Analytics admin page</li>
-<li>Select “Bitbucket” for property</li>
-<li>Select “AVBlocks-Samples” for profile</li>
-<li>Click “View Settings”</li>
-<li>Click “Filters” and then on the +New Filter button.</li>
-<li>Type “AVBlocks-Samples” for Filter Name</li>
-<li>Select “Predefined filter” for Filter Type</li>
-<li>Select “include only”, “traffic to subdirectories”, “that begin with”</li>
-<li>Type “/primosoftware/avblocks-samples/” for Subdirectory</li>
-<li>Select “No” for Case Sensitive</li>
-<li>Click Save</li>
-</ol>
-<p><img alt="2013-08-22-07_00_25-google-analytics" src="../../assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-22-07_00_25-google-analytics.png?lightbox&amp;resize=200,200" /> 
-<img alt="2013-08-22-07_15_04-google-analytics" src="../../assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-22-07_15_04-google-analytics.png?lightbox&amp;resize=200,200" /> 
-<img alt="2013-08-22-07_15_47-google-analytics" src="../../assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-22-07_15_47-google-analytics.png?lightbox&amp;resize=200,200" /> </p>
-    <nav class="md-post__action">
-      <a href="../../setup-google-analytics-for-a-bitbucket-repository/">
         Continue reading
       </a>
     </nav>

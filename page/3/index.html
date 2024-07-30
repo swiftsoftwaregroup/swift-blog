@@ -506,6 +506,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#setup-net-development-environment-on-macos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup .NET development environment on macOS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#configure-ruby-environment-on-ubuntu" class="md-nav__link">
     <span class="md-ellipsis">
       Configure Ruby Environment on Ubuntu
@@ -536,15 +545,6 @@
   <a href="#configure-ruby-environment-on-windows" class="md-nav__link">
     <span class="md-ellipsis">
       Configure Ruby Environment on Windows
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#run-mongodb-with-podman" class="md-nav__link">
-    <span class="md-ellipsis">
-      Run MongoDB with Podman
     </span>
   </a>
   
@@ -1206,11 +1206,57 @@
   
   
     <li class="md-nav__item">
+      <a href="../../k3s/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    k3s
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../../keras/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     keras
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kubernetes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    kubernetes
   </span>
   
 
@@ -1367,11 +1413,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tesnsorflow/" class="md-nav__link">
+      <a href="../../tensorflow/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    tesnsorflow
+    tensorflow
   </span>
   
 
@@ -1509,6 +1555,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#setup-net-development-environment-on-macos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup .NET development environment on macOS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#configure-ruby-environment-on-ubuntu" class="md-nav__link">
     <span class="md-ellipsis">
       Configure Ruby Environment on Ubuntu
@@ -1544,15 +1599,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#run-mongodb-with-podman" class="md-nav__link">
-    <span class="md-ellipsis">
-      Run MongoDB with Podman
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1567,6 +1613,50 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2023-11-14 00:00:00">November 14, 2023</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../csharp/" class="md-meta__link">csharp</a>, 
+              <a href="../../dotnet/" class="md-meta__link">dotnet</a>, 
+              <a href="../../macos/" class="md-meta__link">macos</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              1 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="setup-net-development-environment-on-macos"><a class="toclink" href="../../setup-net-development-environment-macos/">Setup .NET development environment on macOS</a></h2>
+<h2 id="setup-for-macos"><a class="toclink" href="../../setup-net-development-environment-macos/#setup-for-macos">Setup for macOS</a></h2>
+<p>Download the <code>dotnet-install.sh</code> script</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="nb">cd</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>curl<span class="w"> </span>-sSL<span class="w"> </span>https://dot.net/v1/dotnet-install.sh<span class="w"> </span>&gt;<span class="w"> </span>dotnet-install.sh
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>chmod<span class="w"> </span>+x<span class="w"> </span>dotnet-install.sh
+</span></code></pre></div>
+
+    <nav class="md-post__action">
+      <a href="../../setup-net-development-environment-macos/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1679,7 +1769,7 @@
     <h2 id="setup-c-development-environment-on-macos"><a class="toclink" href="../../setup-cpp-development-environment-macos/">Setup C++ development environment on macOS</a></h2>
 <h3 id="homebrew"><a class="toclink" href="../../setup-cpp-development-environment-macos/#homebrew">Homebrew</a></h3>
 <p>Install Homebrew:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>/bin/bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="k">)</span><span class="s2">&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>/bin/bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="k">)</span><span class="s2">&quot;</span>
 </span></code></pre></div>
 
     <nav class="md-post__action">
@@ -1726,49 +1816,6 @@
 
     <nav class="md-post__action">
       <a href="../../configure-ruby-environment-windows/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2023-05-23 00:00:00">May 23, 2023</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../../podman/" class="md-meta__link">podman</a>, 
-              <a href="../../mongodb/" class="md-meta__link">mongodb</a></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              1 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="run-mongodb-with-podman"><a class="toclink" href="../../run-mongodb-with-podman/">Run MongoDB with Podman</a></h2>
-<p>Before you start install <a href="/setup-podman-macos">Podman</a>.</p>
-<h3 id="set-machine-to-rootful"><a class="toclink" href="../../run-mongodb-with-podman/#set-machine-to-rootful">Set machine to <code>rootful</code></a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>podman<span class="w"> </span>machine<span class="w"> </span>stop
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>podman<span class="w"> </span>machine<span class="w"> </span><span class="nb">set</span><span class="w"> </span>--rootful
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>podman<span class="w"> </span>machine<span class="w"> </span>start
-</span></code></pre></div>
-
-    <nav class="md-post__action">
-      <a href="../../run-mongodb-with-podman/">
         Continue reading
       </a>
     </nav>

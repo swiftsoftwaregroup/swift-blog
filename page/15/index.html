@@ -506,6 +506,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 2)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1" class="md-nav__link">
     <span class="md-ellipsis">
       Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 1)
@@ -536,15 +545,6 @@
   <a href="#import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench" class="md-nav__link">
     <span class="md-ellipsis">
       Import a SQL dump from one schema into another with MySQL Workbench
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#super-agile-unknown-is-good-for-your-team" class="md-nav__link">
-    <span class="md-ellipsis">
-      Super Agile: Unknown is good for your team
     </span>
   </a>
   
@@ -1206,11 +1206,57 @@
   
   
     <li class="md-nav__item">
+      <a href="../../k3s/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    k3s
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../../keras/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     keras
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kubernetes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    kubernetes
   </span>
   
 
@@ -1367,11 +1413,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tesnsorflow/" class="md-nav__link">
+      <a href="../../tensorflow/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    tesnsorflow
+    tensorflow
   </span>
   
 
@@ -1509,6 +1555,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 2)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1" class="md-nav__link">
     <span class="md-ellipsis">
       Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 1)
@@ -1544,15 +1599,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#super-agile-unknown-is-good-for-your-team" class="md-nav__link">
-    <span class="md-ellipsis">
-      Super Agile: Unknown is good for your team
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1567,6 +1613,66 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-01-23 00:00:00">January 23, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              4 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2"><a class="toclink" href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/">Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 2)</a></h2>
+<p>This is the second post of a <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (TOC)">multi-part article</a> about Mercurial subrepositories. Please make sure you read <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/" title="Hg subrepositories: a how-to guide for the svn:externals junkie (Part 1)">Part 1</a> before reading this post.</p>
+<p>In <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/" title="Hg subrepositories: a how-to guide for the svn:externals junkie (Part 1)">Part 1</a> of this series we created a Mercurial container <em>SandboxRootHg</em>repository and Mercurial repositories for the main project -<em>SandboxHg,</em>and its two depencies – <em>SandboxDep1Hg</em> and<em>SandboxDep2Hg. </em>Then we added the main project and dependency projects as subrepositories to <em>SandboxRootHg</em>.</p>
+<p>In this post we will go through a <strong>Change / Push</strong> and <strong>Pull / Update</strong> cycle for the subrepositories. If you followed the steps in <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/" title="Hg subrepositories: a how-to guide for the svn:externals junkie (Part 1)">Part 1</a> you will end up with a <em>SandboxRootHg</em>structure similar to the one shown on this screenshot:</p>
+<p><img alt="sandboxroothg-tortoisehg-workbench-15" src="../../assets/images/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/sandboxroothg-tortoisehg-workbench-15.png" /> </p>
+<p>Notice the <em>.hgsubstate</em> file. Mercurial added this file to track the subrepository revisions. We will get back to examine this file when we make changes to the projects and we synchronize those changes with the remote shared repository.</p>
+<p>To simulate a two machine setup I simply cloned the <em>SandboxRootHg</em>shared remote repository to two separate folders named <em>Work</em> and <em>Home</em> respectively. After that I created two groups in TortoiseHg Workbench registry and rearranged the groups and the repositories to reflect my new directory structure. Here is another screenshot:</p>
+<p><img alt="sandboxroothg-tortoisehg-workbench-16" src="../../assets/images/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/sandboxroothg-tortoisehg-workbench-16.png" /></p>
+<p>We are now ready do do some testing.</p>
+<p>Go to the <em>Home</em> folder and add a new file <em>TestFile-1.txt</em> to the <em>SandboxRootHg/SandboxHg</em> folder, right click on the new file and select <strong>TortoiseHg/Add Files</strong> from the menu, then do <strong>Hg Commit</strong>. So far the changes have been committed to your local repository clone. You still have to <strong>Push</strong> the changes to remote shared repository. You can do that in the Synchronize view ofthe TortoiseHg Workbench.</p>
+<p><img alt="sandboxhg-tortoisehg-workbench-17" src="../../assets/images/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/sandboxhg-tortoisehg-workbench-17.png" /></p>
+<p>Now go to the <em>Work</em> folder,right click onthe <em>SandboxRootHg</em> folder and select <strong>Hg Workbench</strong> from the menu. Switch to Synchronize view and pull the changes from the remote repository. Hmm.. Nothing came in the <em>Work/SandboxRootHg/SandboxHg</em> folder. We should have received a change set with the <em>TestFile-1.txt</em>. What happened? We added <em>TestFile-1.txt</em>  in <em>Home/SandboxRootHg/SandboxHg</em>, committed and pushed the change to the remote server. However we forgot to commit and push the change in the container repository: <em>Home/SandboxRootHg</em>. Right click on <em>Home/SandboxRootHg</em> and select <strong>Hg Commit</strong> from the menu.</p>
+<p><img alt="sandboxhg-tortoisehg-commit-18" src="../../assets/images/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/sandboxhg-tortoisehg-commit-18.png" /></p>
+<p>If you open the <em>.hgsubstate</em> file under the <em><em>Home/</em>SandboxRootHg</em> folder you will see that after the commit the Mercurial updated the revision id of the <em>SandBoxHg</em> project. The <em>.hgsubstate</em> contents changed from this:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>0000000000000000000000000000000000000000 SandboxDep1Hg
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>0000000000000000000000000000000000000000 SandboxDep2Hg
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>0000000000000000000000000000000000000000 SandboxHg
+</span></code></pre></div>
+<p>to this:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>0000000000000000000000000000000000000000 SandboxDep1Hg
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>0000000000000000000000000000000000000000 SandboxDep2Hg
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>4090583f58e67f599b5141ed2551be3eb4fe5c8c SandboxHg
+</span></code></pre></div>
+<p>Now all we have to do is Push the <em>Home/SandboxRootHg</em> changes to the remote shared repository.</p>
+<p>Go again to the <em>Work</em> folder,right click on <em>SandboxRootHg</em> and select <strong>Hg Workbench</strong> from the menu. Switch to the Synchronize view and pull the changes from the remote repository. This is how my Hg Workbench looks like after the update:</p>
+<p><img alt="sandboxroothg-tortoisehg-workbench-19" src="../../assets/images/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/sandboxroothg-tortoisehg-workbench-19.png" /></p>
+<p>Notice on the screenshot above that our working copy still does not have the latest code in it. TortoiseHg makes alerts us by displaying the “Not a head revision!” message in red. One of the differences between Mercurial and Subversion is that in Mercurial you have a two-step code update. Basically the <strong>Hg/Pull</strong> command only downloads the latest change sets from a remote shared repository. After you pull the changes you still have to apply them by issuing an <strong>Hg/Update</strong> command.</p>
+<p>Go to the <em>Work</em> folder, right click on the <em>SandboxRootHg</em> folder, and select <strong>TortoiseHg &gt; Update</strong> from the menu. This updates our working copy with the changes we downloaded when did <strong>Hg/Pull</strong>.</p>
+<p><img alt="sandboxroothg-tortoisehg-workbench-21" src="../../assets/images/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/sandboxroothg-tortoisehg-workbench-21.png" /></p>
+<p>If you check the <em>Work/SandboxRootHg/SandboxHg</em> folder you will see that the <em>TestFile-1.txt</em> file is now there as it should be.</p>
+<p>Continue to <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 3)">Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 3)</a></p>
+    <nav class="md-post__action">
+      <a href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1790,37 +1896,6 @@ default = https://myusername@bitbucket.org/primosoftware/projectmap
 <p>After that, import the dump file using MySQL Workbench as usual. Please note that if you exported the old schema with qualified identifiers you would also have to search and replace the schema name everywhere in the dump file, otherwise each object would have the old schema name as prefix.</p>
     <nav class="md-post__action">
       <a href="../../import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2012-11-27 00:00:00">November 27, 2012</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              1 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="super-agile-unknown-is-good-for-your-team"><a class="toclink" href="../../super-agile-unknown-good-team/">Super Agile: Unknown is good for your team</a></h2>
-<p>Encourage developers to work on things or with technologies they do not know. Watch them becoming the fearless masters of technology, who can solve any problem you throw at them.</p>
-    <nav class="md-post__action">
-      <a href="../../super-agile-unknown-good-team/">
         Continue reading
       </a>
     </nav>
