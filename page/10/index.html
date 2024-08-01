@@ -506,6 +506,24 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#ubuntu-and-chef-with-vagrant-and-virtualbox-on-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ubuntu and Chef with Vagrant and VirtualBox on Windows
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-install-jekyll-on-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to Install Jekyll on Windows
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ubuntu-with-vagrant-and-virtualbox-on-windows" class="md-nav__link">
     <span class="md-ellipsis">
       Ubuntu with Vagrant and VirtualBox on Windows
@@ -527,24 +545,6 @@
   <a href="#how-to-use-a-different-cache-directory-for-chocolatey-packages" class="md-nav__link">
     <span class="md-ellipsis">
       How to use a different cache directory for Chocolatey packages
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#unable-to-generate-an-explicit-migration-because-the-following-explicit-migrations-are-pending" class="md-nav__link">
-    <span class="md-ellipsis">
-      Unable to generate an explicit migration because the following explicit migrations are pending
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how-to-upgrade-the-linux-kernel-to-311-on-ubuntu-12044-lts" class="md-nav__link">
-    <span class="md-ellipsis">
-      How to upgrade the Linux kernel to 3.11 on Ubuntu 12.04.4 LTS
     </span>
   </a>
   
@@ -958,6 +958,29 @@
   
   <span class="md-ellipsis">
     aws
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aws-cdk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    aws-cdk
   </span>
   
 
@@ -1578,6 +1601,24 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#ubuntu-and-chef-with-vagrant-and-virtualbox-on-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ubuntu and Chef with Vagrant and VirtualBox on Windows
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-install-jekyll-on-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to Install Jekyll on Windows
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ubuntu-with-vagrant-and-virtualbox-on-windows" class="md-nav__link">
     <span class="md-ellipsis">
       Ubuntu with Vagrant and VirtualBox on Windows
@@ -1604,24 +1645,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#unable-to-generate-an-explicit-migration-because-the-following-explicit-migrations-are-pending" class="md-nav__link">
-    <span class="md-ellipsis">
-      Unable to generate an explicit migration because the following explicit migrations are pending
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how-to-upgrade-the-linux-kernel-to-311-on-ubuntu-12044-lts" class="md-nav__link">
-    <span class="md-ellipsis">
-      How to upgrade the Linux kernel to 3.11 on Ubuntu 12.04.4 LTS
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1636,6 +1659,233 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2015-11-22 00:00:00">November 22, 2015</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              2 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="ubuntu-and-chef-with-vagrant-and-virtualbox-on-windows"><a class="toclink" href="../../ubuntu-chef-vagrant-virtualbox-windows/">Ubuntu and Chef with Vagrant and VirtualBox on Windows</a></h2>
+<p>In this post we show how you can use <a href="https://www.virtualbox.org/">VirtualBox</a> and <a href="https://www.vagrantup.com/">Vagrant</a> to launch an Ubuntu 14.04 guest and install the latest <a href="https://www.chef.io/chef/">Chef</a> client on it using Windows 10 as a host.</p>
+<h3 id="prerequisites"><a class="toclink" href="../../ubuntu-chef-vagrant-virtualbox-windows/#prerequisites">Prerequisites</a></h3>
+<p>You need VirtualBox and Vagrant installed. To do that, you can follow the steps described in <a href="http://www.swiftsoftwaregroup.com/ubuntu-with-vagrant-and-virtualbox-on-windows/">Ubuntu with Vagrant and VirtualBox on Windows</a>.</p>
+<h3 id="chef"><a class="toclink" href="../../ubuntu-chef-vagrant-virtualbox-windows/#chef">Chef</a></h3>
+<h4 id="install-chef-development-kit-chefdk"><a class="toclink" href="../../ubuntu-chef-vagrant-virtualbox-windows/#install-chef-development-kit-chefdk">Install Chef Development Kit (ChefDK)</a></h4>
+<p>In PowerShell as <em>Administrator</em>:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">choco</span> <span class="n">install</span> <span class="n">chefdk</span>
+</span></code></pre></div>
+<h4 id="install-chef-on-the-guest"><a class="toclink" href="../../ubuntu-chef-vagrant-virtualbox-windows/#install-chef-on-the-guest">Install Chef on the guest</a></h4>
+<p>Before you can use Chef Solo, Chef Zero, or Chef Client for provisioning, you need to install the latest Chef client on the guest. </p>
+<p>Open <code>Vagrantfile</code> and add the following code at the end of the configuration:</p>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Provision Chef Client with a shell script that runs the Chef Omnibus Installer</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># For more information see https://docs.chef.io/install_omnibus.html</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># </span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span><span class="w"> </span><span class="s2">&quot;shell&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">inline</span><span class="p">:</span><span class="w"> </span><span class="o">&lt;&lt;-</span><span class="dl">SHELL</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="sh">  sudo apt-get update -y</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="sh">  sudo apt-get install curl -y</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="sh">  curl -L https://www.opscode.com/chef/install.sh | sudo bash</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="dl">SHELL</span>
+</span></code></pre></div>
+<p>The complete <code>Vagrantfile</code> file should look like this:</p>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># -*- mode: ruby -*-</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1"># vi: set ft=ruby :</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># All Vagrant configuration is done below. The &quot;2&quot; in Vagrant.configure</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># configures the configuration version (we support older styles for</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="c1"># backwards compatibility). Please don&#39;t change it unless you know what</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># you&#39;re doing.</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="c1">#</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">  </span><span class="c1"># Every Vagrant development environment requires a box. You can search for</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">  </span><span class="c1"># boxes at https://atlas.hashicorp.com/search.</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">  </span><span class="c1">#</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="w">  </span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ubuntu/trusty64&quot;</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="w">  </span><span class="c1"># Provider-specific configuration so you can fine-tune various</span>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="w">  </span><span class="c1"># backing providers for Vagrant. These expose provider-specific options.</span>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="w">  </span><span class="c1">#</span>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="w">  </span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span><span class="w"> </span><span class="s2">&quot;virtualbox&quot;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">vb</span><span class="o">|</span>
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="w">    </span><span class="c1"># For a complete reference, please see the online documentation at</span>
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="w">    </span><span class="c1"># https://docs.vagrantup.com/v2/virtualbox/configuration.html</span>
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>
+</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="w">    </span><span class="c1"># Name used in Oracle VM VirtualBox Manager GUI</span>
+</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="w">    </span><span class="n">vb</span><span class="o">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Ubuntu-x64-Vagrant&quot;</span>
+</span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>
+</span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="w">    </span><span class="c1"># Customize the amount of memory on the VM (in MB):</span>
+</span><span id="__span-6-27"><a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="w">    </span><span class="n">vb</span><span class="o">.</span><span class="n">memory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;2048&quot;</span>
+</span><span id="__span-6-28"><a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a>
+</span><span id="__span-6-29"><a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a><span class="w">    </span><span class="c1"># Customize the amount of video memory on the VM (in MB):</span>
+</span><span id="__span-6-30"><a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a><span class="w">    </span><span class="n">vb</span><span class="o">.</span><span class="n">customize</span><span class="w"> </span><span class="o">[</span><span class="s2">&quot;modifyvm&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:id</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--vram&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;128&quot;</span><span class="o">]</span>
+</span><span id="__span-6-31"><a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a><span class="w">  </span><span class="k">end</span>
+</span><span id="__span-6-32"><a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a>
+</span><span id="__span-6-33"><a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a><span class="w">  </span><span class="c1"># Provision Chef Client with a shell script that runs the Chef Omnibus Installer</span>
+</span><span id="__span-6-34"><a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a><span class="w">  </span><span class="c1"># For more information see https://docs.chef.io/install_omnibus.html</span>
+</span><span id="__span-6-35"><a id="__codelineno-6-35" name="__codelineno-6-35" href="#__codelineno-6-35"></a><span class="w">  </span><span class="c1"># </span>
+</span><span id="__span-6-36"><a id="__codelineno-6-36" name="__codelineno-6-36" href="#__codelineno-6-36"></a><span class="w">  </span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span><span class="w"> </span><span class="s2">&quot;shell&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">inline</span><span class="p">:</span><span class="w"> </span><span class="o">&lt;&lt;-</span><span class="dl">SHELL</span>
+</span><span id="__span-6-37"><a id="__codelineno-6-37" name="__codelineno-6-37" href="#__codelineno-6-37"></a><span class="sh">    sudo apt-get update -y</span>
+</span><span id="__span-6-38"><a id="__codelineno-6-38" name="__codelineno-6-38" href="#__codelineno-6-38"></a><span class="sh">    sudo apt-get install curl -y</span>
+</span><span id="__span-6-39"><a id="__codelineno-6-39" name="__codelineno-6-39" href="#__codelineno-6-39"></a><span class="sh">    curl -L https://www.opscode.com/chef/install.sh | sudo bash</span>
+</span><span id="__span-6-40"><a id="__codelineno-6-40" name="__codelineno-6-40" href="#__codelineno-6-40"></a><span class="dl">  SHELL</span>
+</span><span id="__span-6-41"><a id="__codelineno-6-41" name="__codelineno-6-41" href="#__codelineno-6-41"></a><span class="k">end</span>
+</span></code></pre></div>
+<h4 id="test"><a class="toclink" href="../../ubuntu-chef-vagrant-virtualbox-windows/#test">Test</a></h4>
+<p>Reload and provision the guest virtual machine. This should install the latest Chef Client:</p>
+<div class="language-posh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">vagrant</span> <span class="n">reload</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">vagrant</span> <span class="n">provision</span>
+</span></code></pre></div>
+    <nav class="md-post__action">
+      <a href="../../ubuntu-chef-vagrant-virtualbox-windows/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2015-09-12 00:00:00">September 12, 2015</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              2 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="how-to-install-jekyll-on-windows"><a class="toclink" href="../../how-to-install-jekyll-on-windows/">How to Install Jekyll on Windows</a></h2>
+<p>This post shows how to install Ruby and Jekyll via Chocolatey on Windows 8.1 or Windows Server 2012 R2 Update 1.</p>
+<h3 id="chocolatey"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#chocolatey">Chocolatey</a></h3>
+<p>If you do not have Chocolatey, you can install it by following the instructions on <a href="https://chocolatey.org/">chocolatey.org</a>. You may also see <a href="http://www.swiftsoftwaregroup.com/configure-download-folder-chocolatey-packages/">this post</a> for instructions on how to set the Chocolatey cache location.</p>
+<h3 id="ruby"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#ruby">Ruby</a></h3>
+<h4 id="install"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#install">Install</a></h4>
+<p>Open PowerShell as Administrator and run the following command:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">choco</span> <span class="n">install</span> <span class="n">ruby</span>
+</span></code></pre></div>
+<p>This will install Ruby 2.1.6 in <code>C:\tools\ruby21\bin</code>. </p>
+<h4 id="configure"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#configure">Configure</a></h4>
+<p>Close PowerShell and open it again, so it can pick the changes to the PATH environment.</p>
+<h4 id="test"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#test">Test</a></h4>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">ruby</span> <span class="p">-</span><span class="n">-version</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">ruby</span> <span class="n">2</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">6p336</span> <span class="p">(</span><span class="n">2015</span><span class="p">-</span><span class="n">04</span><span class="p">-</span><span class="n">13</span> <span class="n">revision</span> <span class="n">50298</span><span class="p">)</span> <span class="p">[</span><span class="n">x64-mingw32</span><span class="p">]</span>
+</span></code></pre></div>
+<h3 id="ruby-devkit-20"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#ruby-devkit-20">Ruby DevKit (2.0+)</a></h3>
+<h4 id="install_1"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#install_1">Install</a></h4>
+<p>Open PowerShell as Administrator and run the following command:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">choco</span> <span class="n">install</span> <span class="n">ruby2</span><span class="p">.</span><span class="n">devkit</span>
+</span></code></pre></div>
+<p>This will install Ruby DevKit 2.0+ and its dependencies- in <code>C:\tools\DevKit2</code>.  </p>
+<h4 id="configure_1"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#configure_1">Configure</a></h4>
+<p>Open <code>C:\tools\DevKit2\config.yml</code>and add <code>C:\tools\ruby21</code> path at the end. The complete <code>config.yml</code> should look like this:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># This configuration file contains the absolute path locations of all</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="c1"># installed Rubies to be enhanced to work with the DevKit. This config</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="c1"># file is generated by the &#39;ruby dk.rb init&#39; step and may be modified</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="c1"># before running the &#39;ruby dk.rb install&#39; step. To include any installed</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="c1"># Rubies that were not automagically discovered, simply add a line below</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="c1"># the triple hyphens with the absolute path to the Ruby root directory.</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="c1">#</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="c1"># Example:</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="c1">#</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="c1"># ---</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="c1"># - C:/ruby19trunk</span>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="c1"># - C:/ruby192dev</span>
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="c1">#</span>
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="nn">---</span>
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">C:/tools/ruby21</span>
+</span></code></pre></div>
+<p>Run the DevKit installer: </p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nb">cd </span><span class="n">C</span><span class="p">:/</span><span class="n">tools</span><span class="p">/</span><span class="n">DevKit2</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="n">ruby</span> <span class="n">dk</span><span class="p">.</span><span class="n">rb</span> <span class="n">install</span>
+</span></code></pre></div>
+<h3 id="jekyll"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#jekyll">Jekyll</a></h3>
+<h4 id="install-bundler"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#install-bundler">Install Bundler</a></h4>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">gem</span> <span class="n">install</span> <span class="n">bundler</span>
+</span></code></pre></div>
+<h4 id="create-jekyll-site"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#create-jekyll-site">Create Jekyll Site</a></h4>
+<p>Create a <code>jekyll</code> directory under your home:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nb">cd </span><span class="p">~</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="n">mkdir</span> <span class="n">jekyll</span>
+</span></code></pre></div>
+<h4 id="create-a-new-bundle"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#create-a-new-bundle">Create a New Bundle</a></h4>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nb">cd </span><span class="p">~/</span><span class="n">jekyll</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="n">bundle</span> <span class="n">init</span>
+</span></code></pre></div>
+<h5 id="jekyll-gem"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#jekyll-gem">Jekyll Gem</a></h5>
+<p>For Jekyll we need the <code>jekyll</code> gem.</p>
+<h5 id="syntax-highlighter-gem"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#syntax-highlighter-gem">Syntax Highlighter Gem</a></h5>
+<p>We will use <code>rouge</code> as a syntax highlighter. This comes in the <code>rouge</code> gem.</p>
+<h5 id="auto-generation-gem"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#auto-generation-gem">Auto-generation Gem</a></h5>
+<p>Jekyll has a built-in auto-regeneration feature that watches your source folder for changes and then re-builds your site. On Windows, you need to install the <code>wdm</code> gem to enable this functionality.</p>
+<h5 id="gemfile"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#gemfile">Gemfile</a></h5>
+<p>Open the <code>Gemfile</code> file and add <code>jekyll</code>, <code>rouge</code>, and <code>wdm</code> packages. Here is the final file:</p>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># A sample Gemfile</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="n">source</span><span class="w"> </span><span class="s2">&quot;https://rubygems.org&quot;</span>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="n">gem</span><span class="w"> </span><span class="s2">&quot;jekyll&quot;</span>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="n">gem</span><span class="w"> </span><span class="s2">&quot;rouge&quot;</span>
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="n">gem</span><span class="w"> </span><span class="s2">&quot;wdm&quot;</span>
+</span></code></pre></div>
+<h5 id="install-gems"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#install-gems">Install Gems</a></h5>
+<p>Install gems locally:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="n">bundle</span> <span class="n">install</span> <span class="p">-</span><span class="n">-binstubs</span> <span class="p">-</span><span class="n">-path</span> <span class="n">vendor</span>
+</span></code></pre></div>
+<h4 id="create-site"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#create-site">Create Site</a></h4>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="nb">cd </span><span class="p">~/</span><span class="n">jekyll</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="n">bundle</span> <span class="n">exec</span> <span class="n">jekyll</span> <span class="n">new</span> <span class="n">site</span>
+</span></code></pre></div>
+<h4 id="configure_2"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#configure_2">Configure</a></h4>
+<h5 id="syntax-highlighter"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#syntax-highlighter">Syntax Highlighter</a></h5>
+<p>Open <code>~/jekyll/site/_config.yml</code>. Add this line at the end to set <code>rouge</code> as a syntax highlighter:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="nt">highlighter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rouge</span>
+</span></code></pre></div>
+<h4 id="test_1"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#test_1">Test</a></h4>
+<h5 id="build"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#build">Build</a></h5>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="nb">cd </span><span class="p">~/</span><span class="n">jekyll</span><span class="p">/</span><span class="n">site</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="n">chcp</span> <span class="n">65001</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="n">bundle</span> <span class="n">exec</span> <span class="n">jekyll</span> <span class="n">build</span> <span class="p">-</span><span class="n">-watch</span>
+</span></code></pre></div>
+<h5 id="serve"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#serve">Serve</a></h5>
+<p>Open a second PowerShell window</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="nb">cd </span><span class="p">~/</span><span class="n">jekyll</span><span class="p">/</span><span class="n">site</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="n">chcp</span> <span class="n">65001</span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="n">bundel</span> <span class="n">exec</span> <span class="n">jekyll</span> <span class="n">serve</span>
+</span></code></pre></div>
+<p>Open a browser and navigate to <code>http://localhost:4000</code>. You should see a basic Jekyll site running.</p>
+<h5 id="auto-generation"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#auto-generation">Auto-generation</a></h5>
+<p>Go to <code>~/jekyll/site</code> and open <code>About.md</code> with a text editor capable of using UTF-8 encoding, e.g. Sublime Text. Change the title from <code>About</code> to <code>About Me</code>. Save the file. Refresh your browser and navigate to <code>http://localhost:4000/about/</code>. You should see the page has the new <code>About Me</code> title.   </p>
+    <nav class="md-post__action">
+      <a href="../../how-to-install-jekyll-on-windows/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1863,123 +2113,6 @@ boxes at https://atlas.hashicorp.com/search.   </p>
   </div>
 </article>
       
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2014-10-16 00:00:00">October 16, 2014</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              1 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="unable-to-generate-an-explicit-migration-because-the-following-explicit-migrations-are-pending"><a class="toclink" href="../../unable-to-generate-an-explicit-migration-because-the-following-explicit-migrations-are-pending/">Unable to generate an explicit migration because the following explicit migrations are pending</a></h2>
-<p>After renaming the namespace of some POCO classes from <code>Primo.LicenseManager.Models</code> to <code>Primo.Licensing.DataModel</code>, the Entity Framework scaffolding no longer recognizes the applied migrations:</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">Add-Migration</span> <span class="n">-Name</span> <span class="n">AddInvoiceEntity</span> <span class="n">-Verbose</span> <span class="n">-StartUpProjectName</span> <span class="n">LicensingDataModel</span> <span class="n">-ProjectName</span> <span class="n">LicensingDataModel</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">Unable</span> <span class="n">to</span> <span class="n">generate</span> <span class="n">an</span> <span class="n">explicit</span> <span class="n">migration</span> <span class="n">because</span> <span class="n">the</span> <span class="n">following</span> <span class="n">explicit</span> <span class="n">migrations</span> <span class="n">are</span> <span class="n">pending</span><span class="p">:</span> <span class="p">[</span><span class="n">201310191546582_CreateTables</span><span class="p">].</span> 
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">Apply</span> <span class="n">the</span> <span class="n">pending</span> <span class="n">explicit</span> <span class="n">migrations</span> <span class="n">before</span> <span class="n">attempting</span> <span class="n">to</span> <span class="n">generate</span> <span class="n">a</span> <span class="n">new</span> <span class="n">explicit</span> <span class="n">migration</span><span class="p">.</span>
-</span></code></pre></div>
-<h3 id="in-sql-server-management-studio"><a class="toclink" href="../../unable-to-generate-an-explicit-migration-because-the-following-explicit-migrations-are-pending/#in-sql-server-management-studio">In SQL Server Management Studio:</a></h3>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">from</span><span class="w"> </span><span class="n">__MigrationHistory</span><span class="w"> </span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">where</span><span class="w"> </span><span class="n">MigrationId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;201310191546582_CreateTables&#39;</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">MigrationId</span><span class="p">:</span><span class="w"> </span><span class="mi">201310191546582</span><span class="n">_CreateTables</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">ContextKey</span><span class="p">:</span><span class="w"> </span><span class="n">Primo</span><span class="p">.</span><span class="n">LicenseManager</span><span class="p">.</span><span class="n">Models</span><span class="p">.</span><span class="n">Migrations</span><span class="p">.</span><span class="n">Configuration</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">Model</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="n">x1F8B08000000</span><span class="p">....</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">ProductVersion</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="n">net45</span>
-</span></code></pre></div>
-<h3 id="the-problem"><a class="toclink" href="../../unable-to-generate-an-explicit-migration-because-the-following-explicit-migrations-are-pending/#the-problem">The problem</a></h3>
-<p>In the database, the ContextKey in the __MigrationHistory table is still the old namespace: <code>Primo.LicenseManager.Models.Migrations.Configuration</code>.</p>
-<h3 id="the-solution"><a class="toclink" href="../../unable-to-generate-an-explicit-migration-because-the-following-explicit-migrations-are-pending/#the-solution">The solution</a></h3>
-<p>Update the ContextKey to the new namespace <code>Primo.Licensing.DataModel.Migrations.Configuration</code></p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">update</span><span class="w"> </span><span class="n">__MigrationHistory</span><span class="w"> </span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">set</span><span class="w"> </span><span class="n">ContextKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Primo.Licensing.DataModel.Migrations.Configuration&#39;</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="k">where</span><span class="w"> </span><span class="n">MigrationId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;201310191546582_CreateTables&#39;</span>
-</span></code></pre></div>
-<p>Now this works:</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">Add-Migration</span> <span class="n">-Name</span> <span class="n">AddInvoiceEntity</span> <span class="n">-Verbose</span> <span class="n">-StartUpProjectName</span> <span class="n">LicensingDataModel</span> <span class="n">-ProjectName</span> <span class="n">LicensingDataModel</span>
-</span></code></pre></div>
-    <nav class="md-post__action">
-      <a href="../../unable-to-generate-an-explicit-migration-because-the-following-explicit-migrations-are-pending/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2014-05-05 00:00:00">May 5, 2014</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              2 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="how-to-upgrade-the-linux-kernel-to-311-on-ubuntu-12044-lts"><a class="toclink" href="../../upgrade-linux-kernel-3-11-ubuntu-12-04-4-lts/">How to upgrade the Linux kernel to 3.11 on Ubuntu 12.04.4 LTS</a></h2>
-<p>I have two Ubuntu 12.04.4 virtual machines that I use for building and testing <a href="https://avblocks.com">AVBlocks</a> - one 32 bit (i386) and one 64 bit (x86_64). Normally I keep them in sync and regularly updated via the Update Manager. </p>
-<p>I noticed today that for some reason, the 32-bit machine upgraded to Linux kernel 3.11, but the 64-bit machine is stuck with Linux kernel 3.8. The Update Manager reports that both systems are up-to-date, yet the kernel versions are different on both systems.</p>
-<h3 id="ubuntu-12044-lts-x86_64"><a class="toclink" href="../../upgrade-linux-kernel-3-11-ubuntu-12-04-4-lts/#ubuntu-12044-lts-x86_64">Ubuntu 12.04.4 LTS x86_64</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>uname<span class="w"> </span>-a
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>Linux<span class="w"> </span>ubuntu-12-04-x64<span class="w"> </span><span class="m">3</span>.8.0-39-generic<span class="w"> </span><span class="c1">#58~precise1-Ubuntu SMP Fri May 2 21:33:40 UTC 2014 x86_64 x86_64 x86_64 GNU/Linux</span>
-</span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>lsb_release<span class="w"> </span>-a
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>No<span class="w"> </span>LSB<span class="w"> </span>modules<span class="w"> </span>are<span class="w"> </span>available.
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Distributor<span class="w"> </span>ID:<span class="w"> </span>Ubuntu
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>Description:<span class="w">    </span>Ubuntu<span class="w"> </span><span class="m">12</span>.04.4<span class="w"> </span>LTS
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>Release:<span class="w">    </span><span class="m">12</span>.04
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>Codename:<span class="w">   </span>precise
-</span></code></pre></div>
-<h3 id="ubuntu-12044-lts-i386"><a class="toclink" href="../../upgrade-linux-kernel-3-11-ubuntu-12-04-4-lts/#ubuntu-12044-lts-i386">Ubuntu 12.04.4 LTS i386</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>uname<span class="w"> </span>-a
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Linux<span class="w"> </span>ubuntu-12-04-i386<span class="w"> </span><span class="m">3</span>.11.0-20-generic<span class="w"> </span><span class="c1">#35~precise1-Ubuntu SMP Fri May 2 21:35:48 UTC 2014 i686 i686 i386 GNU/Linux</span>
-</span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>lsb_release<span class="w"> </span>-a
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>No<span class="w"> </span>LSB<span class="w"> </span>modules<span class="w"> </span>are<span class="w"> </span>available.
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>Distributor<span class="w"> </span>ID:<span class="w"> </span>Ubuntu
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>Description:<span class="w">    </span>Ubuntu<span class="w"> </span><span class="m">12</span>.04.4<span class="w"> </span>LTS
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>Release:<span class="w">    </span><span class="m">12</span>.04
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>Codename:<span class="w">   </span>precise
-</span></code></pre></div>
-<h3 id="the-solution"><a class="toclink" href="../../upgrade-linux-kernel-3-11-ubuntu-12-04-4-lts/#the-solution">The solution</a></h3>
-<p>After some reading on internet, I found that, only installations made from Ubuntu 12.04.2 ISO images and above will receive the 3.11 Linux kernel update automatically. For all other installations you will have to update it manually per this Ubuntu wiki <a href="https://wiki.ubuntu.com/Kernel/LTSEnablementStack">article</a>.</p>
-<p>So, for Ubuntu 12.04.4, you have to install the Saucy (13.10) Hardware Enablement Stack:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>--install-recommends<span class="w"> </span>linux-generic-lts-saucy<span class="w"> </span>xserver-xorg-lts-saucy<span class="w"> </span>libgl1-mesa-glx-lts-saucy
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>sudo<span class="w"> </span>reboot
-</span></code></pre></div>
-    <nav class="md-post__action">
-      <a href="../../upgrade-linux-kernel-3-11-ubuntu-12-04-4-lts/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
       
         
           
@@ -1987,7 +2120,7 @@ boxes at https://atlas.hashicorp.com/search.   </p>
 
 
 <nav class="md-pagination">
-  <a class="md-pagination__link" href="../..">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../8/">8</a> <a class="md-pagination__link" href="../9/">9</a> <span class="md-pagination__current">10</span> <a class="md-pagination__link" href="../11/">11</a> <a class="md-pagination__link" href="../12/">12</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../19/">19</a>
+  <a class="md-pagination__link" href="../..">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../8/">8</a> <a class="md-pagination__link" href="../9/">9</a> <span class="md-pagination__current">10</span> <a class="md-pagination__link" href="../11/">11</a> <a class="md-pagination__link" href="../12/">12</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../20/">20</a>
 </nav>
         
       

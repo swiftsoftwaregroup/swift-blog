@@ -506,6 +506,24 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#unable-to-generate-an-explicit-migration-because-the-following-explicit-migrations-are-pending" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unable to generate an explicit migration because the following explicit migrations are pending
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-upgrade-the-linux-kernel-to-311-on-ubuntu-12044-lts" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to upgrade the Linux kernel to 3.11 on Ubuntu 12.04.4 LTS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#executable-shell-scripts-open-in-gedit-on-ubuntu" class="md-nav__link">
     <span class="md-ellipsis">
       Executable shell scripts open in Gedit on Ubuntu
@@ -527,24 +545,6 @@
   <a href="#dual-boot-windows-81-for-virtualbox-and-hyper-v" class="md-nav__link">
     <span class="md-ellipsis">
       Dual boot Windows 8.1 for VirtualBox and Hyper-V
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#super-agile-not-possible-without-unit-tests" class="md-nav__link">
-    <span class="md-ellipsis">
-      Super Agile: Not possible without unit tests
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#nvidia-driver-mismatch-after-upgrading-to-ubuntu-12043-lts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Nvidia driver mismatch after upgrading to Ubuntu 12.04.3 LTS
     </span>
   </a>
   
@@ -958,6 +958,29 @@
   
   <span class="md-ellipsis">
     aws
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aws-cdk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    aws-cdk
   </span>
   
 
@@ -1578,6 +1601,24 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#unable-to-generate-an-explicit-migration-because-the-following-explicit-migrations-are-pending" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unable to generate an explicit migration because the following explicit migrations are pending
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-upgrade-the-linux-kernel-to-311-on-ubuntu-12044-lts" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to upgrade the Linux kernel to 3.11 on Ubuntu 12.04.4 LTS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#executable-shell-scripts-open-in-gedit-on-ubuntu" class="md-nav__link">
     <span class="md-ellipsis">
       Executable shell scripts open in Gedit on Ubuntu
@@ -1604,24 +1645,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#super-agile-not-possible-without-unit-tests" class="md-nav__link">
-    <span class="md-ellipsis">
-      Super Agile: Not possible without unit tests
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#nvidia-driver-mismatch-after-upgrading-to-ubuntu-12043-lts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Nvidia driver mismatch after upgrading to Ubuntu 12.04.3 LTS
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1636,6 +1659,123 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2014-10-16 00:00:00">October 16, 2014</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              1 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="unable-to-generate-an-explicit-migration-because-the-following-explicit-migrations-are-pending"><a class="toclink" href="../../unable-to-generate-an-explicit-migration-because-the-following-explicit-migrations-are-pending/">Unable to generate an explicit migration because the following explicit migrations are pending</a></h2>
+<p>After renaming the namespace of some POCO classes from <code>Primo.LicenseManager.Models</code> to <code>Primo.Licensing.DataModel</code>, the Entity Framework scaffolding no longer recognizes the applied migrations:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">Add-Migration</span> <span class="n">-Name</span> <span class="n">AddInvoiceEntity</span> <span class="n">-Verbose</span> <span class="n">-StartUpProjectName</span> <span class="n">LicensingDataModel</span> <span class="n">-ProjectName</span> <span class="n">LicensingDataModel</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">Unable</span> <span class="n">to</span> <span class="n">generate</span> <span class="n">an</span> <span class="n">explicit</span> <span class="n">migration</span> <span class="n">because</span> <span class="n">the</span> <span class="n">following</span> <span class="n">explicit</span> <span class="n">migrations</span> <span class="n">are</span> <span class="n">pending</span><span class="p">:</span> <span class="p">[</span><span class="n">201310191546582_CreateTables</span><span class="p">].</span> 
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">Apply</span> <span class="n">the</span> <span class="n">pending</span> <span class="n">explicit</span> <span class="n">migrations</span> <span class="n">before</span> <span class="n">attempting</span> <span class="n">to</span> <span class="n">generate</span> <span class="n">a</span> <span class="n">new</span> <span class="n">explicit</span> <span class="n">migration</span><span class="p">.</span>
+</span></code></pre></div>
+<h3 id="in-sql-server-management-studio"><a class="toclink" href="../../unable-to-generate-an-explicit-migration-because-the-following-explicit-migrations-are-pending/#in-sql-server-management-studio">In SQL Server Management Studio:</a></h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">from</span><span class="w"> </span><span class="n">__MigrationHistory</span><span class="w"> </span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">where</span><span class="w"> </span><span class="n">MigrationId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;201310191546582_CreateTables&#39;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">MigrationId</span><span class="p">:</span><span class="w"> </span><span class="mi">201310191546582</span><span class="n">_CreateTables</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">ContextKey</span><span class="p">:</span><span class="w"> </span><span class="n">Primo</span><span class="p">.</span><span class="n">LicenseManager</span><span class="p">.</span><span class="n">Models</span><span class="p">.</span><span class="n">Migrations</span><span class="p">.</span><span class="n">Configuration</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">Model</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="n">x1F8B08000000</span><span class="p">....</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">ProductVersion</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="n">net45</span>
+</span></code></pre></div>
+<h3 id="the-problem"><a class="toclink" href="../../unable-to-generate-an-explicit-migration-because-the-following-explicit-migrations-are-pending/#the-problem">The problem</a></h3>
+<p>In the database, the ContextKey in the __MigrationHistory table is still the old namespace: <code>Primo.LicenseManager.Models.Migrations.Configuration</code>.</p>
+<h3 id="the-solution"><a class="toclink" href="../../unable-to-generate-an-explicit-migration-because-the-following-explicit-migrations-are-pending/#the-solution">The solution</a></h3>
+<p>Update the ContextKey to the new namespace <code>Primo.Licensing.DataModel.Migrations.Configuration</code></p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">update</span><span class="w"> </span><span class="n">__MigrationHistory</span><span class="w"> </span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">set</span><span class="w"> </span><span class="n">ContextKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Primo.Licensing.DataModel.Migrations.Configuration&#39;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="k">where</span><span class="w"> </span><span class="n">MigrationId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;201310191546582_CreateTables&#39;</span>
+</span></code></pre></div>
+<p>Now this works:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">Add-Migration</span> <span class="n">-Name</span> <span class="n">AddInvoiceEntity</span> <span class="n">-Verbose</span> <span class="n">-StartUpProjectName</span> <span class="n">LicensingDataModel</span> <span class="n">-ProjectName</span> <span class="n">LicensingDataModel</span>
+</span></code></pre></div>
+    <nav class="md-post__action">
+      <a href="../../unable-to-generate-an-explicit-migration-because-the-following-explicit-migrations-are-pending/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2014-05-05 00:00:00">May 5, 2014</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              2 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="how-to-upgrade-the-linux-kernel-to-311-on-ubuntu-12044-lts"><a class="toclink" href="../../upgrade-linux-kernel-3-11-ubuntu-12-04-4-lts/">How to upgrade the Linux kernel to 3.11 on Ubuntu 12.04.4 LTS</a></h2>
+<p>I have two Ubuntu 12.04.4 virtual machines that I use for building and testing <a href="https://avblocks.com">AVBlocks</a> - one 32 bit (i386) and one 64 bit (x86_64). Normally I keep them in sync and regularly updated via the Update Manager. </p>
+<p>I noticed today that for some reason, the 32-bit machine upgraded to Linux kernel 3.11, but the 64-bit machine is stuck with Linux kernel 3.8. The Update Manager reports that both systems are up-to-date, yet the kernel versions are different on both systems.</p>
+<h3 id="ubuntu-12044-lts-x86_64"><a class="toclink" href="../../upgrade-linux-kernel-3-11-ubuntu-12-04-4-lts/#ubuntu-12044-lts-x86_64">Ubuntu 12.04.4 LTS x86_64</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>uname<span class="w"> </span>-a
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>Linux<span class="w"> </span>ubuntu-12-04-x64<span class="w"> </span><span class="m">3</span>.8.0-39-generic<span class="w"> </span><span class="c1">#58~precise1-Ubuntu SMP Fri May 2 21:33:40 UTC 2014 x86_64 x86_64 x86_64 GNU/Linux</span>
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>lsb_release<span class="w"> </span>-a
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>No<span class="w"> </span>LSB<span class="w"> </span>modules<span class="w"> </span>are<span class="w"> </span>available.
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Distributor<span class="w"> </span>ID:<span class="w"> </span>Ubuntu
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>Description:<span class="w">    </span>Ubuntu<span class="w"> </span><span class="m">12</span>.04.4<span class="w"> </span>LTS
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>Release:<span class="w">    </span><span class="m">12</span>.04
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>Codename:<span class="w">   </span>precise
+</span></code></pre></div>
+<h3 id="ubuntu-12044-lts-i386"><a class="toclink" href="../../upgrade-linux-kernel-3-11-ubuntu-12-04-4-lts/#ubuntu-12044-lts-i386">Ubuntu 12.04.4 LTS i386</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>uname<span class="w"> </span>-a
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Linux<span class="w"> </span>ubuntu-12-04-i386<span class="w"> </span><span class="m">3</span>.11.0-20-generic<span class="w"> </span><span class="c1">#35~precise1-Ubuntu SMP Fri May 2 21:35:48 UTC 2014 i686 i686 i386 GNU/Linux</span>
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>lsb_release<span class="w"> </span>-a
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>No<span class="w"> </span>LSB<span class="w"> </span>modules<span class="w"> </span>are<span class="w"> </span>available.
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>Distributor<span class="w"> </span>ID:<span class="w"> </span>Ubuntu
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>Description:<span class="w">    </span>Ubuntu<span class="w"> </span><span class="m">12</span>.04.4<span class="w"> </span>LTS
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>Release:<span class="w">    </span><span class="m">12</span>.04
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>Codename:<span class="w">   </span>precise
+</span></code></pre></div>
+<h3 id="the-solution"><a class="toclink" href="../../upgrade-linux-kernel-3-11-ubuntu-12-04-4-lts/#the-solution">The solution</a></h3>
+<p>After some reading on internet, I found that, only installations made from Ubuntu 12.04.2 ISO images and above will receive the 3.11 Linux kernel update automatically. For all other installations you will have to update it manually per this Ubuntu wiki <a href="https://wiki.ubuntu.com/Kernel/LTSEnablementStack">article</a>.</p>
+<p>So, for Ubuntu 12.04.4, you have to install the Saucy (13.10) Hardware Enablement Stack:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>--install-recommends<span class="w"> </span>linux-generic-lts-saucy<span class="w"> </span>xserver-xorg-lts-saucy<span class="w"> </span>libgl1-mesa-glx-lts-saucy
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>sudo<span class="w"> </span>reboot
+</span></code></pre></div>
+    <nav class="md-post__action">
+      <a href="../../upgrade-linux-kernel-3-11-ubuntu-12-04-4-lts/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1759,87 +1899,6 @@
   </div>
 </article>
       
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2013-12-29 00:00:00">December 29, 2013</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              1 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="super-agile-not-possible-without-unit-tests"><a class="toclink" href="../../super-agile-possible-without-unit-tests/">Super Agile: Not possible without unit tests</a></h2>
-<p>It is never too late to start writing unit tests. Add unit tests to your “Definition of Done” document. Automate your build process, so it runs unit tests with every code change.</p>
-    <nav class="md-post__action">
-      <a href="../../super-agile-possible-without-unit-tests/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2013-12-28 00:00:00">December 28, 2013</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              1 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="nvidia-driver-mismatch-after-upgrading-to-ubuntu-12043-lts"><a class="toclink" href="../../nvidia-driver-mismatch-upgrading-ubuntu-12-04-3-lts/">Nvidia driver mismatch after upgrading to Ubuntu 12.04.3 LTS</a></h2>
-<p>After upgrading to Ubuntu 12.04.3 LTS, I could not boot in GUI / X anymore. I got this when trying to start X:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>startx
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>NVIDIA:<span class="w"> </span>API<span class="w"> </span>mismatch:<span class="w"> </span>the<span class="w"> </span>NVIDIA<span class="w"> </span>kernel<span class="w"> </span>module<span class="w"> </span>has<span class="w"> </span>version<span class="w"> </span><span class="m">304</span>.88,<span class="w"> </span>but<span class="w"> </span>this<span class="w"> </span>NVIDIA<span class="w"> </span>driver<span class="w"> </span>component<span class="w"> </span>has<span class="w"> </span>version<span class="w"> </span><span class="m">304</span>.108.
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Please<span class="w"> </span>make<span class="w"> </span>sure<span class="w"> </span>that<span class="w"> </span>the<span class="w"> </span>kernel<span class="w"> </span>module<span class="w"> </span>and<span class="w"> </span>all<span class="w"> </span>NVIDIA<span class="w"> </span>driver<span class="w"> </span>components<span class="w"> </span>have<span class="w"> </span>the<span class="w"> </span>same<span class="w"> </span>version.
-</span></code></pre></div>
-<p>To fix that it seems you have to disable the <code>xorg:nvidia_304_updates</code> (304.108) driver and enable the <code>xorg:nvidia_304</code> (304.88) driver:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>jockey-text<span class="w"> </span>-e<span class="w"> </span>xorg:nvidia_304<span class="w"> </span>
-</span></code></pre></div>
-<p>After that you should have <code>xorg:nvidia_304</code> listed as Proprietary, Enabled, In use:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>jockey-text<span class="w"> </span>--list
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>xorg:nvidia_173<span class="w"> </span>-<span class="w"> </span>NVIDIA<span class="w"> </span>accelerated<span class="w"> </span>graphics<span class="w"> </span>driver<span class="w"> </span><span class="o">(</span>Proprietary,<span class="w"> </span>Disabled,<span class="w"> </span>Not<span class="w"> </span><span class="k">in</span><span class="w"> </span>use<span class="o">)</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>xorg:nvidia_173_updates<span class="w"> </span>-<span class="w"> </span>NVIDIA<span class="w"> </span>accelerated<span class="w"> </span>graphics<span class="w"> </span>driver<span class="w"> </span><span class="o">(</span>post-release<span class="w"> </span>updates<span class="o">)</span><span class="w"> </span><span class="o">(</span>Proprietary,<span class="w"> </span>Disabled,<span class="w"> </span>Not<span class="w"> </span><span class="k">in</span><span class="w"> </span>use<span class="o">)</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>xorg:nvidia_304<span class="w"> </span>-<span class="w"> </span>NVIDIA<span class="w"> </span>accelerated<span class="w"> </span>graphics<span class="w"> </span>driver<span class="w"> </span><span class="o">(</span>Proprietary,<span class="w"> </span>Enabled,<span class="w"> </span>In<span class="w"> </span>use<span class="o">)</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>xorg:nvidia_304_updates<span class="w"> </span>-<span class="w"> </span>NVIDIA<span class="w"> </span>accelerated<span class="w"> </span>graphics<span class="w"> </span>driver<span class="w"> </span><span class="o">(</span>post-release<span class="w"> </span>updates<span class="o">)</span><span class="w"> </span><span class="o">(</span>Proprietary,<span class="w"> </span>Disabled,<span class="w"> </span>Not<span class="w"> </span><span class="k">in</span><span class="w"> </span>use<span class="o">)</span>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>xorg:nvidia_96<span class="w"> </span>-<span class="w"> </span>NVIDIA<span class="w"> </span>accelerated<span class="w"> </span>graphics<span class="w"> </span>driver<span class="w"> </span><span class="o">(</span>Proprietary,<span class="w"> </span>Disabled,<span class="w"> </span>Not<span class="w"> </span><span class="k">in</span><span class="w"> </span>use<span class="o">)</span><span class="w">    </span>
-</span></code></pre></div>
-<p>And finally you have to reboot:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>reboot
-</span></code></pre></div>
-    <nav class="md-post__action">
-      <a href="../../nvidia-driver-mismatch-upgrading-ubuntu-12-04-3-lts/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
       
         
           
@@ -1847,7 +1906,7 @@
 
 
 <nav class="md-pagination">
-  <a class="md-pagination__link" href="../..">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../9/">9</a> <a class="md-pagination__link" href="../10/">10</a> <span class="md-pagination__current">11</span> <a class="md-pagination__link" href="../12/">12</a> <a class="md-pagination__link" href="../13/">13</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../19/">19</a>
+  <a class="md-pagination__link" href="../..">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../9/">9</a> <a class="md-pagination__link" href="../10/">10</a> <span class="md-pagination__current">11</span> <a class="md-pagination__link" href="../12/">12</a> <a class="md-pagination__link" href="../13/">13</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../20/">20</a>
 </nav>
         
       

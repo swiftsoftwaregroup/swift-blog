@@ -506,6 +506,24 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#getting-started-with-git-and-bitbucket-on-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting started with Git and BitBucket on Windows
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 3)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2" class="md-nav__link">
     <span class="md-ellipsis">
       Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 2)
@@ -527,24 +545,6 @@
   <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc" class="md-nav__link">
     <span class="md-ellipsis">
       Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (TOC)
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how-to-configure-tortoisehg-to-remember-your-username-and-password" class="md-nav__link">
-    <span class="md-ellipsis">
-      How to configure TortoiseHg to remember your username and password
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench" class="md-nav__link">
-    <span class="md-ellipsis">
-      Import a SQL dump from one schema into another with MySQL Workbench
     </span>
   </a>
   
@@ -958,6 +958,29 @@
   
   <span class="md-ellipsis">
     aws
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aws-cdk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    aws-cdk
   </span>
   
 
@@ -1578,6 +1601,24 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#getting-started-with-git-and-bitbucket-on-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting started with Git and BitBucket on Windows
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 3)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2" class="md-nav__link">
     <span class="md-ellipsis">
       Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 2)
@@ -1604,24 +1645,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#how-to-configure-tortoisehg-to-remember-your-username-and-password" class="md-nav__link">
-    <span class="md-ellipsis">
-      How to configure TortoiseHg to remember your username and password
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench" class="md-nav__link">
-    <span class="md-ellipsis">
-      Import a SQL dump from one schema into another with MySQL Workbench
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1636,6 +1659,257 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-02-19 00:00:00">February 19, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              7 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="getting-started-with-git-and-bitbucket-on-windows"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/">Getting started with Git and BitBucket on Windows</a></h2>
+<p>This post describes setting up Git on Windows and using a private remote Git repository hosted on BitBucket.org. Here it goes:</p>
+<p>1) Start by downloading Git fromthe <a href="http://msysgit.github.com/" title="msysgit">msysgit</a> site. At the time of writing the latest installer was Git-1.8.1.2-preview20130201.exe. For some unknown reason the installers are labeled “preview” which normally suggests unfinished product, but the versions are actually fully functional.</p>
+<p>After downloading, run the installer and follow the steps. You may use the default options on each screen, but since we are going to try TortoiseGit later, on the first screen select “Simple context menu (Registry based)” and check only “Git Bash Here”. That will keep to your Windows Explorer context menu less cluttered.</p>
+<p>2) Install <a href="http://code.google.com/p/tortoisegit/" title="TortoiseGit Home">TortoiseGit</a>. At the time of this writing the latest version was 1.8.1. There is nothing special about installing TortoiseGit.</p>
+<p>To verify the TortoiseGit installer integrated with your msysgit installation: right click anywhere in Windows Explorer and select TorstoiseGit &gt; Settings from the context menu, then make sure you have the correct paths for Git.exe under the General section and the ssh client under the Network section.</p>
+<p><img alt="git-tortoisegit-settings-general" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/git-tortoisegit-settings-general.png" /> 
+<img alt="git-tortoisegit-settings-network" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/git-tortoisegit-settings-network.png" /> </p>
+<p>3) Install the <a href="https://github.com/blog/1104-credential-caching-for-wrist-friendly-git-usage" title="Credential Caching">Credential Caching</a> Git extension. We will be using Git via <code>https://</code> instead of <code>ssh</code> and that extension caches the username and password, so we do not have to type them all the time. Download <em><a href="http://github-media-downloads.s3.amazonaws.com/windows/GitWindowsExtras-Fx4.zip">git-credential-winstore and GitPad</a> for Windows 8 (.NET 4.0 required)</em>, unzip,copy <em>git-credential-winstore.exe</em> to the Git bin directory and run it. By default Git is installed in <code>C:\Program Files (x86)\Git\bin</code> on 64 Bit systems. Open your global <em>.gitconfig</em> file. The global <em>.gitconfig</em> file is in your home directory which on Windows Vista and above should be under <code>C:\Users\&lt;yourname&gt;</code>. <em>Verify the you have this line in </em>.gitconfig*:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[credential]</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="na">helper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">!~/AppData/Roaming/GitCredStore/git-credential-winstore</span>
+</span></code></pre></div>
+<p>4) Optionally you may want to change the default text editor that Git uses, e.g. you might need that for commit messages. The default editor in msysgit is Unix VIM. You can change that to Notepad with GitPad – a small utility found in the credential caching extension zip. Simply copy GitPad.exe in<em>C:\Program Files (x86)\Git\bin</em> and run it.</p>
+<p>5) Create an empty Git repository onBitbucket.org – that will be your shared repository. If you are new to BitBucket you can check this short<a href="https://confluence.atlassian.com/display/BITBUCKET/Create+an+Account+and+a+Git+Repo" title="Create an Account and a Git Repo">tutorial</a>on how to create a BitBucket account and a Git repo- the process is rather straightforward. For this demo create a repo and name it <em>SandboxGit</em>. Please note that BitBucket will create a bare repository. A bare repository is one without branches.</p>
+<p><img alt="create-a-repository-bitbucket-sandbox" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/create-a-repository-bitbucket.png" /> </p>
+<p>6) We are now ready to start playing with the <em>SandboxGit</em> repo. If you are new to Git, it is better to start in Git Bash at the beginning just to get a feeling of Git. Knowing Git command line will help you understand what TortoiseGit or any other GUI tool does later, because in almost all cases, all the GUI tools generate and execute Git commands for you.</p>
+<ul>
+<li><a href="../../getting-started-with-git-and-bitbucket-on-windows/#git-bash-tab">Git Bash</a></li>
+<li><a href="../../getting-started-with-git-and-bitbucket-on-windows/#tortoise-git-tab">TortoiseGit</a></li>
+</ul>
+<h5 id="configure-default-name-and-email-for-commits"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#configure-default-name-and-email-for-commits">Configure default name and email for commits</a></h5>
+<p>In Windows Explorer, go to a place where you want to put your working directory, right click and select<em>Git Bash Here</em>from the menu.</p>
+<p>In Git Bash prompt enter:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">&quot;user&quot;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">&quot;user@domain.com&quot;</span>
+</span></code></pre></div>
+<p>After the changes, <code>C:\Users\&lt;yourname&gt;\.gitconfig</code> should have the user configuration in it:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">[credential]</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="na">helper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">!~/AppData/Roaming/GitCredStore/git-credential-winstore</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">[user]</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">user</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="na">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">user@domain.com</span>
+</span></code></pre></div>
+<p>Also we can get the same result with the <code>git config</code> command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>-l<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>credential.helper<span class="o">=</span>!~/AppData/Roaming/GitCredStore/git-credential-winstore<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>user.name<span class="o">=</span>user<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>user.email<span class="o">=</span>user@domain.com
+</span></code></pre></div>
+<h5 id="configure-disable-line-ending-conversion"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#configure-disable-line-ending-conversion">Configure / disable line ending conversion</a></h5>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>core.autocrlf<span class="w"> </span><span class="nb">false</span>
+</span></code></pre></div>
+<p>Without that we will get CR/LF conversion warning on each commit, e.g. something like this will be shown for each new line in your source:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>warning: LF will be replaced by CRLF in HelloWorld.cpp.
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>The file will have its original line endings in your working directory.
+</span></code></pre></div>
+<p>Modern development tools support both CR/LF and LF line endings, so we do not need Git to do line ending conversion.</p>
+<h5 id="clone-the-remote-repository"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#clone-the-remote-repository">Clone the remote repository</a></h5>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://user@bitbucket.org/primosoftware/sandboxgit.git<span class="w"> </span>./SandboxGit
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Cloning<span class="w"> </span>into<span class="w"> </span><span class="s1">&#39;./SandboxGit&#39;</span>...
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>warning:<span class="w"> </span>You<span class="w"> </span>appear<span class="w"> </span>to<span class="w"> </span>have<span class="w"> </span>cloned<span class="w"> </span>an<span class="w"> </span>empty<span class="w"> </span>repository.
+</span></code></pre></div>
+<p>The first time you do this Git will ask for a BitBucket.org password. After that it will remember the password, because of the credentials caching extension thatwe installed in step 3.</p>
+<h5 id="check-the-remote-configuration"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#check-the-remote-configuration">Check the remote configuration</a></h5>
+<p>``` bash
+cd ./SandboxGit
+git remote show
+origin
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>``` bash
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>git remote show origin
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>* remote origin
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>Fetch URL: https://user@bitbucket.org/primosoftware/sandboxgit.git
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>Push URL: https://user@bitbucket.org/primosoftware/sandboxgit.git
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>HEAD branch: (unknown)
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>Local branch configured for &#39;git pull&#39;:
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>master merges with remote master
+</span></code></pre></div></p>
+<p>Basically we have:</p>
+<ul>
+<li>An <code>origin</code> alias that points to a remote repo at <em>https://user@nullbitbucket.org/primosoftware/sandboxgit.git</em></li>
+<li>A local branch <code>master</code> that will merge with the remote branch <code>master</code>. However, the remote <code>master</code> branch does not exist yet. It will be created when we do our first commit and push.</li>
+<li>A remote HEAD branch that is unknown.</li>
+</ul>
+<p>Think of HEAD as a symlink/shortcut to a branch. The HEADis unknown because there are no branches in the remote repository yet. Normally HEAD points to the<em>master</em>branch.</p>
+<h5 id="add-a-file-and-commit"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#add-a-file-and-commit">Add a file and commit</a></h5>
+<p>In the <em>SandboxGit</em> folder create a file<em>HelloWorld.cpp</em>with some code in it. For example:</p>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="p">{</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Hello World!&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w">   </span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Welcome to Git&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"> </span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>In Git Bash do <code>git add HelloWorld.cpp</code>:</p>
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>git<span class="w"> </span>add<span class="w"> </span>HelloWorld.cpp
+</span></code></pre></div>
+... and <code>git commit</code> – enter “Initial commit.” when Git asks for a commit message.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>git<span class="w"> </span>commit<span class="w"> </span>.
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="o">[</span>master<span class="w"> </span><span class="o">(</span>root-commit<span class="o">)</span><span class="w"> </span>8ed71ed<span class="o">]</span><span class="w"> </span>Initial<span class="w"> </span>commit.
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="m">1</span><span class="w"> </span>file<span class="w"> </span>changed,<span class="w"> </span><span class="m">7</span><span class="w"> </span>insertions<span class="o">(</span>+<span class="o">)</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>create<span class="w"> </span>mode<span class="w"> </span><span class="m">100644</span><span class="w"> </span>HelloWorld.cpp
+</span></code></pre></div>
+<p>The commit is local. Up to this point we have done local changes only. The remote repository on BitBucket.org is still untouched.</p>
+<p><img alt="tortoisegit-git-sandboxgit-empty-bitbucket" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-sandboxgit-empty-bitbucket.png" /> </p>
+<p>In order for others to see the changes we have to push the changes to the remote location. That is done with the<em>git push</em> command.</p>
+<h5 id="configure-default-push-style"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#configure-default-push-style">Configure default “push” style</a></h5>
+<p><em>Git push</em>can work in one of two ways:</p>
+<ul>
+<li><strong>matching</strong>: pushes all local branches to remote branches with the same name. This may lead to unwanted remote branches created by accident.</li>
+<li><strong>simple</strong>: pushes only the current local branch to its remote brother which is usually a remote branch with the same name. This is a more intuitive behavior.</li>
+</ul>
+<p>We will use the <em>simple</em> push:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>push.default<span class="w"> </span>simple
+</span></code></pre></div>
+<h5 id="push-to-the-remote-repository"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#push-to-the-remote-repository">Push to the remote repository</a></h5>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>git<span class="w"> </span>push
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>Counting<span class="w"> </span>objects:<span class="w"> </span><span class="m">3</span>,<span class="w"> </span><span class="k">done</span>.
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>Delta<span class="w"> </span>compression<span class="w"> </span>using<span class="w"> </span>up<span class="w"> </span>to<span class="w"> </span><span class="m">8</span><span class="w"> </span>threads.
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>Compressing<span class="w"> </span>objects:<span class="w"> </span><span class="m">100</span>%<span class="w"> </span><span class="o">(</span><span class="m">2</span>/2<span class="o">)</span>,<span class="w"> </span><span class="k">done</span>.
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>Writing<span class="w"> </span>objects:<span class="w"> </span><span class="m">100</span>%<span class="w"> </span><span class="o">(</span><span class="m">3</span>/3<span class="o">)</span>,<span class="w"> </span><span class="m">322</span><span class="w"> </span>bytes,<span class="w"> </span><span class="k">done</span>.
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>Total<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="o">(</span>delta<span class="w"> </span><span class="m">0</span><span class="o">)</span>,<span class="w"> </span>reused<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">(</span>delta<span class="w"> </span><span class="m">0</span><span class="o">)</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>remote:<span class="w"> </span>bb/acl:<span class="w"> </span>user<span class="w"> </span>is<span class="w"> </span>allowed.<span class="w"> </span>accepted<span class="w"> </span>payload.
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>To<span class="w"> </span>https://user@bitbucket.org/primosoftware/sandboxgit.git
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">    </span>*<span class="w"> </span><span class="o">[</span>new<span class="w"> </span>branch<span class="o">]</span><span class="w">      </span>master<span class="w"> </span>-&gt;<span class="w"> </span>master
+</span></code></pre></div>
+<p>Verify that now we have a remote branch called master:</p>
+<p>``` bash
+git remote show origin
+* remote origin
+    Fetch URL: https://user@bitbucket.org/primosoftware/sandboxgit.git
+    Push  URL: https://user@bitbucket.org/primosoftware/sandboxgit.git
+    HEAD branch: master
+    Remote branch:
+    master tracked
+    Local branch configured for 'git pull':
+    master merges with remote master
+    Local ref configured for 'git push':
+    master pushes to master (up to date)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>We are done.
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>#### Configure default name and email for commits
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>Right click anywhere in Windows Explorer and select **TorstoiseGit &gt; Settings** from the context menu, then enter your name and email on under the **Git** section.
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>![tortoisegit-git-settings-config-name-email](../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-settings-config-name-email.png) 
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>Click *Edit global .gitconfig*. Verify that the *.gitconfig* file now contains the user configuration:
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a> ``` ini
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>[credential]
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>helper = !~/AppData/Roaming/GitCredStore/git-credential-winstore
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>[user]
+</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>name = user
+</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>email = user@domain.com
+</span></code></pre></div></p>
+<h5 id="configure-disable-line-ending-conversion_1"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#configure-disable-line-ending-conversion_1">Configure / disable line ending conversion</a></h5>
+<p>Again in the <strong>TorstoiseGit &gt; Settings &gt; Git</strong> section, in the <strong>"Auto CrLf convert"</strong> group, uncheck the <strong>AutoCrlf</strong> box.</p>
+<p>Without that we will get CR/LF conversion warning on each commit, e.g. something like this will be shown for each new line in your source code:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>warning:<span class="w"> </span>LF<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>replaced<span class="w"> </span>by<span class="w"> </span>CRLF<span class="w"> </span><span class="k">in</span><span class="w"> </span>HelloWorld.cpp.
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>The<span class="w"> </span>file<span class="w"> </span>will<span class="w"> </span>have<span class="w"> </span>its<span class="w"> </span>original<span class="w"> </span>line<span class="w"> </span>endings<span class="w"> </span><span class="k">in</span><span class="w"> </span>your<span class="w"> </span>working<span class="w"> </span>directory.
+</span></code></pre></div>
+<p>Modern development tools support both CR/LF and LF line endings, so we do not need Git to do line ending conversion.</p>
+<h5 id="clone-the-remote-repository_1"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#clone-the-remote-repository_1">Clone the remote repository</a></h5>
+<p>In Windows Explorer, go to a place where you want to put your working directory, right click and select <strong>Git Clone</strong> from the menu.</p>
+<p><img alt="tortoisegit-git-clone" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-clone.png" /> </p>
+<p><img alt="tortoisegit-git-clone-finished" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-clone-finished.png" /> </p>
+<h5 id="check-the-remote-configuration_1"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#check-the-remote-configuration_1">Check the remote configuration</a></h5>
+<p>Right click on the <code>SandboxGit</code> folder in Windows Explorer and select <strong>TorstoiseGit &gt; Settings</strong> from the context menu, then go to the <em>Git &gt; Remote</em> section. Verify the remote url to which the <em>origin</em> alias points.</p>
+<p><img alt="tortoisegit-git-settings-config-remote" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-settings-config-remote.png" /> </p>
+<h5 id="add-a-file-and-commit_1"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#add-a-file-and-commit_1">Add a file and commit</a></h5>
+<p>In the <em>SandboxGit</em> folder create a file<em>HelloWorld.cpp</em>with some code in it. For example:</p>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="p">{</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Hello World!&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w">   </span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Welcome to Git&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"> </span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Right click on the <code>HelloWorld.cpp</code> file and select <strong>TortoiseGit &gt; Add</strong>. Check the <code>HelloWorld.cpp</code> file and click OK.</p>
+<p><img alt="tortoisegit-git-add-file" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-add-file.png" /> </p>
+<p>Right click on the <code>HelloWorld.cpp</code> file again and select <strong>Git Commit -&gt; Master</strong>. Enter “Initial commit.” for a message. Check the <code>HelloWorld.cpp</code> file and click OK.</p>
+<p><img alt="tortoisegit-git-commit-file" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-commit-file.png" /> </p>
+<p><img alt="tortoisegit-git-commit-file-done" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-commit-file-done.png" /> </p>
+<p>The commit is local. Up to this point we have done local changes only. The remote repository on BitBucket.org is still untouched.</p>
+<p><img alt="tortoisegit-git-sandboxgit-empty-bitbucket" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-sandboxgit-empty-bitbucket.png" /> </p>
+<h5 id="push-to-the-remote-repository_1"><a class="toclink" href="../../getting-started-with-git-and-bitbucket-on-windows/#push-to-the-remote-repository_1">Push to the remote repository</a></h5>
+<p>Right click on the<em>SandboxGit</em>folder in Windows Explorer and select <strong>TorstoiseGit &gt; Push</strong> from the context menu. Click OK.</p>
+<p><img alt="tortoisegit-git-sandboxgit-push" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-sandboxgit-push.png" /> </p>
+<p><img alt="tortoisegit-git-sandboxgit-push-done" src="../../assets/images/getting-started-with-git-and-bitbucket-on-windows/tortoisegit-git-sandboxgit-push-done.png" /> </p>
+<p>We are done.</p>
+    <nav class="md-post__action">
+      <a href="../../getting-started-with-git-and-bitbucket-on-windows/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-01-26 00:00:00">January 26, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              1 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3"><a class="toclink" href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3/">Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 3)</a></h2>
+<p>This post summarizes the Mercurial subrepository vs the Subversion externals experience. This is the third and last post of a <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (TOC)">multi-part article</a> about Mercurial subrepositories. Please make sure you read <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/" title="Hg subrepositories: a how-to guide for the svn:externals junkie (Part 1)">Part 1</a> and <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 2)">Part 2</a> before reading this post.</p>
+<p>In a few words, Mercurial subrepositories are very similar to Subversion “svn:externals” and can be used pretty much the same way. However, there are some differences in the workflow, because of the distributed nature of Mercurial. Here are the main differences from Subversion:</p>
+<ul>
+<li>You always work in a copy / clone of a remote shared repository.</li>
+<li>You may <em>commit</em> changes multiple times, but those changes are not visible to others unless you <em>push</em> to the remote shared repository.</li>
+<li>A <em>commit + push</em> in a subrepository is treated as a local change in the top-level <em>root</em> repository. To make the <em>root</em> change permanent, you have to do a <em>commit + push</em> of the <em>root</em> repository as well.</li>
+<li>A <em>pull</em> from a remote repository just downloads the latest available changes. In order to apply/merge the changes, you have to manually <em>update</em> your working copy.</li>
+</ul>
+<p>On good thing about the <em>pull+update</em> workflow is that, it guards against accidentally losing local changes and allows you to do code merges at your convenience.You can also revert an <em>update</em> and continue in your local copy when an update breaks a lot of code and requires hard manual merge labor. You can <em>update</em> your working copy again later, when you are ready for the code merge.</p>
+    <nav class="md-post__action">
+      <a href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1797,134 +2071,6 @@ svn://svnserver/SandboxSvn
   </div>
 </article>
       
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2013-01-05 00:00:00">January 5, 2013</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              3 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="how-to-configure-tortoisehg-to-remember-your-username-and-password"><a class="toclink" href="../../how-to-configure-tortoisehg-to-remember-your-username-and-password/">How to configure TortoiseHg to remember your username and password</a></h2>
-<p>I have been playing with Hg (Mercurial) lately to see if it would be feasible to move our projects at <a href="http://www.primosoftware.com" title="Primo Software">Primo Software</a> from SVN (Subversion) to Mercurial. The things I am looking at are not just the version control capabilities, but also the tools that are available on Windows, Mac and Ubuntu. As part of the tools evaluation I have been playing with <a href="http://tortoisehg.bitbucket.org/" title="TortoiseHg">TortoiseHg</a>, which seems to be the recommended Hg visual tool for Windows.</p>
-<p>This post here is about configuring TortoiseHg to remember the username and password and not ask you for those when you do Pull/Push to a remote repository. In the example below I use a Hg repository hosted on bitbucket.org, but the same configuration should be valid for any other remote repository.</p>
-<p>After you first clone your repository with TortoiseHg you end up with this in your Hg configuration file (i.e. your .hg/hgrc file):</p>
-<p>``` ini 
-[ui]
-username = Valentin Kantchev <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#121;&#101;&#109;&#97;&#105;&#108;&#64;&#112;&#114;&#105;&#109;&#111;&#115;&#111;&#102;&#116;&#119;&#97;&#114;&#101;&#46;&#99;&#111;&#109;">&#109;&#121;&#101;&#109;&#97;&#105;&#108;&#64;&#112;&#114;&#105;&#109;&#111;&#115;&#111;&#102;&#116;&#119;&#97;&#114;&#101;&#46;&#99;&#111;&#109;</a></p>
-<p>[paths]
-default = https://myusername@bitbucket.org/primosoftware/projectmap
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>If you do Push and Pull from TortoiseHg it will take your username from the repo URL under the [paths] config, but it will keep asking for your password every time you do this.
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>![workbench_1](../assets/images/how-to-configure-tortoisehg-to-remember-your-username-and-password/workbench_1.png)
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a> One of the solutions to this is to set your username and password in the TortoiseHg synchronization view:
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>![workbench_2](../assets/images/how-to-configure-tortoisehg-to-remember-your-username-and-password/workbench_2.png)
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a> Now it’s all good, but to make this work TortoiseHg creates a file called mercurial.ini under your Windows home directory, whichs is normally C:\\Users\\yourwindowsusername\\. In my case the file had this inside:
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>``` ini 
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a># Generated by TortoiseHg settings dialog
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>[ui]
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>username = Valentin Kantchev &lt;myemail@primosoftware.com&gt;
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>[auth]
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>bitbucket.org.prefix = bitbucket.org
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>bitbucket.org.username = myusername
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>bitbucket.org.password = mypassword
-</span></code></pre></div></p>
-<p>The problem with this file is that the password is stored in it as clear text.</p>
-<p>Fortunately there is an easy workaround for that: TortoiseHg comes bundled with a <a href="http://mercurial.selenic.com/wiki/KeyringExtension" title="Keyring">Keyring</a> extension, designed for storing authentication passwords securely. However, the Keyring extension is not active by default. To activate it you have to add the following lines in your mercurial.ini file:</p>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">[extensions]</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="na">mercurial_keyring</span><span class="o">=</span>
-</span></code></pre></div>
-<p>You can delete the password line under the [auth] section completely as it is not needed at this point. Your final mercurial.ini file should look like this:</p>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Generated by TortoiseHg settings dialog</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">[ui]</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="na">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">Valentin Kantchev &lt;myemail@primosoftware.com&gt;</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="k">[auth]</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="na">bitbucket.org.prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">bitbucket.org</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="na">bitbucket.org.username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">myusername</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="k">[extensions]</span>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="na">mercurial_keyring</span><span class="o">=</span>
-</span></code></pre></div>
-<p>Now you can also remove your username from the repository URL. In the .hg/hgrc file in your local repository folder, change this: https://myusername@nullbitbucket.org/primosoftware/projectmap to this: https://bitbucket.org/primosoftware/projectmap</p>
-<p>Your final .hg/hgrc file should look like this:</p>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">[ui]</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="na">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">Valentin Kantchev &lt;myemail@primosoftware.com&gt;</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">[paths]</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="na">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">https://bitbucket.org/primosoftware/projectmap</span>
-</span></code></pre></div>
-<p>This completely removes all authentication info from your local repository folders. Your password is now stored in the Keyring and your user name is stored in <code>C:\Users\yourwindowsusername\mercurial.ini</code>. This way, for example, if you zip your local folder to send it to somebody you cannot accidentally send your source control authentication information with it.</p>
-<p>Please note that after all changes TortoiseHg might ask you one more time for password. After that it will store and use the password from the Keyring.</p>
-<p>Here is the last TortoiseHg screenshot. Notice that there is no authentication information visible anywhere:</p>
-<p><img alt="workbench_3" src="../../assets/images/how-to-configure-tortoisehg-to-remember-your-username-and-password/workbench_3.png" /></p>
-    <nav class="md-post__action">
-      <a href="../../how-to-configure-tortoisehg-to-remember-your-username-and-password/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2012-12-16 00:00:00">December 16, 2012</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              1 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench"><a class="toclink" href="../../import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench/">Import a SQL dump from one schema into another with MySQL Workbench</a></h2>
-<p>When restoring a MySQL dump from MySQL Workbench, currently it is not possible to specify a different schema than the schema used during the export. The workaround for that is to edit the dump file (which is just a text file) in a text editor and change the name of the schema manually.</p>
-<p>For example to change the schema name from ‘old_schema’ to ‘new_schema’, open the dump file in a text editor and change these two lines:</p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="s1">&#39;old_schema&#39;</span><span class="w"> </span><span class="cm">/*!40100 DEFAULT CHARACTER SET utf8 */</span><span class="p">;</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">USE</span><span class="w"> </span><span class="s1">&#39;old_schema&#39;</span><span class="p">;</span>
-</span></code></pre></div>
-<p>to this:</p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="s1">&#39;new_schema&#39;</span><span class="w"> </span><span class="cm">/*!40100 DEFAULT CHARACTER SET utf8 */</span><span class="p">;</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">USE</span><span class="w"> </span><span class="s1">&#39;new_schema&#39;</span><span class="p">;</span>
-</span></code></pre></div>
-<p>After that, import the dump file using MySQL Workbench as usual. Please note that if you exported the old schema with qualified identifiers you would also have to search and replace the schema name everywhere in the dump file, otherwise each object would have the old schema name as prefix.</p>
-    <nav class="md-post__action">
-      <a href="../../import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
       
         
           
@@ -1932,7 +2078,7 @@ default = https://myusername@bitbucket.org/primosoftware/projectmap
 
 
 <nav class="md-pagination">
-  <a class="md-pagination__link" href="../..">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../13/">13</a> <a class="md-pagination__link" href="../14/">14</a> <span class="md-pagination__current">15</span> <a class="md-pagination__link" href="../16/">16</a> <a class="md-pagination__link" href="../17/">17</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../19/">19</a>
+  <a class="md-pagination__link" href="../..">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../13/">13</a> <a class="md-pagination__link" href="../14/">14</a> <span class="md-pagination__current">15</span> <a class="md-pagination__link" href="../16/">16</a> <a class="md-pagination__link" href="../17/">17</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../20/">20</a>
 </nav>
         
       

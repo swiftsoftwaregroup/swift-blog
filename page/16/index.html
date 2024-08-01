@@ -506,6 +506,24 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-to-configure-tortoisehg-to-remember-your-username-and-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to configure TortoiseHg to remember your username and password
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench" class="md-nav__link">
+    <span class="md-ellipsis">
+      Import a SQL dump from one schema into another with MySQL Workbench
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#super-agile-unknown-is-good-for-your-team" class="md-nav__link">
     <span class="md-ellipsis">
       Super Agile: Unknown is good for your team
@@ -527,24 +545,6 @@
   <a href="#super-agile-replace-email-with-a-shared-blog" class="md-nav__link">
     <span class="md-ellipsis">
       Super Agile: Replace email with a shared blog
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#convert-an-existing-google-apps-account-to-a-google-apps-reseller-account" class="md-nav__link">
-    <span class="md-ellipsis">
-      Convert an existing Google Apps account to a Google Apps Reseller account
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#super-agile-a-note-about-software-requirements" class="md-nav__link">
-    <span class="md-ellipsis">
-      Super Agile: A note about software requirements
     </span>
   </a>
   
@@ -958,6 +958,29 @@
   
   <span class="md-ellipsis">
     aws
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aws-cdk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    aws-cdk
   </span>
   
 
@@ -1578,6 +1601,24 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-to-configure-tortoisehg-to-remember-your-username-and-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to configure TortoiseHg to remember your username and password
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench" class="md-nav__link">
+    <span class="md-ellipsis">
+      Import a SQL dump from one schema into another with MySQL Workbench
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#super-agile-unknown-is-good-for-your-team" class="md-nav__link">
     <span class="md-ellipsis">
       Super Agile: Unknown is good for your team
@@ -1604,24 +1645,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#convert-an-existing-google-apps-account-to-a-google-apps-reseller-account" class="md-nav__link">
-    <span class="md-ellipsis">
-      Convert an existing Google Apps account to a Google Apps Reseller account
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#super-agile-a-note-about-software-requirements" class="md-nav__link">
-    <span class="md-ellipsis">
-      Super Agile: A note about software requirements
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1636,6 +1659,134 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-01-05 00:00:00">January 5, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              3 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="how-to-configure-tortoisehg-to-remember-your-username-and-password"><a class="toclink" href="../../how-to-configure-tortoisehg-to-remember-your-username-and-password/">How to configure TortoiseHg to remember your username and password</a></h2>
+<p>I have been playing with Hg (Mercurial) lately to see if it would be feasible to move our projects at <a href="http://www.primosoftware.com" title="Primo Software">Primo Software</a> from SVN (Subversion) to Mercurial. The things I am looking at are not just the version control capabilities, but also the tools that are available on Windows, Mac and Ubuntu. As part of the tools evaluation I have been playing with <a href="http://tortoisehg.bitbucket.org/" title="TortoiseHg">TortoiseHg</a>, which seems to be the recommended Hg visual tool for Windows.</p>
+<p>This post here is about configuring TortoiseHg to remember the username and password and not ask you for those when you do Pull/Push to a remote repository. In the example below I use a Hg repository hosted on bitbucket.org, but the same configuration should be valid for any other remote repository.</p>
+<p>After you first clone your repository with TortoiseHg you end up with this in your Hg configuration file (i.e. your .hg/hgrc file):</p>
+<p>``` ini 
+[ui]
+username = Valentin Kantchev <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#121;&#101;&#109;&#97;&#105;&#108;&#64;&#112;&#114;&#105;&#109;&#111;&#115;&#111;&#102;&#116;&#119;&#97;&#114;&#101;&#46;&#99;&#111;&#109;">&#109;&#121;&#101;&#109;&#97;&#105;&#108;&#64;&#112;&#114;&#105;&#109;&#111;&#115;&#111;&#102;&#116;&#119;&#97;&#114;&#101;&#46;&#99;&#111;&#109;</a></p>
+<p>[paths]
+default = https://myusername@bitbucket.org/primosoftware/projectmap
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>If you do Push and Pull from TortoiseHg it will take your username from the repo URL under the [paths] config, but it will keep asking for your password every time you do this.
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>![workbench_1](../assets/images/how-to-configure-tortoisehg-to-remember-your-username-and-password/workbench_1.png)
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a> One of the solutions to this is to set your username and password in the TortoiseHg synchronization view:
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>![workbench_2](../assets/images/how-to-configure-tortoisehg-to-remember-your-username-and-password/workbench_2.png)
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a> Now it’s all good, but to make this work TortoiseHg creates a file called mercurial.ini under your Windows home directory, whichs is normally C:\\Users\\yourwindowsusername\\. In my case the file had this inside:
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>``` ini 
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a># Generated by TortoiseHg settings dialog
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>[ui]
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>username = Valentin Kantchev &lt;myemail@primosoftware.com&gt;
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>[auth]
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>bitbucket.org.prefix = bitbucket.org
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>bitbucket.org.username = myusername
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>bitbucket.org.password = mypassword
+</span></code></pre></div></p>
+<p>The problem with this file is that the password is stored in it as clear text.</p>
+<p>Fortunately there is an easy workaround for that: TortoiseHg comes bundled with a <a href="http://mercurial.selenic.com/wiki/KeyringExtension" title="Keyring">Keyring</a> extension, designed for storing authentication passwords securely. However, the Keyring extension is not active by default. To activate it you have to add the following lines in your mercurial.ini file:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">[extensions]</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="na">mercurial_keyring</span><span class="o">=</span>
+</span></code></pre></div>
+<p>You can delete the password line under the [auth] section completely as it is not needed at this point. Your final mercurial.ini file should look like this:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Generated by TortoiseHg settings dialog</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">[ui]</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="na">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">Valentin Kantchev &lt;myemail@primosoftware.com&gt;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="k">[auth]</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="na">bitbucket.org.prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">bitbucket.org</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="na">bitbucket.org.username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">myusername</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="k">[extensions]</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="na">mercurial_keyring</span><span class="o">=</span>
+</span></code></pre></div>
+<p>Now you can also remove your username from the repository URL. In the .hg/hgrc file in your local repository folder, change this: https://myusername@nullbitbucket.org/primosoftware/projectmap to this: https://bitbucket.org/primosoftware/projectmap</p>
+<p>Your final .hg/hgrc file should look like this:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">[ui]</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="na">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">Valentin Kantchev &lt;myemail@primosoftware.com&gt;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">[paths]</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="na">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">https://bitbucket.org/primosoftware/projectmap</span>
+</span></code></pre></div>
+<p>This completely removes all authentication info from your local repository folders. Your password is now stored in the Keyring and your user name is stored in <code>C:\Users\yourwindowsusername\mercurial.ini</code>. This way, for example, if you zip your local folder to send it to somebody you cannot accidentally send your source control authentication information with it.</p>
+<p>Please note that after all changes TortoiseHg might ask you one more time for password. After that it will store and use the password from the Keyring.</p>
+<p>Here is the last TortoiseHg screenshot. Notice that there is no authentication information visible anywhere:</p>
+<p><img alt="workbench_3" src="../../assets/images/how-to-configure-tortoisehg-to-remember-your-username-and-password/workbench_3.png" /></p>
+    <nav class="md-post__action">
+      <a href="../../how-to-configure-tortoisehg-to-remember-your-username-and-password/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2012-12-16 00:00:00">December 16, 2012</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              1 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench"><a class="toclink" href="../../import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench/">Import a SQL dump from one schema into another with MySQL Workbench</a></h2>
+<p>When restoring a MySQL dump from MySQL Workbench, currently it is not possible to specify a different schema than the schema used during the export. The workaround for that is to edit the dump file (which is just a text file) in a text editor and change the name of the schema manually.</p>
+<p>For example to change the schema name from ‘old_schema’ to ‘new_schema’, open the dump file in a text editor and change these two lines:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="s1">&#39;old_schema&#39;</span><span class="w"> </span><span class="cm">/*!40100 DEFAULT CHARACTER SET utf8 */</span><span class="p">;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">USE</span><span class="w"> </span><span class="s1">&#39;old_schema&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<p>to this:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="s1">&#39;new_schema&#39;</span><span class="w"> </span><span class="cm">/*!40100 DEFAULT CHARACTER SET utf8 */</span><span class="p">;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">USE</span><span class="w"> </span><span class="s1">&#39;new_schema&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<p>After that, import the dump file using MySQL Workbench as usual. Please note that if you exported the old schema with qualified identifiers you would also have to search and replace the schema name everywhere in the dump file, otherwise each object would have the old schema name as prefix.</p>
+    <nav class="md-post__action">
+      <a href="../../import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1742,76 +1893,6 @@
   </div>
 </article>
       
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2012-10-12 00:00:00">October 12, 2012</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              1 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="convert-an-existing-google-apps-account-to-a-google-apps-reseller-account"><a class="toclink" href="../../convert-an-existing-google-apps-account-to-a-google-apps-reseller-account/">Convert an existing Google Apps account to a Google Apps Reseller account</a></h2>
-<p>This one was giving me a headache.</p>
-<p>I was trying to enroll Swift Software Group in the Google Apps Reseller program, but the <a href="https://www.google.com/a/signup/rsignup">standard application form</a> did not want to accept our domain name “swiftsoftwaregroup.com”. It kept coming back saying “This domain has already been registered with Google Apps.”</p>
-<p>I just found a way around this:</p>
-<p>Basically, you first have to sign in to your existing Google Apps account and then navigate (in the same browser window) to <a href="http://new.googlepartnerconnect.com/Home/enrollment">http://new.googlepartnerconnect.com/Home/enrollment</a>.You should to complete the reseller enrollment from there.</p>
-    <nav class="md-post__action">
-      <a href="../../convert-an-existing-google-apps-account-to-a-google-apps-reseller-account/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2012-03-06 00:00:00">March 6, 2012</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              1 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="super-agile-a-note-about-software-requirements"><a class="toclink" href="../../super-agile-a-note-about-software-requirements/">Super Agile: A note about software requirements</a></h2>
-<p>Write your requirements as user stories, following this simple template:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>As a , I want  so that .
-</span></code></pre></div>
-<p>In other words:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>As a product owner, I want to describe features as user stories, so that I encourage myself to think about the added value for my customers.
-</span></code></pre></div>
-    <nav class="md-post__action">
-      <a href="../../super-agile-a-note-about-software-requirements/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
       
         
           
@@ -1819,7 +1900,7 @@
 
 
 <nav class="md-pagination">
-  <a class="md-pagination__link" href="../..">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../14/">14</a> <a class="md-pagination__link" href="../15/">15</a> <span class="md-pagination__current">16</span> <a class="md-pagination__link" href="../17/">17</a> <a class="md-pagination__link" href="../18/">18</a> <a class="md-pagination__link" href="../19/">19</a>
+  <a class="md-pagination__link" href="../..">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../14/">14</a> <a class="md-pagination__link" href="../15/">15</a> <span class="md-pagination__current">16</span> <a class="md-pagination__link" href="../17/">17</a> <a class="md-pagination__link" href="../18/">18</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../20/">20</a>
 </nav>
         
       
