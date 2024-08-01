@@ -1597,6 +1597,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#github-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitHub Repository
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1694,8 +1703,8 @@
 
 <h2 id="create-the-cdk-project">Create the CDK Project</h2>
 <p>Open a Terminal and type this to the create project directory:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/ec2-aws-cdk-python
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>~/ec2-aws-cdk-python
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/aws-cdk-ec2-python
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>~/aws-cdk-ec2-python
 </span></code></pre></div>
 <p>Create the project:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>nvm<span class="w"> </span>use<span class="w"> </span><span class="m">20</span>.16.0
@@ -1840,6 +1849,8 @@ Deploy the stack:</p>
 <p><div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>aws<span class="w"> </span>cloudformation<span class="w"> </span>delete-stack<span class="w"> </span>--stack-name<span class="w"> </span>CDKToolkit<span class="w"> </span>--profile<span class="w"> </span>default
 </span></code></pre></div>
 The bootstrap process creates an S3 Bucket with a name:  <code>cdk-&lt;hash&gt;-assets-&lt;account_id&gt;-&lt;region&gt;</code>. This bucket will not be deleted automatically and will remain in your account if not deleted manually. </p>
+<h2 id="github-repository">GitHub Repository</h2>
+<p>The code for this project is available in the <a href="https://github.com/swiftsoftwaregroup/aws-cdk-ec2-python">aws-cdk-ec2-python</a> repository.</p>
 
 
 
