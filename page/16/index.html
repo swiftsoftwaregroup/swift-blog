@@ -506,6 +506,24 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 1)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (TOC)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-to-configure-tortoisehg-to-remember-your-username-and-password" class="md-nav__link">
     <span class="md-ellipsis">
       How to configure TortoiseHg to remember your username and password
@@ -527,24 +545,6 @@
   <a href="#super-agile-unknown-is-good-for-your-team" class="md-nav__link">
     <span class="md-ellipsis">
       Super Agile: Unknown is good for your team
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-specified-password-for-user-account-root-is-not-valid-or-failed-to-connect-to-the-database-server" class="md-nav__link">
-    <span class="md-ellipsis">
-      The specified password for user account &#8216;root&#8217; is not valid, or failed to connect to the database server.
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#super-agile-replace-email-with-a-shared-blog" class="md-nav__link">
-    <span class="md-ellipsis">
-      Super Agile: Replace email with a shared blog
     </span>
   </a>
   
@@ -1252,6 +1252,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../iam/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    iam
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../../k3s/" class="md-nav__link">
         
   
@@ -1601,6 +1624,24 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 1)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (TOC)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-to-configure-tortoisehg-to-remember-your-username-and-password" class="md-nav__link">
     <span class="md-ellipsis">
       How to configure TortoiseHg to remember your username and password
@@ -1627,24 +1668,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#the-specified-password-for-user-account-root-is-not-valid-or-failed-to-connect-to-the-database-server" class="md-nav__link">
-    <span class="md-ellipsis">
-      The specified password for user account &#8216;root&#8217; is not valid, or failed to connect to the database server.
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#super-agile-replace-email-with-a-shared-blog" class="md-nav__link">
-    <span class="md-ellipsis">
-      Super Agile: Replace email with a shared blog
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1659,6 +1682,106 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-01-18 00:00:00">January 18, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              2 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1"><a class="toclink" href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/">Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 1)</a></h2>
+<p>This is the first post from a <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (TOC)">multi-part article</a> about using Mercurial subrepositories when you are switching from Subversion to Mercurial and you heavily used Subversion subrepositories configured via the svn:externals property.</p>
+<p>Often a common scenario in software development is to have a main project that depends on other projects. Here is an example of how the Subversion “trunk” for such projects might look like:</p>
+<p>``` text
+svn://svnserver/SandboxSvn
+    trunk
+        SandboxSvn (main source code)
+        SanboxDep1Svn (svn:externals link from svn://svnserver/SandboxDep1Svn/trunk)
+        SanboxDep2Svn (svn:externals link from svn://svnserver/SandboxDep2Svn/trunk)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Basically we have a repository at *svn://svnserver/SandboxSvn* that includes the main project called *SandboxSvn* and two projects* SandboxDep1Svn* and *SandboxDep2Svn* on which *SandboxSvn* depends. The dependency projects are linked from two separate Subversion repositories, hosted at *svn://svnserver/SandboxDep1Svn/trunk* and *svn://svnserver/SandboxDep2Svn/trunk* respectively.
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>You can create a similar structure in Mercurial by using the Mercurial subrepositories. In the example below, I use BitBucket, so I can test my setup later, but the same steps should be valid for any other shared Mercurial setup. For more information on how to use BitBucket, see the [BitBucket 101](https://confluence.atlassian.com/display/BITBUCKET/Bitbucket+101 &quot;BitBucket 101&quot;) wiki.
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>Steps to setup a main project with two dependencies in Mercurial:
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>1) Create a repository called SandboxRootHg. This will be a containerrepository for both the main project and the dependencies. I set that up at https://bitbucket.org/your-team-name/SandboxRootHg.
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>2) Create a repository for your main project, e.g. SandboxHg at *https://bitbucket.org/your-team-name/SandboxHg*.
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>3) Create a repository for each of the dependencies:
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>- SandboxDep1Hg at *https://bitbucket.org/your-team-name/SandboxDep1Hg*
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>- SandboxDep2Hg at *https://bitbucket.org/your-team-name/sandboxDep1Hg*
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>4) Setup the three dependencies in the container project.
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>You first have to clone the container repository locally to your machine. In our case the containeris *SandboxRootHg*, so I cloned that in a new*SandboxRootHg* folder. In the *SandboxRootHg* folder create a *.hgsub* file(note the dot in the*.hgsub*name), and add the *SandboxHg*, *SandboxDep1Hg* and *SandboxDep2Hg* projects to in the *.hgsub* file. Your final *.hgsub* will have three lines in it and will look similar to this:
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>``` text 
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>SandboxHg = https://bitbucket.org/your-team-name/SandboxHg
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>SandboxDep1Hg = https://bitbucket.org/your-team-name/SandboxDep1Hg
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>SandboxDep2Hg = https://bitbucket.org/your-team-name/SandboxDep2Hg
+</span></code></pre></div></p>
+<p>5) In the <em>SandboxRootHg</em> folder, do a <strong>Hg/Add</strong> to add the <em>.hgsub</em> file to Mercurial, then <strong>Hg/Commit</strong>. And last, do not forget to do a <strong>Hg/Push</strong> to update the remote shared repository with your changes.</p>
+<p>Continue to <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 2)">Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 2)</a>.</p>
+    <nav class="md-post__action">
+      <a href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-01-17 00:00:00">January 17, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              1 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc"><a class="toclink" href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc/">Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (TOC)</a></h2>
+<h3 id="table-of-content"><a class="toclink" href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc/#table-of-content">Table of Content</a></h3>
+<ol>
+<li><a href="http://www.swiftsoftwaregroup.com/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 1)">Repository Setup</a></li>
+<li><a href="http://www.swiftsoftwaregroup.com/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 2)">The Commit/Push, and Pull/Update cycles</a></li>
+<li><a href="http://www.swiftsoftwaregroup.com/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 3)">Summary</a></li>
+</ol>
+    <nav class="md-post__action">
+      <a href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1813,80 +1936,6 @@ default = https://myusername@bitbucket.org/primosoftware/projectmap
 <p>Encourage developers to work on things or with technologies they do not know. Watch them becoming the fearless masters of technology, who can solve any problem you throw at them.</p>
     <nav class="md-post__action">
       <a href="../../super-agile-unknown-good-team/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2012-11-26 00:00:00">November 26, 2012</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              1 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="the-specified-password-for-user-account-root-is-not-valid-or-failed-to-connect-to-the-database-server"><a class="toclink" href="../../the-specified-password-for-user-account-root-is-not-valid-or-failed-to-connect-to-the-database-server/">The specified password for user account &#8216;root&#8217; is not valid, or failed to connect to the database server.</a></h2>
-<p>While installing WordPress 3.4 via Web Platform Installer 4.0 on IIS 7, at some point the Web Platform Installer asks for MySQL ‘root’ user password. There you might get this error: “The specified password for user account ‘root’ is not valid, or failed to connect to the database server”. That happens even if you enter the correct password.</p>
-<p>Here is how to fix it:</p>
-<ul>
-<li>In the Windows registry, delete the mysql_pwd reg key under HKCU\Software\Microsoft\WebPlatformInstaller</li>
-<li>Download and install the latest <a href="http://www.mysql.com/downloads/connector/net/">MySql .NET Connector (32 bit)</a>. At the time of writing, the latest version of MySql .NET Connector was 6.6.4.</li>
-</ul>
-    <nav class="md-post__action">
-      <a href="../../the-specified-password-for-user-account-root-is-not-valid-or-failed-to-connect-to-the-database-server/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2012-11-19 00:00:00">November 19, 2012</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              1 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="super-agile-replace-email-with-a-shared-blog"><a class="toclink" href="../../super-agile-replace-email-with-a-shared-blog/">Super Agile: Replace email with a shared blog</a></h2>
-<p>At Primo Software, we have switched from email to using shared internal blogs. That has improved communication in several ways:</p>
-<ul>
-<li>Instead of emailing multiple people, you now write a post on the blog and all people who are subscribed to it are notified</li>
-<li>Discussions are visible to everybody including future employees</li>
-<li>As a side effect, posts have become more substantial. You post when you really have something valuable to share</li>
-<li>People who prefer email can still choose to receive email notifications, daily digest, weekly digest and so on…</li>
-<li>Posts are searchable</li>
-</ul>
-    <nav class="md-post__action">
-      <a href="../../super-agile-replace-email-with-a-shared-blog/">
         Continue reading
       </a>
     </nav>

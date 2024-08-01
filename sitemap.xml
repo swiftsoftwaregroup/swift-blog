@@ -326,6 +326,16 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://blog.swiftsoftwaregroup.com/create-aws-ec2-instance-aws-cli-step-2-instance-role/</loc>
+         <lastmod>2024-08-01</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://blog.swiftsoftwaregroup.com/create-aws-ec2-instance-aws-cli-step-3-cleanup/</loc>
+         <lastmod>2024-08-01</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://blog.swiftsoftwaregroup.com/launch-ecs-container-aws-cli-step-1-network-setup/</loc>
          <lastmod>2024-08-01</lastmod>
          <changefreq>daily</changefreq>
@@ -691,6 +701,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://blog.swiftsoftwaregroup.com/iam/</loc>
+         <lastmod>2024-08-01</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://blog.swiftsoftwaregroup.com/page/2/</loc>
          <lastmod>2024-08-01</lastmod>
          <changefreq>daily</changefreq>
@@ -806,6 +821,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://blog.swiftsoftwaregroup.com/archive/2021/page/4/</loc>
+         <lastmod>2024-08-01</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://blog.swiftsoftwaregroup.com/archive/2015/page/2/</loc>
          <lastmod>2024-08-01</lastmod>
          <changefreq>daily</changefreq>
@@ -861,6 +881,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://blog.swiftsoftwaregroup.com/aws/page/5/</loc>
+         <lastmod>2024-08-01</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://blog.swiftsoftwaregroup.com/aws-cli/page/2/</loc>
          <lastmod>2024-08-01</lastmod>
          <changefreq>daily</changefreq>
@@ -907,6 +932,11 @@
     </url>
     <url>
          <loc>https://blog.swiftsoftwaregroup.com/ec2/page/2/</loc>
+         <lastmod>2024-08-01</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://blog.swiftsoftwaregroup.com/ec2/page/3/</loc>
          <lastmod>2024-08-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
