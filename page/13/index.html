@@ -506,6 +506,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#nvidia-driver-mismatch-after-upgrading-to-ubuntu-12043-lts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nvidia driver mismatch after upgrading to Ubuntu 12.04.3 LTS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#debian-wheezy-guest-on-windows-81-host-using-virtualbox" class="md-nav__link">
     <span class="md-ellipsis">
       Debian "Wheezy" guest on Windows 8.1 host using VirtualBox
@@ -536,15 +545,6 @@
   <a href="#how-to-upgrade-gcc-to-47-on-ubuntu-1204" class="md-nav__link">
     <span class="md-ellipsis">
       How to upgrade GCC to 4.7+ on Ubuntu 12.04
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuring-php-curl-root-certificates-on-windows-server" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuring PHP / CURL root certificates on Windows Server
     </span>
   </a>
   
@@ -1574,6 +1574,52 @@
   
   
     <li class="md-nav__item">
+      <a href="../../vmdk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vmdk
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vmware/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vmware
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../../vscode/" class="md-nav__link">
         
   
@@ -1647,6 +1693,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#nvidia-driver-mismatch-after-upgrading-to-ubuntu-12043-lts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nvidia driver mismatch after upgrading to Ubuntu 12.04.3 LTS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#debian-wheezy-guest-on-windows-81-host-using-virtualbox" class="md-nav__link">
     <span class="md-ellipsis">
       Debian "Wheezy" guest on Windows 8.1 host using VirtualBox
@@ -1682,15 +1737,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#configuring-php-curl-root-certificates-on-windows-server" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuring PHP / CURL root certificates on Windows Server
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1705,6 +1751,56 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-12-28 00:00:00">December 28, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              1 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="nvidia-driver-mismatch-after-upgrading-to-ubuntu-12043-lts"><a class="toclink" href="../../nvidia-driver-mismatch-upgrading-ubuntu-12-04-3-lts/">Nvidia driver mismatch after upgrading to Ubuntu 12.04.3 LTS</a></h2>
+<p>After upgrading to Ubuntu 12.04.3 LTS, I could not boot in GUI / X anymore. I got this when trying to start X:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>startx
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>NVIDIA:<span class="w"> </span>API<span class="w"> </span>mismatch:<span class="w"> </span>the<span class="w"> </span>NVIDIA<span class="w"> </span>kernel<span class="w"> </span>module<span class="w"> </span>has<span class="w"> </span>version<span class="w"> </span><span class="m">304</span>.88,<span class="w"> </span>but<span class="w"> </span>this<span class="w"> </span>NVIDIA<span class="w"> </span>driver<span class="w"> </span>component<span class="w"> </span>has<span class="w"> </span>version<span class="w"> </span><span class="m">304</span>.108.
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Please<span class="w"> </span>make<span class="w"> </span>sure<span class="w"> </span>that<span class="w"> </span>the<span class="w"> </span>kernel<span class="w"> </span>module<span class="w"> </span>and<span class="w"> </span>all<span class="w"> </span>NVIDIA<span class="w"> </span>driver<span class="w"> </span>components<span class="w"> </span>have<span class="w"> </span>the<span class="w"> </span>same<span class="w"> </span>version.
+</span></code></pre></div>
+<p>To fix that it seems you have to disable the <code>xorg:nvidia_304_updates</code> (304.108) driver and enable the <code>xorg:nvidia_304</code> (304.88) driver:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>jockey-text<span class="w"> </span>-e<span class="w"> </span>xorg:nvidia_304<span class="w"> </span>
+</span></code></pre></div>
+<p>After that you should have <code>xorg:nvidia_304</code> listed as Proprietary, Enabled, In use:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>jockey-text<span class="w"> </span>--list
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>xorg:nvidia_173<span class="w"> </span>-<span class="w"> </span>NVIDIA<span class="w"> </span>accelerated<span class="w"> </span>graphics<span class="w"> </span>driver<span class="w"> </span><span class="o">(</span>Proprietary,<span class="w"> </span>Disabled,<span class="w"> </span>Not<span class="w"> </span><span class="k">in</span><span class="w"> </span>use<span class="o">)</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>xorg:nvidia_173_updates<span class="w"> </span>-<span class="w"> </span>NVIDIA<span class="w"> </span>accelerated<span class="w"> </span>graphics<span class="w"> </span>driver<span class="w"> </span><span class="o">(</span>post-release<span class="w"> </span>updates<span class="o">)</span><span class="w"> </span><span class="o">(</span>Proprietary,<span class="w"> </span>Disabled,<span class="w"> </span>Not<span class="w"> </span><span class="k">in</span><span class="w"> </span>use<span class="o">)</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>xorg:nvidia_304<span class="w"> </span>-<span class="w"> </span>NVIDIA<span class="w"> </span>accelerated<span class="w"> </span>graphics<span class="w"> </span>driver<span class="w"> </span><span class="o">(</span>Proprietary,<span class="w"> </span>Enabled,<span class="w"> </span>In<span class="w"> </span>use<span class="o">)</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>xorg:nvidia_304_updates<span class="w"> </span>-<span class="w"> </span>NVIDIA<span class="w"> </span>accelerated<span class="w"> </span>graphics<span class="w"> </span>driver<span class="w"> </span><span class="o">(</span>post-release<span class="w"> </span>updates<span class="o">)</span><span class="w"> </span><span class="o">(</span>Proprietary,<span class="w"> </span>Disabled,<span class="w"> </span>Not<span class="w"> </span><span class="k">in</span><span class="w"> </span>use<span class="o">)</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>xorg:nvidia_96<span class="w"> </span>-<span class="w"> </span>NVIDIA<span class="w"> </span>accelerated<span class="w"> </span>graphics<span class="w"> </span>driver<span class="w"> </span><span class="o">(</span>Proprietary,<span class="w"> </span>Disabled,<span class="w"> </span>Not<span class="w"> </span><span class="k">in</span><span class="w"> </span>use<span class="o">)</span><span class="w">    </span>
+</span></code></pre></div>
+<p>And finally you have to reboot:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>reboot
+</span></code></pre></div>
+    <nav class="md-post__action">
+      <a href="../../nvidia-driver-mismatch-upgrading-ubuntu-12-04-3-lts/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -2104,63 +2200,6 @@ should return something like:</p>
   </div>
 </article>
       
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2013-09-05 00:00:00">September 5, 2013</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              2 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="configuring-php-curl-root-certificates-on-windows-server"><a class="toclink" href="../../configuring-phpcurl-root-certificates-windows-server/">Configuring PHP / CURL root certificates on Windows Server</a></h2>
-<p>This post is about configuring PHP/CURL root certificates for a WordPress installation running on Windows Server 2008 R2 / IIS 7.5.</p>
-<p>Yesterday I was trying to add an RSS feed to the <a href="https://wiki.avblocks.com" title="AVBlocks Wiki Site">AVBlocks Wiki Site</a> and I got this error:</p>
-<p>``` text
-WP HTTP Error: SSL certificate problem, verify that the CA cert is OK.
-Details: error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>In my case the [feed](https://groups.google.com/forum/feed/avblocks-support/msgs/rss.xml?num=3) was coming from the [AVBlocks Group](https://groups.google.com/forum/#!forum/avblocks) on Google. However, the Google Groups feeds are served via secure https:// protocol and that requires SSL for server-to-server communication. The problem is that WordPress uses *php\_curl*, and on a standard PHP installation of WordPress, *curl* does not come with the root certificate authorities installed.
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Here is how to fix it:
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>1. You need to be running PHP 5.3.7 or later.
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>2. Download [mk-ca-bundle.vbs](https://raw.github.com/bagder/curl/master/lib/mk-ca-bundle.vbs) from the [Curl](https://github.com/bagder/curl/tree/master/lib) repository on GitHub.
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>3. Open a Command Prompt as Administrator and go to the directory in which you downloaded `mk-ca-bundle.vbs`.
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>4. Run `mk-ca-bundle.vbs`. Accept the default filename and do not include the text information for each certificate.
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>5. After running this you will end up with a file `ca-bundle.crt`.
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>6. Copy that to a known location, e.g. `{path}/ca-bundle.crt`.
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>7. Add `curl.cainfo={path}/ca-bundle.crt` to php.ini. See [PHP Runtime Configuration](http://php.net/manual/en/curl.configuration.php) for more details: 
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>``` ini
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>[PHP]
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>;;;;;;;;;;;;;;;;;;;
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>; CURL Settings ;
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>;;;;;;;;;;;;;;;;;;;
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>curl.cainfo={path}/ca-bundle.crt
-</span></code></pre></div>
-8. Restart the IIS web site</p>
-    <nav class="md-post__action">
-      <a href="../../configuring-phpcurl-root-certificates-windows-server/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
       
         
           
@@ -2168,7 +2207,7 @@ Details: error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate ver
 
 
 <nav class="md-pagination">
-  <a class="md-pagination__link" href="../..">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../11/">11</a> <a class="md-pagination__link" href="../12/">12</a> <span class="md-pagination__current">13</span> <a class="md-pagination__link" href="../14/">14</a> <a class="md-pagination__link" href="../15/">15</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../20/">20</a>
+  <a class="md-pagination__link" href="../..">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../11/">11</a> <a class="md-pagination__link" href="../12/">12</a> <span class="md-pagination__current">13</span> <a class="md-pagination__link" href="../14/">14</a> <a class="md-pagination__link" href="../15/">15</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../21/">21</a>
 </nav>
         
       

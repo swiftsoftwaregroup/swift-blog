@@ -506,6 +506,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#configuring-php-curl-root-certificates-on-windows-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring PHP / CURL root certificates on Windows Server
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#setup-google-analytics-for-a-bitbucket-repository" class="md-nav__link">
     <span class="md-ellipsis">
       Setup Google Analytics for a Bitbucket repository
@@ -536,15 +545,6 @@
   <a href="#upgrading-a-web-app-from-aspnet-mvc-3-to-aspnet-mvc-4" class="md-nav__link">
     <span class="md-ellipsis">
       Upgrading a web app from ASP.NET MVC 3 to ASP.NET MVC 4
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#powershell-prompt-here" class="md-nav__link">
-    <span class="md-ellipsis">
-      PowerShell Prompt Here
     </span>
   </a>
   
@@ -1574,6 +1574,52 @@
   
   
     <li class="md-nav__item">
+      <a href="../../vmdk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vmdk
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vmware/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vmware
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../../vscode/" class="md-nav__link">
         
   
@@ -1647,6 +1693,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#configuring-php-curl-root-certificates-on-windows-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring PHP / CURL root certificates on Windows Server
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#setup-google-analytics-for-a-bitbucket-repository" class="md-nav__link">
     <span class="md-ellipsis">
       Setup Google Analytics for a Bitbucket repository
@@ -1682,15 +1737,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#powershell-prompt-here" class="md-nav__link">
-    <span class="md-ellipsis">
-      PowerShell Prompt Here
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1705,6 +1751,63 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-09-05 00:00:00">September 5, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              2 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="configuring-php-curl-root-certificates-on-windows-server"><a class="toclink" href="../../configuring-phpcurl-root-certificates-windows-server/">Configuring PHP / CURL root certificates on Windows Server</a></h2>
+<p>This post is about configuring PHP/CURL root certificates for a WordPress installation running on Windows Server 2008 R2 / IIS 7.5.</p>
+<p>Yesterday I was trying to add an RSS feed to the <a href="https://wiki.avblocks.com" title="AVBlocks Wiki Site">AVBlocks Wiki Site</a> and I got this error:</p>
+<p>``` text
+WP HTTP Error: SSL certificate problem, verify that the CA cert is OK.
+Details: error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>In my case the [feed](https://groups.google.com/forum/feed/avblocks-support/msgs/rss.xml?num=3) was coming from the [AVBlocks Group](https://groups.google.com/forum/#!forum/avblocks) on Google. However, the Google Groups feeds are served via secure https:// protocol and that requires SSL for server-to-server communication. The problem is that WordPress uses *php\_curl*, and on a standard PHP installation of WordPress, *curl* does not come with the root certificate authorities installed.
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Here is how to fix it:
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>1. You need to be running PHP 5.3.7 or later.
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>2. Download [mk-ca-bundle.vbs](https://raw.github.com/bagder/curl/master/lib/mk-ca-bundle.vbs) from the [Curl](https://github.com/bagder/curl/tree/master/lib) repository on GitHub.
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>3. Open a Command Prompt as Administrator and go to the directory in which you downloaded `mk-ca-bundle.vbs`.
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>4. Run `mk-ca-bundle.vbs`. Accept the default filename and do not include the text information for each certificate.
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>5. After running this you will end up with a file `ca-bundle.crt`.
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>6. Copy that to a known location, e.g. `{path}/ca-bundle.crt`.
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>7. Add `curl.cainfo={path}/ca-bundle.crt` to php.ini. See [PHP Runtime Configuration](http://php.net/manual/en/curl.configuration.php) for more details: 
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>``` ini
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>[PHP]
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>;;;;;;;;;;;;;;;;;;;
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>; CURL Settings ;
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>;;;;;;;;;;;;;;;;;;;
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>curl.cainfo={path}/ca-bundle.crt
+</span></code></pre></div>
+8. Restart the IIS web site</p>
+    <nav class="md-post__action">
+      <a href="../../configuring-phpcurl-root-certificates-windows-server/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1952,37 +2055,6 @@
   </div>
 </article>
       
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2013-04-27 00:00:00">April 27, 2013</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              1 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="powershell-prompt-here"><a class="toclink" href="../../powershell-prompt-here/">PowerShell Prompt Here</a></h2>
-<p>I have been doing some scripting in PowerShell 3.0 lately and I found this <a href="http://www.hanselman.com/blog/IntroducingPowerShellPromptHere.aspx" title="PowerShell Prompt Here">post</a> by Scott Hanselman. Just go to that post and download powershellhere.inf, right click on it and click Install. It will give you a nice “PowerShell Prompt Here” context menu in Windows Explorer.</p>
-    <nav class="md-post__action">
-      <a href="../../powershell-prompt-here/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
       
         
           
@@ -1990,7 +2062,7 @@
 
 
 <nav class="md-pagination">
-  <a class="md-pagination__link" href="../..">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../12/">12</a> <a class="md-pagination__link" href="../13/">13</a> <span class="md-pagination__current">14</span> <a class="md-pagination__link" href="../15/">15</a> <a class="md-pagination__link" href="../16/">16</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../20/">20</a>
+  <a class="md-pagination__link" href="../..">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../12/">12</a> <a class="md-pagination__link" href="../13/">13</a> <span class="md-pagination__current">14</span> <a class="md-pagination__link" href="../15/">15</a> <a class="md-pagination__link" href="../16/">16</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../21/">21</a>
 </nav>
         
       

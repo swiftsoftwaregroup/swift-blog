@@ -506,6 +506,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench" class="md-nav__link">
+    <span class="md-ellipsis">
+      Import a SQL dump from one schema into another with MySQL Workbench
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#super-agile-unknown-is-good-for-your-team" class="md-nav__link">
     <span class="md-ellipsis">
       Super Agile: Unknown is good for your team
@@ -536,15 +545,6 @@
   <a href="#convert-an-existing-google-apps-account-to-a-google-apps-reseller-account" class="md-nav__link">
     <span class="md-ellipsis">
       Convert an existing Google Apps account to a Google Apps Reseller account
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#super-agile-a-note-about-software-requirements" class="md-nav__link">
-    <span class="md-ellipsis">
-      Super Agile: A note about software requirements
     </span>
   </a>
   
@@ -1574,6 +1574,52 @@
   
   
     <li class="md-nav__item">
+      <a href="../../vmdk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vmdk
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vmware/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vmware
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../../vscode/" class="md-nav__link">
         
   
@@ -1647,6 +1693,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench" class="md-nav__link">
+    <span class="md-ellipsis">
+      Import a SQL dump from one schema into another with MySQL Workbench
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#super-agile-unknown-is-good-for-your-team" class="md-nav__link">
     <span class="md-ellipsis">
       Super Agile: Unknown is good for your team
@@ -1682,15 +1737,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#super-agile-a-note-about-software-requirements" class="md-nav__link">
-    <span class="md-ellipsis">
-      Super Agile: A note about software requirements
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1705,6 +1751,46 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2012-12-16 00:00:00">December 16, 2012</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              1 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench"><a class="toclink" href="../../import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench/">Import a SQL dump from one schema into another with MySQL Workbench</a></h2>
+<p>When restoring a MySQL dump from MySQL Workbench, currently it is not possible to specify a different schema than the schema used during the export. The workaround for that is to edit the dump file (which is just a text file) in a text editor and change the name of the schema manually.</p>
+<p>For example to change the schema name from ‘old_schema’ to ‘new_schema’, open the dump file in a text editor and change these two lines:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="s1">&#39;old_schema&#39;</span><span class="w"> </span><span class="cm">/*!40100 DEFAULT CHARACTER SET utf8 */</span><span class="p">;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">USE</span><span class="w"> </span><span class="s1">&#39;old_schema&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<p>to this:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="s1">&#39;new_schema&#39;</span><span class="w"> </span><span class="cm">/*!40100 DEFAULT CHARACTER SET utf8 */</span><span class="p">;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">USE</span><span class="w"> </span><span class="s1">&#39;new_schema&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<p>After that, import the dump file using MySQL Workbench as usual. Please note that if you exported the old schema with qualified identifiers you would also have to search and replace the schema name everywhere in the dump file, otherwise each object would have the old schema name as prefix.</p>
+    <nav class="md-post__action">
+      <a href="../../import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1845,42 +1931,6 @@
   </div>
 </article>
       
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2012-03-06 00:00:00">March 6, 2012</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              1 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="super-agile-a-note-about-software-requirements"><a class="toclink" href="../../super-agile-a-note-about-software-requirements/">Super Agile: A note about software requirements</a></h2>
-<p>Write your requirements as user stories, following this simple template:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>As a , I want  so that .
-</span></code></pre></div>
-<p>In other words:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>As a product owner, I want to describe features as user stories, so that I encourage myself to think about the added value for my customers.
-</span></code></pre></div>
-    <nav class="md-post__action">
-      <a href="../../super-agile-a-note-about-software-requirements/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
       
         
           
@@ -1888,7 +1938,7 @@
 
 
 <nav class="md-pagination">
-  <a class="md-pagination__link" href="../..">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../15/">15</a> <a class="md-pagination__link" href="../16/">16</a> <span class="md-pagination__current">17</span> <a class="md-pagination__link" href="../18/">18</a> <a class="md-pagination__link" href="../19/">19</a> <a class="md-pagination__link" href="../20/">20</a>
+  <a class="md-pagination__link" href="../..">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../15/">15</a> <a class="md-pagination__link" href="../16/">16</a> <span class="md-pagination__current">17</span> <a class="md-pagination__link" href="../18/">18</a> <a class="md-pagination__link" href="../19/">19</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../21/">21</a>
 </nav>
         
       

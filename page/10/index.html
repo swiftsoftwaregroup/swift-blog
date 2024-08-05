@@ -506,6 +506,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#getting-started-with-flashdevelop-on-windows-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting Started with FlashDevelop on Windows 10
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-to-install-nginx-on-ubuntu-using-chef" class="md-nav__link">
     <span class="md-ellipsis">
       How To Install Nginx On Ubuntu Using Chef
@@ -536,15 +545,6 @@
   <a href="#ubuntu-and-chef-with-vagrant-and-virtualbox-on-windows" class="md-nav__link">
     <span class="md-ellipsis">
       Ubuntu and Chef with Vagrant and VirtualBox on Windows
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how-to-install-jekyll-on-windows" class="md-nav__link">
-    <span class="md-ellipsis">
-      How to Install Jekyll on Windows
     </span>
   </a>
   
@@ -1574,6 +1574,52 @@
   
   
     <li class="md-nav__item">
+      <a href="../../vmdk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vmdk
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vmware/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vmware
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../../vscode/" class="md-nav__link">
         
   
@@ -1647,6 +1693,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#getting-started-with-flashdevelop-on-windows-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting Started with FlashDevelop on Windows 10
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-to-install-nginx-on-ubuntu-using-chef" class="md-nav__link">
     <span class="md-ellipsis">
       How To Install Nginx On Ubuntu Using Chef
@@ -1682,15 +1737,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#how-to-install-jekyll-on-windows" class="md-nav__link">
-    <span class="md-ellipsis">
-      How to Install Jekyll on Windows
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1705,6 +1751,67 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2016-01-29 00:00:00">January 29, 2016</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              1 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="getting-started-with-flashdevelop-on-windows-10"><a class="toclink" href="../../getting-started-flashdevelop-windows-10/">Getting Started with FlashDevelop on Windows 10</a></h2>
+<p>FlashDevelop is a free IDE for Windows. You can use it to develop Adobe Flash and AIR applications using ActionScript. </p>
+<h3 id="install-chocolatey"><a class="toclink" href="../../getting-started-flashdevelop-windows-10/#install-chocolatey">Install Chocolatey</a></h3>
+<p>Chcocolatey is a package manager for Windows.</p>
+<p>Open PowerShell as <em>Administrator</em> and run the following command:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">iex </span><span class="p">((</span><span class="nb">new-object</span> <span class="n">net</span><span class="p">.</span><span class="n">webclient</span><span class="p">).</span><span class="n">DownloadString</span><span class="p">(</span><span class="s1">&#39;https://chocolatey.org/install.ps1&#39;</span><span class="p">))</span>
+</span></code></pre></div>
+<h3 id="install-java-8-sdk-32-bit"><a class="toclink" href="../../getting-started-flashdevelop-windows-10/#install-java-8-sdk-32-bit">Install Java 8 SDK 32-bit</a></h3>
+<p>FlashDevelop requires a 32-bit java on the system path.</p>
+<p>In PowerShell as <em>Administrator</em>:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">choco</span> <span class="n">install</span> <span class="n">jdk8</span> <span class="n">-params</span> <span class="s2">&quot;x64=false&quot;</span>
+</span></code></pre></div>
+<h3 id="install-flashdevelop"><a class="toclink" href="../../getting-started-flashdevelop-windows-10/#install-flashdevelop">Install FlashDevelop</a></h3>
+<p>Download the latest FlashDevelop setup package from <a href="http://www.flashdevelop.org/">www.flashdevelop.org</a> and install it, <code>FlashDevelop-5.0.2.exe</code> at the time of writing.</p>
+<h3 id="install-additional-software"><a class="toclink" href="../../getting-started-flashdevelop-windows-10/#install-additional-software">Install Additional Software</a></h3>
+<ol>
+<li>Start FlashDevelop</li>
+<li>Install SDKs and other tools using AppMan, from Tools -&gt; Install Software ...<ul>
+<li>Flex SDK + AIR SDK</li>
+<li>Flash Player (SA)</li>
+</ul>
+</li>
+<li>Restart FlashDevelop, so that it can detect the installed SDKs and tools properly.</li>
+</ol>
+<h3 id="create-new-project"><a class="toclink" href="../../getting-started-flashdevelop-windows-10/#create-new-project">Create New Project</a></h3>
+<ol>
+<li>Create a new project from: Project -&gt; New Project</li>
+<li>For project type choose AS3 Project</li>
+<li>Set a breakpoint in Main method - Ctrl+Shift+B</li>
+<li>Compile - F11</li>
+<li>Debug - F5 </li>
+</ol>
+    <nav class="md-post__action">
+      <a href="../../getting-started-flashdevelop-windows-10/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -2285,135 +2392,6 @@
   </div>
 </article>
       
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2015-09-12 00:00:00">September 12, 2015</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              2 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="how-to-install-jekyll-on-windows"><a class="toclink" href="../../how-to-install-jekyll-on-windows/">How to Install Jekyll on Windows</a></h2>
-<p>This post shows how to install Ruby and Jekyll via Chocolatey on Windows 8.1 or Windows Server 2012 R2 Update 1.</p>
-<h3 id="chocolatey"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#chocolatey">Chocolatey</a></h3>
-<p>If you do not have Chocolatey, you can install it by following the instructions on <a href="https://chocolatey.org/">chocolatey.org</a>. You may also see <a href="http://www.swiftsoftwaregroup.com/configure-download-folder-chocolatey-packages/">this post</a> for instructions on how to set the Chocolatey cache location.</p>
-<h3 id="ruby"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#ruby">Ruby</a></h3>
-<h4 id="install"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#install">Install</a></h4>
-<p>Open PowerShell as Administrator and run the following command:</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">choco</span> <span class="n">install</span> <span class="n">ruby</span>
-</span></code></pre></div>
-<p>This will install Ruby 2.1.6 in <code>C:\tools\ruby21\bin</code>. </p>
-<h4 id="configure"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#configure">Configure</a></h4>
-<p>Close PowerShell and open it again, so it can pick the changes to the PATH environment.</p>
-<h4 id="test"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#test">Test</a></h4>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">ruby</span> <span class="p">-</span><span class="n">-version</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">ruby</span> <span class="n">2</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">6p336</span> <span class="p">(</span><span class="n">2015</span><span class="p">-</span><span class="n">04</span><span class="p">-</span><span class="n">13</span> <span class="n">revision</span> <span class="n">50298</span><span class="p">)</span> <span class="p">[</span><span class="n">x64-mingw32</span><span class="p">]</span>
-</span></code></pre></div>
-<h3 id="ruby-devkit-20"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#ruby-devkit-20">Ruby DevKit (2.0+)</a></h3>
-<h4 id="install_1"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#install_1">Install</a></h4>
-<p>Open PowerShell as Administrator and run the following command:</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">choco</span> <span class="n">install</span> <span class="n">ruby2</span><span class="p">.</span><span class="n">devkit</span>
-</span></code></pre></div>
-<p>This will install Ruby DevKit 2.0+ and its dependencies- in <code>C:\tools\DevKit2</code>.  </p>
-<h4 id="configure_1"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#configure_1">Configure</a></h4>
-<p>Open <code>C:\tools\DevKit2\config.yml</code>and add <code>C:\tools\ruby21</code> path at the end. The complete <code>config.yml</code> should look like this:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># This configuration file contains the absolute path locations of all</span>
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="c1"># installed Rubies to be enhanced to work with the DevKit. This config</span>
-</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="c1"># file is generated by the &#39;ruby dk.rb init&#39; step and may be modified</span>
-</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="c1"># before running the &#39;ruby dk.rb install&#39; step. To include any installed</span>
-</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="c1"># Rubies that were not automagically discovered, simply add a line below</span>
-</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="c1"># the triple hyphens with the absolute path to the Ruby root directory.</span>
-</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="c1">#</span>
-</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="c1"># Example:</span>
-</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="c1">#</span>
-</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="c1"># ---</span>
-</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="c1"># - C:/ruby19trunk</span>
-</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="c1"># - C:/ruby192dev</span>
-</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="c1">#</span>
-</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="nn">---</span>
-</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">C:/tools/ruby21</span>
-</span></code></pre></div>
-<p>Run the DevKit installer: </p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nb">cd </span><span class="n">C</span><span class="p">:/</span><span class="n">tools</span><span class="p">/</span><span class="n">DevKit2</span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="n">ruby</span> <span class="n">dk</span><span class="p">.</span><span class="n">rb</span> <span class="n">install</span>
-</span></code></pre></div>
-<h3 id="jekyll"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#jekyll">Jekyll</a></h3>
-<h4 id="install-bundler"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#install-bundler">Install Bundler</a></h4>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">gem</span> <span class="n">install</span> <span class="n">bundler</span>
-</span></code></pre></div>
-<h4 id="create-jekyll-site"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#create-jekyll-site">Create Jekyll Site</a></h4>
-<p>Create a <code>jekyll</code> directory under your home:</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nb">cd </span><span class="p">~</span>
-</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="n">mkdir</span> <span class="n">jekyll</span>
-</span></code></pre></div>
-<h4 id="create-a-new-bundle"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#create-a-new-bundle">Create a New Bundle</a></h4>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nb">cd </span><span class="p">~/</span><span class="n">jekyll</span>
-</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="n">bundle</span> <span class="n">init</span>
-</span></code></pre></div>
-<h5 id="jekyll-gem"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#jekyll-gem">Jekyll Gem</a></h5>
-<p>For Jekyll we need the <code>jekyll</code> gem.</p>
-<h5 id="syntax-highlighter-gem"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#syntax-highlighter-gem">Syntax Highlighter Gem</a></h5>
-<p>We will use <code>rouge</code> as a syntax highlighter. This comes in the <code>rouge</code> gem.</p>
-<h5 id="auto-generation-gem"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#auto-generation-gem">Auto-generation Gem</a></h5>
-<p>Jekyll has a built-in auto-regeneration feature that watches your source folder for changes and then re-builds your site. On Windows, you need to install the <code>wdm</code> gem to enable this functionality.</p>
-<h5 id="gemfile"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#gemfile">Gemfile</a></h5>
-<p>Open the <code>Gemfile</code> file and add <code>jekyll</code>, <code>rouge</code>, and <code>wdm</code> packages. Here is the final file:</p>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># A sample Gemfile</span>
-</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="n">source</span><span class="w"> </span><span class="s2">&quot;https://rubygems.org&quot;</span>
-</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
-</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="n">gem</span><span class="w"> </span><span class="s2">&quot;jekyll&quot;</span>
-</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="n">gem</span><span class="w"> </span><span class="s2">&quot;rouge&quot;</span>
-</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="n">gem</span><span class="w"> </span><span class="s2">&quot;wdm&quot;</span>
-</span></code></pre></div>
-<h5 id="install-gems"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#install-gems">Install Gems</a></h5>
-<p>Install gems locally:</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="n">bundle</span> <span class="n">install</span> <span class="p">-</span><span class="n">-binstubs</span> <span class="p">-</span><span class="n">-path</span> <span class="n">vendor</span>
-</span></code></pre></div>
-<h4 id="create-site"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#create-site">Create Site</a></h4>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="nb">cd </span><span class="p">~/</span><span class="n">jekyll</span>
-</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="n">bundle</span> <span class="n">exec</span> <span class="n">jekyll</span> <span class="n">new</span> <span class="n">site</span>
-</span></code></pre></div>
-<h4 id="configure_2"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#configure_2">Configure</a></h4>
-<h5 id="syntax-highlighter"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#syntax-highlighter">Syntax Highlighter</a></h5>
-<p>Open <code>~/jekyll/site/_config.yml</code>. Add this line at the end to set <code>rouge</code> as a syntax highlighter:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="nt">highlighter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rouge</span>
-</span></code></pre></div>
-<h4 id="test_1"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#test_1">Test</a></h4>
-<h5 id="build"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#build">Build</a></h5>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="nb">cd </span><span class="p">~/</span><span class="n">jekyll</span><span class="p">/</span><span class="n">site</span>
-</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="n">chcp</span> <span class="n">65001</span>
-</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="n">bundle</span> <span class="n">exec</span> <span class="n">jekyll</span> <span class="n">build</span> <span class="p">-</span><span class="n">-watch</span>
-</span></code></pre></div>
-<h5 id="serve"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#serve">Serve</a></h5>
-<p>Open a second PowerShell window</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="nb">cd </span><span class="p">~/</span><span class="n">jekyll</span><span class="p">/</span><span class="n">site</span>
-</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="n">chcp</span> <span class="n">65001</span>
-</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="n">bundel</span> <span class="n">exec</span> <span class="n">jekyll</span> <span class="n">serve</span>
-</span></code></pre></div>
-<p>Open a browser and navigate to <code>http://localhost:4000</code>. You should see a basic Jekyll site running.</p>
-<h5 id="auto-generation"><a class="toclink" href="../../how-to-install-jekyll-on-windows/#auto-generation">Auto-generation</a></h5>
-<p>Go to <code>~/jekyll/site</code> and open <code>About.md</code> with a text editor capable of using UTF-8 encoding, e.g. Sublime Text. Change the title from <code>About</code> to <code>About Me</code>. Save the file. Refresh your browser and navigate to <code>http://localhost:4000/about/</code>. You should see the page has the new <code>About Me</code> title.   </p>
-    <nav class="md-post__action">
-      <a href="../../how-to-install-jekyll-on-windows/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
       
         
           
@@ -2421,7 +2399,7 @@
 
 
 <nav class="md-pagination">
-  <a class="md-pagination__link" href="../..">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../8/">8</a> <a class="md-pagination__link" href="../9/">9</a> <span class="md-pagination__current">10</span> <a class="md-pagination__link" href="../11/">11</a> <a class="md-pagination__link" href="../12/">12</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../20/">20</a>
+  <a class="md-pagination__link" href="../..">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../8/">8</a> <a class="md-pagination__link" href="../9/">9</a> <span class="md-pagination__current">10</span> <a class="md-pagination__link" href="../11/">11</a> <a class="md-pagination__link" href="../12/">12</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../21/">21</a>
 </nav>
         
       

@@ -506,6 +506,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 3)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2" class="md-nav__link">
     <span class="md-ellipsis">
       Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 2)
@@ -536,15 +545,6 @@
   <a href="#how-to-configure-tortoisehg-to-remember-your-username-and-password" class="md-nav__link">
     <span class="md-ellipsis">
       How to configure TortoiseHg to remember your username and password
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench" class="md-nav__link">
-    <span class="md-ellipsis">
-      Import a SQL dump from one schema into another with MySQL Workbench
     </span>
   </a>
   
@@ -1574,6 +1574,52 @@
   
   
     <li class="md-nav__item">
+      <a href="../../vmdk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vmdk
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vmware/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vmware
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../../vscode/" class="md-nav__link">
         
   
@@ -1647,6 +1693,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 3)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2" class="md-nav__link">
     <span class="md-ellipsis">
       Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 2)
@@ -1682,15 +1737,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench" class="md-nav__link">
-    <span class="md-ellipsis">
-      Import a SQL dump from one schema into another with MySQL Workbench
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1705,6 +1751,45 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-01-26 00:00:00">January 26, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              1 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3"><a class="toclink" href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3/">Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 3)</a></h2>
+<p>This post summarizes the Mercurial subrepository vs the Subversion externals experience. This is the third and last post of a <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (TOC)">multi-part article</a> about Mercurial subrepositories. Please make sure you read <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/" title="Hg subrepositories: a how-to guide for the svn:externals junkie (Part 1)">Part 1</a> and <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 2)">Part 2</a> before reading this post.</p>
+<p>In a few words, Mercurial subrepositories are very similar to Subversion “svn:externals” and can be used pretty much the same way. However, there are some differences in the workflow, because of the distributed nature of Mercurial. Here are the main differences from Subversion:</p>
+<ul>
+<li>You always work in a copy / clone of a remote shared repository.</li>
+<li>You may <em>commit</em> changes multiple times, but those changes are not visible to others unless you <em>push</em> to the remote shared repository.</li>
+<li>A <em>commit + push</em> in a subrepository is treated as a local change in the top-level <em>root</em> repository. To make the <em>root</em> change permanent, you have to do a <em>commit + push</em> of the <em>root</em> repository as well.</li>
+<li>A <em>pull</em> from a remote repository just downloads the latest available changes. In order to apply/merge the changes, you have to manually <em>update</em> your working copy.</li>
+</ul>
+<p>On good thing about the <em>pull+update</em> workflow is that, it guards against accidentally losing local changes and allows you to do code merges at your convenience.You can also revert an <em>update</em> and continue in your local copy when an update breaks a lot of code and requires hard manual merge labor. You can <em>update</em> your working copy again later, when you are ready for the code merge.</p>
+    <nav class="md-post__action">
+      <a href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1954,46 +2039,6 @@ default = https://myusername@bitbucket.org/primosoftware/projectmap
   </div>
 </article>
       
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2012-12-16 00:00:00">December 16, 2012</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              1 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench"><a class="toclink" href="../../import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench/">Import a SQL dump from one schema into another with MySQL Workbench</a></h2>
-<p>When restoring a MySQL dump from MySQL Workbench, currently it is not possible to specify a different schema than the schema used during the export. The workaround for that is to edit the dump file (which is just a text file) in a text editor and change the name of the schema manually.</p>
-<p>For example to change the schema name from ‘old_schema’ to ‘new_schema’, open the dump file in a text editor and change these two lines:</p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="s1">&#39;old_schema&#39;</span><span class="w"> </span><span class="cm">/*!40100 DEFAULT CHARACTER SET utf8 */</span><span class="p">;</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">USE</span><span class="w"> </span><span class="s1">&#39;old_schema&#39;</span><span class="p">;</span>
-</span></code></pre></div>
-<p>to this:</p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="s1">&#39;new_schema&#39;</span><span class="w"> </span><span class="cm">/*!40100 DEFAULT CHARACTER SET utf8 */</span><span class="p">;</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">USE</span><span class="w"> </span><span class="s1">&#39;new_schema&#39;</span><span class="p">;</span>
-</span></code></pre></div>
-<p>After that, import the dump file using MySQL Workbench as usual. Please note that if you exported the old schema with qualified identifiers you would also have to search and replace the schema name everywhere in the dump file, otherwise each object would have the old schema name as prefix.</p>
-    <nav class="md-post__action">
-      <a href="../../import-a-sql-dump-from-one-schema-into-another-with-mysql-workbench/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
       
         
           
@@ -2001,7 +2046,7 @@ default = https://myusername@bitbucket.org/primosoftware/projectmap
 
 
 <nav class="md-pagination">
-  <a class="md-pagination__link" href="../..">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../14/">14</a> <a class="md-pagination__link" href="../15/">15</a> <span class="md-pagination__current">16</span> <a class="md-pagination__link" href="../17/">17</a> <a class="md-pagination__link" href="../18/">18</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../20/">20</a>
+  <a class="md-pagination__link" href="../..">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../14/">14</a> <a class="md-pagination__link" href="../15/">15</a> <span class="md-pagination__current">16</span> <a class="md-pagination__link" href="../17/">17</a> <a class="md-pagination__link" href="../18/">18</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../21/">21</a>
 </nav>
         
       

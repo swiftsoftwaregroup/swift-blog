@@ -506,6 +506,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://blog.swiftsoftwaregroup.com/export-ec2-to-vmdk-aws-cli/</loc>
+         <lastmod>2024-08-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://blog.swiftsoftwaregroup.com/archive/2024/</loc>
          <lastmod>2024-08-05</lastmod>
          <changefreq>daily</changefreq>
@@ -581,12 +586,22 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://blog.swiftsoftwaregroup.com/image-builder/</loc>
+         <loc>https://blog.swiftsoftwaregroup.com/vmdk/</loc>
+         <lastmod>2024-08-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://blog.swiftsoftwaregroup.com/vmware/</loc>
          <lastmod>2024-08-05</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.swiftsoftwaregroup.com/macos/</loc>
+         <lastmod>2024-08-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://blog.swiftsoftwaregroup.com/image-builder/</loc>
          <lastmod>2024-08-05</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -807,6 +822,11 @@
     </url>
     <url>
          <loc>https://blog.swiftsoftwaregroup.com/page/20/</loc>
+         <lastmod>2024-08-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://blog.swiftsoftwaregroup.com/page/21/</loc>
          <lastmod>2024-08-05</lastmod>
          <changefreq>daily</changefreq>
     </url>

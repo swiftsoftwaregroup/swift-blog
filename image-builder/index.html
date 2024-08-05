@@ -1544,6 +1544,52 @@
   
   
     <li class="md-nav__item">
+      <a href="../vmdk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vmdk
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../vmware/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vmware
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../vscode/" class="md-nav__link">
         
   
@@ -1680,19 +1726,19 @@
 </ol>
 <h3 id="set-variables"><a class="toclink" href="../create-ami-ec2-image-builder-aws-cli/#set-variables">Set variables</a></h3>
 <p>Set variables needed for next steps: </p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-140-1"><a id="__codelineno-140-1" name="__codelineno-140-1" href="#__codelineno-140-1"></a><span class="nv">account_id</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>sts<span class="w"> </span>get-caller-identity<span class="w"> </span>--query<span class="w"> </span>Account<span class="w"> </span>--output<span class="w"> </span>text<span class="k">)</span>
-</span><span id="__span-140-2"><a id="__codelineno-140-2" name="__codelineno-140-2" href="#__codelineno-140-2"></a>
-</span><span id="__span-140-3"><a id="__codelineno-140-3" name="__codelineno-140-3" href="#__codelineno-140-3"></a><span class="c1"># change this to your desired region</span>
-</span><span id="__span-140-4"><a id="__codelineno-140-4" name="__codelineno-140-4" href="#__codelineno-140-4"></a><span class="nv">region</span><span class="o">=</span><span class="s2">&quot;us-west-2&quot;</span><span class="w">  </span>
-</span><span id="__span-140-5"><a id="__codelineno-140-5" name="__codelineno-140-5" href="#__codelineno-140-5"></a>
-</span><span id="__span-140-6"><a id="__codelineno-140-6" name="__codelineno-140-6" href="#__codelineno-140-6"></a><span class="c1"># EC2 Image Builder Instance Role</span>
-</span><span id="__span-140-7"><a id="__codelineno-140-7" name="__codelineno-140-7" href="#__codelineno-140-7"></a><span class="nv">ib_instance_role</span><span class="o">=</span><span class="s2">&quot;ec2-ib-instance-role&quot;</span>
-</span><span id="__span-140-8"><a id="__codelineno-140-8" name="__codelineno-140-8" href="#__codelineno-140-8"></a>
-</span><span id="__span-140-9"><a id="__codelineno-140-9" name="__codelineno-140-9" href="#__codelineno-140-9"></a><span class="c1"># EC2 Image Builder Instance Profile</span>
-</span><span id="__span-140-10"><a id="__codelineno-140-10" name="__codelineno-140-10" href="#__codelineno-140-10"></a><span class="nv">ib_instance_profile</span><span class="o">=</span><span class="s2">&quot;ec2-ib-instance-profile&quot;</span>
-</span><span id="__span-140-11"><a id="__codelineno-140-11" name="__codelineno-140-11" href="#__codelineno-140-11"></a>
-</span><span id="__span-140-12"><a id="__codelineno-140-12" name="__codelineno-140-12" href="#__codelineno-140-12"></a><span class="c1"># EC2 Image Builder Security Group</span>
-</span><span id="__span-140-13"><a id="__codelineno-140-13" name="__codelineno-140-13" href="#__codelineno-140-13"></a><span class="nv">ib_security_group</span><span class="o">=</span><span class="s2">&quot;ec2-ib-instance-sg&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-168-1"><a id="__codelineno-168-1" name="__codelineno-168-1" href="#__codelineno-168-1"></a><span class="nv">account_id</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>sts<span class="w"> </span>get-caller-identity<span class="w"> </span>--query<span class="w"> </span>Account<span class="w"> </span>--output<span class="w"> </span>text<span class="k">)</span>
+</span><span id="__span-168-2"><a id="__codelineno-168-2" name="__codelineno-168-2" href="#__codelineno-168-2"></a>
+</span><span id="__span-168-3"><a id="__codelineno-168-3" name="__codelineno-168-3" href="#__codelineno-168-3"></a><span class="c1"># change this to your desired region</span>
+</span><span id="__span-168-4"><a id="__codelineno-168-4" name="__codelineno-168-4" href="#__codelineno-168-4"></a><span class="nv">region</span><span class="o">=</span><span class="s2">&quot;us-west-2&quot;</span><span class="w">  </span>
+</span><span id="__span-168-5"><a id="__codelineno-168-5" name="__codelineno-168-5" href="#__codelineno-168-5"></a>
+</span><span id="__span-168-6"><a id="__codelineno-168-6" name="__codelineno-168-6" href="#__codelineno-168-6"></a><span class="c1"># EC2 Image Builder Instance Role</span>
+</span><span id="__span-168-7"><a id="__codelineno-168-7" name="__codelineno-168-7" href="#__codelineno-168-7"></a><span class="nv">ib_instance_role</span><span class="o">=</span><span class="s2">&quot;ec2-ib-instance-role&quot;</span>
+</span><span id="__span-168-8"><a id="__codelineno-168-8" name="__codelineno-168-8" href="#__codelineno-168-8"></a>
+</span><span id="__span-168-9"><a id="__codelineno-168-9" name="__codelineno-168-9" href="#__codelineno-168-9"></a><span class="c1"># EC2 Image Builder Instance Profile</span>
+</span><span id="__span-168-10"><a id="__codelineno-168-10" name="__codelineno-168-10" href="#__codelineno-168-10"></a><span class="nv">ib_instance_profile</span><span class="o">=</span><span class="s2">&quot;ec2-ib-instance-profile&quot;</span>
+</span><span id="__span-168-11"><a id="__codelineno-168-11" name="__codelineno-168-11" href="#__codelineno-168-11"></a>
+</span><span id="__span-168-12"><a id="__codelineno-168-12" name="__codelineno-168-12" href="#__codelineno-168-12"></a><span class="c1"># EC2 Image Builder Security Group</span>
+</span><span id="__span-168-13"><a id="__codelineno-168-13" name="__codelineno-168-13" href="#__codelineno-168-13"></a><span class="nv">ib_security_group</span><span class="o">=</span><span class="s2">&quot;ec2-ib-instance-sg&quot;</span>
 </span></code></pre></div>
 
     <nav class="md-post__action">

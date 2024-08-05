@@ -1173,6 +1173,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#export-ec2-instance-to-vmware-virtual-machine-disk-vmdk-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Export EC2 Instance to VMware Virtual Machine Disk (VMDK) image
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#create-an-amazon-machine-image-ami-using-ec2-image-builder-and-aws-cli" class="md-nav__link">
     <span class="md-ellipsis">
       Create an Amazon Machine Image (AMI) using EC2 Image Builder and AWS CLI
@@ -1203,15 +1212,6 @@
   <a href="#deploy-docker-swarm-on-aws-ec2-via-cloud-formation-templates-step-2-storage" class="md-nav__link">
     <span class="md-ellipsis">
       Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 2 - Storage
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#deploy-docker-swarm-on-aws-ec2-via-cloud-formation-templates-step-3-roles" class="md-nav__link">
-    <span class="md-ellipsis">
-      Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 3 - Roles
     </span>
   </a>
   
@@ -1580,6 +1580,52 @@
   
   
     <li class="md-nav__item">
+      <a href="../vmdk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vmdk
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../vmware/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vmware
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../vscode/" class="md-nav__link">
         
   
@@ -1651,6 +1697,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#export-ec2-instance-to-vmware-virtual-machine-disk-vmdk-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Export EC2 Instance to VMware Virtual Machine Disk (VMDK) image
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#create-an-amazon-machine-image-ami-using-ec2-image-builder-and-aws-cli" class="md-nav__link">
     <span class="md-ellipsis">
       Create an Amazon Machine Image (AMI) using EC2 Image Builder and AWS CLI
@@ -1686,15 +1741,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#deploy-docker-swarm-on-aws-ec2-via-cloud-formation-templates-step-3-roles" class="md-nav__link">
-    <span class="md-ellipsis">
-      Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 3 - Roles
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1709,6 +1755,57 @@
       <header class="md-typeset">
         <h1 id="ec2">ec2</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2024-08-05 00:00:00">August 5, 2024</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../aws/" class="md-meta__link">aws</a>, 
+              <a href="../aws-cli/" class="md-meta__link">aws-cli</a>, 
+              <a href="./" class="md-meta__link">ec2</a>, 
+              <a href="../vmdk/" class="md-meta__link">vmdk</a>, 
+              <a href="../vmware/" class="md-meta__link">vmware</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              3 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="export-ec2-instance-to-vmware-virtual-machine-disk-vmdk-image"><a class="toclink" href="../export-ec2-to-vmdk-aws-cli/">Export EC2 Instance to VMware Virtual Machine Disk (VMDK) image</a></h2>
+<blockquote>
+<p>All the scripts in this article are <code>bash</code> scripts</p>
+</blockquote>
+<h3 id="setup-for-macos"><a class="toclink" href="../export-ec2-to-vmdk-aws-cli/#setup-for-macos">Setup for macOS</a></h3>
+<p>Make sure you do this setup first:</p>
+<ol>
+<li><a href="/setup-macos-for-aws-cloud-devops">Setup macOS for AWS Cloud DevOps</a></li>
+<li><a href="/aws-authentication">AWS Authentication</a></li>
+</ol>
+<h3 id="requirements"><a class="toclink" href="../export-ec2-to-vmdk-aws-cli/#requirements">Requirements</a></h3>
+<p>Follow the steps in the <a href="https://github.com/swiftsoftwaregroup/aws-ec2-terraform">aws-ec2-terraform</a> repository to deploy a new EC2 instance. </p>
+
+    <nav class="md-post__action">
+      <a href="../export-ec2-to-vmdk-aws-cli/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1919,58 +2016,6 @@
 
     <nav class="md-post__action">
       <a href="../deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2021-08-11 00:00:00">August 11, 2021</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../cloud/" class="md-meta__link">cloud</a>, 
-              <a href="../aws/" class="md-meta__link">aws</a>, 
-              <a href="./" class="md-meta__link">ec2</a>, 
-              <a href="../cloud-formation/" class="md-meta__link">cloud-formation</a>, 
-              <a href="../docker/" class="md-meta__link">docker</a></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              4 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="deploy-docker-swarm-on-aws-ec2-via-cloud-formation-templates-step-3-roles"><a class="toclink" href="../deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles/">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 3 - Roles</a></h2>
-<p>In this step we create the IAM roles and policies needed by the EC2 instances.</p>
-<p>This post is part of a thread that includes these steps:</p>
-<ol>
-<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
-<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
-<li>Roles (this post)</li>
-<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a></li>
-<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
-<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
-<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
-<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
-</ol>
-
-    <nav class="md-post__action">
-      <a href="../deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles/">
         Continue reading
       </a>
     </nav>
