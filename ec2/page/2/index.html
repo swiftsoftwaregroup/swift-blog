@@ -1171,6 +1171,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#deploy-docker-swarm-on-aws-ec2-via-cloud-formation-templates-step-4-manager-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 4 - Manager Instance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#deploy-docker-swarm-on-aws-ec2-via-cloud-formation-templates-step-5-worker-launch-template" class="md-nav__link">
     <span class="md-ellipsis">
       Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 5 - Worker Launch Template
@@ -1201,15 +1210,6 @@
   <a href="#deploy-docker-swarm-on-aws-ec2-via-cloud-formation-templates-step-8-cleanup" class="md-nav__link">
     <span class="md-ellipsis">
       Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 8 - Cleanup
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#create-an-aws-ec2-instance-with-the-aws-cli-step-1-launch-instance" class="md-nav__link">
-    <span class="md-ellipsis">
-      Create an AWS EC2 instance with the AWS CLI - Step 1 - Launch Instance
     </span>
   </a>
   
@@ -1261,6 +1261,29 @@
   
   <span class="md-ellipsis">
     iam
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../image-builder/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    image-builder
   </span>
   
 
@@ -1626,6 +1649,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#deploy-docker-swarm-on-aws-ec2-via-cloud-formation-templates-step-4-manager-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 4 - Manager Instance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#deploy-docker-swarm-on-aws-ec2-via-cloud-formation-templates-step-5-worker-launch-template" class="md-nav__link">
     <span class="md-ellipsis">
       Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 5 - Worker Launch Template
@@ -1661,15 +1693,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#create-an-aws-ec2-instance-with-the-aws-cli-step-1-launch-instance" class="md-nav__link">
-    <span class="md-ellipsis">
-      Create an AWS EC2 instance with the AWS CLI - Step 1 - Launch Instance
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1684,6 +1707,58 @@
       <header class="md-typeset">
         <h1 id="ec2">ec2</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2021-08-11 00:00:00">August 11, 2021</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../../cloud/" class="md-meta__link">cloud</a>, 
+              <a href="../../../aws/" class="md-meta__link">aws</a>, 
+              <a href="../../../aws-cli/" class="md-meta__link">aws-cli</a>, 
+              <a href="../../" class="md-meta__link">ec2</a>, 
+              <a href="../../../cloud-formation/" class="md-meta__link">cloud-formation</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              6 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="deploy-docker-swarm-on-aws-ec2-via-cloud-formation-templates-step-4-manager-instance"><a class="toclink" href="../../../deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance/">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 4 - Manager Instance</a></h2>
+<p>In this step we will configure and launch the Manager EC2 instance.</p>
+<p>This post is part of a thread that includes these steps:</p>
+<ol>
+<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
+<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
+<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
+<li>Manager Instance (this post)</li>
+<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
+<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
+<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
+<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
+</ol>
+
+    <nav class="md-post__action">
+      <a href="../../../deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1887,56 +1962,6 @@
 
     <nav class="md-post__action">
       <a href="../../../deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2021-01-23 00:00:00">January 23, 2021</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../../../cloud/" class="md-meta__link">cloud</a>, 
-              <a href="../../../aws/" class="md-meta__link">aws</a>, 
-              <a href="../../../aws-cli/" class="md-meta__link">aws-cli</a>, 
-              <a href="../../" class="md-meta__link">ec2</a></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              3 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="create-an-aws-ec2-instance-with-the-aws-cli-step-1-launch-instance"><a class="toclink" href="../../../create-aws-ec2-instance-aws-cli/">Create an AWS EC2 instance with the AWS CLI - Step 1 - Launch Instance</a></h2>
-<p>Make sure you do this setup first:</p>
-<ol>
-<li><a href="/setup-macos-for-aws-cloud-devops">Setup macOS for AWS Cloud DevOps</a></li>
-<li><a href="/aws-authentication">AWS Authentication</a></li>
-</ol>
-<p>Steps:</p>
-<ol>
-<li>Launch an AWS EC2 instance (this post)</li>
-<li><a href="/create-aws-ec2-instance-aws-cli-step-2-instance-role">Attach an instance role to allow S3 access</a></li>
-<li><a href="/create-aws-ec2-instance-aws-cli-step-3-cleanup">Cleanup</a> </li>
-</ol>
-
-    <nav class="md-post__action">
-      <a href="../../../create-aws-ec2-instance-aws-cli/">
         Continue reading
       </a>
     </nav>

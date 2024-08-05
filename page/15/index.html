@@ -506,6 +506,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#starting-with-mercurial-bitbucket-and-sourcetree-on-mac" class="md-nav__link">
+    <span class="md-ellipsis">
+      Starting with Mercurial, BitBucket and SourceTree on Mac
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ubuntu-how-to-add-open-in-terminal-to-the-nautilus-context-menu" class="md-nav__link">
     <span class="md-ellipsis">
       Ubuntu: how to add &#8220;Open in Terminal&#8221; to the Nautilus context menu
@@ -536,15 +545,6 @@
   <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3" class="md-nav__link">
     <span class="md-ellipsis">
       Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 3)
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 2)
     </span>
   </a>
   
@@ -1275,6 +1275,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../image-builder/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    image-builder
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../../k3s/" class="md-nav__link">
         
   
@@ -1624,6 +1647,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#starting-with-mercurial-bitbucket-and-sourcetree-on-mac" class="md-nav__link">
+    <span class="md-ellipsis">
+      Starting with Mercurial, BitBucket and SourceTree on Mac
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ubuntu-how-to-add-open-in-terminal-to-the-nautilus-context-menu" class="md-nav__link">
     <span class="md-ellipsis">
       Ubuntu: how to add &#8220;Open in Terminal&#8221; to the Nautilus context menu
@@ -1659,15 +1691,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 2)
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1682,6 +1705,86 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-04-18 00:00:00">April 18, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              2 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="starting-with-mercurial-bitbucket-and-sourcetree-on-mac"><a class="toclink" href="../../mercurial-sourcetree-and-bitbucket-on-mac/">Starting with Mercurial, BitBucket and SourceTree on Mac</a></h2>
+<p>This is a quick step-by-step tutorial on starting with Mercurial and BitBucket on Mac. This tutorial was done on Mac OS 10.8.2.</p>
+<h4 id="install-mercurial"><a class="toclink" href="../../mercurial-sourcetree-and-bitbucket-on-mac/#install-mercurial">Install Mercurial</a></h4>
+<p>The easiest way to do that is to download and install the <a href="http://mercurial.berkwood.com/binaries/Mercurial-2.5.4-py2.7-macosx10.8.zip">Mercurial 2.5.4 for OS X 10.8</a> binary package from the official <a href="http://mercurial.berkwood.com/" title="Mercurial for Mac">Mercurial</a> site. After downloading the file unzip it and open <code>mercurial-2.5.4+20130405-py2.7-macosx10.8.mpkg</code>.</p>
+<h4 id="verify-mercurial-installation"><a class="toclink" href="../../mercurial-sourcetree-and-bitbucket-on-mac/#verify-mercurial-installation">Verify Mercurial Installation</a></h4>
+<p>Open Terminal and type <code>hg –version</code>.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>hg<span class="w"> </span>--version
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Mercurial<span class="w"> </span>Distributed<span class="w"> </span>SCM<span class="w"> </span><span class="o">(</span>version<span class="w"> </span><span class="m">2</span>.5.4+20130405<span class="o">)</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="o">(</span>see<span class="w"> </span>http://mercurial.selenic.com<span class="w"> </span><span class="k">for</span><span class="w"> </span>more<span class="w"> </span>information<span class="o">)</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>Copyright<span class="w"> </span><span class="o">(</span>C<span class="o">)</span><span class="w"> </span><span class="m">2005</span>-2012<span class="w"> </span>Matt<span class="w"> </span>Mackall<span class="w"> </span>and<span class="w"> </span>others
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>This<span class="w"> </span>is<span class="w"> </span>free<span class="w"> </span>software<span class="p">;</span><span class="w"> </span>see<span class="w"> </span>the<span class="w"> </span><span class="nb">source</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>copying<span class="w"> </span>conditions.<span class="w"> </span>There<span class="w"> </span>is<span class="w"> </span>NO
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>warranty<span class="p">;</span><span class="w"> </span>not<span class="w"> </span>even<span class="w"> </span><span class="k">for</span><span class="w"> </span>MERCHANTABILITY<span class="w"> </span>or<span class="w"> </span>FITNESS<span class="w"> </span>FOR<span class="w"> </span>A<span class="w"> </span>PARTICULAR<span class="w"> </span>PURPOSE.
+</span></code></pre></div>
+<h4 id="install-mercurial-keyring-extension"><a class="toclink" href="../../mercurial-sourcetree-and-bitbucket-on-mac/#install-mercurial-keyring-extension">Install Mercurial Keyring Extension</a></h4>
+<p>In Terminal:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>easy_install<span class="w"> </span>keyring
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo<span class="w"> </span>easy_install<span class="w"> </span>mercurial_keyring
+</span></code></pre></div>
+<p>Next, add these lines to <code>.hgrc</code> (in your home directory):</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">[extensions]</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="na">mercurial_keyring</span><span class="w"> </span><span class="o">=</span>
+</span></code></pre></div>
+<p>Now Mercurial will store and use user credentials to/from the Mac OS keychain.</p>
+<h4 id="configure-bitbucket-user"><a class="toclink" href="../../mercurial-sourcetree-and-bitbucket-on-mac/#configure-bitbucket-user">Configure BitBucket User</a></h4>
+<p>There are a few ways to do this, but the best is via [ui] and [auth] sections in <em>.hgrc</em> (in your home directory). Your final <em>.hgrc</em> file should look like this:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">[ui]</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="na">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">Valentin Kantchev &lt;youremail@&lt;span class=&quot;oe_displaynone&quot;&gt;null&lt;/span&gt;yourdomain.com&gt;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">[auth]</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="na">bitbucket.org.prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">bitbucket.org</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="na">bitbucket.org.username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">yourusername</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="k">[extensions]</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="na">mercurial_keyring</span><span class="o">=</span>
+</span></code></pre></div>
+<h4 id="install-atlassian-sourcetree"><a class="toclink" href="../../mercurial-sourcetree-and-bitbucket-on-mac/#install-atlassian-sourcetree">Install Atlassian SourceTree</a></h4>
+<p>Go to <a href="http://www.sourcetreeapp.com/" title="SourceTree for Mac">www.sourcetreeapp.com</a> and download SourceTree for Mac. At the time of this writing the latest version of SourceTree was 1.5.8. SourceTree for Mac comes packaged as a dmg file – after you open the dmg file you install the app the normal Mac way – by dragging SourceTree.app into your Applications folder.</p>
+<h4 id="configure-sourcetree"><a class="toclink" href="../../mercurial-sourcetree-and-bitbucket-on-mac/#configure-sourcetree">Configure SourceTree</a></h4>
+<p>I recommend configuring SourceTree to use the system Mercurial. That way you get consistent Hg experience when working in Terminal and in the SourceTree GUI. To do that, run SourceTree and press <em>“Command + ,”</em> to open Preferences and then click <em>Use System Mercurial.</em></p>
+<p><img alt="sourcetree-preferences" src="../../assets/images/mercurial-sourcetree-and-bitbucket-on-mac/sourcetree-preferences.png?lightbox&amp;resize=300,300" /> </p>
+<h4 id="clone-a-bitbucket-repository"><a class="toclink" href="../../mercurial-sourcetree-and-bitbucket-on-mac/#clone-a-bitbucket-repository">Clone a BitBucket Repository</a></h4>
+<p>In the SourceTree Bookmarks window:</p>
+<ol>
+<li>Click on the Add Repository button.</li>
+<li>Enter the remote repository url and the local repository folder.</li>
+<li>Click Clone</li>
+</ol>
+<p><img alt="sourcetree-add-repository" src="../../assets/images/mercurial-sourcetree-and-bitbucket-on-mac/sourcetree-add-repository.png?lightbox&amp;resize=300,300" /> 
+<img alt="sourcetree-clone-repository" src="../../assets/images/mercurial-sourcetree-and-bitbucket-on-mac/sourcetree-clone-repository.png?lightbox&amp;resize=300,300" /> 
+<img alt="sourcetree-repository-bookmark" src="../../assets/images/mercurial-sourcetree-and-bitbucket-on-mac/sourcetree-repository-bookmark.png?lightbox&amp;resize=300,300" /> </p>
+    <nav class="md-post__action">
+      <a href="../../mercurial-sourcetree-and-bitbucket-on-mac/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -2046,66 +2149,6 @@ git remote show origin
 <p>On good thing about the <em>pull+update</em> workflow is that, it guards against accidentally losing local changes and allows you to do code merges at your convenience.You can also revert an <em>update</em> and continue in your local copy when an update breaks a lot of code and requires hard manual merge labor. You can <em>update</em> your working copy again later, when you are ready for the code merge.</p>
     <nav class="md-post__action">
       <a href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2013-01-23 00:00:00">January 23, 2013</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              4 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2"><a class="toclink" href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/">Hg subrepositories: a how-to guide for the &#8220;svn:externals&#8221; junkie (Part 2)</a></h2>
-<p>This is the second post of a <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-toc/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (TOC)">multi-part article</a> about Mercurial subrepositories. Please make sure you read <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/" title="Hg subrepositories: a how-to guide for the svn:externals junkie (Part 1)">Part 1</a> before reading this post.</p>
-<p>In <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/" title="Hg subrepositories: a how-to guide for the svn:externals junkie (Part 1)">Part 1</a> of this series we created a Mercurial container <em>SandboxRootHg</em>repository and Mercurial repositories for the main project -<em>SandboxHg,</em>and its two depencies – <em>SandboxDep1Hg</em> and<em>SandboxDep2Hg. </em>Then we added the main project and dependency projects as subrepositories to <em>SandboxRootHg</em>.</p>
-<p>In this post we will go through a <strong>Change / Push</strong> and <strong>Pull / Update</strong> cycle for the subrepositories. If you followed the steps in <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-1/" title="Hg subrepositories: a how-to guide for the svn:externals junkie (Part 1)">Part 1</a> you will end up with a <em>SandboxRootHg</em>structure similar to the one shown on this screenshot:</p>
-<p><img alt="sandboxroothg-tortoisehg-workbench-15" src="../../assets/images/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/sandboxroothg-tortoisehg-workbench-15.png" /> </p>
-<p>Notice the <em>.hgsubstate</em> file. Mercurial added this file to track the subrepository revisions. We will get back to examine this file when we make changes to the projects and we synchronize those changes with the remote shared repository.</p>
-<p>To simulate a two machine setup I simply cloned the <em>SandboxRootHg</em>shared remote repository to two separate folders named <em>Work</em> and <em>Home</em> respectively. After that I created two groups in TortoiseHg Workbench registry and rearranged the groups and the repositories to reflect my new directory structure. Here is another screenshot:</p>
-<p><img alt="sandboxroothg-tortoisehg-workbench-16" src="../../assets/images/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/sandboxroothg-tortoisehg-workbench-16.png" /></p>
-<p>We are now ready do do some testing.</p>
-<p>Go to the <em>Home</em> folder and add a new file <em>TestFile-1.txt</em> to the <em>SandboxRootHg/SandboxHg</em> folder, right click on the new file and select <strong>TortoiseHg/Add Files</strong> from the menu, then do <strong>Hg Commit</strong>. So far the changes have been committed to your local repository clone. You still have to <strong>Push</strong> the changes to remote shared repository. You can do that in the Synchronize view ofthe TortoiseHg Workbench.</p>
-<p><img alt="sandboxhg-tortoisehg-workbench-17" src="../../assets/images/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/sandboxhg-tortoisehg-workbench-17.png" /></p>
-<p>Now go to the <em>Work</em> folder,right click onthe <em>SandboxRootHg</em> folder and select <strong>Hg Workbench</strong> from the menu. Switch to Synchronize view and pull the changes from the remote repository. Hmm.. Nothing came in the <em>Work/SandboxRootHg/SandboxHg</em> folder. We should have received a change set with the <em>TestFile-1.txt</em>. What happened? We added <em>TestFile-1.txt</em>  in <em>Home/SandboxRootHg/SandboxHg</em>, committed and pushed the change to the remote server. However we forgot to commit and push the change in the container repository: <em>Home/SandboxRootHg</em>. Right click on <em>Home/SandboxRootHg</em> and select <strong>Hg Commit</strong> from the menu.</p>
-<p><img alt="sandboxhg-tortoisehg-commit-18" src="../../assets/images/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/sandboxhg-tortoisehg-commit-18.png" /></p>
-<p>If you open the <em>.hgsubstate</em> file under the <em><em>Home/</em>SandboxRootHg</em> folder you will see that after the commit the Mercurial updated the revision id of the <em>SandBoxHg</em> project. The <em>.hgsubstate</em> contents changed from this:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>0000000000000000000000000000000000000000 SandboxDep1Hg
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>0000000000000000000000000000000000000000 SandboxDep2Hg
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>0000000000000000000000000000000000000000 SandboxHg
-</span></code></pre></div>
-<p>to this:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>0000000000000000000000000000000000000000 SandboxDep1Hg
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>0000000000000000000000000000000000000000 SandboxDep2Hg
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>4090583f58e67f599b5141ed2551be3eb4fe5c8c SandboxHg
-</span></code></pre></div>
-<p>Now all we have to do is Push the <em>Home/SandboxRootHg</em> changes to the remote shared repository.</p>
-<p>Go again to the <em>Work</em> folder,right click on <em>SandboxRootHg</em> and select <strong>Hg Workbench</strong> from the menu. Switch to the Synchronize view and pull the changes from the remote repository. This is how my Hg Workbench looks like after the update:</p>
-<p><img alt="sandboxroothg-tortoisehg-workbench-19" src="../../assets/images/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/sandboxroothg-tortoisehg-workbench-19.png" /></p>
-<p>Notice on the screenshot above that our working copy still does not have the latest code in it. TortoiseHg makes alerts us by displaying the “Not a head revision!” message in red. One of the differences between Mercurial and Subversion is that in Mercurial you have a two-step code update. Basically the <strong>Hg/Pull</strong> command only downloads the latest change sets from a remote shared repository. After you pull the changes you still have to apply them by issuing an <strong>Hg/Update</strong> command.</p>
-<p>Go to the <em>Work</em> folder, right click on the <em>SandboxRootHg</em> folder, and select <strong>TortoiseHg &gt; Update</strong> from the menu. This updates our working copy with the changes we downloaded when did <strong>Hg/Pull</strong>.</p>
-<p><img alt="sandboxroothg-tortoisehg-workbench-21" src="../../assets/images/hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/sandboxroothg-tortoisehg-workbench-21.png" /></p>
-<p>If you check the <em>Work/SandboxRootHg/SandboxHg</em> folder you will see that the <em>TestFile-1.txt</em> file is now there as it should be.</p>
-<p>Continue to <a href="../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-3/" title="Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 3)">Hg subrepositories: a how-to guide for the “svn:externals” junkie (Part 3)</a></p>
-    <nav class="md-post__action">
-      <a href="../../hg-subrepositories-a-how-to-guide-for-the-svnexternals-junkie-part-2/">
         Continue reading
       </a>
     </nav>

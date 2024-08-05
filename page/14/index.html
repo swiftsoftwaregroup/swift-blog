@@ -506,6 +506,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#setup-google-analytics-for-a-bitbucket-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup Google Analytics for a Bitbucket repository
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#super-agile-accept-that-your-product-will-never-be-100-complete" class="md-nav__link">
     <span class="md-ellipsis">
       Super Agile: Accept that your product will never be 100% complete
@@ -536,15 +545,6 @@
   <a href="#powershell-prompt-here" class="md-nav__link">
     <span class="md-ellipsis">
       PowerShell Prompt Here
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#starting-with-mercurial-bitbucket-and-sourcetree-on-mac" class="md-nav__link">
-    <span class="md-ellipsis">
-      Starting with Mercurial, BitBucket and SourceTree on Mac
     </span>
   </a>
   
@@ -1275,6 +1275,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../image-builder/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    image-builder
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="../../k3s/" class="md-nav__link">
         
   
@@ -1624,6 +1647,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#setup-google-analytics-for-a-bitbucket-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup Google Analytics for a Bitbucket repository
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#super-agile-accept-that-your-product-will-never-be-100-complete" class="md-nav__link">
     <span class="md-ellipsis">
       Super Agile: Accept that your product will never be 100% complete
@@ -1659,15 +1691,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#starting-with-mercurial-bitbucket-and-sourcetree-on-mac" class="md-nav__link">
-    <span class="md-ellipsis">
-      Starting with Mercurial, BitBucket and SourceTree on Mac
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1682,6 +1705,89 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2013-08-19 00:00:00">August 19, 2013</time></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              3 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="setup-google-analytics-for-a-bitbucket-repository"><a class="toclink" href="../../setup-google-analytics-for-a-bitbucket-repository/">Setup Google Analytics for a Bitbucket repository</a></h2>
+<p>The idea is to create a new Google Analytics property for Bitbucket and then have a separate Google Analytics profiles for each repository. That way I end up with one profile per repository neatly grouped under the Bitbucket property. In the profiles, I also use filters to include only the traffic for the corresponding repository.</p>
+<p>This post is about myself setting up Google Analytics for our <a href="https://bitbucket.org/primosoftware/avblocks-samples/" title="AVBlocks-Samples Repository">AVBlocks-Samples</a> repository, so in the steps below I use the “AVBlocks-Samples” name and the corresponding URL. Needless to say, when going through the steps, you will use the name and URL of your own Bitbucket repo. OK, here it goes:</p>
+<h3 id="create-a-new-google-analytics-property-called-bitbucket"><a class="toclink" href="../../setup-google-analytics-for-a-bitbucket-repository/#create-a-new-google-analytics-property-called-bitbucket">Create a new Google Analytics property called Bitbucket</a></h3>
+<ol>
+<li>Go to Google Analytics and login into your account.</li>
+<li>Click on the Admin link at the top right corner.</li>
+<li>Click on the property drop-down list and then select the New Property at the bottom.</li>
+<li>Select “Classic Analytics” for tracking method.</li>
+<li>Under Website Name, type “Bitbucket”.</li>
+<li>Under Web Site URL, select “https://” and type “bitbucket.org”.</li>
+<li>Click [Get Tracking ID]</li>
+</ol>
+<p><img alt="2013-08-19-19_30_38-google-analytics" src="../../assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-19-19_30_38-google-analytics.png?lightbox&amp;resize=200,200" /> 
+<img alt="2013-08-19-19_52_18-google-analytics" src="../../assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-19-19_52_18-google-analytics.png?lightbox&amp;resize=200,200" /> </p>
+<h3 id="add-the-tracking-id-to-the-bitbucket-repository"><a class="toclink" href="../../setup-google-analytics-for-a-bitbucket-repository/#add-the-tracking-id-to-the-bitbucket-repository">Add the Tracking ID to the Bitbucket repository</a></h3>
+<p>Google Analytics will generate a new tracking ID for you, something that looks like “UA-123456-78″.</p>
+<ol>
+<li>Copy the Tracking ID that Google generated</li>
+<li>Go to the repository admin page on Bitbucket</li>
+<li>Paste the Tracking ID into the “Google Analytics key” field.</li>
+</ol>
+<p><img alt="2013-08-19-19_55_54-avblocks-samples-bitbucket" src="../../assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-19-19_55_54-avblocks-samples-bitbucket.png?lightbox&amp;resize=200,200" /> </p>
+<p>## Update the Google Analytics profile</p>
+<ol>
+<li>Go back to Google Analytics admin page</li>
+<li>Select “Bitbucket” for property</li>
+<li>Select “All Web Site Data” for profile</li>
+<li>Click “View Settings”</li>
+<li>Update the Website’s URL with the full URL of your bitbucket repository.</li>
+<li>In my case I put “https://” and “bitbucket.org/primosoftware/avblocks-samples”.</li>
+<li>If you plan to have multiple repo profiles under the Bitbucket property, I recommend changing the View name to something other than “All Web Site Data”. I my case, I named my property “AVBlocks-Samples”.</li>
+<li>Click Apply.</li>
+</ol>
+<p><img alt="2013-08-19-20_06_28-google-analytics" src="../../assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-19-20_06_28-google-analytics.png?lightbox&amp;resize=200,200" /> 
+<img alt="2013-08-19-20_12_10-google-analytics" src="../../assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-19-20_12_10-google-analytics.png?lightbox&amp;resize=200,200" /> 
+<img alt="2013-08-22-06_27_20-google-analytics" src="../../assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-22-06_27_20-google-analytics.png?lightbox&amp;resize=200,200" /> </p>
+<h3 id="setup-a-profile-filter"><a class="toclink" href="../../setup-google-analytics-for-a-bitbucket-repository/#setup-a-profile-filter">Setup a profile filter</a></h3>
+<ol>
+<li>Go back to Google Analytics admin page</li>
+<li>Select “Bitbucket” for property</li>
+<li>Select “AVBlocks-Samples” for profile</li>
+<li>Click “View Settings”</li>
+<li>Click “Filters” and then on the +New Filter button.</li>
+<li>Type “AVBlocks-Samples” for Filter Name</li>
+<li>Select “Predefined filter” for Filter Type</li>
+<li>Select “include only”, “traffic to subdirectories”, “that begin with”</li>
+<li>Type “/primosoftware/avblocks-samples/” for Subdirectory</li>
+<li>Select “No” for Case Sensitive</li>
+<li>Click Save</li>
+</ol>
+<p><img alt="2013-08-22-07_00_25-google-analytics" src="../../assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-22-07_00_25-google-analytics.png?lightbox&amp;resize=200,200" /> 
+<img alt="2013-08-22-07_15_04-google-analytics" src="../../assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-22-07_15_04-google-analytics.png?lightbox&amp;resize=200,200" /> 
+<img alt="2013-08-22-07_15_47-google-analytics" src="../../assets/images/setup-google-analytics-for-a-bitbucket-repository/2013-08-22-07_15_47-google-analytics.png?lightbox&amp;resize=200,200" /> </p>
+    <nav class="md-post__action">
+      <a href="../../setup-google-analytics-for-a-bitbucket-repository/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1871,86 +1977,6 @@
 <p>I have been doing some scripting in PowerShell 3.0 lately and I found this <a href="http://www.hanselman.com/blog/IntroducingPowerShellPromptHere.aspx" title="PowerShell Prompt Here">post</a> by Scott Hanselman. Just go to that post and download powershellhere.inf, right click on it and click Install. It will give you a nice “PowerShell Prompt Here” context menu in Windows Explorer.</p>
     <nav class="md-post__action">
       <a href="../../powershell-prompt-here/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2013-04-18 00:00:00">April 18, 2013</time></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              2 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="starting-with-mercurial-bitbucket-and-sourcetree-on-mac"><a class="toclink" href="../../mercurial-sourcetree-and-bitbucket-on-mac/">Starting with Mercurial, BitBucket and SourceTree on Mac</a></h2>
-<p>This is a quick step-by-step tutorial on starting with Mercurial and BitBucket on Mac. This tutorial was done on Mac OS 10.8.2.</p>
-<h4 id="install-mercurial"><a class="toclink" href="../../mercurial-sourcetree-and-bitbucket-on-mac/#install-mercurial">Install Mercurial</a></h4>
-<p>The easiest way to do that is to download and install the <a href="http://mercurial.berkwood.com/binaries/Mercurial-2.5.4-py2.7-macosx10.8.zip">Mercurial 2.5.4 for OS X 10.8</a> binary package from the official <a href="http://mercurial.berkwood.com/" title="Mercurial for Mac">Mercurial</a> site. After downloading the file unzip it and open <code>mercurial-2.5.4+20130405-py2.7-macosx10.8.mpkg</code>.</p>
-<h4 id="verify-mercurial-installation"><a class="toclink" href="../../mercurial-sourcetree-and-bitbucket-on-mac/#verify-mercurial-installation">Verify Mercurial Installation</a></h4>
-<p>Open Terminal and type <code>hg –version</code>.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>hg<span class="w"> </span>--version
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Mercurial<span class="w"> </span>Distributed<span class="w"> </span>SCM<span class="w"> </span><span class="o">(</span>version<span class="w"> </span><span class="m">2</span>.5.4+20130405<span class="o">)</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="o">(</span>see<span class="w"> </span>http://mercurial.selenic.com<span class="w"> </span><span class="k">for</span><span class="w"> </span>more<span class="w"> </span>information<span class="o">)</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>Copyright<span class="w"> </span><span class="o">(</span>C<span class="o">)</span><span class="w"> </span><span class="m">2005</span>-2012<span class="w"> </span>Matt<span class="w"> </span>Mackall<span class="w"> </span>and<span class="w"> </span>others
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>This<span class="w"> </span>is<span class="w"> </span>free<span class="w"> </span>software<span class="p">;</span><span class="w"> </span>see<span class="w"> </span>the<span class="w"> </span><span class="nb">source</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>copying<span class="w"> </span>conditions.<span class="w"> </span>There<span class="w"> </span>is<span class="w"> </span>NO
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>warranty<span class="p">;</span><span class="w"> </span>not<span class="w"> </span>even<span class="w"> </span><span class="k">for</span><span class="w"> </span>MERCHANTABILITY<span class="w"> </span>or<span class="w"> </span>FITNESS<span class="w"> </span>FOR<span class="w"> </span>A<span class="w"> </span>PARTICULAR<span class="w"> </span>PURPOSE.
-</span></code></pre></div>
-<h4 id="install-mercurial-keyring-extension"><a class="toclink" href="../../mercurial-sourcetree-and-bitbucket-on-mac/#install-mercurial-keyring-extension">Install Mercurial Keyring Extension</a></h4>
-<p>In Terminal:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>easy_install<span class="w"> </span>keyring
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo<span class="w"> </span>easy_install<span class="w"> </span>mercurial_keyring
-</span></code></pre></div>
-<p>Next, add these lines to <code>.hgrc</code> (in your home directory):</p>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">[extensions]</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="na">mercurial_keyring</span><span class="w"> </span><span class="o">=</span>
-</span></code></pre></div>
-<p>Now Mercurial will store and use user credentials to/from the Mac OS keychain.</p>
-<h4 id="configure-bitbucket-user"><a class="toclink" href="../../mercurial-sourcetree-and-bitbucket-on-mac/#configure-bitbucket-user">Configure BitBucket User</a></h4>
-<p>There are a few ways to do this, but the best is via [ui] and [auth] sections in <em>.hgrc</em> (in your home directory). Your final <em>.hgrc</em> file should look like this:</p>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">[ui]</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="na">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">Valentin Kantchev &lt;youremail@&lt;span class=&quot;oe_displaynone&quot;&gt;null&lt;/span&gt;yourdomain.com&gt;</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">[auth]</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="na">bitbucket.org.prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">bitbucket.org</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="na">bitbucket.org.username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">yourusername</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="k">[extensions]</span>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="na">mercurial_keyring</span><span class="o">=</span>
-</span></code></pre></div>
-<h4 id="install-atlassian-sourcetree"><a class="toclink" href="../../mercurial-sourcetree-and-bitbucket-on-mac/#install-atlassian-sourcetree">Install Atlassian SourceTree</a></h4>
-<p>Go to <a href="http://www.sourcetreeapp.com/" title="SourceTree for Mac">www.sourcetreeapp.com</a> and download SourceTree for Mac. At the time of this writing the latest version of SourceTree was 1.5.8. SourceTree for Mac comes packaged as a dmg file – after you open the dmg file you install the app the normal Mac way – by dragging SourceTree.app into your Applications folder.</p>
-<h4 id="configure-sourcetree"><a class="toclink" href="../../mercurial-sourcetree-and-bitbucket-on-mac/#configure-sourcetree">Configure SourceTree</a></h4>
-<p>I recommend configuring SourceTree to use the system Mercurial. That way you get consistent Hg experience when working in Terminal and in the SourceTree GUI. To do that, run SourceTree and press <em>“Command + ,”</em> to open Preferences and then click <em>Use System Mercurial.</em></p>
-<p><img alt="sourcetree-preferences" src="../../assets/images/mercurial-sourcetree-and-bitbucket-on-mac/sourcetree-preferences.png?lightbox&amp;resize=300,300" /> </p>
-<h4 id="clone-a-bitbucket-repository"><a class="toclink" href="../../mercurial-sourcetree-and-bitbucket-on-mac/#clone-a-bitbucket-repository">Clone a BitBucket Repository</a></h4>
-<p>In the SourceTree Bookmarks window:</p>
-<ol>
-<li>Click on the Add Repository button.</li>
-<li>Enter the remote repository url and the local repository folder.</li>
-<li>Click Clone</li>
-</ol>
-<p><img alt="sourcetree-add-repository" src="../../assets/images/mercurial-sourcetree-and-bitbucket-on-mac/sourcetree-add-repository.png?lightbox&amp;resize=300,300" /> 
-<img alt="sourcetree-clone-repository" src="../../assets/images/mercurial-sourcetree-and-bitbucket-on-mac/sourcetree-clone-repository.png?lightbox&amp;resize=300,300" /> 
-<img alt="sourcetree-repository-bookmark" src="../../assets/images/mercurial-sourcetree-and-bitbucket-on-mac/sourcetree-repository-bookmark.png?lightbox&amp;resize=300,300" /> </p>
-    <nav class="md-post__action">
-      <a href="../../mercurial-sourcetree-and-bitbucket-on-mac/">
         Continue reading
       </a>
     </nav>
