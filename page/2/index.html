@@ -506,6 +506,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#local-kubernetes-cluster-on-macos-with-ubuntu-multipass-and-k3s" class="md-nav__link">
+    <span class="md-ellipsis">
+      Local Kubernetes cluster on macOS with Ubuntu Multipass and K3s
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#creating-a-simple-regression-model-using-tensorflow-and-keras" class="md-nav__link">
     <span class="md-ellipsis">
       Creating a simple regression model using Tensorflow and Keras
@@ -536,15 +545,6 @@
   <a href="#setup-c-development-environment-on-windows" class="md-nav__link">
     <span class="md-ellipsis">
       Setup C++ development environment on Windows
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#getting-started-with-net-and-visual-studio-code-on-ubuntu" class="md-nav__link">
-    <span class="md-ellipsis">
-      Getting Started with .NET and Visual Studio Code on Ubuntu
     </span>
   </a>
   
@@ -1693,6 +1693,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#local-kubernetes-cluster-on-macos-with-ubuntu-multipass-and-k3s" class="md-nav__link">
+    <span class="md-ellipsis">
+      Local Kubernetes cluster on macOS with Ubuntu Multipass and K3s
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#creating-a-simple-regression-model-using-tensorflow-and-keras" class="md-nav__link">
     <span class="md-ellipsis">
       Creating a simple regression model using Tensorflow and Keras
@@ -1728,15 +1737,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#getting-started-with-net-and-visual-studio-code-on-ubuntu" class="md-nav__link">
-    <span class="md-ellipsis">
-      Getting Started with .NET and Visual Studio Code on Ubuntu
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1751,6 +1751,55 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2024-07-29 00:00:00">July 29, 2024</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../kubernetes/" class="md-meta__link">kubernetes</a>, 
+              <a href="../../k3s/" class="md-meta__link">k3s</a>, 
+              <a href="../../ubuntu/" class="md-meta__link">ubuntu</a>, 
+              <a href="../../macos/" class="md-meta__link">macos</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              3 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="local-kubernetes-cluster-on-macos-with-ubuntu-multipass-and-k3s"><a class="toclink" href="../../local-kubernetes-cluster-ubuntu-multipass-k3s-macos/">Local Kubernetes cluster on macOS with Ubuntu Multipass and K3s</a></h2>
+<h3 id="install-multipass"><a class="toclink" href="../../local-kubernetes-cluster-ubuntu-multipass-k3s-macos/#install-multipass">Install Multipass</a></h3>
+<p>Install via Homebrew:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>brew<span class="w"> </span>install<span class="w"> </span>multipass
+</span></code></pre></div>
+<h3 id="launch-ubuntu-nodes"><a class="toclink" href="../../local-kubernetes-cluster-ubuntu-multipass-k3s-macos/#launch-ubuntu-nodes">Launch Ubuntu Nodes</a></h3>
+<p>Launch 3 virtual nodes running Ubuntu 22.04 LTS:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>multipass<span class="w"> </span>launch<span class="w"> </span><span class="m">22</span>.04<span class="w"> </span>--name<span class="w"> </span>ubuntu-k3s-01<span class="w"> </span>--cpus<span class="w"> </span><span class="m">1</span><span class="w"> </span>--memory<span class="w"> </span>2G<span class="w"> </span>--disk<span class="w"> </span>8G
+</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>multipass<span class="w"> </span>launch<span class="w"> </span><span class="m">22</span>.04<span class="w"> </span>--name<span class="w"> </span>ubuntu-k3s-02<span class="w"> </span>--cpus<span class="w"> </span><span class="m">1</span><span class="w"> </span>--memory<span class="w"> </span>2G<span class="w"> </span>--disk<span class="w"> </span>8G
+</span><span id="__span-52-3"><a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a>multipass<span class="w"> </span>launch<span class="w"> </span><span class="m">22</span>.04<span class="w"> </span>--name<span class="w"> </span>ubuntu-k3s-03<span class="w"> </span>--cpus<span class="w"> </span><span class="m">1</span><span class="w"> </span>--memory<span class="w"> </span>2G<span class="w"> </span>--disk<span class="w"> </span>8G
+</span></code></pre></div>
+
+    <nav class="md-post__action">
+      <a href="../../local-kubernetes-cluster-ubuntu-multipass-k3s-macos/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1908,47 +1957,6 @@
 
     <nav class="md-post__action">
       <a href="../../setup-cpp-development-environment-windows/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2023-11-20 00:00:00">November 20, 2023</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../../csharp/" class="md-meta__link">csharp</a>, 
-              <a href="../../vscode/" class="md-meta__link">vscode</a>, 
-              <a href="../../dotnet/" class="md-meta__link">dotnet</a>, 
-              <a href="../../linux/" class="md-meta__link">linux</a>, 
-              <a href="../../ubuntu/" class="md-meta__link">ubuntu</a></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              2 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="getting-started-with-net-and-visual-studio-code-on-ubuntu"><a class="toclink" href="../../getting-started-net-visual-studio-code-ubuntu/">Getting Started with .NET and Visual Studio Code on Ubuntu</a></h2>
-<p>Before going through these steps make sure you have done <a href="/setup-net-development-environment-ubuntu">Setup .NET development environment on Ubuntu</a></p>
-
-    <nav class="md-post__action">
-      <a href="../../getting-started-net-visual-studio-code-ubuntu/">
         Continue reading
       </a>
     </nav>

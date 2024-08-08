@@ -574,6 +574,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#run-ec2-vmdk-image-in-oracle-virtualbox-on-ec2-metal-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run EC2 VMDK image in Oracle VirtualBox on EC2 Metal Instance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#export-ec2-instance-to-vmware-virtual-machine-disk-vmdk-image" class="md-nav__link">
     <span class="md-ellipsis">
       Export EC2 Instance to VMware Virtual Machine Disk (VMDK) image
@@ -604,15 +613,6 @@
   <a href="#how-to-install-the-aws-cdk-on-macos" class="md-nav__link">
     <span class="md-ellipsis">
       How to install the AWS CDK on macOS
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#local-kubernetes-cluster-on-macos-with-ubuntu-multipass-and-k3s" class="md-nav__link">
-    <span class="md-ellipsis">
-      Local Kubernetes cluster on macOS with Ubuntu Multipass and K3s
     </span>
   </a>
   
@@ -1697,6 +1697,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#run-ec2-vmdk-image-in-oracle-virtualbox-on-ec2-metal-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run EC2 VMDK image in Oracle VirtualBox on EC2 Metal Instance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#export-ec2-instance-to-vmware-virtual-machine-disk-vmdk-image" class="md-nav__link">
     <span class="md-ellipsis">
       Export EC2 Instance to VMware Virtual Machine Disk (VMDK) image
@@ -1732,15 +1741,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#local-kubernetes-cluster-on-macos-with-ubuntu-multipass-and-k3s" class="md-nav__link">
-    <span class="md-ellipsis">
-      Local Kubernetes cluster on macOS with Ubuntu Multipass and K3s
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1755,6 +1755,58 @@
       <header class="md-typeset">
         <h1 id="2024">2024</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2024-08-07 00:00:00">August 7, 2024</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../aws/" class="md-meta__link">aws</a>, 
+              <a href="../../aws-cli/" class="md-meta__link">aws-cli</a>, 
+              <a href="../../ec2/" class="md-meta__link">ec2</a>, 
+              <a href="../../vmdk/" class="md-meta__link">vmdk</a>, 
+              <a href="../../vmware/" class="md-meta__link">vmware</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              5 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="run-ec2-vmdk-image-in-oracle-virtualbox-on-ec2-metal-instance"><a class="toclink" href="../../run-ec2-vmdk-virtualbox-ec2-metal/">Run EC2 VMDK image in Oracle VirtualBox on EC2 Metal Instance</a></h2>
+<blockquote>
+<p>All the scripts in this article are <code>bash</code> scripts</p>
+</blockquote>
+<h3 id="create-vmdk-image"><a class="toclink" href="../../run-ec2-vmdk-virtualbox-ec2-metal/#create-vmdk-image">Create VMDK image</a></h3>
+<p>Clone the <a href="https://github.com/swiftsoftwaregroup/aws-ec2-ami-packer">aws-ec2-ami-packer</a> repository and follow the instructions in the README to create a Virtual Machine Disk (VMDK) from an EC2 Instance.</p>
+<p>Then follow the steps bellow to run the VMDK in VirtualBox in an EC2 Metal instance.   </p>
+<h3 id="create-working-directory"><a class="toclink" href="../../run-ec2-vmdk-virtualbox-ec2-metal/#create-working-directory">Create working directory</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/tmp/vmdk-on-ec2
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nb">cd</span><span class="w"> </span>~/tmp/vmdk-on-ec2
+</span></code></pre></div>
+<h3 id="start-an-ec2-metal-instance"><a class="toclink" href="../../run-ec2-vmdk-virtualbox-ec2-metal/#start-an-ec2-metal-instance">Start an EC2 Metal Instance</a></h3>
+<p>Start an AWS <code>c5.metal</code> instance:</p>
+
+    <nav class="md-post__action">
+      <a href="../../run-ec2-vmdk-virtualbox-ec2-metal/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1951,55 +2003,6 @@
 
     <nav class="md-post__action">
       <a href="../../install-aws-cdk-macos/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2024-07-29 00:00:00">July 29, 2024</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../../kubernetes/" class="md-meta__link">kubernetes</a>, 
-              <a href="../../k3s/" class="md-meta__link">k3s</a>, 
-              <a href="../../ubuntu/" class="md-meta__link">ubuntu</a>, 
-              <a href="../../macos/" class="md-meta__link">macos</a></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              3 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="local-kubernetes-cluster-on-macos-with-ubuntu-multipass-and-k3s"><a class="toclink" href="../../local-kubernetes-cluster-ubuntu-multipass-k3s-macos/">Local Kubernetes cluster on macOS with Ubuntu Multipass and K3s</a></h2>
-<h3 id="install-multipass"><a class="toclink" href="../../local-kubernetes-cluster-ubuntu-multipass-k3s-macos/#install-multipass">Install Multipass</a></h3>
-<p>Install via Homebrew:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>brew<span class="w"> </span>install<span class="w"> </span>multipass
-</span></code></pre></div>
-<h3 id="launch-ubuntu-nodes"><a class="toclink" href="../../local-kubernetes-cluster-ubuntu-multipass-k3s-macos/#launch-ubuntu-nodes">Launch Ubuntu Nodes</a></h3>
-<p>Launch 3 virtual nodes running Ubuntu 22.04 LTS:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>multipass<span class="w"> </span>launch<span class="w"> </span><span class="m">22</span>.04<span class="w"> </span>--name<span class="w"> </span>ubuntu-k3s-01<span class="w"> </span>--cpus<span class="w"> </span><span class="m">1</span><span class="w"> </span>--memory<span class="w"> </span>2G<span class="w"> </span>--disk<span class="w"> </span>8G
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>multipass<span class="w"> </span>launch<span class="w"> </span><span class="m">22</span>.04<span class="w"> </span>--name<span class="w"> </span>ubuntu-k3s-02<span class="w"> </span>--cpus<span class="w"> </span><span class="m">1</span><span class="w"> </span>--memory<span class="w"> </span>2G<span class="w"> </span>--disk<span class="w"> </span>8G
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>multipass<span class="w"> </span>launch<span class="w"> </span><span class="m">22</span>.04<span class="w"> </span>--name<span class="w"> </span>ubuntu-k3s-03<span class="w"> </span>--cpus<span class="w"> </span><span class="m">1</span><span class="w"> </span>--memory<span class="w"> </span>2G<span class="w"> </span>--disk<span class="w"> </span>8G
-</span></code></pre></div>
-
-    <nav class="md-post__action">
-      <a href="../../local-kubernetes-cluster-ubuntu-multipass-k3s-macos/">
         Continue reading
       </a>
     </nav>

@@ -966,6 +966,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#run-ec2-vmdk-image-in-oracle-virtualbox-on-ec2-metal-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run EC2 VMDK image in Oracle VirtualBox on EC2 Metal Instance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#export-ec2-instance-to-vmware-virtual-machine-disk-vmdk-image" class="md-nav__link">
     <span class="md-ellipsis">
       Export EC2 Instance to VMware Virtual Machine Disk (VMDK) image
@@ -996,15 +1005,6 @@
   <a href="#deploy-docker-swarm-on-aws-ec2-via-cloud-formation-templates-step-4-manager-instance" class="md-nav__link">
     <span class="md-ellipsis">
       Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 4 - Manager Instance
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#deploy-docker-swarm-on-aws-ec2-via-cloud-formation-templates-step-5-worker-launch-template" class="md-nav__link">
-    <span class="md-ellipsis">
-      Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 5 - Worker Launch Template
     </span>
   </a>
   
@@ -1697,6 +1697,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#run-ec2-vmdk-image-in-oracle-virtualbox-on-ec2-metal-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run EC2 VMDK image in Oracle VirtualBox on EC2 Metal Instance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#export-ec2-instance-to-vmware-virtual-machine-disk-vmdk-image" class="md-nav__link">
     <span class="md-ellipsis">
       Export EC2 Instance to VMware Virtual Machine Disk (VMDK) image
@@ -1732,15 +1741,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#deploy-docker-swarm-on-aws-ec2-via-cloud-formation-templates-step-5-worker-launch-template" class="md-nav__link">
-    <span class="md-ellipsis">
-      Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 5 - Worker Launch Template
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1755,6 +1755,58 @@
       <header class="md-typeset">
         <h1 id="aws-cli">aws-cli</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2024-08-07 00:00:00">August 7, 2024</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../aws/" class="md-meta__link">aws</a>, 
+              <a href="./" class="md-meta__link">aws-cli</a>, 
+              <a href="../ec2/" class="md-meta__link">ec2</a>, 
+              <a href="../vmdk/" class="md-meta__link">vmdk</a>, 
+              <a href="../vmware/" class="md-meta__link">vmware</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              5 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="run-ec2-vmdk-image-in-oracle-virtualbox-on-ec2-metal-instance"><a class="toclink" href="../run-ec2-vmdk-virtualbox-ec2-metal/">Run EC2 VMDK image in Oracle VirtualBox on EC2 Metal Instance</a></h2>
+<blockquote>
+<p>All the scripts in this article are <code>bash</code> scripts</p>
+</blockquote>
+<h3 id="create-vmdk-image"><a class="toclink" href="../run-ec2-vmdk-virtualbox-ec2-metal/#create-vmdk-image">Create VMDK image</a></h3>
+<p>Clone the <a href="https://github.com/swiftsoftwaregroup/aws-ec2-ami-packer">aws-ec2-ami-packer</a> repository and follow the instructions in the README to create a Virtual Machine Disk (VMDK) from an EC2 Instance.</p>
+<p>Then follow the steps bellow to run the VMDK in VirtualBox in an EC2 Metal instance.   </p>
+<h3 id="create-working-directory"><a class="toclink" href="../run-ec2-vmdk-virtualbox-ec2-metal/#create-working-directory">Create working directory</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/tmp/vmdk-on-ec2
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="nb">cd</span><span class="w"> </span>~/tmp/vmdk-on-ec2
+</span></code></pre></div>
+<h3 id="start-an-ec2-metal-instance"><a class="toclink" href="../run-ec2-vmdk-virtualbox-ec2-metal/#start-an-ec2-metal-instance">Start an EC2 Metal Instance</a></h3>
+<p>Start an AWS <code>c5.metal</code> instance:</p>
+
+    <nav class="md-post__action">
+      <a href="../run-ec2-vmdk-virtualbox-ec2-metal/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1976,58 +2028,6 @@
   </div>
 </article>
       
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2021-08-11 00:00:00">August 11, 2021</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../cloud/" class="md-meta__link">cloud</a>, 
-              <a href="../aws/" class="md-meta__link">aws</a>, 
-              <a href="./" class="md-meta__link">aws-cli</a>, 
-              <a href="../ec2/" class="md-meta__link">ec2</a>, 
-              <a href="../cloud-formation/" class="md-meta__link">cloud-formation</a></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              5 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="deploy-docker-swarm-on-aws-ec2-via-cloud-formation-templates-step-5-worker-launch-template"><a class="toclink" href="../deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template/">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 5 - Worker Launch Template</a></h2>
-<p>In this step we will create the a launch templat for the  EC2 Worker instances.</p>
-<p>This post is part of a thread that includes these steps:</p>
-<ol>
-<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
-<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
-<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
-<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance">Manager Instance</a> </li>
-<li>Worker Launch Template (this post)</li>
-<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
-<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
-<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
-</ol>
-
-    <nav class="md-post__action">
-      <a href="../deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
       
         
           
@@ -2035,7 +2035,7 @@
 
 
 <nav class="md-pagination">
-  <span class="md-pagination__current">1</span> <a class="md-pagination__link" href="page/2/">2</a> <a class="md-pagination__link" href="page/3/">3</a>
+  <span class="md-pagination__current">1</span> <a class="md-pagination__link" href="page/2/">2</a> <a class="md-pagination__link" href="page/3/">3</a> <a class="md-pagination__link" href="page/4/">4</a>
 </nav>
         
       

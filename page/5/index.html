@@ -506,6 +506,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#run-mongodb-with-podman" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run MongoDB with Podman
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#setup-podman-on-macos" class="md-nav__link">
     <span class="md-ellipsis">
       Setup Podman on macOS
@@ -536,15 +545,6 @@
   <a href="#deploy-docker-swarm-on-aws-ec2-via-cloud-formation-templates-step-3-roles" class="md-nav__link">
     <span class="md-ellipsis">
       Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 3 - Roles
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#deploy-docker-swarm-on-aws-ec2-via-cloud-formation-templates-step-4-manager-instance" class="md-nav__link">
-    <span class="md-ellipsis">
-      Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 4 - Manager Instance
     </span>
   </a>
   
@@ -1693,6 +1693,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#run-mongodb-with-podman" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run MongoDB with Podman
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#setup-podman-on-macos" class="md-nav__link">
     <span class="md-ellipsis">
       Setup Podman on macOS
@@ -1728,15 +1737,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#deploy-docker-swarm-on-aws-ec2-via-cloud-formation-templates-step-4-manager-instance" class="md-nav__link">
-    <span class="md-ellipsis">
-      Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 4 - Manager Instance
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1751,6 +1751,49 @@
       <header class="md-typeset">
         <h1 id="blog">Blog</h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2023-05-23 00:00:00">May 23, 2023</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../podman/" class="md-meta__link">podman</a>, 
+              <a href="../../mongodb/" class="md-meta__link">mongodb</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              1 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="run-mongodb-with-podman"><a class="toclink" href="../../run-mongodb-with-podman/">Run MongoDB with Podman</a></h2>
+<p>Before you start install <a href="/setup-podman-macos">Podman</a>.</p>
+<h3 id="set-machine-to-rootful"><a class="toclink" href="../../run-mongodb-with-podman/#set-machine-to-rootful">Set machine to <code>rootful</code></a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>podman<span class="w"> </span>machine<span class="w"> </span>stop
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>podman<span class="w"> </span>machine<span class="w"> </span><span class="nb">set</span><span class="w"> </span>--rootful
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>podman<span class="w"> </span>machine<span class="w"> </span>start
+</span></code></pre></div>
+
+    <nav class="md-post__action">
+      <a href="../../run-mongodb-with-podman/">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1940,58 +1983,6 @@
 
     <nav class="md-post__action">
       <a href="../../deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles/">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2021-08-11 00:00:00">August 11, 2021</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../../cloud/" class="md-meta__link">cloud</a>, 
-              <a href="../../aws/" class="md-meta__link">aws</a>, 
-              <a href="../../aws-cli/" class="md-meta__link">aws-cli</a>, 
-              <a href="../../ec2/" class="md-meta__link">ec2</a>, 
-              <a href="../../cloud-formation/" class="md-meta__link">cloud-formation</a></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              6 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="deploy-docker-swarm-on-aws-ec2-via-cloud-formation-templates-step-4-manager-instance"><a class="toclink" href="../../deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance/">Deploy Docker Swarm on AWS EC2 via cloud-formation templates - Step 4 - Manager Instance</a></h2>
-<p>In this step we will configure and launch the Manager EC2 instance.</p>
-<p>This post is part of a thread that includes these steps:</p>
-<ol>
-<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-1-network-setup">Network Setup</a></li>
-<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-2-storage">Storage</a></li>
-<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-3-roles">Roles</a></li>
-<li>Manager Instance (this post)</li>
-<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-5-worker-launch-template">Worker Launch Template</a></li>
-<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-6-worker-instances">Worker Instances</a></li>
-<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-7-docker-swarm">Docker Swarm</a></li>
-<li><a href="/deploy-docker-swarm-aws-ec2-cloudformation-step-8-cleanup">Cleanup</a></li>
-</ol>
-
-    <nav class="md-post__action">
-      <a href="../../deploy-docker-swarm-aws-ec2-cloudformation-step-4-manager-instance/">
         Continue reading
       </a>
     </nav>
